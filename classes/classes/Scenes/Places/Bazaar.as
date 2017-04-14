@@ -73,6 +73,36 @@ public function enterTheBazaarAndMenu(demons:Boolean = true):void {
 	outputText("\n\nOne of the wagons proudly proclaims itself to be \"Greta's Garments,\" though both 'G's are emphasized with cute, stylized devil horns, and the 'S' is shaped in the form of a spaded, demonic tail.  Obviously it must some kind of clothing shop.");
 	menu();
 	//Shops & Services
+	addButton(0, "Shops", bazaarShopMenu);
+	blackCock.blackCockDescription();
+	addButton(1, "Black Cock", blackCock.enterTheBlackCock);
+
+	fapArena.fapAppearance();
+	addButton(2, "Tent", fapArena.fapArenaGOOOO);
+	//NPCs
+	addButton(3, flags[kFLAGS.CINNABAR_NUMBER_ENCOUNTERS] > 0 ? "Cinnabar" : "Rat", cinnabar.cinnabarAppearance(false));
+	if(flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00292] == 0 && rand(4) == 0 && demons) {
+		overHearDemonsAboutSyrena();
+		return;
+	}
+	if((flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00292] == 1 || flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00292] == 2) && demons && rand(10) == 0) {
+		//[Repeat Variant]
+		outputText("\n\n<b>The familiar sounds of the two griping demons can be heard nearby.  Do you listen in again?</b>", false);
+		addButton(4, "GripingDemons", overHearDemonsAboutSyrena);
+	}
+	if (lilium.LiliumText(false) != null) {
+		addButton(5, flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00267] > 0 ? "Lilium" : "Demon", lilium.LiliumText(false));
+	}
+	if (flags[kFLAGS.NIAMH_STATUS] > 0 && flags[kFLAGS.NIAMH_MOVED_OUT_COUNTER] == -1) {
+		if (flags[kFLAGS.NIAMH_STATUS] == 2) outputText("\n\nThe sounds of voices raised in song and girlish laughter makes it obvious where Niamh is holding a perpetual party.");
+		addButton(6, "Niamh", getGame().telAdre.niamh.bazaarNiamh);
+	}
+	addButton(7, flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00221] > 0 ? "Roxanne" : "Lizans", roxanne.RoxanneAppearance());
+	addButton(9,"Leave",camp.returnToCampUseOneHour);
+}	
+
+private function bazaarShopMenu():void {
+	menu();
 	if (model.time.hours >= 9 && model.time.hours <= 17) {
 		if ((flags[kFLAGS.FEMOIT_NEXTDAY_EVENT_DONE] == 1 && this.getGame().model.time.days >= flags[kFLAGS.FEMOIT_NEXTDAY_EVENT]) || flags[kFLAGS.FEMOIT_NEXTDAY_EVENT_DONE] != 1) {
 			if (flags[kFLAGS.TIMES_IN_BENOITS] == 0) 
@@ -82,35 +112,10 @@ public function enterTheBazaarAndMenu(demons:Boolean = true):void {
 			addButton(0, flags[kFLAGS.TIMES_IN_BENOITS] == 0 ? "MarketStall" : benoit.benoitMF("Benoit", "Benoite"), benoit.benoitIntro);
 		}
 	}
-	if (debug) {
-		blackCock.blackCockDescription();
-		addButton(1, "Black Cock", blackCock.enterTheBlackCock);
-	}
-	addButton(2, "Greta's", gretasGarments);
-	addButton(3, "S. Squeeze", theSlipperySqueeze);
-	fapArena.fapAppearance();
-	addButton(4, "Tent", fapArena.fapArenaGOOOO);
-	//NPCs
-	addButton(5, flags[kFLAGS.CINNABAR_NUMBER_ENCOUNTERS] > 0 ? "Cinnabar" : "Rat", cinnabar.cinnabarAppearance(false));
-	if(flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00292] == 0 && rand(4) == 0 && demons) {
-		overHearDemonsAboutSyrena();
-		return;
-	}
-	if((flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00292] == 1 || flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00292] == 2) && demons && rand(10) == 0) {
-		//[Repeat Variant]
-		outputText("\n\n<b>The familiar sounds of the two griping demons can be heard nearby.  Do you listen in again?</b>", false);
-		addButton(6, "GripingDemons", overHearDemonsAboutSyrena);
-	}
-	if (lilium.LiliumText(false) != null) {
-		addButton(7, flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00267] > 0 ? "Lilium" : "Demon", lilium.LiliumText(false));
-	}
-	if (flags[kFLAGS.NIAMH_STATUS] > 0 && flags[kFLAGS.NIAMH_MOVED_OUT_COUNTER] == -1) {
-		if (flags[kFLAGS.NIAMH_STATUS] == 2) outputText("\n\nThe sounds of voices raised in song and girlish laughter makes it obvious where Niamh is holding a perpetual party.");
-		addButton(8, "Niamh", getGame().telAdre.niamh.bazaarNiamh);
-	}
-	addButton(9, flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00221] > 0 ? "Roxanne" : "Lizans", roxanne.RoxanneAppearance());
-	addButton(14,"Leave",camp.returnToCampUseOneHour);
-}	
+	addButton(1, "Greta's", gretasGarments);
+	addButton(2, "S. Squeeze", theSlipperySqueeze);
+	addButton(4, "Back", enterTheBazaarAndMenu);
+}
 
 //Semen Bukkake and Massage Parlor
 //-Femboi Bunny owner - Joey
