@@ -357,10 +357,16 @@ package classes.Scenes.Areas
 				}
 				//Trip on a root!
 				if (temp == 3) {
-					outputText("You trip on an exposed root, scraping yourself somewhat, but otherwise the hour is uneventful.", false);
-					player.takeDamage(10);
-					doNext(camp.returnToCampUseOneHour);
-					trace("FIX MEEEEE");
+					if (rand(2) == 0) {
+						outputText("You trip on an exposed root, scraping yourself somewhat, but otherwise the hour is uneventful.", false);
+						player.takeDamage(10);
+						doNext(camp.returnToCampUseOneHour);
+						trace("FIX MEEEEE");
+					}
+					else {
+						outputText("You spot something unusual. Taking a closer look, it's definitely a truffle of some sort. ");
+						inventory.takeItem(consumables.PIGTRUF, camp.returnToCampUseOneHour);
+					}
 					return;
 				}
 			}
