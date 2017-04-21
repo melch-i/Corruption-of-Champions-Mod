@@ -153,7 +153,7 @@ package classes.Items
 		public const FOXBERY:SimpleConsumable = mk("FoxBery","Fox Berry", "a fox berry", curry(m.foxTF,false), "This large orange berry is heavy in your hands.  It may have gotten its name from its bright orange coloration.  You're certain it is no mere fruit.");
 		public const FRRTFRT:SimpleConsumable = mk("Frrtfrt","FerretFrt","a ferret fruit", m.ferretTF, "This fruit is curved oddly, just like the tree it came from.  The skin is fuzzy and brown, like the skin of a peach.");
 		public const FOXJEWL:SimpleConsumable = mk("FoxJewl", "Fox Jewel", "a fox jewel", curry(m.foxJewel, false), "A shining teardrop-shaped jewel.  An eerie blue flame dances beneath the surface.");
-		//public const GLDRIND:GoldenRind       = new GoldenRind();
+		public const GLDRIND:GoldenRind       = new GoldenRind();
 		public const GLDSEED:SimpleConsumable = mk("GldSeed","GoldenSeed", "a golden seed", curry(m.goldenSeed,0),"This seed looks and smells absolutely delicious.  Though it has an unusual color, the harpies prize these nuts as delicious treats.  Eating one might induce some physical transformations.");
 		public const GOB_ALE:SimpleConsumable = mk("Gob.Ale","Gob.Ale", "a flagon of potent goblin ale", m.goblinAle, "This sealed flagon of 'Goblin Ale' sloshes noisily with alcoholic brew.  Judging by the markings on the flagon, it's a VERY strong drink, and not to be trifled with.");
 		//public const HUMMUS_:SimpleConsumable = mk("Hummus ","Hummanus", "a jar of cheesy-looking hummus", m.regularHummus, "This small clay jar contains a substance known as hummus. Given the label, it's probably going to help you regain lost humanity.", 100);
