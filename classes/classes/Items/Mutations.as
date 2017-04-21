@@ -9007,5 +9007,12 @@
 			if (player.tone < 70) player.modTone(70, rand(3));
 			if (player.femininity > 30) player.modFem(30, rand(3));
 		}
+		
+		public function akbalSaliva(player:Player):void
+		{
+			outputText("You uncork the vial and chug down the saliva. ");
+			HPChange((player.maxHP() / 4), true);
+			//player.refillHunger(5);
+		}
 	}
 }
