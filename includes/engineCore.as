@@ -1851,6 +1851,9 @@ public function displayStats(e:MouseEvent = null):void
 	if (mountain.salon.lynnetteApproval() != 0)
 		interpersonStats += "<b>Lynnette's Approval:</b> " + mountain.salon.lynnetteApproval() + "\n";
 		
+	if (player.statusAffectv2(StatusAffects.Marble) > 0)
+		interpersonStats += "<b>Marble's Affection:</b> " + player.statusAffectv2(StatusAffects.Marble) + "%\n";
+		
 	if (flags[kFLAGS.OWCAS_ATTITUDE] > 0)
 		interpersonStats += "<b>Owca's Attitude:</b> " + flags[kFLAGS.OWCAS_ATTITUDE] + "\n";
 		
@@ -1893,7 +1896,10 @@ public function displayStats(e:MouseEvent = null):void
 		
 	if (player.statusAffectv1(StatusAffects.BlackCatBeer) > 0)
 		statEffects += "Black Cat Beer - " + player.statusAffectv1(StatusAffects.BlackCatBeer) + " hours remaining (Lust resistance 20% lower, physical resistance 25% higher.)\n";
-	
+
+	if (player.statusAffectv1(StatusAffects.Dysfunction) > 0)
+		statEffects += "Dysfunction - " + player.statusAffectv1(StatusAffects.Dysfunction) + " hours remaining\n";
+		
 	if (statEffects != "")
 		outputText("\n<b><u>Ongoing Status Effects</u></b>\n" + statEffects, false);
 	// End Ongoing Stat Effects
