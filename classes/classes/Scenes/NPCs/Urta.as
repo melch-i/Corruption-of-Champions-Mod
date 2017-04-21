@@ -395,6 +395,7 @@ public function urtaBarApproach():void {
 			if(flags[kFLAGS.URTA_CUM_NO_CUM_DAYS] >= 5) addButton(1,"Suck Off",slurpFawkesCocksForFunAndInflation);
 			else addButton(1,"Suck Off",blowUrtaUnderTheTableLuv);
 			addButton(2,"Eat Out",eatUrtaOutNomNomPussy);
+			addButton(9,"Leave",telAdre.barTelAdre);
 			return;
 		}
 		//[Horny Urta Talk – Drunk]
