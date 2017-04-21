@@ -1437,16 +1437,17 @@ public function tailorShoppe():void {
 		outputText("at Victoria the Corgi Tailor.  As usual, she's dressed in a stylish low-cut dress and sporting her feathery hat.", false);
 	}
 	outputText("\n\n(What do you want to buy?)", false);
-	choices(armors.CLSSYCL.shortName, createCallBackFunction(buyClothes,armors.CLSSYCL),
-			armors.RBBRCLT.shortName, createCallBackFunction(buyClothes,armors.RBBRCLT),
-			armors.ADVCLTH.shortName, createCallBackFunction(buyClothes,armors.ADVCLTH),
-			armors.TUBETOP.shortName, createCallBackFunction(buyClothes,armors.TUBETOP),
-			armors.OVERALL.shortName, createCallBackFunction(buyClothes,armors.OVERALL),
-			armors.B_DRESS.shortName, createCallBackFunction(buyClothes,armors.B_DRESS),
-			armors.T_BSUIT.shortName, createCallBackFunction(buyClothes,armors.T_BSUIT),
-			armors.M_ROBES.shortName, createCallBackFunction(buyClothes,armors.M_ROBES),
-			armors.LTHRPNT.shortName, createCallBackFunction(buyClothes,armors.LTHRPNT),
-			armors.FURLOIN.shortName, createCallBackFunction(buyClothes, armors.FURLOIN));
+	addButton(0, armors.CLSSYCL.shortName, buyClothes, armors.CLSSYCL);
+	addButton(1, armors.RBBRCLT.shortName, buyClothes, armors.RBBRCLT);
+	addButton(2, armors.ADVCLTH.shortName, buyClothes, armors.ADVCLTH);
+	addButton(3, armors.TUBETOP.shortName, buyClothes, armors.TUBETOP);
+	addButton(4, armors.OVERALL.shortName, buyClothes, armors.B_DRESS);
+	addButton(5, armors.B_DRESS.shortName, buyClothes, armors.B_DRESS);
+	addButton(6, armors.T_BSUIT.shortName, buyClothes, armors.T_BSUIT);
+	addButton(7, armors.M_ROBES.shortName, buyClothes, armors.M_ROBES);
+	addButton(8, armors.LTHRPNT.shortName, buyClothes, armors.LTHRPNT);
+	addButton(9, armors.FURLOIN.shortName, buyClothes, armors.FURLOIN);
+	addButton(10, armors.BIMBOSK.shortName, buyClothes, armors.BIMBOSK);
 	addButton(14, "Leave", telAdreMenu);
 }
 
