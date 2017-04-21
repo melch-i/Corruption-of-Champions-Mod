@@ -236,17 +236,12 @@ public function telAdreMenuShow():void { //Just displays the normal Tel'Adre men
 
 private function armorShops():void {
 	menu();
-	addButton(0,"Blacksmith",armorShop);
-	addButton(1,"Piercing",piercingStudio);
+	addButton(0, "Blacksmith",armorShop);
+	addButton(1, "Piercing",piercingStudio);
 	addButton(2, "Tailor", tailorShoppe);
 	addButton(3, "Weapons", weaponShop);
-
-	if (flags[kFLAGS.LOPPE_PC_MET_UMA] == 1)
-	{
-		addButton(4, "Clinic", umasShop.enterClinic);
-	}
-
-	addButton(9,"Back",telAdreMenu);
+	addButton(4, "Clinic", umasShop.enterClinic);
+	addButton(9, "Back",telAdreMenu);
 }
 
 public function houses():void {
