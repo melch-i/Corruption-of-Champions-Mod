@@ -421,6 +421,8 @@ private function declineHelSexings():void {
 	outputText("\"<i>Catch you next time, friend – and maybe we can have some fun, then!</i>\" she calls over her shoulder with a wave.\n\n", false);
 
 	outputText("You nod, and return the wave before heading back to your camp.", false);
+	flags[kFLAGS.HEL_AFFECTION]++;
+	helFollower.helAffection(2);
 	if (getGame().inCombat)
 		cleanupAfterCombat();
 	else doNext(camp.returnToCampUseOneHour);
