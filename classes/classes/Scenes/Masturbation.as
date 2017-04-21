@@ -20,8 +20,12 @@ package classes.Scenes {
 			
 			//FAP BUTTON GOAADFADHAKDADK
 			if ((player.findPerk(PerkLib.HistoryReligious) >= 0 && player.cor <= 66) || (player.findPerk(PerkLib.Enlightened) >= 0 && player.cor < 10)) {
-				if (player.findStatusAffect(StatusAffects.Exgartuan) >= 0 && player.statusAffectv2(StatusAffects.Exgartuan) == 0)
-					addButton(button++,"Masturbate", masturbateGo);
+				if (player.hasStatusEffect(StatusEffects.Exgartuan) && player.statusEffectv2(StatusEffects.Exgartuan) == 0)
+					addButton(button++, "Masturbate", masturbateGo);
+				else if (player.findPerk(PerkLib.Enlightened) >= 0 && player.findPerk(PerkLib.HistoryReligious) < 0) {
+					addButton(button++, "Masturbate", masturbateGo);
+					addButton(button++, "Meditate", meditate);
+				}
 				else addButton(button++,"Meditate", meditate);
 			}
 			else addButton(button++,"Masturbate", masturbateGo);
