@@ -480,7 +480,7 @@
 	public static const MAX_MASSAGE_BONUS_DURATION:int = 24;			// Duration of the bonus
 		/**
 		 * Apply massage bonus. Bonuses are replaced when a new effect is placed on the player.
-		 * StatusEffects.UmasMassage for all bonuses
+		 * StatusAffects.UmasMassage for all bonuses
 		 * @param	selectedMassage
 		 */
 		public function applyMassageBonus(selectedMassage:int):void
@@ -494,9 +494,9 @@
 				var bonusValue:Number;
 				
 				// Remove the old massage bonus if present
-				if (player.hasStatusEffect(StatusEffects.UmasMassage))
+				if (player.findStatusAffect(StatusAffects.UmasMassage) >= 0)
 				{
-					player.removeStatusEffect(StatusEffects.UmasMassage);
+					player.removeStatusAffect(StatusAffects.UmasMassage);
 				}
 				
 				if (selectedMassage == MASSAGE_RELIEF)
@@ -527,7 +527,7 @@
 				
 				if (bonusValue != 0)
 				{
-					player.createStatusEffect(StatusEffects.UmasMassage, selectedMassage, bonusValue, MAX_MASSAGE_BONUS_DURATION, 0);
+					player.createStatusAffect(StatusAffects.UmasMassage, selectedMassage, bonusValue, MAX_MASSAGE_BONUS_DURATION, 0);
 					flags[kFLAGS.UMA_TIMES_MASSAGED]++;
 				}
 			}
@@ -539,10 +539,14 @@
 		 */
 		public function updateBonusDuration(hours:int):void
 		{
-			const effect:StatusEffectClass = player.statusEffectByType(StatusEffects.UmasMassage);
-			if (effect!=null) {
-				effect.value3 -= hours;
-				if (effect.value3 <= 0) {
+			var statIndex:int = player.findStatusAffect(StatusAffects.UmasMassage);
+			
+			if (statIndex >= 0)
+			{
+				player.statusAffect(statIndex).value3 -= hours;
+				
+				if (player.statusAffect(statIndex).value3 <= 0)
+				{
 					bonusExpired();
 				}
 			}
@@ -555,7 +559,7 @@
 		{
 			outputText("\n<b>You groan softly as a feeling of increased tension washes over you, no longer as loose as you were before.  It looks like the effects of Uma's massage have worn off.</b>\n");
 			
-			player.removeStatusEffect(StatusEffects.UmasMassage);
+			player.removeStatusAffect(StatusAffects.UmasMassage);
 		}
 		
 		/**
@@ -1662,7 +1666,7 @@
 			var hoursSinceCum:int = player.hoursSinceCum;
 			dynStats("lust=", 0);
 			player.hoursSinceCum = Math.ceil(hoursSinceCum * 0.75);
-			flags[kFLAGS.TIMES_ORGASMED]++;
+			//flags[kFLAGS.TIMES_ORGASMED]++;
 
 			menu();
 			doNext(camp.returnToCampUseOneHour);
