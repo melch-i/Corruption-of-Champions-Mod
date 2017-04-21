@@ -636,7 +636,7 @@ public function buildPerkList():Array {
 			_add(new PerkClass(PerkLib.CorruptedLibido,20,0,0,0));
 	}
 	//Slot 7 - Seduction (Must have seduced Jojo
-	if(player.findPerk(PerkLib.Seduction) < 0 && player.cor >= 50 && monk >= 5) {
+	if(player.findPerk(PerkLib.Seduction) < 0 && player.cor >= 50) {
 			_add(new PerkClass(PerkLib.Seduction));
 	}
 	//Slot 7 - Nymphomania
