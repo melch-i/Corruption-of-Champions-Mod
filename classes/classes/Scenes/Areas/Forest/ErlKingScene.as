@@ -823,6 +823,7 @@ package classes.Scenes.Areas.Forest
 			}
 			addButton(3, "Milk Dick", gwynnGetsDickmilked);
 			addButton(4, "Gifts", gwynnGibsGifts);
+			addButton(9, "Leave", camp.returnToCampUseOneHour);
 		}
 
 		protected function gwynnSucksDicks():void
