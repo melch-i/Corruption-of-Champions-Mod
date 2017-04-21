@@ -10,10 +10,18 @@ package classes.Scenes {
 		
 		public function masturbateMenu():void {
 			menu();
-			if (player.hasCock() && (player.cocks[0].cockType == CockTypesEnum.BEE)) {
+			if (player.hasCock() && (player.cocks[0].cockType == CockTypesEnum.BEE) && !fappingItems(false)) {
 				clearOutput();
 				outputText("Although your bee cock aches you know that there's no way for you to get relief on your own.  When you touch your shaft or think about cumming images of the bee girl and the sound of her hypnotic buzzing fill your mind.");
 				addButton(0, "Next", playerMenu);
+				if (player.hasItem(consumables.BEEHONY) || player.hasItem(consumables.PURHONY) || player.hasItem(consumables.SPHONEY)) {
+					outputText("\n\nFortunately, you could smear honey all over your " + player.cockDescript() + " and relieve yourself if you want to.");
+					addButton(1, "Use Honey", masturbateGo);
+				}
+				if ((player.findPerk(PerkLib.HistoryReligious) >= 0 && player.cor <= 66) || (player.findPerk(PerkLib.Enlightened) >= 0 && player.cor < 10)) {
+					outputText("\n\nYou could meditate to cleanse your urges.");
+					addButton(2, "Meditate", meditate);
+				}
 				return;
 			}
 			var button:int = 0;
@@ -122,7 +130,7 @@ package classes.Scenes {
 				doNext(playerMenu);
 				return;
 			}
-			if (player.hasCock() && (player.cocks[0].cockType == CockTypesEnum.BEE)) {
+			if (player.hasCock() && (player.cocks[0].cockType == CockTypesEnum.BEE) && !(player.hasItem(consumables.BEEHONY) || player.hasItem(consumables.PURHONY) || player.hasItem(consumables.SPHONEY)) && !inDungeon) {
 				outputText("Although your bee cock aches you know that there's no way for you to get relief on your own.  When you touch your shaft or think about cumming images of the bee girl and the sound of her hypnotic buzzing fill your mind.");
 				doNext(playerMenu);
 				return;
@@ -171,6 +179,12 @@ package classes.Scenes {
 			titForeplay();
 			//Touch our various junks
 			if (player.cocks.length > 0) {
+				if (player.cocks[0].cockType == CockTypesEnum.BEE && (player.hasItem(consumables.BEEHONY) || player.hasItem(consumables.PURHONY) || player.hasItem(consumables.SPHONEY))) {
+					if (player.hasItem(consumables.BEEHONY)) player.consumeItem(consumables.BEEHONY, 1);
+					else if (player.hasItem(consumables.PURHONY)) player.consumeItem(consumables.PURHONY, 1);
+					else if (player.hasItem(consumables.SPHONEY)) player.consumeItem(consumables.SPHONEY, 1);
+					outputText("You take out a vial of honey and smear the contents all over your bee cock. It feels great and the pain quickly recedes. ");
+				}
 				if (player.cocks.length == 1) {
 					outputText("You stroke your " + player.cockDescript());
 					if (player.lib < 45)
