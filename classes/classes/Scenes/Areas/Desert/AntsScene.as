@@ -495,8 +495,19 @@ package classes.Scenes.Areas.Desert
 			menu();
 			if (player.hasCock()) addButton(0, "Use Penis", gigititigitigitigitigityAntGirl);
 			if (player.hasVagina()) addButton(1, "Use Vagina", femalePhyllaFirstFuckGooooo);
+			addButton(4, "Reject", refuseAntSex);
 		}
 
+		//Refuse sex. This disables further encounter.
+		private function refuseAntSex():void {
+			clearOutput();
+			outputText("Your mind finally fires up; she's not worth your time. You quickly dart off towards the door, leaving Phylla heart-broken.");
+			outputText("\n\n\"<i>What are you doing? I mean... You won't?</i>\" She looks down, tears leaking from her eyes.");
+			outputText("\n\nYou have a feeling that you won't see her again.");
+			flags[kFLAGS.ANTS_PC_FAILED_PHYLLA] = 1;
+			doNext(camp.returnToCampUseOneHour);
+		}
+		
 //►Male Continuation
 		private function gigititigitigitigitigityAntGirl():void
 		{
