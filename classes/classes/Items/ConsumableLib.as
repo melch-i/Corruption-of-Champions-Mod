@@ -40,7 +40,7 @@ package classes.Items
 		public const WHITEDY:HairDye = new HairDye("WhiteDy", "White");
 		
 		//SKIN OILS & BODY LOTIONS
-		/*public const DARK_OL:SkinOil = new SkinOil("DarkOil", "Dark");
+		public const DARK_OL:SkinOil = new SkinOil("DarkOil", "Dark");
 		public const EBONYOL:SkinOil = new SkinOil("EbonyOl", "Ebony");
 		public const FAIR_OL:SkinOil = new SkinOil("FairOil", "Fair");
 		public const LIGHTOL:SkinOil = new SkinOil("LightOl", "Light");
@@ -51,7 +51,7 @@ package classes.Items
 		public const CLEARLN:BodyLotion = new BodyLotion("ClearLn", "Clear", "smooth thick creamy liquid");
 		public const ROUGHLN:BodyLotion = new BodyLotion("RoughLn", "Rough", "thick abrasive cream");
 		public const SEXY_LN:BodyLotion = new BodyLotion("SexyLtn", "Sexy", "pretty cream like substance");
-		public const SMTH_LN:BodyLotion = new BodyLotion("SmthLtn", "Smooth", "smooth thick creamy liquid");*/
+		public const SMTH_LN:BodyLotion = new BodyLotion("SmthLtn", "Smooth", "smooth thick creamy liquid");
 		
 		//EGGS
 		//Small

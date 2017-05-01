@@ -154,7 +154,7 @@ private function rathazulWorkOffer():Boolean {
 	var debimbo:int = 0;
 	var reductos:Function = null;
 	var lethiciteDefense:Function = null;
-	var dyes:Function = null;
+	var dyes:Boolean = false;
 	if(player.hasItem(consumables.BLACKEG) || player.hasItem(consumables.L_BLKEG)) {
 		flags[kFLAGS.PC_KNOWS_ABOUT_BLACK_EGGS] = 1;
 		spoken = true;
@@ -223,7 +223,7 @@ private function rathazulWorkOffer():Boolean {
 		outputText("Rathazul offers, \"<i>Since you have enough gems to cover the cost of materials for my dyes as well, you could buy one of my dyes for your hair.  I will need 50 gems up-front.</i>\"\n\n", false);
 		spoken = true;
 		totalOffers++;
-		dyes = buyDyes;
+		dyes = true;
 	}
 	//Reducto
 	if(player.findStatusAffect(StatusAffects.CampRathazul) >= 0 && player.statusAffectv2(StatusAffects.MetRathazul) >= 4) {
@@ -275,9 +275,13 @@ private function rathazulWorkOffer():Boolean {
 		menu();
 		if (showArmorMenu) addButton(0, "Armor", rathazulArmorMenu);
 		if (debimbo > 0) addButton(1, "Debimbo", makeADeBimboDraft);
-		addButton(2,"Buy Dye",dyes);
-		if (lethiciteDefense != null) addButton(3, "Lethicite", lethiciteDefense);
+		if (dyes) {
+			addButton(1, "Buy Dye", buyDyes);
+			addButton(2, "Buy Oil", buyOils);
+			addButton(3, "Buy Lotion", buyLotions);
+		}
 		addButton(4,"Purify",purify);
+		if (lethiciteDefense != null) addButton(5, "Lethicite", lethiciteDefense);
 		if (reductos != null) addButton(8, "Reducto", reductos);
 		if(player.findStatusAffect(StatusAffects.CampRathazul) >= 0)
 			addButton(9,"Leave", camp.campFollowers);
@@ -519,6 +523,7 @@ private function craftOozeArmor():void {
 	if(player.findStatusAffect(StatusAffects.RathazulArmor) < 0) player.createStatusAffect(StatusAffects.RathazulArmor,0,0,0,0);
 }
 
+//Hair Dyes
 private function buyDyes():void {
 	spriteSelect(49);
 	clearOutput();
@@ -549,6 +554,77 @@ private function buyDyeNevermind():void {
 	spriteSelect(49);
 	clearOutput();
 	outputText("You change your mind about the dye, and Rathazul returns your gems.\n\n(<b>+50 Gems</b>)");
+	player.gems += 50;
+	statScreenRefresh();
+	doNext(returnToRathazulMenu);
+}
+
+//Skin Oils
+private function buyOils():void {
+	spriteSelect(49);
+	clearOutput();
+	outputText("Rathazul smiles and pulls forth several bottles of skin oil.  Which type of skin oil would you like?");
+	outputText("\n\n<b>(-50 Gems)</b>");
+	player.gems -= 50;
+	statScreenRefresh();
+	menu();
+	addButton(0, "Dark", buyOil, consumables.DARK_OL);
+	addButton(1, "Ebony", buyOil, consumables.EBONYOL);
+	addButton(2, "Fair", buyOil, consumables.FAIR_OL);
+	addButton(3, "Light", buyOil, consumables.LIGHTOL);
+	addButton(4, "Mahogany", buyOil, consumables.MAHOGOL);
+	addButton(5, "Olive", buyOil, consumables.OLIVEOL);
+	addButton(6, "Russet", buyOil, consumables.RUSS_OL);
+	addButton(9, "Nevermind", buyOilNevermind);
+}
+
+private function buyOil(oil:ItemType):void {
+	spriteSelect(49);
+	clearOutput();
+	//outputText(images.showImage("rathazul-buy-oil"));
+	inventory.takeItem(oil, returnToRathazulMenu);
+	statScreenRefresh();
+	player.addStatusValue(StatusAffects.MetRathazul, 2, 1);
+}
+
+private function buyOilNevermind():void {
+	spriteSelect(49);
+	clearOutput();
+	outputText("You change your mind about the oil, and Rathazul returns your gems.\n\n<b>(+50 Gems)</b>");
+	player.gems += 50;
+	statScreenRefresh();
+	doNext(returnToRathazulMenu);
+}
+
+//Body Lotions
+private function buyLotions():void {
+	spriteSelect(49);
+	clearOutput();
+	outputText("Rathazul smiles and pulls forth several vials of body lotion.  Which type of body lotion would you like?");
+	outputText("\n\n<b>(-50 Gems)</b>");
+	player.gems -= 50;
+	statScreenRefresh();
+	menu();
+	addButton(0, "Clear", buyLotion, consumables.CLEARLN);
+	addButton(1, "Rough", buyLotion, consumables.ROUGHLN);
+	addButton(2, "Sexy", buyLotion, consumables.SEXY_LN);
+	addButton(3, "Smooth", buyLotion, consumables.SMTH_LN);
+	addButton(9, "Nevermind", buyLotionNevermind);
+}
+
+private function buyLotion(lotion:ItemType):void {
+	spriteSelect(49);
+	clearOutput();
+	//outputText(images.showImage("rathazul-buy-lotion"));
+	inventory.takeItem(lotion, returnToRathazulMenu);
+	statScreenRefresh();
+	player.addStatusValue(StatusAffects.MetRathazul, 2, 1);
+}
+
+private function buyLotionNevermind():void {
+	spriteSelect(49);
+	clearOutput();
+	outputText("You change your mind about the lotion, and Rathazul returns your gems.\n\n<b>(+50 Gems)</b>");
 	player.gems += 50;
 	statScreenRefresh();
 	doNext(returnToRathazulMenu);
