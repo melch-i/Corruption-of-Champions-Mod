@@ -165,6 +165,11 @@ private function doCamp():void { //Only called by playerMenu
 		arianScene.arianLaysEggs();
 		return;
 	}
+	if (flags[kFLAGS.EMBER_MORNING] > 0 && (model.time.hours >= 6)) {
+		hideMenus();
+		emberScene.postEmberSleep();
+		return;
+	}
 	if(flags[kFLAGS.JACK_FROST_PROGRESS] > 0) {
 		hideMenus();
 		kGAMECLASS.processJackFrostEvent();
@@ -1382,6 +1387,14 @@ private function exgartuanCampUpdate():void {
 		}		
 	}
 	doNext(playerMenu);
+}
+
+public function homeDesc():String {
+	return "tent";
+}
+
+public function bedDesc():String {
+	return "bedroll";
 }
 
 /*

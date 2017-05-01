@@ -2211,8 +2211,8 @@ public static const UNKNOWN_FLAG_NUMBER_02202:int                               
 public static const UNKNOWN_FLAG_NUMBER_02203:int                                   = 2203;
 public static const UNKNOWN_FLAG_NUMBER_02204:int                                   = 2204;
 public static const UNKNOWN_FLAG_NUMBER_02205:int                                   = 2205;
-public static const UNKNOWN_FLAG_NUMBER_02206:int                                   = 2206;
-public static const UNKNOWN_FLAG_NUMBER_02207:int                                   = 2207;
+public static const TIMES_SLEPT_WITH_EMBER:int                                      = 2206;
+public static const EMBER_MORNING:int                                               = 2207;
 public static const UNKNOWN_FLAG_NUMBER_02208:int                                   = 2208;
 public static const UNKNOWN_FLAG_NUMBER_02209:int                                   = 2209;
 public static const UNKNOWN_FLAG_NUMBER_02210:int                                   = 2210;
