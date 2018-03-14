@@ -159,7 +159,6 @@ public class HeXinDao extends BaseContent
         addButton(3, "4th Stall", Tier4).hint("Check out stall with most expensive TF items.");
         addButton(5, "5th Stall", Tier5).hint("Check out stall with most exotic TF items.");		//specjalne type TF jak ectoplasm ^^
         //addButton(10, "Talk", TalkWithMogaHen).hint("Talk with shopkeeper.");
-        addButton(11, "Sell", sellItemsForSpiritStones).hint("Sell items for spirit stones.");
         addButton(12, "Exchange", exchangeGemsToSpiritStonesorReverse).hint("Exchange gems to spirit stones or spirit stones to gems.");
         addButton(14, "Back", riverislandVillageStuff);
         statScreenRefresh();
@@ -280,31 +279,6 @@ public class HeXinDao extends BaseContent
         statScreenRefresh();
         doNext(exchangeGemsToSpiritStonesorReverse);
 
-    }
-
-    public function sellItemsForSpiritStones():void {
-        clearOutput();
-        outputText("\"<i>Let me look over what you got for sale. I promise I will give you a 'fair' price for those things,</i>\" Saying this the merchant calmly awaits what you will take out.");
-        menu();
-        if (player.hasItem(useables.GOLCORE, 1)) addButton(0, "Sell 1", sellOneGolemCore).hint("Sell 1 golem core.");
-        if (player.hasItem(useables.GOLCORE, 5)) addButton(1, "Sell 5", sellFiveGolemCores).hint("Sell 5 golem cores.");
-        addButton(14, "Back", mogahenmerchant);
-    }
-
-    public function sellOneGolemCore():void {
-        clearOutput();
-        outputText("\"<i>A single golem core. Still in good shape so that will be single spirit stone,</i>\" he states after examing core. Moment later after he went to put away core Moga gave you a single stone.");
-        player.destroyItems(useables.GOLCORE, 1);
-        flags[kFLAGS.SPIRIT_STONES]++;
-        doNext(sellItemsForSpiritStones);
-    }
-
-    public function sellFiveGolemCores():void {
-        clearOutput();
-        outputText("\"<i>Golem cores. Let me check...yes the all seems to be in decent shape,</i>\" after examination he walks away to return shortly. \"<i>Here your five stones for them.</i>\"");
-        player.destroyItems(useables.GOLCORE, 5);
-        flags[kFLAGS.SPIRIT_STONES] += 5;
-        doNext(sellItemsForSpiritStones);
     }
 
     public function soulequipmentmerchant():void {
@@ -450,56 +424,28 @@ public function soularena():void {
 	}
 }
 
+    //FIXME @Oxdeception need more combatants.
     public function soularenaSolo():void {
         clearOutput();
         outputText("Picking the one on the left prepared for solo fight you enter there and looking around checking who is currently avialable for sparring session.");
         menu();
-        //addButton(0, "Goblin", );//Goblinka
-        addButton(5, "D.Golem", arenaSelection,GolemDummy).hint("LVL 6");
-        addButton(6, "I.D.Golem", arenaSelection,GolemDummyImproved).hint("LVL 12");
-        addButton(7, "A.D.Golem", arenaSelection,GolemDummyAdvanced).hint("LVL 18");
-        addButton(8, "S.D.Golem", arenaSelection,GolemDummySuperior).hint("LVL 24");
-        addButton(10, "B.T.Golem", arenaSelection,GolemTrueBasic).hint("LVL 33");
-        addButton(11, "I.T.Golem", arenaSelection,GolemTrueImproved).hint("LVL 42");
-        addButton(12, "A.T.Golem", arenaSelection,GolemTrueAdvanced).hint("LVL 51");
         addButton(14, "Back", soularena);
     }
-
     public function soularenaGroup():void {
         clearOutput();
         outputText("Picking the one on the right prepared for group fight you enter there and looking around checking who is currently avialable for sparring session.");
         menu();
-        //addButton(0, "Goblins", );//Córki goblinki z solo areny ^^
-        addButton(5, "D.Golems", arenaSelection,GolemsDummy).hint("LVL 6");
-        addButton(6, "I.D.Golems", arenaSelection,GolemsDummyImproved).hint("LVL 12");
-        addButton(7, "A.D.Golems", arenaSelection,GolemsDummyAdvanced).hint("LVL 18");
-        addButton(8, "S.D.Golems", arenaSelection,GolemsDummySuperior).hint("LVL 24");
-        addButton(10, "B.T.Golems", arenaSelection,GolemsTrueBasic).hint("LVL 33");
-        addButton(11, "I.T.Golems", arenaSelection,GolemsTrueImproved).hint("LVL 42");
-        addButton(12, "A.T.Golems", arenaSelection,GolemsTrueAdvanced).hint("LVL 51");
         addButton(14, "Back", soularena);
     }
-
     public function soularenaChallenge():void {
         clearOutput();
         outputText("Picking the one in the middle prepared for challanges you enter there and looking around checking who if there is currently anyone up for a challange.");
         menu();
         addButton(0, "Gaunlet 1", gaunletchallange1fight1).hint("Fight 3 diff enemies one after another.");
         if (flags[kFLAGS.SOUL_ARENA_FINISHED_GAUNLETS] == 1) addButton(1, "Gaunlet 2", gaunletchallange2fight1).hint("Fight 4 diff enemies one after another.");
-        //addButton(2, "Gaunlet 3", gaunletchallange3).hint("Fight 5 diff enemies one after another.");
-        //addButton(3, "Gaunlet 4", gaunletchallange4).hint("Fight 6 diff enemies one after another.");
-        //addButton(4, "Gaunlet 5", gaunletchallange5).hint("Fight 7 diff enemies one after another.");
-        //addButton(5, "Golemancer", arenaSelection,Jeniffer);
-        //addButton(6, "AyotechManiac", arenaSelection,Jinx);
-        //addButton(7, "MachoSalamander", arenaSelection,Syth);
-        //addButton(8, "MissSalamander", arenaSelection,Rangiku);
-        //addButton(9, "LvL 24 Gargoyle", arenaSelection,GargoyleBasic);
-        addButton(10, "LvL 33 Golems", arenaSelection,GolemsBasic);
-        addButton(11, "LvL 42 Golems", arenaSelection,GolemsImproved);
-        addButton(12, "LvL 51 Golems", arenaSelection,GolemsAdvanced);
-        //if (flags[kFLAGS.CHI_CHI_AFFECTION] < 15) addButton(13, "Chi Chi", chichiScene.EnterOfTheChiChi);
         addButton(14, "Back", soularena);
     }
+
     private function arenaSelection(mon:Class):void{
         player.createStatusEffect(StatusEffects.SoulArena, 0, 0, 0, 0);
         if (flags[kFLAGS.CHI_CHI_AFFECTION] < 10) flags[kFLAGS.CHI_CHI_AFFECTION]++;
@@ -512,6 +458,7 @@ public function soularena():void {
         player.createStatusEffect(StatusEffects.SoulArena, 0, 0, 0, 0);
         player.createStatusEffect(StatusEffects.SoulArenaGaunlet, 0, 0, 0, 0);
 	}
+    //TODO @Oxdeception Replace this fight with a different monster?
     public function gaunletchallange1fight1():void {
         clearOutput();
         outputText("You register for the gauntlet challenge then when called, move out beyond the arena gate to face your opponent. The crowd is big, you sure will have quite the audience. A man with a necktie and a weird stick screams across the area.\n\n");
@@ -582,6 +529,7 @@ public function soularena():void {
         outputText("\"<i>You are my opponent uh? Doesn’t look like much. Little pet, by the time I’m done binding you, you will seldom call me mistress!</i>\"\n\n");
         startCombat(new CorruptedDrider());
 	}
+    //todo @Oxdeception replace this fight
 	public function gaunletchallange2fight4():void {
 		clearOutput();
 		gaunletsinbetween();

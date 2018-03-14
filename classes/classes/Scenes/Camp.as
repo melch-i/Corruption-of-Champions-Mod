@@ -119,6 +119,10 @@ public function EzekielCurseQuickFix():void
 }
 
 private function doCamp():void { //Only called by playerMenu
+	if (flags[kFLAGS.MOD_SAVE_VERSION] < CoC.instance.modSaveVersion) {
+		promptSaveUpdate();
+		return;
+	}
 	//Force autosave on HARDCORE MODE! And level-up.
 	if (player.slotName != "VOID" && mainView.getButtonText(0) != "Game Over" && flags[kFLAGS.HARDCORE_MODE] > 0) 
 	{
@@ -895,10 +899,6 @@ CoC.instance.saves.saveGame(player.slotName);
 		inventory.takeItem(weapons.HNTCANE, doCamp);
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] < CoC.instance.modSaveVersion) {
-		promptSaveUpdate();
-		return;
-	}
 	//Massive Balls Bad End (Realistic Mode only)
 	if (flags[kFLAGS.HUNGER_ENABLED] >= 1 && player.ballSize > (18 + (player.str / 2) + (player.tallness / 4))) {
 		badEndGIANTBALLZ();
@@ -1644,7 +1644,7 @@ private function campActions():void {
 	addButton(3, "Read Codex", codex.accessCodexMenu).hint("Read any codex entries you have unlocked.");
 	if (flags[kFLAGS.LETHICE_DEFEATED] > 0) addButton(4, "Ascension", promptAscend).hint("Perform an ascension? This will restart your adventures with your items, and gems carried over. The game will also get harder.");
 	addButton(5, "Build", campBuildingSim).hint("Check your camp build options.");
-	if (player.hasPerk(PerkLib.JobElementalConjurer) >= 0 || player.hasPerk(PerkLib.JobGolemancer) >= 0) addButton(6, "Winions", campWinionsArmySim).hint("Check your options for making some Winions.");
+	if (player.hasPerk(PerkLib.JobElementalConjurer)) addButton(6, "Winions", campWinionsArmySim).hint("Check your options for making some Winions.");
 	else addButtonDisabled(6, "Winions", "You need to be able to make some minions that fight for you to use this option like elementals or golems...");
 	//addButton(7, "Heal", spellHealcamp).hint("Heal.  \n\nMana Cost: 30");
 	//addButton(8, "Craft", kGAMECLASS.crafting.accessCraftingMenu).hint("Craft some items.");
@@ -1669,7 +1669,6 @@ private function campBuildingSim():void {
 
 private function campWinionsArmySim():void {
 	menu();
-	addButton(0, "Make", campMake.accessMakeWinionsMainMenu).hint("Check your options for making some golems.");
 	if (flags[kFLAGS.CAMP_UPGRADES_ARCANE_CIRCLE] > 0) addButton(1, "Summon", campMake.accessSummonElementalsMainMenu).hint("Check your options for managing your elemental summons.");
 	else addButtonDisabled(1, "Summon", "You should first build Arcane Circle.");
 	addButton(14, "Back", campActions);
@@ -3152,8 +3151,14 @@ private function fixFlags():void {
 }
 private function promptSaveUpdate():void {
 	clearOutput();
-	if (flags[kFLAGS.MOD_SAVE_VERSION] < 2) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 2;
+	function saveVersion(vers:int = -1):int{
+		if(vers > 0){
+			flags[kFLAGS.MOD_SAVE_VERSION] = vers;
+		}
+		return flags[kFLAGS.MOD_SAVE_VERSION];
+	}
+	if (saveVersion() < 2) {
+		saveVersion(2);
 		outputText("<b><u>CAUTION</u></b>\n");
 		outputText("Looks like you are importing your save from vanilla CoC.");
 		outputText("\n\nIf you're planning to save over your original save file, I not going to stop you but... If you overwrite the save file from original game, it will no longer be backwards compatible with the original CoC. So maybe create separate save files.");
@@ -3161,8 +3166,8 @@ private function promptSaveUpdate():void {
 		doNext(doCamp);
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 2) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 3;
+	if (saveVersion() == 2) {
+		saveVersion(3);
 		outputText("Ups looks like you not have achievements feature unlocked yet. So now you can get them.");
 		outputText("\n\nDrill is as always. So not all achievements would be automaticaly gained but who of people playing this won't play again and again and...you get my drift right?");
 		updateAchievements();
@@ -3170,18 +3175,18 @@ private function promptSaveUpdate():void {
 		doNext(doCamp);
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 3) {
+	if (saveVersion() == 3) {
 		//Reclaim flags for future use.
 		flags[kFLAGS.GIACOMO_MET] = 0;
 		flags[kFLAGS.GIACOMO_NOTICES_WORMS] = 0;
 		flags[kFLAGS.PHOENIX_ENCOUNTERED] = 0;
 		flags[kFLAGS.PHOENIX_WANKED_COUNTER] = 0;
-		flags[kFLAGS.MOD_SAVE_VERSION] = 4;
+		saveVersion(4);
 		doCamp();
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 4) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 5;
+	if (saveVersion() == 4) {
+		saveVersion(5);
 		if (flags[kFLAGS.KELT_KILLED] > 0 && player.statusEffectv1(StatusEffects.Kelt) <= 0) {
 			clearOutput();
 			outputText("Due to a bug where your bow skill got reset after you've slain Kelt, your bow skill got reset. Fortunately, this is now fixed. As a compensation, your bow skill is now instantly set to 100!");
@@ -3192,8 +3197,8 @@ private function promptSaveUpdate():void {
 		doCamp();
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 5) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 6;
+	if (saveVersion() == 5) {
+		saveVersion(6);
 		if (player.armorName == "revealing fur loincloths" || player.armorName == "comfortable underclothes" || player.weaponName == "dragon-shell shield") {
 			clearOutput();
 			outputText("Due to a bit of restructing regarding equipment, any reclassified equipment (eggshell shield and fur loincloth) that was equipped are now unequipped.");
@@ -3206,9 +3211,9 @@ private function promptSaveUpdate():void {
 		doCamp();
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 6) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 7;
-		if (flags[kFLAGS.MOD_SAVE_VERSION] == 6) {
+	if (saveVersion() == 6) {
+		saveVersion(7);
+		if (saveVersion() == 6) {
 			flags[kFLAGS.D1_OMNIBUS_KILLED] = flags[kFLAGS.CORRUPTED_GLADES_DESTROYED];
 			flags[kFLAGS.CORRUPTED_GLADES_DESTROYED] = 0; //Reclaimed
 		}
@@ -3216,16 +3221,16 @@ private function promptSaveUpdate():void {
 		doCamp();
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 7) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 8;
+	if (saveVersion() == 7) {
+		saveVersion(8);
 		//Move and reclaim flag.
 		flags[kFLAGS.LETHICITE_ARMOR_TAKEN] = flags[kFLAGS.JOJO_ANAL_CATCH_COUNTER];
 		flags[kFLAGS.JOJO_ANAL_CATCH_COUNTER] = 0;
 		doCamp();
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 8) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 9;
+	if (saveVersion() == 8) {
+		saveVersion(9);
 		if (!player.hasFur()) {
 			doCamp();
 			return; //No fur? Return to camp.
@@ -3236,16 +3241,16 @@ private function promptSaveUpdate():void {
 		furColorSelection1();
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 9) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 10;
+	if (saveVersion() == 9) {
+		saveVersion(10);
 		if (flags[kFLAGS.MARAE_LETHICITE] > 0 && player.hasKeyItem("Marae's Lethicite") >= 0) {
 			player.removeKeyItem("Marae's Lethicite"); //Remove the old.
 			player.createKeyItem("Marae's Lethicite", flags[kFLAGS.MARAE_LETHICITE], 0, 0, 0);
 			flags[kFLAGS.MARAE_LETHICITE] = 0; //Reclaim the flag.
 		}
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 10) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 11;
+	if (saveVersion() == 10) {
+		saveVersion(11);
 		if (player.findPerk(PerkLib.JobMonk) >= 0) {
 			player.removePerk(PerkLib.JobMonk);
 			player.createPerk(PerkLib.JobBrawler, 0, 0, 0, 0);
@@ -3253,8 +3258,8 @@ private function promptSaveUpdate():void {
 		doNext(doCamp);
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 11) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 12;
+	if (saveVersion() == 11) {
+		saveVersion(12);
 		outputText("No worry it's not a bug it's an airplan...err ok your save is just upgraded to the next level ^^");
 		if (flags[kFLAGS.EVANGELINE_GEMS_PURSE] < 0) flags[kFLAGS.EVANGELINE_GEMS_PURSE] = 0;
 		if (flags[kFLAGS.EVANGELINE_SPELLS_CASTED] < 0) flags[kFLAGS.EVANGELINE_SPELLS_CASTED] = 0;
@@ -3263,9 +3268,8 @@ private function promptSaveUpdate():void {
 		doNext(doCamp);
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 12) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 13;
-		clearOutput();
+	if (saveVersion() == 12) {
+		saveVersion(13);
 		outputText("And we do it again since game got more shiny then before so we would fast give additional polishing to your save. No worry it will be now +20% more shiny ;)");
 		if (player.findPerk(PerkLib.JobSoulCultivator) < 0) player.perkPoints += 1;
 		var refund:int = 0;
@@ -3281,9 +3285,8 @@ private function promptSaveUpdate():void {
 		doNext(doCamp);
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 13) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 14;
-		clearOutput();
+	if (saveVersion() == 13) {
+		saveVersion(14);
 		outputText("Attention! All Munchkins Kindly leave thou gate sixty and nine. As replacements there will be whole legion of All-Rounders commin in five, four, ...........aaaand their here ^^");
 		if (player.findPerk(PerkLib.DeityJobMunchkin) >= 0) {
 			player.removePerk(PerkLib.DeityJobMunchkin);
@@ -3293,9 +3296,8 @@ private function promptSaveUpdate():void {
 		doNext(doCamp);
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 14) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 15;
-		clearOutput();
+	if (saveVersion() == 14) {
+		saveVersion(15);
 		outputText("Why only use an imitation of bow when you can have A REAL BOW?");
 		if (player.hasKeyItem("Bow") >= 0) {
 			player.removeKeyItem("Bow");
@@ -3335,9 +3337,8 @@ private function promptSaveUpdate():void {
 		doNext(doCamp);
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 15) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 16;
-		clearOutput();
+	if (saveVersion() == 15) {
+		saveVersion(16);
 		outputText("Time for...save upgrade ^^");
 		if (player.findPerk(PerkLib.EnlightenedNinetails) >= 0) player.createPerk(PerkLib.EnlightenedKitsune, 0, 0, 0, 0);
 		if (player.findPerk(PerkLib.CorruptedNinetails) >= 0) player.createPerk(PerkLib.CorruptedKitsune, 0, 0, 0, 0);
@@ -3348,9 +3349,8 @@ private function promptSaveUpdate():void {
 		doNext(doCamp);
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 16) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 17;
-		clearOutput();
+	if (saveVersion() == 16) {
+		saveVersion(17);
 		outputText("Tentacled Barks, Divine Barks, Barks everywhere!!! No go back and beat Marae again if you had her bark unused yet");
 		if (player.hasKeyItem("Tentacled Bark Plates") >= 0) {
 			player.removeKeyItem("Tentacled Bark Plates");
@@ -3376,9 +3376,8 @@ private function promptSaveUpdate():void {
 		doNext(doCamp);
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 17) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 18;
-		clearOutput();
+	if (saveVersion() == 17) {
+		saveVersion(18);
 		outputText("Multi tails get broken or was it venom in them...so we fixed that both will not gonna mess up other or so we think ^^");
 		if (player.tailType == Tail.FOX) {
 			player.tailCount = player.tailVenom;
@@ -3403,9 +3402,8 @@ private function promptSaveUpdate():void {
 		doNext(doCamp);
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 18) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 19;
-		clearOutput();
+	if (saveVersion() == 18) {
+		saveVersion(19);
 		outputText("Small reorganizing of the house interiors...err I mean mod interiors so not mind it if you not have Soul Cultivator PC. I heard you all likes colors, colors on EVERYTHING ever your belowed lil PC's eyes. So go ahead and pick them. Not much change from addition to appearance screen this small detail. But in future if scene will allow there will be addition of parser for using eyes color too.");
 		if (player.findPerk(PerkLib.SoulExalt) >= 0) {
 			player.removePerk(PerkLib.SoulExalt);
@@ -3420,8 +3418,8 @@ private function promptSaveUpdate():void {
 		eyesColorSelection();
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 19) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 20;
+	if (saveVersion() == 19) {
+		saveVersion(20);
 		if (player.findPerk(PerkLib.JobBarbarian) >= 0) {
 			player.removePerk(PerkLib.JobBarbarian);
 			player.createPerk(PerkLib.JobSwordsman, 0, 0, 0, 0);
@@ -3431,40 +3429,28 @@ private function promptSaveUpdate():void {
 		doNext(doCamp);
 		return;
 	}
-/*	if (flags[kFLAGS.MOD_SAVE_VERSION] == 20) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 21;
-		if (player.hasPerk(PerkLib.Lycanthropy)) {
-			player.skin.coverage = Skin.COVERAGE_LOW;
-			player.coatColor = player.hairColor;
+	if(saveVersion() == 20){
+		saveVersion(21);
+		//Remove and refund golem Perks
+		var golemPerks:Array = [
+			PerkLib.JobGolemancer,
+			PerkLib.GolemArmyCaptain, PerkLib.GolemArmyColonel, PerkLib.GolemArmyGeneral, PerkLib.GolemArmyLieutenant, PerkLib.GolemArmyMajor,
+			PerkLib.ApprenticeGolemMaker, PerkLib.BeginnerGolemMaker, PerkLib.EpicGolemMaker, PerkLib.ExpertGolemMaker,PerkLib.MasterGolemMaker,PerkLib.GrandMasterGolemMaker,PerkLib.LegendaryGolemMaker,PerkLib.MythicalGolemMaker,
+			PerkLib.BiggerGolemBag1,PerkLib.BiggerGolemBag2,PerkLib.BiggerGolemBag3,PerkLib.BiggerGolemBag4,PerkLib.BiggerGolemBag5,PerkLib.BiggerGolemBag6,
+			PerkLib.FirstAttackGolems,
+			PerkLib.ChargedCore, PerkLib.SuperChargedCore
+		];
+		for each (var perk:PerkType in golemPerks){
+			if(player.hasPerk(perk)){
+				player.removePerk(perk);
+				player.perkPoints++;
+			}
 		}
-		if (flags[kFLAGS.LUNA_MOON_CYCLE] > 8) flags[kFLAGS.LUNA_MOON_CYCLE] = 1;
-		clearOutput();
-		outputText("Time to defur our werewolfs... no worry it will be only partial deffuring.");
+		outputText("The golemancer job and perks have been removed. All perk points have been refunded for these\n\n");
 		doNext(doCamp);
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 21) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 22;
-		clearOutput();
-		outputText("Text.");
-		doNext(doCamp);
-		return;
-	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 22) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 23;
-		clearOutput();
-		outputText("Text.");
-		doNext(doCamp);
-		return;
-	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 23) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 24;
-		clearOutput();
-		outputText("Text.");
-		doNext(doCamp);
-		return;
-	}
-*/	doCamp();
+	doCamp();
 }
 
 private function furColorSelection1():void {

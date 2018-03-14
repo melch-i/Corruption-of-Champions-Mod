@@ -186,157 +186,61 @@ public class Exploration extends BaseContent
 				}
 				return;
 			}
-			//Encounter Gobbalin!
-			//Encounter Golemuuu!
 			else {
-				if (player.level >= 6 && rand(10) < 5) {
-					var golemChooser:int = rand(70);
-					//Limit chooser range
-					if (player.level < 12 && golemChooser >= 10) golemChooser = 9;
-					else if (player.level < 18 && golemChooser >= 20) golemChooser = 19;
-					else if (player.level < 24 && golemChooser >= 30) golemChooser = 29;
-					else if (player.level < 33 && golemChooser >= 40) golemChooser = 39;
-					else if (player.level < 42 && golemChooser >= 50) golemChooser = 49;
-					else if (player.level < 51 && golemChooser >= 60) golemChooser = 59;
+				var goblinChooser:int = rand(100);
+				//Level modifier
+				if (player.level < 20) goblinChooser += player.level;
+				else goblinChooser += 20;
+				//Limit chooser range
+				if (goblinChooser > 100) goblinChooser = 100;
+				if (player.level < 10 && goblinChooser >= 20) goblinChooser = 29;
+				else if (player.level < 12 && goblinChooser >= 60) goblinChooser = 49;
+				else if (player.level < 16 && goblinChooser >= 80) goblinChooser = 79;
+				//Goblin assassin!
+				if (goblinChooser >= 30 && goblinChooser < 50) {
+					SceneLib.goblinAssassinScene.goblinAssassinEncounter();
+					spriteSelect(24);
+					return;
+				}
+				//Goblin warrior! (Equal chance with Goblin Shaman)
+				else if (goblinChooser >= 50 && goblinChooser < 65) {
+					SceneLib.goblinWarriorScene.goblinWarriorEncounter();
+					spriteSelect(123);
+					return;
+				}
+				//Goblin shaman!
+				else if (goblinChooser >= 65 && goblinChooser < 80) {
+					SceneLib.goblinShamanScene.goblinShamanEncounter();
+					spriteSelect(124);
+					return;
+				}
+				//Goblin elder!
+				else if (goblinChooser >= 80) {
+					SceneLib.goblinElderScene.goblinElderEncounter();
+					spriteSelect(122);
+					return;
+				}
+				if (player.gender > 0) {
 					clearOutput();
-					//Improved dummy golem
-					if (golemChooser >= 10 && golemChooser < 20) {
-						outputText("As you take a stroll, out of nearby bushes emerge golem. Looks like you have encountered improved dummy golem! You ready your [weapon] for a fight!");
-						startCombat(new GolemDummyImproved());
-						return;
+					outputText("A goblin saunters out of the bushes with a dangerous glint in her eyes.\n\nShe says, \"<i>Time to get fucked, " + player.mf("stud", "slut") + ".</i>\"");
+					if (flags[kFLAGS.CODEX_ENTRY_GOBLINS] <= 0) {
+						flags[kFLAGS.CODEX_ENTRY_GOBLINS] = 1;
+						outputText("\n\n<b>New codex entry unlocked: Goblins!</b>")
 					}
-					//Advanced dummy golem or golems
-					if (golemChooser >= 20 && golemChooser < 30) {
-						if (rand(4) == 0) {
-							outputText("As you take a stroll, out of nearby bushes emerge group of golems. Looks like you have encountered advanced dummy golems! You ready your [weapon] for a fight!");
-							startCombat(new GolemsDummyAdvanced());
-							return;
-						}
-						else {
-							outputText("As you take a stroll, out of nearby bushes emerge golem. Looks like you have encountered advanced dummy golem! You ready your [weapon] for a fight!");
-							startCombat(new GolemDummyAdvanced());
-							return;
-						}
-					}
-					//Superior dummy golem or golems
-					if (golemChooser >= 30 && golemChooser < 40) {
-						if (rand(4) == 0) {
-							outputText("As you take a stroll, out of nearby bushes emerge group of golems. Looks like you have encountered superior dummy golems! You ready your [weapon] for a fight!");
-							startCombat(new GolemsDummySuperior());
-							return;
-						}
-						else {
-							outputText("As you take a stroll, out of nearby bushes emerge golem. Looks like you have encountered superior dummy golem! You ready your [weapon] for a fight!");
-							startCombat(new GolemDummySuperior());
-							return;
-						}
-					}
-					//Basic true golem or golems
-					if (golemChooser >= 40 && golemChooser < 50) {
-						if (rand(4) == 0) {
-							outputText("As you take a stroll, out of nearby bushes emerge group of golems. Looks like you have encountered basic true golems! You ready your [weapon] for a fight!");
-							startCombat(new GolemsTrueBasic());
-							return;
-						}
-						else {
-							outputText("As you take a stroll, out of nearby bushes emerge golem. Looks like you have encountered basic true golem! You ready your [weapon] for a fight!");
-							startCombat(new GolemTrueBasic());
-							return;
-						}
-					}
-					//Improved true golem or golems
-					if (golemChooser >= 50 && golemChooser < 60) {
-						if (rand(4) == 0) {
-							outputText("As you take a stroll, out of nearby bushes emerge group of golems. Looks like you have encountered improved true golems! You ready your [weapon] for a fight!");
-							startCombat(new GolemsTrueImproved());
-							return;
-						}
-						else {
-							outputText("As you take a stroll, out of nearby bushes emerge golem. Looks like you have encountered improved true golem! You ready your [weapon] for a fight!");
-							startCombat(new GolemTrueImproved());
-							return;
-						}
-					}
-					//Advanced true golem or golems
-					if (golemChooser >= 60) {
-						if (rand(4) == 0) {
-							outputText("As you take a stroll, out of nearby bushes emerge group of golems. Looks like you have encountered advanced true golems! You ready your [weapon] for a fight!");
-							startCombat(new GolemsTrueAdvanced());
-							return;
-						}
-						else {
-							outputText("As you take a stroll, out of nearby bushes emerge golem. Looks like you have encountered advanced true golem! You ready your [weapon] for a fight!");
-							startCombat(new GolemTrueAdvanced());
-							return;
-						}
-					}
-					//Dummy golem
-					else {
-						outputText("As you take a stroll, out of nearby bushes emerge golem. Looks like you have encountered dummy golem! You ready your [weapon] for a fight!");
-						if (flags[kFLAGS.CODEX_ENTRY_GOLEMS] <= 0) {
-							flags[kFLAGS.CODEX_ENTRY_GOLEMS] = 1;
-							outputText("\n\n<b>New codex entry unlocked: Golems!</b>")
-						}
-						startCombat(new GolemDummy());
-						return;
-					}
+					startCombat(new Goblin());
+					spriteSelect(24);
+					return;
 				}
 				else {
-					var goblinChooser:int = rand(100);
-					//Level modifier
-					if (player.level < 20) goblinChooser += player.level;
-					else goblinChooser += 20;
-					//Limit chooser range
-					if (goblinChooser > 100) goblinChooser = 100;
-					if (player.level < 10 && goblinChooser >= 20) goblinChooser = 29;
-					else if (player.level < 12 && goblinChooser >= 60) goblinChooser = 49;
-					else if (player.level < 16 && goblinChooser >= 80) goblinChooser = 79;
-					//Goblin assassin!
-					if (goblinChooser >= 30 && goblinChooser < 50) {
-						SceneLib.goblinAssassinScene.goblinAssassinEncounter();
-						spriteSelect(24);
-						return;
+					clearOutput();
+					outputText("A goblin saunters out of the bushes with a dangerous glint in her eyes.\n\nShe says, \"<i>Time to get fuc-oh shit, you don't even have anything to play with!  This is for wasting my time!</i>\"");
+					if (flags[kFLAGS.CODEX_ENTRY_GOBLINS] <= 0) {
+						flags[kFLAGS.CODEX_ENTRY_GOBLINS] = 1;
+						outputText("\n\n<b>New codex entry unlocked: Goblins!</b>")
 					}
-					//Goblin warrior! (Equal chance with Goblin Shaman)
-					else if (goblinChooser >= 50 && goblinChooser < 65) {
-						SceneLib.goblinWarriorScene.goblinWarriorEncounter();
-						spriteSelect(123);
-						return;
-					}
-					//Goblin shaman!
-					else if (goblinChooser >= 65 && goblinChooser < 80) {
-						SceneLib.goblinShamanScene.goblinShamanEncounter();
-						spriteSelect(124);
-						return;
-					}
-					//Goblin elder!
-					else if (goblinChooser >= 80) {
-						SceneLib.goblinElderScene.goblinElderEncounter();
-						spriteSelect(122);
-						return;
-					}
-					if (player.gender > 0) {
-						clearOutput();
-						outputText("A goblin saunters out of the bushes with a dangerous glint in her eyes.\n\nShe says, \"<i>Time to get fucked, " + player.mf("stud", "slut") + ".</i>\"");
-						if (flags[kFLAGS.CODEX_ENTRY_GOBLINS] <= 0) {
-							flags[kFLAGS.CODEX_ENTRY_GOBLINS] = 1;
-							outputText("\n\n<b>New codex entry unlocked: Goblins!</b>")
-						}
-						startCombat(new Goblin());
-						spriteSelect(24);
-						return;
-					}
-					else {
-						clearOutput();
-						outputText("A goblin saunters out of the bushes with a dangerous glint in her eyes.\n\nShe says, \"<i>Time to get fuc-oh shit, you don't even have anything to play with!  This is for wasting my time!</i>\"");
-						if (flags[kFLAGS.CODEX_ENTRY_GOBLINS] <= 0) {
-							flags[kFLAGS.CODEX_ENTRY_GOBLINS] = 1;
-							outputText("\n\n<b>New codex entry unlocked: Goblins!</b>")
-						}
-						startCombat(new Goblin());
-						spriteSelect(24);
-						return;
-					}
+					startCombat(new Goblin());
+					spriteSelect(24);
+					return;
 				}
 			}
 		}
@@ -395,55 +299,6 @@ public class Exploration extends BaseContent
 			//Omnibus
 			else {
 				TrueDemons.OmnibusEncounter();
-				return;
-			}
-		}
-		public function genericGolemsEncounters1(even:Boolean = false):void {
-			var golemsChooser:int = rand(60);
-			//Limit chooser range
-			if (player.level < 12 && golemsChooser >= 10) golemsChooser = 9;
-			else if (player.level < 18 && golemsChooser >= 20) golemsChooser = 19;
-			else if (player.level < 24 && golemsChooser >= 30) golemsChooser = 29;
-			else if (player.level < 33 && golemsChooser >= 40) golemsChooser = 39;
-			clearOutput();
-			//Improved dummy golems
-			if (golemsChooser >= 10 && golemsChooser < 20) {
-				outputText("As you take a stroll, from behind of nearby combatants remains emerge group of golems. Looks like you have encountered improved dummy golems! You ready your [weapon] for a fight!");
-				startCombat(new GolemsDummyImproved());
-				return;
-			}
-			//Advanced dummy golems
-			if (golemsChooser >= 20 && golemsChooser < 30) {
-				outputText("As you take a stroll, from behind of nearby combatants remains emerge group of golems. Looks like you have encountered advanced dummy golems! You ready your [weapon] for a fight!");
-				startCombat(new GolemsDummyAdvanced());
-				return;
-			}
-			//Superior dummy golems
-			if (golemsChooser >= 30 && golemsChooser < 40) {
-				outputText("As you take a stroll, from behind of nearby combatants remains emerge group of golems. Looks like you have encountered superior dummy golems! You ready your [weapon] for a fight!");
-				startCombat(new GolemsDummySuperior());
-				return;
-			}
-			//Basic true golems
-			if (golemsChooser >= 40 && golemsChooser < 50) {
-				outputText("As you take a stroll, from behind of nearby combatants remains emerge group of golems. Looks like you have encountered basic true golems! You ready your [weapon] for a fight!");
-				startCombat(new GolemsTrueBasic());
-				return;
-			}
-			//Improved true golems
-			if (golemsChooser >= 50) {
-				outputText("As you take a stroll, from behind of nearby combatants remains emerge group of golems. Looks like you have encountered improved true golems! You ready your [weapon] for a fight!");
-				startCombat(new GolemsTrueImproved());
-				return;
-			}
-			//Dummy golems
-			else {
-				outputText("As you take a stroll, from behind of nearby combatants remains emerge group of golems. Looks like you have encountered dummy golems! You ready your [weapon] for a fight!");
-				if (flags[kFLAGS.CODEX_ENTRY_GOLEMS] <= 0) {
-					flags[kFLAGS.CODEX_ENTRY_GOLEMS] = 1;
-					outputText("\n\n<b>New codex entry unlocked: Golems!</b>")
-				}
-				startCombat(new GolemsDummy());
 				return;
 			}
 		}
