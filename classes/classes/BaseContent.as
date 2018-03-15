@@ -914,7 +914,7 @@ import coc.xxc.StoryContext;
 		}
 				
 		protected function darkTheme():Boolean {
-			return CoC.instance.mainViewManager.darkThemeImpl();
+			return CoC.instance.mainViewManager.isDarkTheme();
 		}
 		protected static function onGameInit(f:Function):void {
 			CoC.onGameInit(f);

@@ -2981,7 +2981,7 @@ public static const UNKNOWN_FLAG_NUMBER_02972:int                               
 public static const UNKNOWN_FLAG_NUMBER_02973:int                                   = 2973;
 public static const SPARRABLE_NPCS_TRAINING:int                                     = 2974;
 public static const STAT_GAIN_MODE:int                                              = 2975;
-public static const UNKNOWN_FLAG_NUMBER_02976:int                                   = 2976;
+public static const TEXT_BACKGROUND_STYLE:int                                       = 2976; // Text BG Style. Revamp has this flag as 2983
 public static const CHARVIEW_STYLE:int                                              = 2977; // 0 for in text, 1 for sidebar
 public static const CHARVIEWER_ENABLED:int                                          = 2978;
 public static const NEW_GAME_PLUS_LEVEL:int                                         = 2979; // Current intensity of New Game+. Each ascension increments this counter by 1.

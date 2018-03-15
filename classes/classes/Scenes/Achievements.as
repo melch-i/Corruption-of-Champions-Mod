@@ -41,6 +41,7 @@ public class Achievements extends BaseContent
 		}
 		*/
 		public function achievementsScreen():void {
+			CoC.instance.mainMenu.hideMainMenu();
 			achievementsEarned = 0;
 			achievementsTotal = 0;
 			clearOutput();
@@ -207,7 +208,7 @@ public class Achievements extends BaseContent
 			addAchievement("Godslayer", kACHIEVEMENTS.GENERAL_GODSLAYER, "Defeat corrupted Marae.", "", true);
 			addAchievement("Follow the Leader", kACHIEVEMENTS.GENERAL_FOLLOW_THE_LEADER, "Get every follower in the game.");
 			addAchievement("Gotta Love 'Em All", kACHIEVEMENTS.GENERAL_GOTTA_LOVE_THEM_ALL, "Get every lover in the game. (Nieve optional)");
-			addAchievement("Meet Your " + player.mf("Master", "Mistress"), kACHIEVEMENTS.GENERAL_MEET_YOUR_MASTER, "Get every slave in the game. (Corrupt Jojo & Amily, and Bimbo Sophie optional.)");
+			addAchievement("Meet Your Master/Mistress", kACHIEVEMENTS.GENERAL_MEET_YOUR_MASTER, "Get every slave in the game. (Corrupt Jojo & Amily, and Bimbo Sophie optional.)");
 			addAchievement("Slaver", kACHIEVEMENTS.GENERAL_MEET_YOUR_MASTER_TRUE, "Get every slave in the game, including corrupt Jojo and Amily, and Bimbo Sophie.", "", true);
 			addAchievement("All Your People are Belong to Me", kACHIEVEMENTS.GENERAL_ALL_UR_PPLZ_R_BLNG_2_ME, "Obtain every follower, lover, and slave. (Excluding mutual exclusivity)");
 			addAchievement("Scholar", kACHIEVEMENTS.GENERAL_SCHOLAR, "Fill out all codex entries available in the game.");

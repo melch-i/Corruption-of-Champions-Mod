@@ -347,6 +347,7 @@ public function saveScreen():void
 
 public function saveLoad(e:MouseEvent = null):void
 {
+	CoC.instance.mainMenu.hideMainMenu();
 	mainView.eventTestInput.x = -10207.5;
 	mainView.eventTestInput.y = -1055.1;
 	//Hide the name box in case of backing up from save
