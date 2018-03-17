@@ -102,8 +102,6 @@ public class SceneLib {
 
     public static var etnaScene:EtnaFollower = new EtnaFollower();
 
-    public static var evangelineFollower:EvangelineFollower = new EvangelineFollower();
-
     public static var exgartuan:Exgartuan = new Exgartuan();
 
     public static var helFollower:HelFollower = new HelFollower();

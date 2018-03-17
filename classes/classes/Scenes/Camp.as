@@ -63,7 +63,6 @@ use namespace CoC;
 		public var dungeonHC:HiddenCave = new HiddenCave();
 		public var dungeonDD:DenOfDesire = new DenOfDesire();
 		public var dungeonAP:AnzuPalace = new AnzuPalace();
-		public var EvangelineF:EvangelineFollower = new EvangelineFollower();
 		public var HolliPure:HolliPureScene = new HolliPureScene();
 		public var templeofdivine:TempleOfTheDivine = new TempleOfTheDivine();
 		
@@ -105,18 +104,6 @@ use namespace CoC;
 	protected var marbleJoinsStream:Boolean;
 	protected var heliaJoinsStream:Boolean;
 	protected var amilyJoinsStream:Boolean;
-
-public function EzekielCurseQuickFix():void
-{
-	clearOutput();
-	outputText("Like with a magic wand touch some divine being has blessed you. And before leaving meantioned about never again selling or discarding odd fruits.");
-	if (player.findPerk(PerkLib.EzekielBlessing) < 0) player.createPerk(PerkLib.EzekielBlessing, 0, 0, 0, 0);
-	if (player.hasStatusEffect(StatusEffects.EzekielCurse)) player.removeStatusEffect(StatusEffects.EzekielCurse);
-	statScreenRefresh();
-	dynStats("str", 5, "tou", 5, "spe", 5, "inte", 5, "lib", 5);
-	doCamp();
-
-}
 
 private function doCamp():void { //Only called by playerMenu
 	if (flags[kFLAGS.MOD_SAVE_VERSION] < CoC.instance.modSaveVersion) {
@@ -938,7 +925,6 @@ public function followersCount():Number {
 	if (player.hasStatusEffect(StatusEffects.CampRathazul)) counter++;
 	if (followerShouldra()) counter++;
 	if (sophieFollower() && flags[kFLAGS.FOLLOWER_AT_FARM_SOPHIE] == 0) counter++;
-	if (flags[kFLAGS.EVANGELINE_FOLLOWER] >= 1) counter++;
 	if (flags[kFLAGS.KINDRA_FOLLOWER] >= 1) counter++;
 	if (flags[kFLAGS.AYANE_FOLLOWER] >= 2) counter++;
 	if (helspawnFollower()) counter++;
@@ -1017,7 +1003,6 @@ public function sparableCampMembersCount():Number {
 	var counter:Number = 0;
 	if (emberScene.followerEmber()) counter++;
 	if (flags[kFLAGS.VALARIA_AT_CAMP] == 1) counter++;
-	if (flags[kFLAGS.EVANGELINE_FOLLOWER] >= 1) counter++;
 	if (flags[kFLAGS.KINDRA_FOLLOWER] >= 1) counter++;
 	if (helspawnFollower()) counter++;
 	if (flags[kFLAGS.CHI_CHI_FOLLOWER] > 2) counter++;
@@ -1473,19 +1458,6 @@ public function campFollowers(descOnly:Boolean = false):void {
 			else outputText(", though the mouse is probably hanging around the camp's perimeter.\n\n");
 			buttons.add( "Jojo", jojoScene.jojoCamp2).hint("Go find Jojo around the edges of your camp and meditate with him or talk about watch duty.").disableIf(player.statusEffectv2(StatusEffects.CampLunaMishaps1) > 0,"Annoyed.");
 		}
-	}
-	//Celess
-	//Evangeline
-	if (flags[kFLAGS.EVANGELINE_FOLLOWER] >= 1 && flags[kFLAGS.EVANGELINE_WENT_OUT_FOR_THE_ITEMS] <= 0) {
-		outputText("There is a small bedroll for Evangeline near the camp edge");
-		if (!(model.time.hours > 4 && model.time.hours < 23)) outputText(" and she's sleeping on it right now.");
-		else outputText(", though she probably wander somewhere near camp looking for more ingredients to make her potions.");
-		outputText(" Next to it stands a small chest with her personal stuff.\n\n");
-		buttons.add( "Evangeline", EvangelineF.meetEvangeline).hint("Visit Evangeline.");
-	}
-	else if (flags[kFLAGS.EVANGELINE_FOLLOWER] >= 1 && flags[kFLAGS.EVANGELINE_WENT_OUT_FOR_THE_ITEMS] >= 1) {
-		/*if (flags[kFLAGS.EVANGELINE_WENT_OUT_FOR_THE_ITEMS] >= 1)*/ outputText("Evangeline isn't in the camp as she went to buy some items. She should be out no longer than a few hours.\n\n");
-		//if () outputText("Evangeline is busy training now. She should be done with it in a few hours.\n\n");
 	}
 	//Kindra
 	if (flags[kFLAGS.KINDRA_FOLLOWER] >= 1) {

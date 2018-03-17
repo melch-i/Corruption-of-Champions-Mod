@@ -6372,7 +6372,7 @@ use namespace CoC;
 				dynStats("spe", -statusEffectv3(StatusEffects.CrinosShape), "scale", false);
 				removeStatusEffect(StatusEffects.CrinosShape);
 			}
-			if(hasStatusEffect(StatusEffects.EzekielCurse) && flags[kFLAGS.EVANGELINE_AFFECTION] >= 3 && findPerk(PerkLib.EzekielBlessing) >= 0) {
+			if(hasStatusEffect(StatusEffects.EzekielCurse)) {
 				removeStatusEffect(StatusEffects.EzekielCurse);
 			}
 			if(hasStatusEffect(StatusEffects.DragonBreathCooldown) && findPerk(PerkLib.DraconicLungsEvolved) >= 0) {

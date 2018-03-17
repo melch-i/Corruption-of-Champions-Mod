@@ -3983,18 +3983,6 @@ private function combatStatusesUpdate():void {
 		}
 		else player.addStatusValue(StatusEffects.EverywhereAndNowhere,1,-1);
 	}
-	//Ezekiel Curse
-	if (player.hasStatusEffect(StatusEffects.EzekielCurse)) {
-		if (flags[kFLAGS.EVANGELINE_AFFECTION] >= 2 && player.hasPerk(PerkLib.EzekielBlessing)) {
-			outputText("<b>You feel familiar feeling of your own lifeforce been slowly extinquished.  Maybe you should finish this fight as soon as possible to start healing this aligment?</b>\n\n");
-			player.takePhysDamage(500);
-		}
-		else if (flags[kFLAGS.EVANGELINE_AFFECTION] >= 2) {
-			outputText("<b>You suddenly feel like you very own lifeforce are been at steady pace extinquished the longer you keep fighting.  You better finsh this fight fast or find way to cure your current situation as otherwise...</b>\n\n");
-			if (player.maxHP() < 1000) player.takePhysDamage(player.maxHP() * 0.1);
-			else player.takePhysDamage(100);
-		}
-	}
 	//Flying
 	if(player.isFlying()) {
 		player.addStatusValue(StatusEffects.Flying,1,-1);

@@ -735,8 +735,6 @@ public function FightNightmare():void {
 			addButton(7, "DE Ranger", FightDarkElfRanger).hint("Test fight with Dark Elf Ranger. (lvl 39)");
 			//addButton(8, "DE Sniper", FightDarkElfSniper).hint("Test fight with Dark Elf Sniper. (lvl 51)");
 			addButton(9, "Electra", FightElectra).hint("Test fight with Electra.");
-			addButton(10, "LvLUP Eva", LvLUPEva).hint("LvL UP forcefully Evangeline for testing purpose up to the limit.");
-			addButton(11, "DELvL Eva", DELvLEva).hint("DE LvL forcefully Evangeline for testing purpose down toward the lvl 12.");
 			//addButton(12, "ObsidianGarg", FightObsidianGargoyle).hint("Test fight with Obsidian Gargoyle.");
 			//addButton(13, "HeroslayerOmni", FightHeroslayerOmnibus).hint("Test fight with Heroslayer Omnibus.");
 			addButton(14, "Back", SoulforceCheats);
@@ -1341,16 +1339,6 @@ public function FightNightmare():void {
 			clearOutput();
 			outputText("Entering battle with Heroslayer Omnibus! Enjoy ^^");
 			startCombat(new HeroslayerOmnibus());
-		}
-		public function LvLUPEva():void {
-			outputText("\n\n<b>Evangeline get stronger! (cheat stop working when she reach max possible lvl for now (atm it's lvl 42))</b>");
-			if (flags[kFLAGS.EVANGELINE_LVL_UP] < 17) flags[kFLAGS.EVANGELINE_LVL_UP]++;
-			doNext(EnemiesMenu);
-		}
-		public function DELvLEva():void {
-			outputText("\n\n<b>Evangeline get weaker! (cheat stop working when she reach lvl 12)</b>");
-			if (flags[kFLAGS.EVANGELINE_LVL_UP] > 6) flags[kFLAGS.EVANGELINE_LVL_UP]--;
-			doNext(EnemiesMenu);
 		}
 		public function RevertCabinProgress():void {
 			flags[kFLAGS.CAMP_CABIN_PROGRESS] = 2;

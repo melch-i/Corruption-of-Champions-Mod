@@ -87,8 +87,6 @@ public class PlayerEvents extends BaseContent implements TimeAwareInterface {
 			Begin("PlayerEvents","hourlyHunger");
 			hourlyHunger();
 			End("PlayerEvents","hourlyHunger");
-			//Evangeline went out for the items counter
-			if (flags[kFLAGS.EVANGELINE_WENT_OUT_FOR_THE_ITEMS] > 0) flags[kFLAGS.EVANGELINE_WENT_OUT_FOR_THE_ITEMS]--;
 			//cumOmeter dropping down
 			if (flags[kFLAGS.SEXUAL_FLUIDS_LEVEL] > 0) {
 				/*if (flags[kFLAGS.SEXUAL_FLUIDS_LEVEL] == 1) */flags[kFLAGS.SEXUAL_FLUIDS_LEVEL]--;/*

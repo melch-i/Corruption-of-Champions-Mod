@@ -14,7 +14,6 @@ import classes.Scenes.Areas.Ocean;
 import classes.Scenes.Dungeons.HiddenCave;
 import classes.Scenes.Explore.ExploreDebug;
 import classes.Scenes.Monsters.*;
-import classes.Scenes.NPCs.EvangelineFollower;
 import classes.Scenes.NPCs.RyuBiDragon;
 import classes.Scenes.Places.HeXinDao;
 
@@ -31,7 +30,6 @@ public class Exploration extends BaseContent
 		public var hexindao:HeXinDao = new HeXinDao();
 		public var hiddencave:HiddenCave = new HiddenCave();
 		public var TrueDemons:DemonScene = new DemonScene();
-		public var Evangeline:EvangelineFollower = new EvangelineFollower();
 
 		public function Exploration()
 		{
@@ -310,14 +308,6 @@ public class Exploration extends BaseContent
 			// CoC.instance.goblinAssassinScene.goblinAssassinEncounter();
 			// return;
 
-			if (flags[kFLAGS.EVANGELINE_AFFECTION] < 1 && rand(3) == 0) {
-				Evangeline.enterTheEvangeline();
-				return;
-			}
-			if (flags[kFLAGS.EVANGELINE_AFFECTION] == 2 && rand(6) == 0) {
-				Evangeline.alternativEvangelineRecruit();
-				return;
-			}
 			if (player.level > 2 && player.hasKeyItem("Sky Poison Pearl") < 0 && flags[kFLAGS.SKY_POISON_PEARL] < 1 && rand(10) == 0) {
 				pearldiscovery();
 				return;
