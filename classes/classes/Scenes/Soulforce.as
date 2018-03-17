@@ -33,7 +33,6 @@ import classes.Scenes.Monsters.DarkElfScout;
 import classes.Scenes.Monsters.DarkElfSlaver;
 import classes.Scenes.Monsters.DarkElfSniper;
 import classes.Scenes.NPCs.CelessScene;
-import classes.Scenes.NPCs.Diana;
 import classes.Scenes.NPCs.Electra;
 import classes.Scenes.NPCs.RyuBiDragon;
 import classes.Scenes.NPCs.Sonya;
@@ -228,21 +227,7 @@ public function fixingWerewolfFur():void {
 	player.coatColor = player.hairColor;
 	doNext(SoulforceCheats);
 }
-public function LvLUPDiana():void {
-	outputText("\n\n<b>Diana get stronger! (cheat stop working when she reach max possible lvl (atm it's lvl 27))</b>");
-	if (flags[kFLAGS.DIANA_LVL_UP] < 8) flags[kFLAGS.DIANA_LVL_UP]++;
-	doNext(EnemiesMenu);
-}
-public function AffectionUpDiana():void {
-	outputText("\n\n<b>+5% Diana affection</b>");
-	if (flags[kFLAGS.DIANA_AFFECTION] < 100) flags[kFLAGS.DIANA_AFFECTION] += 5;
-	doNext(EnemiesMenu);
-}
-public function DELvLDiana():void {
-	outputText("\n\n<b>Diana get weaker! (cheat stop working when she reach lvl 3)</b>");
-	if (flags[kFLAGS.DIANA_LVL_UP] > 0) flags[kFLAGS.DIANA_LVL_UP]--;
-	doNext(EnemiesMenu);
-}
+
 public function FightNightmare():void {
 	clearOutput();
 	outputText("Entering battle with Nightmare! Enjoy ^^");
@@ -743,21 +728,17 @@ public function FightNightmare():void {
 			addButton(1, "Marae", FightMarae).hint("Test fight with Marae (depending on game stage she can be buffed or unbuffed).");
 			addButton(2, "Sonya", FightSonya).hint("Test fight with Sonya.");
 			//addButton(3, "RyuBi", FightRyuBi).hint("Test fight with RyuBi.");
-			addButton(3, "Diana", FightDiana).hint("Test fight with Diana.");
 			addButton(4, "Nightmare", FightNightmare).hint("Test fight with Nightmare.");
 			//addButton(4, "Alraune", FightAlraune).hint("Test fight with Alraune.");
 			addButton(5, "DE Scout", FightDarkElfScout).hint("Test fight with Dark Elf Scout. (lvl 15)");
 			addButton(6, "DE Slaver", FightDarkElfSlaver).hint("Test fight with Dark Elf Slaver. (lvl 27)");
 			addButton(7, "DE Ranger", FightDarkElfRanger).hint("Test fight with Dark Elf Ranger. (lvl 39)");
 			//addButton(8, "DE Sniper", FightDarkElfSniper).hint("Test fight with Dark Elf Sniper. (lvl 51)");
-			addButton(8, "DianaAffUp", AffectionUpDiana).hint("+5% Diana aff.");
 			addButton(9, "Electra", FightElectra).hint("Test fight with Electra.");
 			addButton(10, "LvLUP Eva", LvLUPEva).hint("LvL UP forcefully Evangeline for testing purpose up to the limit.");
 			addButton(11, "DELvL Eva", DELvLEva).hint("DE LvL forcefully Evangeline for testing purpose down toward the lvl 12.");
 			//addButton(12, "ObsidianGarg", FightObsidianGargoyle).hint("Test fight with Obsidian Gargoyle.");
 			//addButton(13, "HeroslayerOmni", FightHeroslayerOmnibus).hint("Test fight with Heroslayer Omnibus.");
-			addButton(12, "LvLUP Diana", LvLUPDiana).hint("LvL UP forcefully Diana for testing purpose up to the limit.");
-			addButton(13, "DELvL Diana", DELvLDiana).hint("DE LvL forcefully Diana for testing purpose down toward the lvl 3.");
 			addButton(14, "Back", SoulforceCheats);
 		}
 		public function AscensionMenu():void {
@@ -1320,11 +1301,6 @@ public function FightNightmare():void {
 			clearOutput();
 			outputText("Entering battle with RyuBi! Enjoy ^^");
 			startCombat(new RyuBiDragon());
-		}
-		public function FightDiana():void {
-			clearOutput();
-			outputText("Entering battle with Diana! Enjoy ^^");
-			startCombat(new Diana());
 		}
 		public function FightAlraune():void {
 			clearOutput();

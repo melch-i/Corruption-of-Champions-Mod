@@ -976,7 +976,6 @@ public function loversCount():Number {
 	if (arianScene.arianFollower()) counter++;
 	if (flags[kFLAGS.CHI_CHI_FOLLOWER] > 2) counter++;
 	if (flags[kFLAGS.CEANI_FOLLOWER] > 0) counter++;
-	if (flags[kFLAGS.DIANA_FOLLOWER] > 5) counter++;
 	if (flags[kFLAGS.ETNA_FOLLOWER] > 0) counter++;
 	if (followerHel()) counter++;
 	//Izma!
@@ -1000,7 +999,6 @@ public function loversHotBathCount():Number {
 	if (flags[kFLAGS.AYANE_FOLLOWER] >= 2) counter++;
 	if (flags[kFLAGS.CHI_CHI_FOLLOWER] > 2) counter++;
 	if (flags[kFLAGS.CEANI_FOLLOWER] > 0) counter++;
-	if (flags[kFLAGS.DIANA_FOLLOWER] > 5) counter++;
 	if (flags[kFLAGS.ETNA_FOLLOWER] > 0) counter++;
 	if (flags[kFLAGS.LUNA_FOLLOWER] >= 4) counter++;
 	if (followerHel()) counter++;
@@ -1101,11 +1099,6 @@ public function campLoversMenu(descOnly:Boolean = false):void {
 		outputText("You can see Chi Chi not so far from Jojo. She’s busy practicing her many combos on a dummy. Said dummy will more than likely have to be replaced within twenty four hours.\n\n");
 		/*if (player.statusEffectv4(StatusEffects.CampLunaMishaps2) > 0) buttons.disable("Wet.");
 		else */buttons.add( "Chi Chi", SceneLib.chichiScene.ChiChiCampMainMenu2);
-	}
-	//Diana
-	if (flags[kFLAGS.DIANA_FOLLOWER] > 5) {
-		outputText("Diana is resting next to her many medical tools and medicines.\n\n");
-		buttons.add("Diana", SceneLib.dianaScene.mainCampMenu);
 	}
 	//Etna
 	if (flags[kFLAGS.ETNA_FOLLOWER] > 0) {
