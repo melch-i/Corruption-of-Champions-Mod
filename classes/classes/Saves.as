@@ -480,15 +480,19 @@ public function confirmDelete():void
 
 public function purgeTheMutant():void
 {
-	var test:* = SharedObject.getLocal(flags[kFLAGS.TEMP_STORAGE_SAVE_DELETION], "/");
-	trace("DELETING SLOT: " + flags[kFLAGS.TEMP_STORAGE_SAVE_DELETION]);
+	var slot:String = flags[kFLAGS.TEMP_STORAGE_SAVE_DELETION];
+	var test:* = SharedObject.getLocal(slot, "/");
+	trace("DELETING SLOT: " + slot);
 	var blah:Array = ["been virus bombed", "been purged", "been vaped", "been nuked from orbit", "taken an arrow to the knee", "fallen on its sword", "lost its reality matrix cohesion", "been cleansed", "suffered the following error: (404) Porn Not Found", "been deleted"];
 	
 	trace(blah.length + " array slots");
 	var select:Number = rand(blah.length);
 	clearOutput();
-	outputText(flags[kFLAGS.TEMP_STORAGE_SAVE_DELETION] + " has " + blah[select] + ".");
+	outputText(slot + " has " + blah[select] + ".");
 	test.clear();
+	if(lastSaveSlot == slot){
+		lastSaved("VOID");
+	}
 	doNext(deleteScreen);
 }
 
@@ -512,8 +516,9 @@ public function saveGame(slot:String, bringPrompt:Boolean = false):void
 	saveGameObject(slot, false);
 }
 
-public function loadGame(slot:String):void
+public function loadGame(slot:String,fromMain:Boolean = false):void
 {
+	CoC.instance.mainMenu.hideMainMenu();
 	var saveFile:* = SharedObject.getLocal(slot, "/");
 	
 	// Check the property count of the file
@@ -572,15 +577,20 @@ public function loadGame(slot:String):void
 
 		loadGameObject(saveFile, slot);
 		loadPermObject();
-		outputText("Game Loaded");
 		
 		if (player.slotName == "VOID")
 		{
 			trace("Setting in-use save slot to: " + slot);
 			player.slotName = slot;
 		}
+
 		statScreenRefresh();
-		doNext(playerMenu);
+		if(fromMain){
+			playerMenu();
+		} else {
+			outputText("Game Loaded");
+			doNext(playerMenu);
+		}
 	}
 }
 
@@ -1274,6 +1284,7 @@ public function saveGameObject(slot:String, isFile:Boolean):void
 	
 	if (!backupAborted)
 	{
+		lastSaved(slot);
 		doNext(playerMenu);
 	}
 	else
@@ -1284,6 +1295,18 @@ public function saveGameObject(slot:String, isFile:Boolean):void
 	}
 	
 }
+	private function lastSaved(slot:String):void{
+		var lastSaveFile:SharedObject = SharedObject.getLocal("CoC/EndlessJourney/LastSaved", "/");
+		lastSaveFile.data.lastSlot = slot;
+		lastSaveFile.flush();
+	}
+	public function get lastSaveSlot():String{
+		var lastSaveFile:SharedObject = SharedObject.getLocal("CoC/EndlessJourney/LastSaved", "/");
+		if(lastSaveFile.data.lastSlot != undefined){
+			return lastSaveFile.data.lastSlot;
+		}
+		return "VOID";
+	}
 
 public function restore(slotName:String):void
 {

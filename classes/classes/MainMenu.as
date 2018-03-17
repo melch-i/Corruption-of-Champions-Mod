@@ -40,8 +40,20 @@ package classes {
 			else {
 				var button:CoCButton = _mainMenu.getElementByName("mainmenu_button_0") as CoCButton;
 				if (button != null) {
-					button.disableIf(player == null, "Please start a new game or load an existing save file."); //Dirty checking, WHYYYYY?
-					if (player) button.hint("Get back to gameplay?");
+					if (player != null) {
+						button.hint("Get back to gameplay?");
+						button.callback = playerMenu;
+						button.enabled = true;
+					} else {
+						var slot:String = CoC.instance.saves.lastSaveSlot;
+						if (slot != "VOID") {
+							button.callback = curry(CoC.instance.saves.loadGame, slot, true);
+							button.toolTipText = "Load last saved game?";
+							button.enabled = true;
+						} else {
+							button.disable("Please start a new game or load an existing save file.");
+						}
+					}
 				}
 				updateMainMenuTextColours();
 				_mainMenu.visible = true;
@@ -178,6 +190,7 @@ package classes {
 			mainMenuContent.addElement(versionInfo);
 			_mainMenu = mainMenuContent;
 			mainView.addElementAt(_mainMenu, 2);
+			mainMenu();
 		}
 		private function updateMainMenuTextColours():void {
 			var elements:Array = ["revampLogo", "miniCredit", "websiteInfo", "versionInfo"];
