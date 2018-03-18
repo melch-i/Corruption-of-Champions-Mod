@@ -2,9 +2,9 @@
  * ...
  * @author Zevos
  */
-package classes.Scenes.Places.HeXinDao 
+package classes.Scenes.Places.TelAdre
 {
-import classes.*;
+	import classes.*;
 import classes.BodyParts.Butt;
 import classes.BodyParts.Hips;
 import classes.BodyParts.Tail;

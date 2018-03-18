@@ -349,7 +349,6 @@ package classes.Scenes.NPCs
 				outputText("You tell her about you late accomplishments, and how the menace of the demons, albeit still present, is gradually receding. Still, the average Marethian seems a bit hornier than most people than you knew before arriving.\n\n");
 				outputText("\"<i>Yeah I get you. Every now and then I had to bust a nut inside of one of those prancing satyrs, else I’ll end up captured by a random critter that had taken advantage of my lust.</i>\"\n\n");
 				outputText("That doesn’t sound too different about what you have to do with some of your attackers.It’s good to hear that you’re not the only one on that situation. You decide to change topic, and both of you talk for a good while about what do you hope for this land after the demons go, about how Sidonie business is booming");
-				if (flags[kFLAGS.HEXINDAO_UNLOCKED] > 0) outputText(" and now she’s selling a lot of pieces to the He Xin Dao folks,");
 				if (flags[kFLAGS.FACTORY_SHUTDOWN] == 1) outputText(" or how the sky, slowly but surely, is acquiring a more blueish color");
 				outputText(". Several glasses of mead are exchanged on the meanwhile, making both of you gradually affected by the honey-scented drink.\n\n");
 				outputText("\"<i>Hey, [name]. i think that it’s enough mead for a while.</i>\" Sidonie remarks, putting aside the bottle of mead. \"<i>Mind if we stay together and cool down while the effect passes?</i>\"\n\n");

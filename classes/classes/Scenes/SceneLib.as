@@ -190,8 +190,6 @@ public class SceneLib {
 
     public static var prison:Prison = new Prison();
 
-    public static var hexindao:HeXinDao = new HeXinDao();
-
     public static var kitsuneScene:KitsuneScene = new KitsuneScene();
 	
 	public static var anzu:AnzuScene = new AnzuScene();

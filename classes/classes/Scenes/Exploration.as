@@ -15,7 +15,6 @@ import classes.Scenes.Dungeons.HiddenCave;
 import classes.Scenes.Explore.ExploreDebug;
 import classes.Scenes.Monsters.*;
 import classes.Scenes.NPCs.RyuBiDragon;
-import classes.Scenes.Places.HeXinDao;
 
 //import classes.Scenes.Areas.nazwa lokacji;
 	//import classes.Scenes.Areas.nazwa lokacji;
@@ -27,7 +26,6 @@ public class Exploration extends BaseContent
 		public var ocean:Ocean = new Ocean();
 		public var deepsea:DeepSea = new DeepSea();
 		//public var blightridge:BlightRidge = new BlightRidge();	//dla nowych lokacji
-		public var hexindao:HeXinDao = new HeXinDao();
 		public var hiddencave:HiddenCave = new HiddenCave();
 		public var TrueDemons:DemonScene = new DemonScene();
 
@@ -495,21 +493,6 @@ public class Exploration extends BaseContent
 					outputText("Your curiosity draws you towards the smoke of a campfire on the edges of the forest. In the gloom ahead you see what appears to be a cage wagon surrounded by several tents, and hear the sounds of guttural voices engaged in boisterous conversation. Inexplicably you find yourself struck by an unwholesome sense of foreboding. <b>Even from here that cage looks like it is designed to carry people off to somewhere very unpleasant, some place where your life could be turned upside down and the rules you have become accustomed to in this world may no longer apply.</b> You take a long moment to consider turning back. Do you throw caution to the wind and investigate further?");
 					//outputText("\n\n(<b>NOTE:</b> Prisoner mod is currently under development and not all scenes are available.)");
 					doYesNo(SceneLib.prison.goDirectlyToPrisonDoNotPassGoDoNotCollect200Gems, camp.returnToCampUseOneHour);
-					return;
-				}
-				else if (choosey == 4 && flags[kFLAGS.HEXINDAO_UNLOCKED] < 1) {
-					player.explored++;
-					clearOutput();
-					outputText("Against your better judgement, curiosity gets the better of you and you find yourself walking into the strange area.");
-					outputText("\n\nNot long into your journey you see a hooded figure, looming across the landscape, moving at the same speed as it goes across the terrain. The odd creature captures your interest and you start to follow it. Taking a moment to look around, there's still no one else around so you continue to tail the mysterious being.");
-					outputText("\n\nHalf an hour or so later, still following the cloaked figure you begin to hear the sound of running water, moving on you eventually come across the source, a decently sized river flows across the land, populated by variously sized island. Stopping for a second to take a look around the hooded person seems to be moving towards one of the several islands. He, she… It is still oblivious to your presence.");
-					outputText("\n\n\"<i> Did you came to visit He'Xin'Dao stranger? </i>\" Suddenly you hear some voice from behind you.");
-					outputText("\n\nTurning around you see few hooded figures similar to the one you been following.  Cursing in thought on getting in such situation and fact that you not even notice them coming so close without you noticing anything, you reply you just been walking and just casually came here.  One of the them measure you for a moment before speaking again. \"<i>You not seems to have strong soulforce, but lucky your soul is enough intact to allow future cultivation. So since you already here what you think about visiting our village? Maybe you would come more often to it in the future?</i>\"");
-					outputText("\n\nYou ponder for a moment over the offer.  Well so far none of them tried to attack you nor rape so maybe it's a worth to check this place?  You shortly reply accepting offer and then their lead you over the wide bridge on the one of the islands.  After stepping on your way is blocked by few heavy armored guards that looking at you with suspicion but then one of your companions explaining to them your guest.  Only then their let you pass by.  Next thing you do is visiting one of smaller islands near the entrance to register yourself as guest and receiving guide to the village.");
-					outputText("\n\nAfter that you're left alone.  Spending some time you wander around checking few interesting places before you decides it's time to come back to the camp.  With guide in your hands you're sure you'll easily find this place again if you need to.");
-					outputText("\n\n\n<b>You have unlocked He'Xin'Dao in Places menu!</b>");
-					flags[kFLAGS.HEXINDAO_UNLOCKED] = 1;
-					doNext(camp.returnToCampUseTwoHours);
 					return;
 				}
 				//Monster - 50/50 imp/gob split.

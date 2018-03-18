@@ -6,13 +6,10 @@ import classes.BodyParts.Hips;
 import classes.BodyParts.LowerBody;
 import classes.BodyParts.Tail;
 import classes.Scenes.SceneLib;
-import classes.Scenes.Places.HeXinDao;
 import classes.internals.*;
 
 public class HellHound extends Monster
 	{
-		public var hellpuppy:HeXinDao = new HeXinDao();
-		
 		protected function hellhoundFire():void {
 			//Blind dodge change
 			if(hasStatusEffect(StatusEffects.Blind)) {
@@ -108,7 +105,7 @@ public class HellHound extends Monster
 
 		override public function defeated(hpVictory:Boolean):void
 		{
-			if (player.hasStatusEffect(StatusEffects.SoulArenaGaunlet)) hellpuppy.gaunletchallange2fight3();
+			if (player.hasStatusEffect(StatusEffects.SoulArenaGaunlet)) SceneLib.telAdre.arena.gaunletchallange2fight3();
 			else {
 				if (hpVictory) {
 					outputText("The hellhound's flames dim and the heads let out a whine before the creature slumps down, defeated and nearly unconscious.", true);
