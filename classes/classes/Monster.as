@@ -2220,10 +2220,6 @@ import flash.utils.getQualifiedClassName;
 				inte += (5 * (1 + newGamePlusMod()));
 				lib += (5 * (1 + newGamePlusMod()));
 			}
-			if (hasPerk(PerkLib.JobGolemancer)) {
-				inte += (5 * (1 + newGamePlusMod()));
-				wis += (5 * (1 + newGamePlusMod()));
-			}
 			if (hasPerk(PerkLib.JobGuardian)) tou += (5 * (1 + newGamePlusMod()));
 			if (hasPerk(PerkLib.JobHealer)) {
 				inte += (5 * (1 + newGamePlusMod()));

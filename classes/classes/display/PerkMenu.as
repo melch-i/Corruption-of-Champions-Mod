@@ -54,10 +54,6 @@ public class PerkMenu extends BaseContent {
 			outputText("\n<b>You can adjust your elemental summons behaviour during combat.</b>");
 			addButton(8, "Elementals",summonsbehaviourOptions);
 		}
-		if (flags[kFLAGS.PERNAMENT_GOLEMS_BAG] > 0 && player.hasPerk(PerkLib.FirstAttackGolems)) {
-			outputText("\n<b>You can adjust your pernament golems behaviour during combat.</b>");
-			addButton(9, "P.Golems",golemsbehaviourOptions);
-		}
 		addButton(10, "Number of", EngineCore.doNothing);
 		addButton(11, "perks: " + player.perks.length, EngineCore.doNothing);
 	}
@@ -324,27 +320,6 @@ public class PerkMenu extends BaseContent {
                 if (player.hasStatusEffect(StatusEffects.SummonedElementalsLightning)) addButton(8, "Lightning", attackingElementalType,6);
                 if (player.hasStatusEffect(StatusEffects.SummonedElementalsDarkness)) addButton(9, "Darkness", attackingElementalType,7);
             }
-        }
-	}
-
-
-
-	public function golemsbehaviourOptions():void {
-		clearOutput();
-		menu();
-		outputText("You can choose how your pernament golems will behave during each fight.\n\n");
-		outputText("\n<b>Pernament golems behavious:</b>\n");
-		if (flags[kFLAGS.GOLEMANCER_PERM_GOLEMS] == 1) outputText("Attacking at the begining of each turn (owner would need to just choose how many of them will be sent).");
-		if (flags[kFLAGS.GOLEMANCER_PERM_GOLEMS] < 1) outputText("Waiting for the owner to give an attack command each turn.");
-		if (flags[kFLAGS.GOLEMANCER_PERM_GOLEMS] == 1) addButton(10, "Waiting", golemsAttacking,false);
-		if (flags[kFLAGS.GOLEMANCER_PERM_GOLEMS] != 1) addButton(11, "Attacking", golemsAttacking,true);
-
-		var e:MouseEvent;
-		if (SceneLib.combat.inCombat) addButton(14, "Back", combat.combatMenu);
-		else addButton(14, "Back", displayPerks);
-        function golemsAttacking(attacking:Boolean):void {
-            flags[kFLAGS.GOLEMANCER_PERM_GOLEMS] = (attacking)?1:0;
-            golemsbehaviourOptions();
         }
 	}
 

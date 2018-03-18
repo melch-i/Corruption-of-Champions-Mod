@@ -11,7 +11,8 @@ import classes.*;
 import classes.GlobalFlags.kFLAGS;
 import classes.CoC;
 import classes.GlobalFlags.kACHIEVEMENTS;
-import classes.Scenes.Areas.Forest.TentacleBeast;
+	import classes.Items.ConsumableLib;
+	import classes.Scenes.Areas.Forest.TentacleBeast;
 import classes.Scenes.Areas.Mountain.HellHound;
 import classes.Scenes.Areas.Swamp.CorruptedDrider;
 import classes.Scenes.Dungeons.HiddenCave.BossGolems;
@@ -22,6 +23,9 @@ import classes.Scenes.NPCs.ChiChiFollower;
 import classes.Scenes.NPCs.Jinx;
 import classes.Scenes.NPCs.Syth;
 import classes.Scenes.NPCs.Rangiku;
+
+	import coc.view.ButtonDataList;
+
 //import classes.Scenes.Places.HeXinDao.*;
 //import classes.Items.Armor;
 //import classes.Scenes.Dungeons.DeepCave.ValaScene;
@@ -49,7 +53,7 @@ public class HeXinDao extends BaseContent
         riverislandMenuShow();
     }
 
-    public function riverislandMenuShow():void {
+    private function riverislandMenuShow():void {
         menu();
         addButton(0, "Merchant", golemmerchant);
         addButton(1, "TFspec/Exch", mogahenmerchant);
@@ -62,7 +66,7 @@ public class HeXinDao extends BaseContent
         if (flags[kFLAGS.CHI_CHI_AFFECTION] >= 20 && flags[kFLAGS.CHI_CHI_FOLLOWER] < 2) addButton(13, "Chi Chi", chichiScene.MeetingChiChiInHeXinDao);
         addButton(14, "Leave", camp.returnToCampUseOneHour);
     }
-    public function golemmerchant():void {
+    private function golemmerchant():void {
         clearOutput();
         outputText("You enter a shop that got sign over the entrance titled 'Soul Items'.  Inside you see few stalls with similar looking items put on the display.  Actually it not seems this merchant got 'a wide' choice of things but for someone at the beginning of soul cultivator road it's probably enough.  Sensing some movements from the corner of the shop that is pernamently covered in darkness a person appearing without making any sound.  'He' is around five feet tall with outer appearance of some kind of demonic monster. ");
         if (flags[kFLAGS.FOUND_CATHEDRAL] > 0) outputText("But he do looks quite similar to the gargoyle from the cathedral.");
@@ -118,7 +122,7 @@ public class HeXinDao extends BaseContent
         addButton(14, "Back", riverislandVillageStuff);
         statScreenRefresh();
     }
-    private function debitItem(returnFunc:Function,shopKeep:String,priceRate:int,itype:ItemType,onBuy:String):void{
+    private function debitItem(returnFunc:Function,shopKeep:String,priceRate:Number,itype:ItemType,onBuy:String):void{
         var value:int = itype.value * priceRate;
         if (player.gems < value) {
             clearOutput();
@@ -132,113 +136,77 @@ public class HeXinDao extends BaseContent
             statScreenRefresh();
         }
     }
-    private function confirmBuy(returnFunc:Function,shopKeep:String,priceRate:int,itype:ItemType,descString:String,onBuyString:String="\n"):void{
+    private function confirmBuy(returnFunc:Function,shopKeep:String,priceRate:Number,itype:ItemType,descString:String,onBuyString:String="\n"):void{
         clearOutput();
         outputText(descString);
         doYesNo(curry(debitItem,returnFunc,shopKeep,priceRate,itype,onBuyString),returnFunc);
     }
 
-    public function mogahenmerchant():void {
-        clearOutput();
-        outputText("You enter a shop that got sign over the entrance titled 'Transformative Items and Exchanges'.  Inside you see few stalls with many types of the items put on the display.  Most of them you have already seen somewhere but few seems to been quite rare ones as you not seen many of them so far or at least never seen in such large amounts gathered in one place.");
-        outputText("\n\nWhen you're looking over the stalls human owner almost silently approched you but compared to other shop you have seen in this islands Moga Hen by clearing his throat attracts your attention to himself.  After you turned toward him, smiling at you like a cat at the mouse, he first breaks the silence.");
-        outputText("\n\n\"<i>Welcome to my humble shop dear and precious customer. What need bring you here today? To repair some damage by using casual picked item or some specific change to attain? Or maybe you need to exchange some gems or spirit stones? I could even give you a fair price on special items that are useless for non-cultivators.</i>\" Each word sounds almost like it was repeated endless times.\n\n");
+    private function mogahenmerchant():void {
         var buyItem:Function = curry(confirmBuy,mogahenmerchant,"Moga",3);
         var introText:String = "While you point toward the one of the items on the display merchant says, \"<i>It's item to embrace the ";
         var costText:String = " in you.  Interested?  It is merely <b>";
         var endText:String = " gems</b></i>.\"";
         var onBuyString:String="\n\nAfter you give Hen gems he hand over to you purchased transformative item. ";
-        function sayLine(itype:ItemType,desc:String):String{
-            return introText+desc+costText+(itype.value*3)+endText;
-        }
+	    var consLib:ConsumableLib = consumables;
+	    var tierOne:Array = [
+		    [consLib.B_GOSSR,"drider"], [consLib.BEEHONY, "bee"],[consLib.BLADEGR,"mantis"],
+		    [consLib.CANINEP,"dog"],[consLib.EQUINUM,"horse"],[consLib.FOXBERY,"fox"],
+		    [consLib.FRRTFRT,"ferret"],[consLib.GLDRIND,"deer"],[consLib.GLDSEED,"harpy"],
+		    [consLib.GOB_ALE,"goblin"],[consLib.INCUBID,"incubus"],[consLib.KANGAFT,"kangaroo"],
+		    [consLib.LABOVA_,"cow"],[consLib.MOUSECO,"mouse"]
+	    ];
+        var tierTwo:Array = [
+            [consLib.MINOBLO,"bull"],[consLib.PIGTRUF,"pig"],[consLib.REPTLUM,"lizan"],
+	        [consLib.RINGFIG,"raccoon"],[consLib.S_GOSSR,"spider"],[consLib.SALAMFW,"salamander"],
+	        [consLib.SCORICO,"scorpion"],[consLib.SHARK_T,"shark"],[consLib.SNAKOIL,"snake"],
+	        [consLib.SUCMILK,"sucubus"],[consLib.TSTOOTH,"tigershark"],[consLib.W_FRUIT,"cat"],
+	        [consLib.WETCLTH,"goo"],[consLib.YETICUM,"yeti"]
+        ];
+        var tierThree:Array = [
+            [consLib.BLACKIN,"female scylla"],[consLib.BLACKPP,"dog"],[consLib.BULBYPP,"dog"],
+	        [consLib.DBLPEPP,"dog"],[consLib.KNOTTYP,"dog"],[consLib.LARGEPP,"dog"],
+	        [consLib.CHILLYP,"winter wolf"],[consLib.MARAFRU,"plant"],[consLib.SKYSEED,"avian"]
+        ];
+        var tierFour:Array = [
+            [consLib.SPHONEY,"bee"],[consLib.SATYR_W,"satyr"],[consLib.DRAKHRT,"dragon"],
+            [consLib.HUMMUS_,"humanity"]
+        ];
+        var tierFive:Array = [
+            [consLib.COAL___,"heat or rut"],[consLib.DRYTENT,"anemone"],[consLib.ECTOPLS,"ghost"],
+            [consLib.TRAPOIL,"sand trap"],[consLib.ICICLE_,"ice shard"]
+        ];
 
+	    clearOutput();
+	    outputText("You enter a shop that got sign over the entrance titled 'Transformative Items and Exchanges'.  Inside you see few stalls with many types of the items put on the display.  Most of them you have already seen somewhere but few seems to been quite rare ones as you not seen many of them so far or at least never seen in such large amounts gathered in one place.");
+	    outputText("\n\nWhen you're looking over the stalls human owner almost silently approched you but compared to other shop you have seen in this islands Moga Hen by clearing his throat attracts your attention to himself.  After you turned toward him, smiling at you like a cat at the mouse, he first breaks the silence.");
+	    outputText("\n\n\"<i>Welcome to my humble shop dear and precious customer. What need bring you here today? To repair some damage by using casual picked item or some specific change to attain? Or maybe you need to exchange some gems or spirit stones? I could even give you a fair price on special items that are useless for non-cultivators.</i>\" Each word sounds almost like it was repeated endless times.\n\n");
         menu();
-        addButton(0, "1st Stall", Tier1).hint("Check out first of stalls with a cheapest TF items.");
-        addButton(1, "2nd Stall", Tier2).hint("Check out second of stalls with a cheapest TF items.");
-        addButton(2, "3rd Stall", Tier3).hint("Check out stall with more expensive TF items.");
-        addButton(3, "4th Stall", Tier4).hint("Check out stall with most expensive TF items.");
-        addButton(5, "5th Stall", Tier5).hint("Check out stall with most exotic TF items.");		//specjalne type TF jak ectoplasm ^^
+        addButton(0, "1st Stall", buyMenu,tierOne).hint("Check out first of stalls with a cheapest TF items.");
+        addButton(1, "2nd Stall", buyMenu,tierTwo).hint("Check out second of stalls with a cheapest TF items.");
+        addButton(2, "3rd Stall", buyMenu,tierThree).hint("Check out stall with more expensive TF items.");
+        addButton(3, "4th Stall", buyMenu,tierFour).hint("Check out stall with most expensive TF items.");
+        addButton(5, "5th Stall", buyMenu,tierFive).hint("Check out stall with most exotic TF items.");		//specjalne type TF jak ectoplasm ^^
         //addButton(10, "Talk", TalkWithMogaHen).hint("Talk with shopkeeper.");
-        addButton(11, "Sell", sellItemsForSpiritStones).hint("Sell items for spirit stones.");
         addButton(12, "Exchange", exchangeGemsToSpiritStonesorReverse).hint("Exchange gems to spirit stones or spirit stones to gems.");
         addButton(14, "Back", riverislandVillageStuff);
         statScreenRefresh();
-        //buyItem,consumables.,sayLine(consumables.,""),onBuyString
-        function Tier1():void {
-            menu();
-            addButton(0, "B.Gossr", buyItem,consumables.B_GOSSR,sayLine(consumables.B_GOSSR,"drider"),onBuyString).hint("Buy a bundle of black, gossamer webbing.");
-            addButton(1, "BeeHony", buyItem,consumables.BEEHONY,sayLine(consumables.BEEHONY,"bee"),onBuyString).hint("Buy a small vial filled with giant-bee honey.");
-            addButton(2, "BladeGrass", buyItem,consumables.BLADEGR,sayLine(consumables.BLADEGR,"mantis"),onBuyString).hint("Buy a blade shaped grass.");
-            addButton(3, "CanineP", buyItem,consumables.CANINEP,sayLine(consumables.CANINEP,"dog"),onBuyString).hint("Buy a Canine pepper.");
-            addButton(4, "Equinum", buyItem,consumables.EQUINUM,sayLine(consumables.EQUINUM,"horse"),onBuyString).hint("Buy a vial of Equinum.");
-            addButton(5, "Fox Berry", buyItem,consumables.FOXBERY,sayLine(consumables.FOXBERY,"fox"),onBuyString).hint("Buy a fox berry.");
-            addButton(6, "FerretFrt", buyItem,consumables.FRRTFRT,sayLine(consumables.FRRTFRT,"ferret"),onBuyString).hint("Buy a ferret fruit.");
-            addButton(7, "GoldenRind", buyItem,consumables.GLDRIND,sayLine(consumables.GLDRIND,"deer"),onBuyString).hint("Buy a golden rind.");
-            addButton(8, "GoldenSeed", buyItem,consumables.GLDSEED,sayLine(consumables.GLDSEED,"harpy"),onBuyString).hint("Buy a golden seed.");
-            addButton(9, "Gob.Ale", buyItem,consumables.GOB_ALE,sayLine(consumables.GOB_ALE,"goblin"),onBuyString).hint("Buy a flagon of potent goblin ale.");
-            addButton(10, "IncubiD", buyItem,consumables.INCUBID,sayLine(consumables.INCUBID,"incubus"),onBuyString).hint("Buy a flask of Incubi draft.");
-            addButton(11, "KangaFruit", buyItem,consumables.KANGAFT,sayLine(consumables.KANGAFT,"kangaroo"),onBuyString).hint("Buy a piece of kanga fruit.");
-            addButton(12, "La Bova", buyItem,consumables.LABOVA_,sayLine(consumables.LABOVA_,"cow"),onBuyString).hint("Buy a bottle containing a misty fluid labeled \"LaBova\".");
-            addButton(13, "MouseCo", buyItem,consumables.MOUSECO,sayLine(consumables.MOUSECO,"mouse"),onBuyString).hint("Buy a handful of mouse cocoa.");
-            addButton(14, "Back", mogahenmerchant);
-            statScreenRefresh();
-        }
-        function Tier2():void {
-            menu();
-            addButton(0, "MinoBlo", buyItem,consumables.MINOBLO,sayLine(consumables.MINOBLO,"bull"),onBuyString).hint("Buy a vial of Minotaur blood.");
-            addButton(1, "PigTruffle", buyItem,consumables.PIGTRUF,sayLine(consumables.PIGTRUF,"pig"),onBuyString).hint("Buy a pigtail truffle.");
-            addButton(2, "Reptilum", buyItem,consumables.REPTLUM,sayLine(consumables.REPTLUM,"lizan"),onBuyString).hint("Buy a vial of Reptilum.");
-            addButton(3, "RingFig", buyItem,consumables.RINGFIG,sayLine(consumables.RINGFIG,"raccoon"),onBuyString).hint("Buy a ringtail fig.");
-            addButton(4, "S.Gossr", buyItem,consumables.S_GOSSR,sayLine(consumables.S_GOSSR,"spider"),onBuyString).hint("Buy a bundle of pink, gossamer webbing.");
-            addButton(5, "SalamFW", buyItem,consumables.SALAMFW,sayLine(consumables.SALAMFW,"salamander"),onBuyString).hint("Buy a hip flask of Salamander Firewater.");
-            addButton(6, "Scorpinum", buyItem,consumables.SCORICO,sayLine(consumables.SCORICO,"scorpion"),onBuyString).hint("Buy a vial of Scorpinum.");
-            addButton(7, "Shark.T", buyItem,consumables.SHARK_T,sayLine(consumables.SHARK_T,"shark"),onBuyString).hint("Buy a sharp shark tooth.");
-            addButton(8, "SnakeOil", buyItem,consumables.SNAKOIL,sayLine(consumables.SNAKOIL,"snake"),onBuyString).hint("Buy a vial of snake oil.");
-            addButton(9, "SucMilk", buyItem,consumables.SUCMILK,sayLine(consumables.SUCMILK,"sucubus"),onBuyString).hint("Buy a bottle of Succubi milk.");
-            addButton(10, "TSTooth", buyItem,consumables.TSTOOTH,sayLine(consumables.TSTOOTH,"tigershark"),onBuyString).hint("Buy a glowing tiger shark tooth.");
-            addButton(11, "W.Fruit", buyItem,consumables.W_FRUIT,sayLine(consumables.W_FRUIT,"cat"),onBuyString).hint("Buy a piece of whisker-fruit.");
-            addButton(12, "WetCloth", buyItem,consumables.WETCLTH,sayLine(consumables.WETCLTH,"goo"),onBuyString).hint("Buy a wet cloth dripping with slippery slime.");
-            addButton(13, "YetiCum", buyItem,consumables.YETICUM,sayLine(consumables.YETICUM,"yeti"),onBuyString).hint("Buy a bottle of Yeti Cum.");
-            addButton(14, "Back", mogahenmerchant);
-            statScreenRefresh();
-        }
-        function Tier3():void {
-            menu();
-            addButton(0, "BlackInk", buyItem,consumables.BLACKIN,sayLine(consumables.BLACKIN,"female scylla"),onBuyString).hint("Buy a vial of black ink.");
-            addButton(1, "BlackPp", buyItem,consumables.BLACKPP,sayLine(consumables.BLACKPP,"dog"),onBuyString).hint("Buy solid black canine pepper.");
-            addButton(2, "BulbyPp", buyItem,consumables.BULBYPP,sayLine(consumables.BULBYPP,"dog"),onBuyString).hint("Buy a bulbous pepper.");
-            addButton(3, "DblPepp", buyItem,consumables.DBLPEPP,sayLine(consumables.DBLPEPP,"dog"),onBuyString).hint("Buy a double canine pepper.");
-            addButton(4, "KnottyP", buyItem,consumables.KNOTTYP,sayLine(consumables.KNOTTYP,"dog"),onBuyString).hint("Buy a knotty canine pepper.");
-            addButton(5, "LargePp", buyItem,consumables.LARGEPP,sayLine(consumables.LARGEPP,"dog"),onBuyString).hint("Buy an overly large canine pepper.");
-            addButton(6, "ChillyP", buyItem,consumables.CHILLYP,sayLine(consumables.CHILLYP,"winter wolf"),onBuyString).hint("Buy a Chilly pepper.");
-            addButton(7, "MaraFruit", buyItem,consumables.MARAFRU,sayLine(consumables.MARAFRU,"plant"),onBuyString).hint("Buy an apple-shaped fruit.");
-            addButton(8, "SkySeed", buyItem,consumables.SKYSEED,sayLine(consumables.SKYSEED,"avian"),onBuyString).hint("Buy a skyborn seed.");
-            //addButton(9, "B.Gossr", BGossr).hint("Buy .");
-            addButton(14, "Back", mogahenmerchant);
-            statScreenRefresh();
-        }
-        function Tier4():void {
-            menu();
-            addButton(0, "SpHoney", buyItem,consumables.SPHONEY,sayLine(consumables.SPHONEY,"bee"),onBuyString).hint("Buy a bottle of special bee honey.");
-            addButton(1, "SatyrWine", buyItem,consumables.SATYR_W,sayLine(consumables.SATYR_W,"satyr"),onBuyString).hint("Buy a bottle of satyr wine.");
-            addButton(2, "DrakeHeart", buyItem,consumables.DRAKHRT,sayLine(consumables.DRAKHRT,"dragon"),onBuyString).hint("Buy a drake's heart's flower.");
-            addButton(4, "Hummus", buyItem,consumables.HUMMUS_,sayLine(consumables.HUMMUS_,"humanity"),onBuyString).hint("Buy a blob of cheesy-looking hummus.");
-            addButton(14, "Back", mogahenmerchant);
-            statScreenRefresh();
-        }
-        function Tier5():void {
-            menu();
-            addButton(0, "Coal", buyItem,consumables.COAL___,sayLine(consumables.COAL___,"heat or rut"),onBuyString).hint("Buy two pieces of coal.");
-            addButton(1, "DryTent", buyItem,consumables.DRYTENT,sayLine(consumables.DRYTENT,"anemone"),onBuyString).hint("Buy a shriveled tentacle.");
-            addButton(2, "EctoPls", buyItem,consumables.ECTOPLS,sayLine(consumables.ECTOPLS,"ghost"),onBuyString).hint("Buy a bottle of ectoplasm.");
-            addButton(3, "TrapOil", buyItem,consumables.TRAPOIL,sayLine(consumables.TRAPOIL,"sand trap"),onBuyString).hint("Buy a vial of trap oil.");
-            addButton(4, "Icicle", buyItem,consumables.ICICLE_,sayLine(consumables.ICICLE_,"ice shard"),onBuyString).hint("Buy an icicle.");
-            addButton(14, "Back", mogahenmerchant);
+
+        function sayLine(itype:ItemType,desc:String):String{
+		    return introText+desc+costText+(itype.value*3)+endText;
+	    }
+
+        function buyMenu(items:Array):void{
+            var buttons:ButtonDataList = new ButtonDataList();
+            for each(var item:Array in items){
+                buttons.add(item[0].shortName,curry(buyItem,item[0],sayLine(item[0],item[1]),onBuyString),"Buy "+item[0].longName);
+            }
+            submenu(buttons,mogahenmerchant,0,false);
             statScreenRefresh();
         }
     }
 
-    public function exchangeGemsToSpiritStonesorReverse():void {
+    private function exchangeGemsToSpiritStonesorReverse():void {
         clearOutput();
         outputText("When you ask about this exchange that was mentioned on the sign over the entrance Moga  think for a moment before reaching to the desk near him. After handing you over a piece of paper he adds.");
         outputText("\n\n\"<i>Here are my exchange rates. Pick the one you want and let me know. If you don't like those rates you can go and try to find someone else... not like there is anyone else here that want to deal with those exchanges aside me.</i>\"");
@@ -282,40 +250,15 @@ public class HeXinDao extends BaseContent
 
     }
 
-    public function sellItemsForSpiritStones():void {
-        clearOutput();
-        outputText("\"<i>Let me look over what you got for sale. I promise I will give you a 'fair' price for those things,</i>\" Saying this the merchant calmly awaits what you will take out.");
-        menu();
-        if (player.hasItem(useables.GOLCORE, 1)) addButton(0, "Sell 1", sellOneGolemCore).hint("Sell 1 golem core.");
-        if (player.hasItem(useables.GOLCORE, 5)) addButton(1, "Sell 5", sellFiveGolemCores).hint("Sell 5 golem cores.");
-        addButton(14, "Back", mogahenmerchant);
-    }
-
-    public function sellOneGolemCore():void {
-        clearOutput();
-        outputText("\"<i>A single golem core. Still in good shape so that will be single spirit stone,</i>\" he states after examing core. Moment later after he went to put away core Moga gave you a single stone.");
-        player.destroyItems(useables.GOLCORE, 1);
-        flags[kFLAGS.SPIRIT_STONES]++;
-        doNext(sellItemsForSpiritStones);
-    }
-
-    public function sellFiveGolemCores():void {
-        clearOutput();
-        outputText("\"<i>Golem cores. Let me check...yes the all seems to be in decent shape,</i>\" after examination he walks away to return shortly. \"<i>Here your five stones for them.</i>\"");
-        player.destroyItems(useables.GOLCORE, 5);
-        flags[kFLAGS.SPIRIT_STONES] += 5;
-        doNext(sellItemsForSpiritStones);
-    }
-
     public function soulequipmentmerchant():void {
         clearOutput();//później zamienić soulequipment na imie sprzedawczyni ^^ female siren npc
         outputText("After entering the shop with a sign saying 'Equipment' over the doors you see a few shelves filled with various weapons, shields, armors and even more rare items like rings or necklaces. Behind the desk that looks like a central point of the shop you see a woman that seems to have mixed races traits. A shark face and a tail that sometimes show up on either side of the desk which is contrasting to its feather covered arms that are not looking at all like shark ones and more similar to bird wings.");
         outputText("\n\n\"<i>Greeting dear customer.  Look around and if something catch your eyes let me know,</i>\" she say all that almost on one breath after noticing your near.");
         outputText("\n\n<b>Spirit Stones: </b>" + flags[kFLAGS.SPIRIT_STONES] + "\n");
         menu();
-        addButton(1, "Shelf 1", soulequipmentshelf1);
-        addButton(2, "Shelf 2", soulequipmentshelf2);
-        addButton(3, "Shelf 3", soulequipmentshelf3);//armors and consumable
+        addButton(1, "Shelf 1", weaponMenu,soulequipmentmerchant,soulEquipShelfFirst);
+        addButton(2, "Shelf 2", weaponMenu,soulequipmentmerchant,soulEquipShelfSecond);
+        addButton(3, "Shelf 3", weaponMenu,soulequipmentmerchant,soulEquipShelfThird);//armors and consumable
         //addButton(9, weapons.ERIBBON.shortName, weaponBuy, weapons.ERIBBON);//czy bedzie tu jako do sprzedaży czy jako nagroda za quest lub drop z mobka/bossa?
         //addButton(7, weapons.MACE.shortName, weaponBuy, weapons.MACE);//awl - wymagać bedzie możliwość lewitacji czy coś od PC aby to używać
         //addButton(8, weapons.MACE.shortName, weaponBuy, weapons.MACE);//bow made for soul cultivator xD
@@ -324,47 +267,21 @@ public class HeXinDao extends BaseContent
         addButton(14, "Back", riverislandVillageStuff);
         statScreenRefresh();
     }
-    public function soulequipmentshelf1():void {
-        menu();
-        addButton(0, weapons.TRASAXE.shortName, weaponBuy, weapons.TRASAXE);
-        addButton(1, weaponsrange.TRSXBOW.shortName, weaponBuy, weaponsrange.TRSXBOW);
-        addButton(2, shields.TRASBUC.shortName, weaponBuy, shields.TRASBUC);
-        addButton(3, armors.TRASARM.shortName, weaponBuy, armors.TRASARM);
-        addButton(5, weapons.W_STAFF.shortName, weaponBuy, weapons.W_STAFF);
-        addButton(6, weapons.GUANDAO.shortName, weaponBuy, weapons.GUANDAO);
-        addButton(7, weapons.HSWORDS.shortName, weaponBuy, weapons.HSWORDS);
-		addButton(8, weapons.SNAKESW.shortName, weaponBuy, weapons.SNAKESW);
-		//Changdao
-        addButton(10, weapons.FLYWHIS.shortName, weaponBuy, weapons.FLYWHIS);
-        addButton(11, shields.MABRACE.shortName, weaponBuy, shields.MABRACE);
-        addButton(14, "Back", soulequipmentmerchant);
-    }
-    public function soulequipmentshelf2():void {
-        menu();
-        addButton(0, weapons.KATANA.shortName, weaponBuy, weapons.KATANA);
-        addButton(1, weapons.NODACHI.shortName, weaponBuy, weapons.NODACHI);
-        addButton(2, weapons.OTETSU.shortName, weaponBuy, weapons.OTETSU);
-        addButton(3, weapons.RCLAYMO.shortName, weaponBuy, weapons.RCLAYMO);
-        addButton(4, weapons.SCLAYMO.shortName, weaponBuy, weapons.SCLAYMO);
-        addButton(5, weapons.RIBBON.shortName, weaponBuy, weapons.RIBBON);
-        addButton(6, weapons.S_GAUNT.shortName, weaponBuy, weapons.S_GAUNT);
-        addButton(7, weapons.CLAWS.shortName, weaponBuy, weapons.CLAWS);
-        addButton(8, weapons.TCLAYMO.shortName, weaponBuy, weapons.TCLAYMO);
-        addButton(9, weapons.ACLAYMO.shortName, weaponBuy, weapons.ACLAYMO);
-        addButton(10, weapons.WHIP.shortName, weaponBuy, weapons.WHIP);
-        addButton(11, weapons.PWHIP.shortName, weaponBuy, weapons.PWHIP);
-        addButton(12, weapons.FRTAXE.shortName, weaponBuy, weapons.FRTAXE);
-        addButton(14, "Back", soulequipmentmerchant);
-    }
-    public function soulequipmentshelf3():void {
-        menu();
-        //if (player.findPerk(PerkLib.SoulApprentice) >= 0) addButton(3, armors.LAYOARM.shortName, weaponBuy, armors.LAYOARM);
-        //addButton(2, weapons.MACE.shortName, weaponBuy, weapons.MACE);//basic light armor made of soulmetal
-        //addButton(0, weapons.MACE.shortName, weaponBuy, weapons.MACE);//basic heavy armor made of soulmetal
-        //addButton(1, weapons.MACE.shortName, weaponBuy, weapons.MACE);//basic armor made of soulmetal that works with unhindered perk xD czyli coś ala bikini lub ogólnie tylko underwear z fragmentami zbroi lewitującymi wokół postaci i tylko w wypadku ataku wroga przesuwające sie aby przyjąć atak
-        addButton(10, consumables.W_STICK.shortName, weaponBuy, consumables.W_STICK);
-        addButton(11, consumables.BANGB_M.shortName, weaponBuy, consumables.BANGB_M);
-        addButton(14, "Back", soulequipmentmerchant);
+    private var soulEquipShelfFirst:Vector.<ItemType> = new <ItemType>[
+	    weapons.TRASAXE,weaponsrange.TRSXBOW,shields.TRASBUC,armors.TRASARM,weapons.W_STAFF,
+	    weapons.GUANDAO,weapons.HSWORDS,weapons.SNAKESW,weapons.FLYWHIS,shields.MABRACE
+    ];
+    private var soulEquipShelfSecond:Vector.<ItemType> = new <ItemType>[
+	    weapons.KATANA,weapons.NODACHI,weapons.OTETSU,weapons.RCLAYMO,weapons.SCLAYMO,weapons.RIBBON,
+	    weapons.S_GAUNT,weapons.CLAWS,weapons.TCLAYMO,weapons.ACLAYMO,weapons.WHIP,weapons.PWHIP,weapons.FRTAXE
+    ];
+    private var soulEquipShelfThird:Vector.<ItemType> = new <ItemType>[consumables.W_STICK,consumables.BANGB_M];
+    private function weaponMenu(backFunc:Function,items:Vector.<ItemType>):void{
+        var buttons:ButtonDataList = new ButtonDataList();
+        for each(var item:ItemType in items){
+            buttons.add(item.shortName,curry(weaponBuy,item),item.description,item.longName);
+        }
+        submenu(buttons,backFunc,0,false);
     }
 
     private function weaponBuy(itype:ItemType):void {
@@ -450,56 +367,28 @@ public function soularena():void {
 	}
 }
 
+    //FIXME @Oxdeception need more combatants.
     public function soularenaSolo():void {
         clearOutput();
         outputText("Picking the one on the left prepared for solo fight you enter there and looking around checking who is currently avialable for sparring session.");
         menu();
-        //addButton(0, "Goblin", );//Goblinka
-        addButton(5, "D.Golem", arenaSelection,GolemDummy).hint("LVL 6");
-        addButton(6, "I.D.Golem", arenaSelection,GolemDummyImproved).hint("LVL 12");
-        addButton(7, "A.D.Golem", arenaSelection,GolemDummyAdvanced).hint("LVL 18");
-        addButton(8, "S.D.Golem", arenaSelection,GolemDummySuperior).hint("LVL 24");
-        addButton(10, "B.T.Golem", arenaSelection,GolemTrueBasic).hint("LVL 33");
-        addButton(11, "I.T.Golem", arenaSelection,GolemTrueImproved).hint("LVL 42");
-        addButton(12, "A.T.Golem", arenaSelection,GolemTrueAdvanced).hint("LVL 51");
         addButton(14, "Back", soularena);
     }
-
     public function soularenaGroup():void {
         clearOutput();
         outputText("Picking the one on the right prepared for group fight you enter there and looking around checking who is currently avialable for sparring session.");
         menu();
-        //addButton(0, "Goblins", );//Córki goblinki z solo areny ^^
-        addButton(5, "D.Golems", arenaSelection,GolemsDummy).hint("LVL 6");
-        addButton(6, "I.D.Golems", arenaSelection,GolemsDummyImproved).hint("LVL 12");
-        addButton(7, "A.D.Golems", arenaSelection,GolemsDummyAdvanced).hint("LVL 18");
-        addButton(8, "S.D.Golems", arenaSelection,GolemsDummySuperior).hint("LVL 24");
-        addButton(10, "B.T.Golems", arenaSelection,GolemsTrueBasic).hint("LVL 33");
-        addButton(11, "I.T.Golems", arenaSelection,GolemsTrueImproved).hint("LVL 42");
-        addButton(12, "A.T.Golems", arenaSelection,GolemsTrueAdvanced).hint("LVL 51");
         addButton(14, "Back", soularena);
     }
-
     public function soularenaChallenge():void {
         clearOutput();
         outputText("Picking the one in the middle prepared for challanges you enter there and looking around checking who if there is currently anyone up for a challange.");
         menu();
         addButton(0, "Gaunlet 1", gaunletchallange1fight1).hint("Fight 3 diff enemies one after another.");
         if (flags[kFLAGS.SOUL_ARENA_FINISHED_GAUNLETS] == 1) addButton(1, "Gaunlet 2", gaunletchallange2fight1).hint("Fight 4 diff enemies one after another.");
-        //addButton(2, "Gaunlet 3", gaunletchallange3).hint("Fight 5 diff enemies one after another.");
-        //addButton(3, "Gaunlet 4", gaunletchallange4).hint("Fight 6 diff enemies one after another.");
-        //addButton(4, "Gaunlet 5", gaunletchallange5).hint("Fight 7 diff enemies one after another.");
-        //addButton(5, "Golemancer", arenaSelection,Jeniffer);
-        //addButton(6, "AyotechManiac", arenaSelection,Jinx);
-        //addButton(7, "MachoSalamander", arenaSelection,Syth);
-        //addButton(8, "MissSalamander", arenaSelection,Rangiku);
-        //addButton(9, "LvL 24 Gargoyle", arenaSelection,GargoyleBasic);
-        addButton(10, "LvL 33 Golems", arenaSelection,GolemsBasic);
-        addButton(11, "LvL 42 Golems", arenaSelection,GolemsImproved);
-        addButton(12, "LvL 51 Golems", arenaSelection,GolemsAdvanced);
-        //if (flags[kFLAGS.CHI_CHI_AFFECTION] < 15) addButton(13, "Chi Chi", chichiScene.EnterOfTheChiChi);
         addButton(14, "Back", soularena);
     }
+
     private function arenaSelection(mon:Class):void{
         player.createStatusEffect(StatusEffects.SoulArena, 0, 0, 0, 0);
         if (flags[kFLAGS.CHI_CHI_AFFECTION] < 10) flags[kFLAGS.CHI_CHI_AFFECTION]++;
@@ -512,6 +401,7 @@ public function soularena():void {
         player.createStatusEffect(StatusEffects.SoulArena, 0, 0, 0, 0);
         player.createStatusEffect(StatusEffects.SoulArenaGaunlet, 0, 0, 0, 0);
 	}
+    //TODO @Oxdeception Replace this fight with a different monster?
     public function gaunletchallange1fight1():void {
         clearOutput();
         outputText("You register for the gauntlet challenge then when called, move out beyond the arena gate to face your opponent. The crowd is big, you sure will have quite the audience. A man with a necktie and a weird stick screams across the area.\n\n");
@@ -582,6 +472,7 @@ public function soularena():void {
         outputText("\"<i>You are my opponent uh? Doesn’t look like much. Little pet, by the time I’m done binding you, you will seldom call me mistress!</i>\"\n\n");
         startCombat(new CorruptedDrider());
 	}
+    //todo @Oxdeception replace this fight
 	public function gaunletchallange2fight4():void {
 		clearOutput();
 		gaunletsinbetween();

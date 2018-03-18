@@ -5,24 +5,17 @@ import classes.BodyParts.Butt;
 import classes.BodyParts.Hips;
 import classes.BodyParts.Wings;
 import classes.GlobalFlags.kFLAGS;
-import classes.Scenes.NPCs.EvangelineFollower;
 import classes.Scenes.SceneLib;
 import classes.internals.*;
 
 public class Imp extends Monster
 	{
-		public var Evangeline:EvangelineFollower = new EvangelineFollower();
-		
 		override public function defeated(hpVictory:Boolean):void
 		{
 			game.flags[kFLAGS.DEMONS_DEFEATED]++;
 			if (hasStatusEffect(StatusEffects.KitsuneFight)) {
 				SceneLib.forest.kitsuneScene.winKitsuneImpFight();
-			}
-			else if (flags[kFLAGS.EVANGELINE_AFFECTION] == 1) {
-				Evangeline.winEvangelineImpFight();
-			}
-			else {
+			} else {
 				SceneLib.impScene.impVictory();
 			}
 		}
@@ -36,10 +29,6 @@ public class Imp extends Monster
 				outputText("\n\nThe imp grins at your already corrupted state...");
 				player.lust = player.maxLust();
 				doNext(SceneLib.impScene.impRapesYou);
-			}
-			else if (flags[kFLAGS.EVANGELINE_AFFECTION] == 1) {
-				flags[kFLAGS.EVANGELINE_AFFECTION] = 2;
-				SceneLib.impScene.impRapesYou();
 			}
 			else {
 				SceneLib.impScene.impRapesYou();
