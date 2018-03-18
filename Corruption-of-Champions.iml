@@ -3,7 +3,7 @@
   <component name="FlexBuildConfigurationManager" active="CoC-debug">
     <configurations>
       <configuration name="CoC-debug" main-class="classes.CoC" output-file="CoC-debug.swf" output-folder="$MODULE_DIR$">
-        <dependencies target-player="23.0" component-set="MxOnly" framework-linkage="Merged">
+        <dependencies target-player="11.1" component-set="MxOnly" framework-linkage="Merged">
           <entries>
             <entry library-name="lib" library-level="project">
               <dependency linkage="Merged" />
