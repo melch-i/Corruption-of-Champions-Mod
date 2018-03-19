@@ -572,11 +572,11 @@ public function barTelAdre():void {
 		else outputText("a blazing mouse girl");
 		outputText(" sitting on one of the stool drinking sake.\n\n");
 		outputText("\"<i>Yeah, and after I told it I was the top girl here I punched it in the face, Woooooooo!</i>\"");
-		outputText("The barman sighs, pretending not to notice the drunken mouse, aside for when he has to serve her a new drink. Just as you are about to order something she realises you are there and engages in conversation.\n\n");
+		outputText("The barmaid sighs, pretending not to notice the drunken mouse, aside for when she has to serve her a new drink. Just as you are about to order something she realises you are there and engages in conversation.\n\n");
 		if (flags[kFLAGS.CHI_CHI_FOLLOWER] > 2) outputText("\"<i>Gaaaaah, [name], why do you hang around all those girls. Worse why do you fuck with them and not me?! Its like you are a " + player.mf("go go boy","cheap whore") + " selling your body to everyone and thish drives me mad! Yeaaa, I’m going to prove them all I’m the top shlut!</i>\"");
-		else if (flags[kFLAGS.CHI_CHI_FOLLOWER] == 1) outputText("\"<i>Hey... you’re that so called champ who lost in the arena?! Well I like you. I like you so much I’d want you as my " + player.mf("boy","girl") + "friend but waaaah I’m way too shy to tell you that right! Well don’t go tell [name] I like " + player.mf("him","her") + " got it? Yeah who cares about that! Barman a round for [name] the best person I met woooo. Now let’s have sex!</i>\"");
+		else if (flags[kFLAGS.CHI_CHI_FOLLOWER] == 1) outputText("\"<i>Hey... you’re that so called champ who lost in the arena?! Well I like you. I like you so much I’d want you as my " + player.mf("boy","girl") + "friend but waaaah I’m way too shy to tell you that right! Well don’t go tell [name] I like " + player.mf("him","her") + " got it? Yeah who cares about that! Barmaid a round for [name] the best person I met woooo. Now let’s have sex!</i>\"");
 		else outputText("\"<i>Hey you... yesh you, the tall person over there! Think you can fight?! Well I’m pretty sure nobody in this village hash the guts to anyway. If you dare show up in the arena I will beat you to death like I do everyone. Now that I think of it, there are other kinds of battle I can beat people in. Bet you're the kind who fucks every demon you meet. Well not tonight, letsh bang!</i>\"");
-		outputText("Wait, what? You barely have the time to mutter a reply before the red cheeked mousette pushes you on the nearest table and climbs over you. The barman pulls a curtain around your table, he must be used to this.\n\n");
+		outputText("Wait, what? You barely have the time to mutter a reply before the red cheeked mousette pushes you on the nearest table and climbs over you. The barmaid pulls a curtain around your table, he must be used to this.\n\n");
 		outputText("\"<i>Yeshh you heard me you big idiot. I’m going to fuck with you here and now! So don’t you dare try to run away because I will get very mad if you do.</i>\"");
 		outputText("Do you let her?\n\n");
 		menu();
@@ -585,6 +585,7 @@ public function barTelAdre():void {
 
 
 		function drunksex(selected:Boolean):void {
+			clearOutput();
 			if (!selected) {
 				outputText("" + (flags[kFLAGS.CHI_CHI_FOLLOWER] > 0 ? "Chi Chi" : "The mouse") + " is clearly out of it. Better stop her now before she does something she will regret later. You shove her to the side and run for the exit of the bar. Hearing her swear in background. Once outside you head back to camp.");
 				doNext(camp.returnToCampUseOneHour);
@@ -606,7 +607,7 @@ public function barTelAdre():void {
 					outputText("Her pussy starts heating even more and before you know it, it actually transfers to you. Wow, your urethra is indeed as if possessed by some kind of angry efreeti. It's so hot you can’t think straight anymore, only the cool passage of cum can free you from this heat! You begin to piston in and out of Chi Chi desperate for a cooling release.\n\n");
 					outputText("Both desperate for a way to get rid of the heat, the two of you manage to cum together, your jizz filling Chi Chi to the brim before slowly dripping on the ground. Chi Chi sighs in relief and exhaustion falling limp on the table.\n\n");
 					outputText("\"<i>" + (flags[kFLAGS.CHI_CHI_FOLLOWER] > 2 ? "You're the besht [name] you know that? Let'sh do thish again sometimes, I jusht can’t get enough of it." : "You're a good boyfriend you know that? Let'sh do thish again sometimes.") + "</i>\"\n\n");
-					outputText("She finally passes out, which is a good thing because, even if you're as tired as her, you think it'd be wise if you headed back to camp before she came back to her senses" + (flags[kFLAGS.CHI_CHI_FOLLOWER] == 2 ? ", especially because you're pretty sure she will beat you to death if she discovers the two of you had sex while she was drunk" : "") + ". You exit the establishment under the somewhat relieved gaze of the barman who gently proceeds to also get the sleeping inferno-mouse out with the help of a bouncer.\n\n");
+					outputText("She finally passes out, which is a good thing because, even if you're as tired as her, you think it'd be wise if you headed back to camp before she came back to her senses" + (flags[kFLAGS.CHI_CHI_FOLLOWER] == 2 ? ", especially because you're pretty sure she will beat you to death if she discovers the two of you had sex while she was drunk" : "") + ". You exit the establishment under the somewhat relieved gaze of the barmaid who gently proceeds to also get the sleeping inferno-mouse out with the help of a bouncer.\n\n");
 				}
 				else {
 					outputText("Chi Chi initiates with a wet but warm kiss her tongue dancing tango with yours. While small in stature she displays an uncommon level of strength rarely seen even among animal morphs. What’s more concerning is that you aren't sure how come her burning tail and fur isn't actually setting on fire everything around her starting with you. You inquire on this matter.\n\n");
@@ -618,7 +619,7 @@ public function barTelAdre():void {
 					outputText("only the cool passage of your girl-juices can free you from this heat! Meanwhile she grinds against her own tail bump but you have decided not to let her get off at her own pace. You swiftly slide " + (player.tailType > Tail.NONE ? "your tail" : "a pair of finger") + " in the smoking hot hinezumi cunt and retaliate with a set of rapid movement of your own.\n\n");
 					outputText("Both desperate for a way to get rid of the heat and unable to fully outpace her, the two of you still manage to cum together your girl juices melding together and staining the ground. Chi Chi sighs in relief and exhaustion falling limp on the table.\n\n");
 					outputText("\"<i>" + (flags[kFLAGS.CHI_CHI_FOLLOWER] > 2 ? "You're the besht [name] you know that? Let'sh do thish again sometimes, I jusht can’t get enough of it." : "You're a good girlfriend you know that? Let'sh do thish again sometimes.") + "</i>\"\n\n");
-					outputText("She finally pass out which is a good thing because, even if you're as tired as her, you think it'd be wise if you headed back to camp before she came back to her senses" + (flags[kFLAGS.CHI_CHI_FOLLOWER] == 2 ? ", especially because you're pretty sure she will beat you to death if she discovers the two of you had sex while she was drunk" : "") + ". You exit the establishment under the somewhat relieved gaze of the barman who gently proceeded to also get the sleeping mouse out with the help of a bouncer.\n\n");
+					outputText("She finally pass out which is a good thing because, even if you're as tired as her, you think it'd be wise if you headed back to camp before she came back to her senses" + (flags[kFLAGS.CHI_CHI_FOLLOWER] == 2 ? ", especially because you're pretty sure she will beat you to death if she discovers the two of you had sex while she was drunk" : "") + ". You exit the establishment under the somewhat relieved gaze of the barmaid who gently proceeded to also get the sleeping mouse out with the help of a bouncer.\n\n");
 				}
 				player.orgasm();
 				if (flags[kFLAGS.CHI_CHI_FOLLOWER] < 1) flags[kFLAGS.CHI_CHI_FOLLOWER] = 1;
