@@ -2,13 +2,14 @@
  * ...
  * @author Zevos
  */
-package classes.Scenes.Places.HeXinDao 
+package classes.Scenes.Places.TelAdre
 {
 	import classes.*;
 	import classes.GlobalFlags.kFLAGS;
-	import classes.Scenes.Places.HeXinDao.IgnisArenaSeer;
+	import classes.Scenes.Places.TelAdre.IgnisArenaSeer;
+	import classes.Scenes.SceneLib;
 
-	public class IgnisArenaSeerScene extends HeXinDaoAbstractContent
+	public class IgnisArenaSeerScene extends BaseContent
 	{
 		
 		//public var arena:HeXinDao = new HeXinDao();
@@ -28,7 +29,7 @@ package classes.Scenes.Places.HeXinDao
 			addButton(0, "Appearance", ignisAppearance);
 			addButton(1, "Talk", ignisTalks);
 			addButton(3, "Sparring", sparringWithIgnis);
-			addButton(4, "Leave", heXinDao.soularena);
+			addButton(4, "Leave", SceneLib.telAdre.arena.soularena);
 		}
 		
 		public function ignisAppearance():void {

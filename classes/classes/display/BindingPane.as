@@ -164,8 +164,8 @@ import mx.core.ScrollControlBase;
 				var newLabel:BindDisplay = new BindDisplay(this.width-20);
 				newLabel.name = _functions[i].Name;
 				newLabel.htmlText = "<b>" + _functions[i].Name + ":</b>";
-				newLabel.button1Text = _keyDict[_functions[i].PrimaryKey];
-				newLabel.button2Text = _keyDict[_functions[i].SecondaryKey];
+				newLabel.buttons[0].labelText = _keyDict[_functions[i].PrimaryKey];
+				newLabel.buttons[1].labelText = _keyDict[_functions[i].SecondaryKey];
 				
 				// This is going to look crazy...
 				var genPrimaryCallback:Function = function(funcName:String, inMan:InputManager):Function
@@ -187,8 +187,8 @@ import mx.core.ScrollControlBase;
 				};
 				// ... Warned you.
 
-				newLabel.button1Callback = genPrimaryCallback(_functions[i].Name, _inputManager);
-				newLabel.button2Callback = genSecondaryCallback(_functions[i].Name, _inputManager);
+				newLabel.buttons[0].callback = genPrimaryCallback(_functions[i].Name, _inputManager);
+				newLabel.buttons[1].callback = genSecondaryCallback(_functions[i].Name, _inputManager);
 				
 				_content.addElement(newLabel);
 			}
@@ -205,8 +205,8 @@ import mx.core.ScrollControlBase;
 			{
 				var currLabel:BindDisplay = _content.getElementByName(_functions[i].Name) as BindDisplay;
 				
-				currLabel.button1Text = _keyDict[_functions[i].PrimaryKey];
-				currLabel.button2Text = _keyDict[_functions[i].SecondaryKey];
+				currLabel.buttons[0].labelText = _keyDict[_functions[i].PrimaryKey];
+				currLabel.buttons[1].labelText = _keyDict[_functions[i].SecondaryKey];
 			}
 		}
 		

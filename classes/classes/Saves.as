@@ -347,6 +347,7 @@ public function saveScreen():void
 
 public function saveLoad(e:MouseEvent = null):void
 {
+	CoC.instance.mainMenu.hideMainMenu();
 	mainView.eventTestInput.x = -10207.5;
 	mainView.eventTestInput.y = -1055.1;
 	//Hide the name box in case of backing up from save
@@ -358,7 +359,7 @@ public function saveLoad(e:MouseEvent = null):void
 	
 	clearOutput();
 	outputText("<b>Where are my saves located?</b>\n");
-	outputText("<i>In Windows Vista/7 (IE/FireFox/Other): <pre>Users/{username}/Appdata/Roaming/Macromedia/Flash Player/#Shared Objects/{GIBBERISH}/</pre>\n\n");
+	outputText("<i>In Windows Vista/7 (IE/FireFox/Other)</i>: <pre>Users/{username}/Appdata/Roaming/Macromedia/Flash Player/#Shared Objects/{GIBBERISH}/</pre>\n\n");
 	outputText("In Windows Vista/7 (Chrome): <pre>Users/{username}/AppData/Local/Google/Chrome/User Data/Default/Pepper Data/Shockwave Flash/WritableRoot/#SharedObjects/{GIBBERISH}/</pre>\n\n");
 	outputText("Inside that folder it will saved in a folder corresponding to where it was played from.  If you saved the CoC.swf to your HDD, then it will be in a folder called localhost.  If you played from my website, it will be in fenoxo.com.  The save files will be labelled CoC_1.sol, CoC_2.sol, CoC_3.sol, etc.</i>\n\n");
 	outputText("<b>Why do my saves disappear all the time?</b>\n<i>There are numerous things that will wipe out flash local shared files.  If your browser or player is set to delete flash cookies or data, that will do it.  CCleaner will also remove them.  CoC or its updates will never remove your savegames - if they disappear something else is wiping them out.</i>\n\n");
@@ -479,15 +480,19 @@ public function confirmDelete():void
 
 public function purgeTheMutant():void
 {
-	var test:* = SharedObject.getLocal(flags[kFLAGS.TEMP_STORAGE_SAVE_DELETION], "/");
-	trace("DELETING SLOT: " + flags[kFLAGS.TEMP_STORAGE_SAVE_DELETION]);
+	var slot:String = flags[kFLAGS.TEMP_STORAGE_SAVE_DELETION];
+	var test:* = SharedObject.getLocal(slot, "/");
+	trace("DELETING SLOT: " + slot);
 	var blah:Array = ["been virus bombed", "been purged", "been vaped", "been nuked from orbit", "taken an arrow to the knee", "fallen on its sword", "lost its reality matrix cohesion", "been cleansed", "suffered the following error: (404) Porn Not Found", "been deleted"];
 	
 	trace(blah.length + " array slots");
 	var select:Number = rand(blah.length);
 	clearOutput();
-	outputText(flags[kFLAGS.TEMP_STORAGE_SAVE_DELETION] + " has " + blah[select] + ".");
+	outputText(slot + " has " + blah[select] + ".");
 	test.clear();
+	if(lastSaveSlot == slot){
+		lastSaved("VOID");
+	}
 	doNext(deleteScreen);
 }
 
@@ -511,8 +516,9 @@ public function saveGame(slot:String, bringPrompt:Boolean = false):void
 	saveGameObject(slot, false);
 }
 
-public function loadGame(slot:String):void
+public function loadGame(slot:String,fromMain:Boolean = false):void
 {
+	CoC.instance.mainMenu.hideMainMenu();
 	var saveFile:* = SharedObject.getLocal(slot, "/");
 	
 	// Check the property count of the file
@@ -571,15 +577,20 @@ public function loadGame(slot:String):void
 
 		loadGameObject(saveFile, slot);
 		loadPermObject();
-		outputText("Game Loaded");
 		
 		if (player.slotName == "VOID")
 		{
 			trace("Setting in-use save slot to: " + slot);
 			player.slotName = slot;
 		}
+
 		statScreenRefresh();
-		doNext(playerMenu);
+		if(fromMain){
+			playerMenu();
+		} else {
+			outputText("Game Loaded");
+			doNext(playerMenu);
+		}
 	}
 }
 
@@ -1273,6 +1284,7 @@ public function saveGameObject(slot:String, isFile:Boolean):void
 	
 	if (!backupAborted)
 	{
+		lastSaved(slot);
 		doNext(playerMenu);
 	}
 	else
@@ -1283,6 +1295,18 @@ public function saveGameObject(slot:String, isFile:Boolean):void
 	}
 	
 }
+	private function lastSaved(slot:String):void{
+		var lastSaveFile:SharedObject = SharedObject.getLocal("CoC/EndlessJourney/LastSaved", "/");
+		lastSaveFile.data.lastSlot = slot;
+		lastSaveFile.flush();
+	}
+	public function get lastSaveSlot():String{
+		var lastSaveFile:SharedObject = SharedObject.getLocal("CoC/EndlessJourney/LastSaved", "/");
+		if(lastSaveFile.data.lastSlot != undefined){
+			return lastSaveFile.data.lastSlot;
+		}
+		return "VOID";
+	}
 
 public function restore(slotName:String):void
 {

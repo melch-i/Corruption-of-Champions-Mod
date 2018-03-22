@@ -11,7 +11,6 @@ import classes.Scenes.Areas.HighMountains.TempleOfTheDivine;
 import classes.Scenes.Camp.*;
 import classes.Scenes.Dungeons.*;
 import classes.Scenes.NPCs.*;
-import classes.Scenes.Places.HeXinDao;
 import classes.lists.Gender;
 
 import coc.view.ButtonDataList;
@@ -55,7 +54,6 @@ use namespace CoC;
 		public var codex:Codex = new Codex();
 		public var questlog:Questlog = new Questlog();
 		public var soulforce:Soulforce = new Soulforce();
-		public var hexindao:HeXinDao = new HeXinDao();
 		public var dungeon1:Factory = new Factory();
 		public var dungeon2:DeepCave = new DeepCave();
 		public var dungeonS:DesertCave = new DesertCave();
@@ -63,7 +61,6 @@ use namespace CoC;
 		public var dungeonHC:HiddenCave = new HiddenCave();
 		public var dungeonDD:DenOfDesire = new DenOfDesire();
 		public var dungeonAP:AnzuPalace = new AnzuPalace();
-		public var EvangelineF:EvangelineFollower = new EvangelineFollower();
 		public var HolliPure:HolliPureScene = new HolliPureScene();
 		public var templeofdivine:TempleOfTheDivine = new TempleOfTheDivine();
 		
@@ -106,19 +103,11 @@ use namespace CoC;
 	protected var heliaJoinsStream:Boolean;
 	protected var amilyJoinsStream:Boolean;
 
-public function EzekielCurseQuickFix():void
-{
-	clearOutput();
-	outputText("Like with a magic wand touch some divine being has blessed you. And before leaving meantioned about never again selling or discarding odd fruits.");
-	if (player.findPerk(PerkLib.EzekielBlessing) < 0) player.createPerk(PerkLib.EzekielBlessing, 0, 0, 0, 0);
-	if (player.hasStatusEffect(StatusEffects.EzekielCurse)) player.removeStatusEffect(StatusEffects.EzekielCurse);
-	statScreenRefresh();
-	dynStats("str", 5, "tou", 5, "spe", 5, "inte", 5, "lib", 5);
-	doCamp();
-
-}
-
 private function doCamp():void { //Only called by playerMenu
+	if (flags[kFLAGS.MOD_SAVE_VERSION] < CoC.instance.modSaveVersion) {
+		promptSaveUpdate();
+		return;
+	}
 	//Force autosave on HARDCORE MODE! And level-up.
 	if (player.slotName != "VOID" && mainView.getButtonText(0) != "Game Over" && flags[kFLAGS.HARDCORE_MODE] > 0) 
 	{
@@ -860,7 +849,8 @@ CoC.instance.saves.saveGame(player.slotName);
 	if (slavesCount() > 0) addButton(7, "Slaves", campSlavesMenu).hint("Check up on any slaves you have received and interact with them.");
 	addButton(8, "Camp Actions", campActions).hint("Interact with the camp surroundings and also read your codex or questlog.");
 	if (flags[kFLAGS.CAMP_CABIN_PROGRESS] >= 10 || flags[kFLAGS.CAMP_BUILT_CABIN] >= 1) addButton(9, "Enter Cabin", cabinProgress.initiateCabin).hint("Enter your cabin."); //Enter cabin for furnish.
-	if (player.findPerk(PerkLib.JobSoulCultivator) >= 0 || debug) addButton(10, "Soulforce", soulforce.accessSoulforceMenu).hint("Spend some time on the cultivation or spend some of the soulforce.");
+	if (player.hasPerk(PerkLib.JobSoulCultivator) || debug) addButton(10, "Soulforce", soulforce.accessSoulforceMenu).hint("Spend some time on the cultivation or spend some of the soulforce.");
+	else if (!player.hasPerk(PerkLib.JobSoulCultivator) && player.hasPerk(PerkLib.Metamorph)) addButton(10, "Metamorf", SceneLib.metamorph.accessMetamorphMenu).hint("Use your soulforce to mold freely your body.");
 	var canFap:Boolean = !player.hasStatusEffect(StatusEffects.Dysfunction) && (flags[kFLAGS.UNABLE_TO_MASTURBATE_BECAUSE_CENTAUR] == 0 && !player.isTaur());
 	if (player.lust >= 30) {
 		addButton(11, "Masturbate", SceneLib.masturbation.masturbateMenu);
@@ -892,10 +882,6 @@ CoC.instance.saves.saveGame(player.slotName);
 		outputText("Out of nowhere, a cane appears on your " + bedDesc() + ". It looks like it once belonged to the Erlking. Perhaps the cane has been introduced into the game and you've committed a revenge on the Erlking? Regardless, you take it anyway. ");
 		flags[kFLAGS.ERLKING_CANE_OBTAINED] = 1;
 		inventory.takeItem(weapons.HNTCANE, doCamp);
-		return;
-	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] < CoC.instance.modSaveVersion) {
-		promptSaveUpdate();
 		return;
 	}
 	//Massive Balls Bad End (Realistic Mode only)
@@ -937,7 +923,6 @@ public function followersCount():Number {
 	if (player.hasStatusEffect(StatusEffects.CampRathazul)) counter++;
 	if (followerShouldra()) counter++;
 	if (sophieFollower() && flags[kFLAGS.FOLLOWER_AT_FARM_SOPHIE] == 0) counter++;
-	if (flags[kFLAGS.EVANGELINE_FOLLOWER] >= 1) counter++;
 	if (flags[kFLAGS.KINDRA_FOLLOWER] >= 1) counter++;
 	if (flags[kFLAGS.AYANE_FOLLOWER] >= 2) counter++;
 	if (helspawnFollower()) counter++;
@@ -975,7 +960,6 @@ public function loversCount():Number {
 	if (arianScene.arianFollower()) counter++;
 	if (flags[kFLAGS.CHI_CHI_FOLLOWER] > 2) counter++;
 	if (flags[kFLAGS.CEANI_FOLLOWER] > 0) counter++;
-	if (flags[kFLAGS.DIANA_FOLLOWER] > 5) counter++;
 	if (flags[kFLAGS.ETNA_FOLLOWER] > 0) counter++;
 	if (followerHel()) counter++;
 	//Izma!
@@ -999,8 +983,8 @@ public function loversHotBathCount():Number {
 	if (flags[kFLAGS.AYANE_FOLLOWER] >= 2) counter++;
 	if (flags[kFLAGS.CHI_CHI_FOLLOWER] > 2) counter++;
 	if (flags[kFLAGS.CEANI_FOLLOWER] > 0) counter++;
-	if (flags[kFLAGS.DIANA_FOLLOWER] > 5) counter++;
 	if (flags[kFLAGS.ETNA_FOLLOWER] > 0) counter++;
+	if (flags[kFLAGS.LUNA_FOLLOWER] >= 4) counter++;
 	if (followerHel()) counter++;
 	if (flags[kFLAGS.IZMA_FOLLOWER_STATUS] == 1 && flags[kFLAGS.FOLLOWER_AT_FARM_IZMA] == 0) counter++;
 	if (isabellaFollower() && flags[kFLAGS.FOLLOWER_AT_FARM_ISABELLA] == 0) counter++;
@@ -1017,12 +1001,12 @@ public function sparableCampMembersCount():Number {
 	var counter:Number = 0;
 	if (emberScene.followerEmber()) counter++;
 	if (flags[kFLAGS.VALARIA_AT_CAMP] == 1) counter++;
-	if (flags[kFLAGS.EVANGELINE_FOLLOWER] >= 1) counter++;
 	if (flags[kFLAGS.KINDRA_FOLLOWER] >= 1) counter++;
 	if (helspawnFollower()) counter++;
 	if (flags[kFLAGS.CHI_CHI_FOLLOWER] > 2) counter++;
 	if (flags[kFLAGS.CEANI_FOLLOWER] > 0) counter++;
 	if (flags[kFLAGS.ETNA_FOLLOWER] > 0) counter++;
+	if (flags[kFLAGS.LUNA_FOLLOWER] > 10) counter++;
 	if (followerHel()) counter++;
 	if (isabellaFollower() && flags[kFLAGS.FOLLOWER_AT_FARM_ISABELLA] == 0) counter++;
 	if (followerKiha()) counter++;
@@ -1075,7 +1059,7 @@ public function campLoversMenu(descOnly:Boolean = false):void {
 				break;
 		}
 		outputText(".\n\n");
-		buttons.add("Amily", amilyScene.amilyFollowerEncounter);
+		buttons.add("Amily", amilyScene.amilyFollowerEncounter2).disableIf(player.statusEffectv1(StatusEffects.CampLunaMishaps1) > 0,"Hurt foot.");
 	}
 	//Amily out freaking Urta?
 	else if(flags[kFLAGS.AMILY_VISITING_URTA] == 1 || flags[kFLAGS.AMILY_VISITING_URTA] == 2) {
@@ -1096,17 +1080,14 @@ public function campLoversMenu(descOnly:Boolean = false):void {
 	//Chi Chi
 	if (flags[kFLAGS.CHI_CHI_FOLLOWER] > 2) {
 		outputText("You can see Chi Chi not so far from Jojo. She’s busy practicing her many combos on a dummy. Said dummy will more than likely have to be replaced within twenty four hours.\n\n");
-		buttons.add( "Chi Chi", SceneLib.chichiScene.ChiChiCampMainMenu);
-	}
-	//Diana
-	if (flags[kFLAGS.DIANA_FOLLOWER] > 5) {
-		outputText("Diana is resting next to her many medical tools and medicines.\n\n");
-		buttons.add("Diana", SceneLib.dianaScene.mainCampMenu);
+		/*if (player.statusEffectv4(StatusEffects.CampLunaMishaps2) > 0) buttons.disable("Wet.");
+		else */buttons.add( "Chi Chi", SceneLib.chichiScene.ChiChiCampMainMenu2);
 	}
 	//Etna
 	if (flags[kFLAGS.ETNA_FOLLOWER] > 0) {
 		outputText("Etna is resting lazily on a rug in a very cat-like manner. She’s looking at you always with this adorable expression of hers, her tail wagging expectantly at your approach.\n\n");
-		buttons.add( "Etna", SceneLib.etnaScene.etnaCampMenu).disableIf(player.statusEffectv4(StatusEffects.CampSparingNpcsTimers1) > 0,"Training.");
+		/*if (player.statusEffectv1(StatusEffects.CampLunaMishaps2) > 0) buttons.disable("Sleeping.");
+		else */buttons.add( "Etna", SceneLib.etnaScene.etnaCampMenu2).disableIf(player.statusEffectv4(StatusEffects.CampSparingNpcsTimers1) > 0,"Training.");
 	}
 	//Helia
 	if(SceneLib.helScene.followerHel()) {
@@ -1129,7 +1110,7 @@ public function campLoversMenu(descOnly:Boolean = false):void {
 				outputText("<b>You see the salamander Helia pacing around camp, anxiously awaiting your departure to the harpy roost. Seeing you looking her way, she perks up, obviously ready to get underway.</b>\n\n");
 			}
 		}
-		buttons.add( "Helia", helFollower.heliaFollowerMenu);
+		buttons.add( "Helia", helFollower.heliaFollowerMenu2).disableIf(player.statusEffectv3(StatusEffects.CampLunaMishaps2) > 0,"Sleeping.");
 	}
 	//Isabella
 	if(isabellaFollower() && flags[kFLAGS.FOLLOWER_AT_FARM_ISABELLA] == 0) {
@@ -1222,7 +1203,7 @@ public function campLoversMenu(descOnly:Boolean = false):void {
 				case 2: outputText("Izma is lying on her back near her bedroll. You wonder at first just why she isn't using her bed, but as you look closer you notice all the water pooled beneath her and the few droplets running down her arm, evidence that she's just returned from the stream."); break;
 			}
 			outputText("\n\n");
-			buttons.add( "Izma", izmaScene.izmaFollowerMenu);
+			buttons.add( "Izma", izmaScene.izmaFollowerMenu2).disableIf(player.statusEffectv4(StatusEffects.CampLunaMishaps1) > 0,"Fish smell.");
 		}
 	}
 	//Kiha!
@@ -1248,7 +1229,8 @@ public function campLoversMenu(descOnly:Boolean = false):void {
 				outputText("Most of them are on fire.\n\n");
 			}
 		}
-		buttons.add( "Kiha", kihaScene.encounterKiha).disableIf(player.statusEffectv3(StatusEffects.CampSparingNpcsTimers1) > 0,"Training.");
+		/*if (player.statusEffectv1(StatusEffects.CampLunaMishaps2) > 0) buttons.disable("Cleaning burnt meat.");
+		else */buttons.add( "Kiha", kihaScene.encounterKiha2).disableIf(player.statusEffectv3(StatusEffects.CampSparingNpcsTimers1) > 0,"Training.");
 	}
 	//MARBLE
 	if(player.hasStatusEffect(StatusEffects.CampMarble) && flags[kFLAGS.FOLLOWER_AT_FARM_MARBLE] == 0) {
@@ -1428,9 +1410,10 @@ public function campFollowers(descOnly:Boolean = false):void {
 	//Ember
 	if(emberScene.followerEmber()) {
 		emberScene.emberCampDesc();
-		buttons.add(
+		/*if (player.statusEffectv2(StatusEffects.CampLunaMishaps2) > 0) buttons.disable("Wet.");
+		else */buttons.add(
 				"Ember",
-				emberScene.emberCampMenu
+				emberScene.emberCampMenu2
 		).hint("Check up on Ember the dragon-" + (flags[kFLAGS.EMBER_ROUNDFACE] == 0 ? "morph" : flags[kFLAGS.EMBER_GENDER] == 1 ? "boy" : "girl" ) + ""
 		).disableIf(player.statusEffectv1(StatusEffects.CampSparingNpcsTimers1) > 0,"Training.");
 	}
@@ -1471,21 +1454,8 @@ public function campFollowers(descOnly:Boolean = false):void {
 			if (flags[kFLAGS.CAMP_BUILT_CABIN] > 0) outputText(" cabin");
 			if (!(model.time.hours > 4 && model.time.hours < 23)) outputText(" and the mouse is sleeping on it right now.\n\n");
 			else outputText(", though the mouse is probably hanging around the camp's perimeter.\n\n");
-			buttons.add( "Jojo", jojoScene.jojoCamp).hint("Go find Jojo around the edges of your camp and meditate with him or talk about watch duty.");
+			buttons.add( "Jojo", jojoScene.jojoCamp2).hint("Go find Jojo around the edges of your camp and meditate with him or talk about watch duty.").disableIf(player.statusEffectv2(StatusEffects.CampLunaMishaps1) > 0,"Annoyed.");
 		}
-	}
-	//Celess
-	//Evangeline
-	if (flags[kFLAGS.EVANGELINE_FOLLOWER] >= 1 && flags[kFLAGS.EVANGELINE_WENT_OUT_FOR_THE_ITEMS] <= 0) {
-		outputText("There is a small bedroll for Evangeline near the camp edge");
-		if (!(model.time.hours > 4 && model.time.hours < 23)) outputText(" and she's sleeping on it right now.");
-		else outputText(", though she probably wander somewhere near camp looking for more ingredients to make her potions.");
-		outputText(" Next to it stands a small chest with her personal stuff.\n\n");
-		buttons.add( "Evangeline", EvangelineF.meetEvangeline).hint("Visit Evangeline.");
-	}
-	else if (flags[kFLAGS.EVANGELINE_FOLLOWER] >= 1 && flags[kFLAGS.EVANGELINE_WENT_OUT_FOR_THE_ITEMS] >= 1) {
-		/*if (flags[kFLAGS.EVANGELINE_WENT_OUT_FOR_THE_ITEMS] >= 1)*/ outputText("Evangeline isn't in the camp as she went to buy some items. She should be out no longer than a few hours.\n\n");
-		//if () outputText("Evangeline is busy training now. She should be done with it in a few hours.\n\n");
 	}
 	//Kindra
 	if (flags[kFLAGS.KINDRA_FOLLOWER] >= 1) {
@@ -1605,9 +1575,9 @@ public function campFollowers(descOnly:Boolean = false):void {
 	//Luna
 	if (flags[kFLAGS.LUNA_FOLLOWER] >= 4) {
 		outputText("Luna wanders around the camp, doing her chores as usual.");
-		if (flags[kFLAGS.LUNA_JEALOUSY] >= 25) outputText(" She looks at you from time to time, as if expecting you to notice her.");
+		if (flags[kFLAGS.LUNA_JEALOUSY] >= 50) outputText(" She looks at you from time to time, as if expecting you to notice her.");
 		outputText("\n\n");
-		buttons.add( "Luna", SceneLib.lunaFollower.mainLunaMenu).hint("Visit Luna.");
+		buttons.add( "Luna", SceneLib.lunaFollower.mainLunaMenu).hint("Visit Luna.").disableIf(player.statusEffectv1(StatusEffects.CampSparingNpcsTimers3) > 0,"Training.");
 	}
     for each(var npc:XXCNPC in _campFollowers){
         npc.campDescription(buttons,XXCNPC.FOLLOWER);
@@ -1637,9 +1607,9 @@ private function campActions():void {
 	addButton(3, "Read Codex", codex.accessCodexMenu).hint("Read any codex entries you have unlocked.");
 	if (flags[kFLAGS.LETHICE_DEFEATED] > 0) addButton(4, "Ascension", promptAscend).hint("Perform an ascension? This will restart your adventures with your items, and gems carried over. The game will also get harder.");
 	addButton(5, "Build", campBuildingSim).hint("Check your camp build options.");
-	if (player.hasPerk(PerkLib.JobElementalConjurer) >= 0 || player.hasPerk(PerkLib.JobGolemancer) >= 0) addButton(6, "Winions", campWinionsArmySim).hint("Check your options for making some Winions.");
+	if (player.hasPerk(PerkLib.JobElementalConjurer)) addButton(6, "Winions", campWinionsArmySim).hint("Check your options for making some Winions.");
 	else addButtonDisabled(6, "Winions", "You need to be able to make some minions that fight for you to use this option like elementals or golems...");
-	if (player.hasStatusEffect(StatusEffects.KnowsHeal)) addButton(7, "Heal", spellHealcamp).hint("Heal will attempt to use white magic to instantly close your wounds and restore your body.  \n\nMana Cost: 30");
+	//addButton(7, "Heal", spellHealcamp).hint("Heal.  \n\nMana Cost: 30");
 	//addButton(8, "Craft", kGAMECLASS.crafting.accessCraftingMenu).hint("Craft some items.");
 	if (flags[kFLAGS.CAMP_UPGRADES_FISHERY] >= 1) addButton(8, "Fishery", VisitFishery).hint("Visit Fishery.");
 	addButton(9, "Questlog", questlog.accessQuestlogMainMenu).hint("Check your questlog.");
@@ -1662,7 +1632,6 @@ private function campBuildingSim():void {
 
 private function campWinionsArmySim():void {
 	menu();
-	addButton(0, "Make", campMake.accessMakeWinionsMainMenu).hint("Check your options for making some golems.");
 	if (flags[kFLAGS.CAMP_UPGRADES_ARCANE_CIRCLE] > 0) addButton(1, "Summon", campMake.accessSummonElementalsMainMenu).hint("Check your options for managing your elemental summons.");
 	else addButtonDisabled(1, "Summon", "You should first build Arcane Circle.");
 	addButton(14, "Back", campActions);
@@ -1730,39 +1699,6 @@ private function RetrieveStack():void {
 		outputText("\n\nYou need more fish to bag out a bundle.");
 		doNext(VisitFishery);
 	}
-}
-
-public function spellHealcamp():void {
-	clearOutput();
-	if(player.mana < 30) {
-		outputText("Your mana is too low to cast this spell.");
-		doNext(campActions);
-		return;
-	}
-	useMana(30);
-	var healing:int = combat.scalingBonusIntelligence();
-	//healing *= spellMod();
-	if (player.unicornScore() >= 5) healing *= ((player.unicornScore() - 4) * 0.5);
-	if (player.alicornScore() >= 6) healing *= ((player.alicornScore() - 5) * 0.5);
-	if (player.armorName == "skimpy nurse's outfit") healing *= 1.2;
-	//Determine if critical heal!
-	var crit:Boolean = false;
-	var critHeal:int = 5;
-	if (player.findPerk(PerkLib.Tactician) >= 0 && player.inte >= 50) critHeal += (player.inte - 50) / 5;
-	if (rand(100) < critHeal) {
-		crit = true;
-		healing *= 1.75;
-	}
-	healing = Math.round(healing);
-	outputText("You chant a magical song of healing and recovery and your wounds start knitting themselves shut in response. <b>(<font color=\"#008000\">+" + healing + "</font>)</b>.");
-	if (crit == true) outputText(" <b>*Critical Heal!*</b>");
-	HPChange(healing,false);
-	outputText("\n\n");
-	statScreenRefresh();
-	flags[kFLAGS.SPELLS_CAST]++;
-	//spellPerkUnlock();
-	doNext(doCamp);
-	cheatTime(1/12);
 }
 
 private function swimInStream():void {
@@ -2232,7 +2168,7 @@ CoC.instance.saves.saveGame(player.slotName);
 			return;
 		}
 		//Full Moon
-		if (flags[kFLAGS.LUNA_MOON_CYCLE] % 7 == 0 && flags[kFLAGS.LUNA_FOLLOWER] < 9 && flags[kFLAGS.LUNA_AFFECTION] >= 50 && flags[kFLAGS.SLEEP_WITH] == "Luna" && player.gender > 0) {
+		if (flags[kFLAGS.LUNA_MOON_CYCLE] == 8 && flags[kFLAGS.LUNA_FOLLOWER] < 9 && flags[kFLAGS.LUNA_AFFECTION] >= 50 && flags[kFLAGS.SLEEP_WITH] == "Luna" && player.gender > 0) {
 			SceneLib.lunaFollower.fullMoonEvent();
 			sleepRecovery(false);
 			return;
@@ -2262,7 +2198,7 @@ CoC.instance.saves.saveGame(player.slotName);
 		}
 		else if(flags[kFLAGS.SLEEP_WITH] == "Luna" && flags[kFLAGS.LUNA_FOLLOWER] >= 4) {
 			outputText("You head to bed, Luna following you. ");
-			if (flags[kFLAGS.LUNA_MOON_CYCLE] % 7 == 0 && flags[kFLAGS.LUNA_FOLLOWER] >= 9) {
+			if (flags[kFLAGS.LUNA_MOON_CYCLE] == 8 && flags[kFLAGS.LUNA_FOLLOWER] >= 9) {
 				SceneLib.lunaFollower.sleepingFullMoon();
 				return;
 			}
@@ -2567,7 +2503,6 @@ public function placesCount():int {
 	if (flags[kFLAGS.AMILY_VILLAGE_ACCESSIBLE] > 0) places++;
 	if (flags[kFLAGS.MET_MINERVA] >= 4) places++;
 	if (flags[kFLAGS.KITSUNE_SHRINE_UNLOCKED] > 0) places++;
-	if (flags[kFLAGS.HEXINDAO_UNLOCKED] > 0) places++;
 	if (flags[kFLAGS.FOUND_TEMPLE_OF_THE_DIVINE] > 0) places++;
 	if (flags[kFLAGS.PRISON_CAPTURE_COUNTER] > 0) places++;
 	return places;
@@ -2590,8 +2525,6 @@ public function places():Boolean {
 	if (player.statusEffectv1(StatusEffects.TelAdre) >= 1) addButton(5, "Tel'Adre", SceneLib.telAdre.telAdreMenu).hint("Visit the city of Tel'Adre in desert, easily recognized by the massive tower.");
 	if (flags[kFLAGS.BAZAAR_ENTERED] > 0) addButton(6, "Bazaar", SceneLib.bazaar.enterTheBazaar).hint("Visit the Bizarre Bazaar where the demons and corrupted beings hang out.");
 	if (flags[kFLAGS.OWCA_UNLOCKED] == 1) addButton(7, "Owca", SceneLib.owca.gangbangVillageStuff).hint("Visit the sheep village of Owca, known for its pit where a person is hung on the pole weekly to be gang-raped by the demons.");
-	
-	if (flags[kFLAGS.HEXINDAO_UNLOCKED] == 1) addButton(10, "He'Xin'Dao", hexindao.riverislandVillageStuff).hint("Visit the village of He'xin'dao, place where all greenhorn soul cultivators come together.");
 	addButton(4, "Next", placesPage2);
 	addButton(14, "Back", playerMenu);
 	return true;
@@ -3178,8 +3111,14 @@ private function fixFlags():void {
 }
 private function promptSaveUpdate():void {
 	clearOutput();
-	if (flags[kFLAGS.MOD_SAVE_VERSION] < 2) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 2;
+	function saveVersion(vers:int = -1):int{
+		if(vers > 0){
+			flags[kFLAGS.MOD_SAVE_VERSION] = vers;
+		}
+		return flags[kFLAGS.MOD_SAVE_VERSION];
+	}
+	if (saveVersion() < 2) {
+		saveVersion(2);
 		outputText("<b><u>CAUTION</u></b>\n");
 		outputText("Looks like you are importing your save from vanilla CoC.");
 		outputText("\n\nIf you're planning to save over your original save file, I not going to stop you but... If you overwrite the save file from original game, it will no longer be backwards compatible with the original CoC. So maybe create separate save files.");
@@ -3187,8 +3126,8 @@ private function promptSaveUpdate():void {
 		doNext(doCamp);
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 2) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 3;
+	if (saveVersion() == 2) {
+		saveVersion(3);
 		outputText("Ups looks like you not have achievements feature unlocked yet. So now you can get them.");
 		outputText("\n\nDrill is as always. So not all achievements would be automaticaly gained but who of people playing this won't play again and again and...you get my drift right?");
 		updateAchievements();
@@ -3196,18 +3135,18 @@ private function promptSaveUpdate():void {
 		doNext(doCamp);
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 3) {
+	if (saveVersion() == 3) {
 		//Reclaim flags for future use.
 		flags[kFLAGS.GIACOMO_MET] = 0;
 		flags[kFLAGS.GIACOMO_NOTICES_WORMS] = 0;
 		flags[kFLAGS.PHOENIX_ENCOUNTERED] = 0;
 		flags[kFLAGS.PHOENIX_WANKED_COUNTER] = 0;
-		flags[kFLAGS.MOD_SAVE_VERSION] = 4;
+		saveVersion(4);
 		doCamp();
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 4) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 5;
+	if (saveVersion() == 4) {
+		saveVersion(5);
 		if (flags[kFLAGS.KELT_KILLED] > 0 && player.statusEffectv1(StatusEffects.Kelt) <= 0) {
 			clearOutput();
 			outputText("Due to a bug where your bow skill got reset after you've slain Kelt, your bow skill got reset. Fortunately, this is now fixed. As a compensation, your bow skill is now instantly set to 100!");
@@ -3218,8 +3157,8 @@ private function promptSaveUpdate():void {
 		doCamp();
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 5) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 6;
+	if (saveVersion() == 5) {
+		saveVersion(6);
 		if (player.armorName == "revealing fur loincloths" || player.armorName == "comfortable underclothes" || player.weaponName == "dragon-shell shield") {
 			clearOutput();
 			outputText("Due to a bit of restructing regarding equipment, any reclassified equipment (eggshell shield and fur loincloth) that was equipped are now unequipped.");
@@ -3232,9 +3171,9 @@ private function promptSaveUpdate():void {
 		doCamp();
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 6) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 7;
-		if (flags[kFLAGS.MOD_SAVE_VERSION] == 6) {
+	if (saveVersion() == 6) {
+		saveVersion(7);
+		if (saveVersion() == 6) {
 			flags[kFLAGS.D1_OMNIBUS_KILLED] = flags[kFLAGS.CORRUPTED_GLADES_DESTROYED];
 			flags[kFLAGS.CORRUPTED_GLADES_DESTROYED] = 0; //Reclaimed
 		}
@@ -3242,16 +3181,16 @@ private function promptSaveUpdate():void {
 		doCamp();
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 7) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 8;
+	if (saveVersion() == 7) {
+		saveVersion(8);
 		//Move and reclaim flag.
 		flags[kFLAGS.LETHICITE_ARMOR_TAKEN] = flags[kFLAGS.JOJO_ANAL_CATCH_COUNTER];
 		flags[kFLAGS.JOJO_ANAL_CATCH_COUNTER] = 0;
 		doCamp();
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 8) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 9;
+	if (saveVersion() == 8) {
+		saveVersion(9);
 		if (!player.hasFur()) {
 			doCamp();
 			return; //No fur? Return to camp.
@@ -3262,16 +3201,16 @@ private function promptSaveUpdate():void {
 		furColorSelection1();
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 9) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 10;
+	if (saveVersion() == 9) {
+		saveVersion(10);
 		if (flags[kFLAGS.MARAE_LETHICITE] > 0 && player.hasKeyItem("Marae's Lethicite") >= 0) {
 			player.removeKeyItem("Marae's Lethicite"); //Remove the old.
 			player.createKeyItem("Marae's Lethicite", flags[kFLAGS.MARAE_LETHICITE], 0, 0, 0);
 			flags[kFLAGS.MARAE_LETHICITE] = 0; //Reclaim the flag.
 		}
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 10) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 11;
+	if (saveVersion() == 10) {
+		saveVersion(11);
 		if (player.findPerk(PerkLib.JobMonk) >= 0) {
 			player.removePerk(PerkLib.JobMonk);
 			player.createPerk(PerkLib.JobBrawler, 0, 0, 0, 0);
@@ -3279,8 +3218,8 @@ private function promptSaveUpdate():void {
 		doNext(doCamp);
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 11) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 12;
+	if (saveVersion() == 11) {
+		saveVersion(12);
 		outputText("No worry it's not a bug it's an airplan...err ok your save is just upgraded to the next level ^^");
 		if (flags[kFLAGS.EVANGELINE_GEMS_PURSE] < 0) flags[kFLAGS.EVANGELINE_GEMS_PURSE] = 0;
 		if (flags[kFLAGS.EVANGELINE_SPELLS_CASTED] < 0) flags[kFLAGS.EVANGELINE_SPELLS_CASTED] = 0;
@@ -3289,9 +3228,8 @@ private function promptSaveUpdate():void {
 		doNext(doCamp);
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 12) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 13;
-		clearOutput();
+	if (saveVersion() == 12) {
+		saveVersion(13);
 		outputText("And we do it again since game got more shiny then before so we would fast give additional polishing to your save. No worry it will be now +20% more shiny ;)");
 		if (player.findPerk(PerkLib.JobSoulCultivator) < 0) player.perkPoints += 1;
 		var refund:int = 0;
@@ -3307,9 +3245,8 @@ private function promptSaveUpdate():void {
 		doNext(doCamp);
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 13) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 14;
-		clearOutput();
+	if (saveVersion() == 13) {
+		saveVersion(14);
 		outputText("Attention! All Munchkins Kindly leave thou gate sixty and nine. As replacements there will be whole legion of All-Rounders commin in five, four, ...........aaaand their here ^^");
 		if (player.findPerk(PerkLib.DeityJobMunchkin) >= 0) {
 			player.removePerk(PerkLib.DeityJobMunchkin);
@@ -3319,9 +3256,8 @@ private function promptSaveUpdate():void {
 		doNext(doCamp);
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 14) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 15;
-		clearOutput();
+	if (saveVersion() == 14) {
+		saveVersion(15);
 		outputText("Why only use an imitation of bow when you can have A REAL BOW?");
 		if (player.hasKeyItem("Bow") >= 0) {
 			player.removeKeyItem("Bow");
@@ -3361,9 +3297,8 @@ private function promptSaveUpdate():void {
 		doNext(doCamp);
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 15) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 16;
-		clearOutput();
+	if (saveVersion() == 15) {
+		saveVersion(16);
 		outputText("Time for...save upgrade ^^");
 		if (player.findPerk(PerkLib.EnlightenedNinetails) >= 0) player.createPerk(PerkLib.EnlightenedKitsune, 0, 0, 0, 0);
 		if (player.findPerk(PerkLib.CorruptedNinetails) >= 0) player.createPerk(PerkLib.CorruptedKitsune, 0, 0, 0, 0);
@@ -3374,9 +3309,8 @@ private function promptSaveUpdate():void {
 		doNext(doCamp);
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 16) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 17;
-		clearOutput();
+	if (saveVersion() == 16) {
+		saveVersion(17);
 		outputText("Tentacled Barks, Divine Barks, Barks everywhere!!! No go back and beat Marae again if you had her bark unused yet");
 		if (player.hasKeyItem("Tentacled Bark Plates") >= 0) {
 			player.removeKeyItem("Tentacled Bark Plates");
@@ -3402,9 +3336,8 @@ private function promptSaveUpdate():void {
 		doNext(doCamp);
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 17) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 18;
-		clearOutput();
+	if (saveVersion() == 17) {
+		saveVersion(18);
 		outputText("Multi tails get broken or was it venom in them...so we fixed that both will not gonna mess up other or so we think ^^");
 		if (player.tailType == Tail.FOX) {
 			player.tailCount = player.tailVenom;
@@ -3429,9 +3362,8 @@ private function promptSaveUpdate():void {
 		doNext(doCamp);
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 18) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 19;
-		clearOutput();
+	if (saveVersion() == 18) {
+		saveVersion(19);
 		outputText("Small reorganizing of the house interiors...err I mean mod interiors so not mind it if you not have Soul Cultivator PC. I heard you all likes colors, colors on EVERYTHING ever your belowed lil PC's eyes. So go ahead and pick them. Not much change from addition to appearance screen this small detail. But in future if scene will allow there will be addition of parser for using eyes color too.");
 		if (player.findPerk(PerkLib.SoulExalt) >= 0) {
 			player.removePerk(PerkLib.SoulExalt);
@@ -3446,8 +3378,8 @@ private function promptSaveUpdate():void {
 		eyesColorSelection();
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 19) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 20;
+	if (saveVersion() == 19) {
+		saveVersion(20);
 		if (player.findPerk(PerkLib.JobBarbarian) >= 0) {
 			player.removePerk(PerkLib.JobBarbarian);
 			player.createPerk(PerkLib.JobSwordsman, 0, 0, 0, 0);
@@ -3457,21 +3389,28 @@ private function promptSaveUpdate():void {
 		doNext(doCamp);
 		return;
 	}
-/*	if (flags[kFLAGS.MOD_SAVE_VERSION] == 20) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 21;
-		clearOutput();
-		outputText("Text.");
+	if(saveVersion() == 20){
+		saveVersion(21);
+		//Remove and refund golem Perks
+		var golemPerks:Array = [
+			PerkLib.JobGolemancer,
+			PerkLib.GolemArmyCaptain, PerkLib.GolemArmyColonel, PerkLib.GolemArmyGeneral, PerkLib.GolemArmyLieutenant, PerkLib.GolemArmyMajor,
+			PerkLib.ApprenticeGolemMaker, PerkLib.BeginnerGolemMaker, PerkLib.EpicGolemMaker, PerkLib.ExpertGolemMaker,PerkLib.MasterGolemMaker,PerkLib.GrandMasterGolemMaker,PerkLib.LegendaryGolemMaker,PerkLib.MythicalGolemMaker,
+			PerkLib.BiggerGolemBag1,PerkLib.BiggerGolemBag2,PerkLib.BiggerGolemBag3,PerkLib.BiggerGolemBag4,PerkLib.BiggerGolemBag5,PerkLib.BiggerGolemBag6,
+			PerkLib.FirstAttackGolems,
+			PerkLib.ChargedCore, PerkLib.SuperChargedCore
+		];
+		for each (var perk:PerkType in golemPerks){
+			if(player.hasPerk(perk)){
+				player.removePerk(perk);
+				player.perkPoints++;
+			}
+		}
+		outputText("The golemancer job and perks have been removed. All perk points have been refunded for these\n\n");
 		doNext(doCamp);
 		return;
 	}
-	if (flags[kFLAGS.MOD_SAVE_VERSION] == 21) {
-		flags[kFLAGS.MOD_SAVE_VERSION] = 22;
-		clearOutput();
-		outputText("Text.");
-		doNext(doCamp);
-		return;
-	}
-*/	doCamp();
+	doCamp();
 }
 
 private function furColorSelection1():void {

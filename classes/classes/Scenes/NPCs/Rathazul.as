@@ -1,8 +1,10 @@
 ﻿package classes.Scenes.NPCs{
 import classes.*;
 import classes.GlobalFlags.kFLAGS;
+	import classes.Items.ConsumableLib;
+	import classes.internals.Utils;
 
-public class Rathazul extends NPCAwareContent implements TimeAwareInterface {
+	public class Rathazul extends NPCAwareContent implements TimeAwareInterface {
 
 //const RATHAZUL_DEBIMBO_OFFERED:int = 744;
 
@@ -293,7 +295,7 @@ private function rathazulWorkOffer():Boolean {
 		else
 			addButtonDisabled(1, "Shop", "You can't afford anything Rathazul has to offer.");
 		addButton(4, "Purify", purifySomething).hint("Ask him to purify any tainted potions. \n\nCost: 20 Gems.");
-		
+
 		if (debimbo) addButton(5, "Debimbo", makeADeBimboDraft).hint("Ask Rathazul to make a debimbofying potion for you. \n\nCost: 250 Gems \nNeeds 5 Scholar Teas.");
 		if (player.hasItem(consumables.BEEHONY)) addButton(6, consumables.PURHONY.shortName, rathazulMakesPureHoney).hint("Ask him to distill a vial of bee honey into a pure honey. \n\nCost: 25 Gems \nNeeds 1 vial of Bee Honey");
 		if (player.statusEffectv2(StatusEffects.MetRathazul) >= 5) addButton(7, "ProLactaid", rathazulMakesMilkPotion).hint("Ask him to brew a special lactation potion. \n\nCost: 250 Gems \nNeeds 5 Lactaids and 2 Purified LaBovas.");
@@ -302,7 +304,10 @@ private function rathazulWorkOffer():Boolean {
 			addButton(11, "Pure Potion", rathazulMakesPurifyPotion).hint("Ask him to brew a purification potion for Minerva.");
 		}
 		if (player.statusEffectv2(StatusEffects.MetRathazul) >= 5) addButton(12, "Scorpinum", rathazulMakesScorpioPotion).hint("Ask him to brew a special potion that could aid in gaining scorpion tail. \n\nCost: 100 Gems \nNeeds 2 vials of Bee Honey and 2 vials of Snake Oil.");
-
+		if (player.hasKeyItem("Soul Gem Research") >= 0 && flags[kFLAGS.GARGOYLE_QUEST] >= 3) {
+			if (player.statusEffectv1(StatusEffects.SoulGemCrafting) == 0)  addButton(13, "Soul Gem", recivingCraftedSoulGem).hint("Pick up your crafted Soul Gem.");
+			if (!player.hasStatusEffect(StatusEffects.SoulGemCrafting)) addButton(13, "Soul Gem", craftingSoulGem).hint("Ask Rathazul about crafting a Soul Gem.");
+		}
 		if(player.hasStatusEffect(StatusEffects.CampRathazul))
 			addButton(14,"Leave", camp.campFollowers);
 		else
@@ -526,6 +531,7 @@ private function rathazulShopMenu():void {
 		addButtonDisabled(6, consumables.PPHILTR.shortName, "You can't afford to buy this.\n\n100 gems required.");
 		addButtonDisabled(7, consumables.NUMBOIL.shortName, "You can't afford to buy this.\n\n100 gems required.");
 	}
+	addButton(8, "Alchemy", alchemyMenu).hint("Ask him to brew a special transformative item.");
 	addButton(14, "Back", returnToRathazulMenu);
 }
 //Hair dyes
@@ -836,7 +842,7 @@ private function rathazulMakesScorpioPotion():void {
 	player.destroyItems(consumables.SNAKOIL, 2);
 	player.gems -= 100;
 	statScreenRefresh();
-	outputText("You hand over two vials of Bee Honey, two vials of Snake Oil and one hundred gems to Rathazul, which he gingerly takes them and proceeds to make a special potion for you.");
+	outputText("You hand over two vials of Bee Honey, two vials of Snake Oil and one hundred gems to Rathazul, which he gingerly takes and proceeds to make a special potion for you.");
 	outputText("\n\nAfter a while, the rat hands you a vial labeled \"Scorpinum\" and nods.");
 	player.addStatusValue(StatusEffects.MetRathazul, 2, 1);
 	inventory.takeItem(consumables.SCORICO, rathazulShopMenu);
@@ -854,7 +860,7 @@ private function growLethiciteDefense():void {
 private function growLethiciteDefenseYesYesYes():void {
 	spriteSelect(49);
 	clearOutput();
-	outputText("Rathazul nods and produces a mallet and chisel from his robes.  With surprisingly steady hands for one so old, he holds the chisel against the crystal and taps it, easily cracking off a large shard.  Rathazul gathers it into his hands before slamming it down into the dirt, until only the smallest tip of the crystal is visible.  He produces vials of various substances from his robe, as if by magic, and begins pouring them over the crystal.  In a few seconds, he finishes, and runs back towards his equipment.\n\n\"<i>You may want to take a step back,</i>\" he warns, but before you have a chance to do anything, a thick trunk covered in thorny vines erupts from the ground.  Thousands of vine-like branches split off the main trunk as it reaches thirty feet in the air, radiating away from the trunk and intertwining with their neighbors as they curve back towards the ground.  In the span of a few minutes, your camp gained a thorn tree and a thick mesh of barbed vines preventing access from above.");
+	outputText("Rathazul nods and produces a mallet and chisel from his robes.  With surprisingly steady hands for one so old, he holds the chisel against the crystal and taps it, easily cracking off a large shard.  Rathazul gathers it into his hands before slamming it down into the dirt, until only the smallest tip of the crystal is visible.  He produces vials of various substances from his robe, as if by magic, and begins pouring them over the crystal.  In a few seconds, he finihes, and runs back towards his equipment.\n\n\"<i>You may want to take a step back,</i>\" he warns, but before you have a chance to do anything, a thick trunk covered in thorny vines erupts from the ground.  Thousands of vine-like branches split off the main trunk as it reaches thirty feet in the air, radiating away from the trunk and intertwining with their neighbors as they curve back towards the ground.  In the span of a few minutes, your camp gained a thorn tree and a thick mesh of barbed vines preventing access from above.");
 	player.createStatusEffect(StatusEffects.DefenseCanopy, 0, 0, 0, 0);
 	player.addKeyValue("Marae's Lethicite", 1, -1);
 	doNext(playerMenu);
@@ -863,9 +869,111 @@ private function growLethiciteDefenseYesYesYes():void {
 private function growLethiciteDefenseGuessNot():void {
 	spriteSelect(49);
 	clearOutput();
-	outputText("Rathazul nods sagely, \"<i>That may be wise.  Perhaps there will be another use for this power.");
+	outputText("Rathazul nods sagely, \"<i>That may be wise.  Perhaps there will be another use for this power.\"</i>");
 	doNext(returnToRathazulMenu);
 }
 
+
+	private function alchemyMenu():void {
+		var cons:ConsumableLib = consumables;
+		var alchemyCosts:Array = [
+			[cons.GORGOIL,10,[[cons.SNAKOIL, 1],[cons.REPTLUM, 1]]],
+			[cons.VOUIOIL,15,[[cons.SNAKOIL, 1],[cons.DRAKHRT, 1]]],
+			[cons.COUAOIL,10,[[cons.SNAKOIL, 1],[cons.GLDSEED, 1]]],
+			[cons.CENTARI,10,[[cons.EQUINUM, 1],[cons.MINOBLO, 1]]],
+			[cons.UNICORN,20,[[cons.EQUINUM, 1],[cons.LG_SFRP, 4]]],
+			[cons.NOCELIQ,10,[[cons.GLDSEED, 1],[cons.SALAMFW, 1]]],
+			[cons.ALICORN,50,[[cons.UNICORN, 1],[cons.MG_SFRP, 4]]],
+
+			[cons.GREYINK,50,[[cons.BLACKIN, 1],[cons.BHMTCUM, 1]]],
+			[cons.WHITEIN,50,[[cons.BLACKIN, 1],[cons.BHMTCUM, 2]]],
+
+			[cons.INFWINE,480,[[cons.SATYR_W, 1],[cons.SUCMILK, 1],[cons.INCUBID, 1]]],
+		];
+		clearOutput();
+		outputText("\"<i>So you do want me to make a transformational item?</i>\" He asked after hearing what potion you want to purpose to him this time, at which you simply nod. Without wasting time he grabs some vials that were strewn through the area in which he keep his equipment.\n\n\"<i>So what shall I make this time?</i>\"");
+		menu();
+		addButton(0, "Gorgon Oil", alchemyBuy,alchemyCosts[0]).hint("Ask to brew a special potion that could aid in becoming a gorgon. \n\nCost: 10 Gems \nNeeds 1 Snake Oil and 1 Reptilum.");
+		addButton(1, "Vouivre Oil", alchemyBuy,alchemyCosts[1]).hint("Ask to brew a special potion that could aid in becoming a vouivre. \n\nCost: 15 Gems \nNeeds 1 Snake Oil and 1 Drake Heart.");
+		addButton(2, "Couatl Oil", alchemyBuy,alchemyCosts[2]).hint("Ask to brew a special potion that could aid in becoming a couatl. \n\nCost: 10 Gems \nNeeds 1 Snake Oil and 1 Golden Seed.");
+		addButton(3, "Centaurinum", alchemyBuy,alchemyCosts[3]).hint("Ask to brew a special potion that could aid in becoming a centaur. \n\nCost: 10 Gems \nNeeds 1 Equinum and 1 Minotaur Blood.");
+		addButton(4, "Unicornum", alchemyBuy,alchemyCosts[4]).hint("Ask to brew a special potion that could aid in becoming a unicorn. \n\nCost: 20 Gems \nNeeds 1 Equinum and 4 Low-grade Soulforce Recovery Pills.");//1st stage Soul evolution race TF
+
+		addButton(6, "Nocello Liq", alchemyBuy,alchemyCosts[5]).hint("Ask to brew a special potion that could aid in becoming a phoenix. \n\nCost: 10 Gems \nNeeds 1 Golden Seed and 1 Salamander Firewater.");//Hybryd race TF
+
+		addButton(10, "Alicornum", alchemyBuy,alchemyCosts[6]).hint("Ask to brew a special potion that could aid in becoming a unicorn. \n\nCost: 50 Gems \nNeeds 1 Unicornum and 4 Mid-grade Soulforce Recovery Pills.");//2nd stage Soul evolution race TF
+		addButton(11, "Scylla Ink", MakingScyllaInkPotion).hint("Ask to brew a special potion based on Black Ink.");
+
+		addButton(13, "InferWine", alchemyBuy,alchemyCosts[9]).hint("Aske to brew a special potion that could aid in becoming a infernal goat/devil. \n\nCost: 480 Gems \nNeeds 1 Satyr Wine, 1 Succubi milk and 1 Incubi draft.");
+		addButton(14, "Back", rathazulShopMenu);
+
+		function MakingScyllaInkPotion():void {
+			outputText("\n\n\"<i>So the grey or white ink this time?</i>\"");
+			menu();
+			addButton(0, "Grey Ink", alchemyBuy,alchemyCosts[7]).hint("Grey Ink for Herm Scylla form. \n\nCost: 10 Gems \nNeeds 1 vial of Black Ink and 1 sealed bottle of behemoth cum.");
+			addButton(1, "White Ink", alchemyBuy,alchemyCosts[8]).hint("White Ink for Male Scylla form. \n\nCost: 20 Gems \nNeeds 1 vial of Black Ink and 2 sealed bottles of behemoth cum.");
+			addButton(4, "Back", alchemyMenu);
+		}
+
+		function alchemyBuy(costs:Array):void{
+			clearOutput();
+			if(player.gems < costs[1]){
+				outputText("\"<i>I'm sorry but you don't have the gems for this potion,</i>\" Rathazul says.");
+				doNext(alchemyMenu);
+				return;
+			}
+			for each (var req:Array in costs[2]){
+				if(!player.hasItem(req[0],req[1])){
+					alchemyNotEnoughReqs(costs[2],costs[1]);
+					doNext(alchemyMenu);
+					return
+				}
+			}
+			outputText("You hand over ");
+			for each (var reqs:Array in costs[2]){
+				player.destroyItems(reqs[0],reqs[1]);
+				outputText(Utils.num2Text(reqs[1]) + " " + reqs[0].longName.replace(/^a /,'') + " and ");
+			}
+			outputText(num2Text(costs[1]) + " gems to Rathazul, which he gingerly takes and proceeds to make the potion for you.");
+			outputText("\n\nAfter a while, he hands you "+costs[0].longName + ".\n\n");
+			inventory.takeItem(costs[0],alchemyMenu);
+			cheatTime(1/6);
+
+			function alchemyNotEnoughReqs(costs:Array,gems:int):void{
+				outputText("\"<i>I'm sorry but you don't have the materials I need. I need ");
+				for each (var reqs:Array in costs){
+					outputText(Utils.num2Text(reqs[1]) + " " + reqs[0].longName.replace(/^a /,'') + " and ");
+				}
+				outputText(num2Text(gems)+" gems,</i>\" Rathazul says.");
+			}
+		}
+	}
+		private function craftingSoulGem():void {
+			clearOutput();
+			outputText("\"<i>Wait, you want me to craft a soul gem!? What do you even intend to do with it? These things are used to capture and hold souls!</i>\"\n\n");
+			outputText("You remind him that it’s your business, telling him that in the end it will serve a greater purpose.\n\n");
+			if (player.hasItem(consumables.S_WATER, 5) && player.hasItem(consumables.ECTOPLS, 5) && player.gems >= 2000) {
+				player.destroyItems(consumables.S_WATER, 5);
+				player.destroyItems(consumables.ECTOPLS, 5);
+				player.gems -= 2000;
+				statScreenRefresh();
+				outputText("\"<i>I hope you know what you're doing. Hand me the recipe and materials, and I will get to work.</i>\"");
+				player.createStatusEffect(StatusEffects.SoulGemCrafting,120,0,0,0);
+				doNext(camp.returnToCampUseOneHour);
+			}
+			else {
+				outputText("\"<i>Regardless, I can’t craft a soul gem without the proper materials. Gather me 5 Ectoplasm, 5 vials of Pure Spring Water, and 2000 gems for the miscellaneous reagents.</i>\"");
+				doNext(returnToRathazulMenu);
+			}
+		}
+		private function recivingCraftedSoulGem():void {
+			clearOutput();
+			outputText("As you check on Rathazul he hands a purplish crystal to you.\n\n");
+			outputText("\"<i>Here's your soul gem. Please use this responsibly, they are very hard to craft, and quite dangerous.</i>\"\n\n");
+			outputText("<b>Acquired Soul Gem</b>\n\n");
+			if (flags[kFLAGS.GARGOYLE_QUEST] == 3) flags[kFLAGS.GARGOYLE_QUEST]++;
+			player.removeStatusEffect(StatusEffects.SoulGemCrafting);
+			inventory.takeItem(useables.SOULGEM, returnToRathazulMenu);
+		}
 }
 }

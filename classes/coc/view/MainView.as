@@ -12,7 +12,10 @@
  ****/
 
 package coc.view {
-import coc.view.UIUtils;
+	import classes.CoC;
+	import classes.GlobalFlags.kFLAGS;
+
+	import coc.view.UIUtils;
 
 import fl.controls.ComboBox;
 import fl.controls.ScrollBarDirection;
@@ -23,9 +26,19 @@ import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.text.TextField;
+	import flash.text.TextFormat;
 
-public class MainView extends Block {
-	[Embed(source="../../../res/ui/background1.png")]
+	public class MainView extends Block {
+	[Embed(source="../../../res/ui/CoCLogo.png")]
+	public static const GameLogo:Class;
+	[Embed(source="../../../res/ui/disclaimer-bg.png")]
+	public static const DisclaimerBG:Class;
+	[Embed(source="../../../res/ui/warning.png")]
+	public static const Warning:Class;
+
+	[Embed(source="../../../res/ui/background0.jpg")]
+	public static var Background0:Class;
+	[Embed(source="../../../res/ui/background1.jpg")]
 	public static var Background1:Class;
 	[Embed(source="../../../res/ui/background2.png")]
 	public static var Background2:Class;
@@ -35,7 +48,7 @@ public class MainView extends Block {
 	public static var Background4:Class;
 	[Embed(source="../../../res/ui/backgroundKaizo.png")]
 	public static var BackgroundKaizo:Class;
-	public static var Backgrounds:Array = [Background1, Background2, Background3, Background4, null, BackgroundKaizo];
+	public static var Backgrounds:Array = [Background0,Background1, Background2, Background3, Background4, null, BackgroundKaizo];
 
 	[Embed(source="../../../res/ui/button0.jpg")]
 	public static var ButtonBackground0:Class;
@@ -84,8 +97,8 @@ public class MainView extends Block {
 	internal static const BTN_W:Number = 150; // Button size
 	internal static const BTN_H:Number = 40;
 
-	internal static const SCREEN_W:Number       = 1200;
-	internal static const SCREEN_H:Number       = 800;
+	public static const SCREEN_W:Number       = 1200;
+	public static const SCREEN_H:Number       = 800;
 
 	// TOPROW: [Main Menu]/[New Game], [Data] ... [Appearance]
 
@@ -141,6 +154,7 @@ public class MainView extends Block {
 	internal static const MONSTER_H:Number        = TEXTZONE_H;
 
 	private var blackBackground:BitmapDataSprite;
+	public var textBGTranslucent:BitmapDataSprite;
 	public var textBGWhite:BitmapDataSprite;
 	public var textBGTan:BitmapDataSprite;
 	public var background:BitmapDataSprite;
@@ -185,7 +199,7 @@ public class MainView extends Block {
 			fillColor  : '#000000'
 		}), {});
 		addElement(background = new BitmapDataSprite({
-			bitmapClass: Background1,
+			bitmapClass: Background0,
 			width      : SCREEN_W,
 			height     : SCREEN_H,
 			fillColor  : 0,
@@ -225,6 +239,14 @@ public class MainView extends Block {
 		topRow.addElement(appearanceButton = new CoCButton({
 			labelText  : 'Appearance',
 			bitmapClass: ButtonBackground6
+		}));
+		addElement(textBGTranslucent = new BitmapDataSprite( {
+			alpha    : 0.4,
+			fillColor: '#FFFFFF',
+			x        : TEXTZONE_X,
+			y        : TEXTZONE_Y,
+			width    : TEXTZONE_W,
+			height   : TEXTZONE_H
 		}));
 		addElement(textBGWhite = new BitmapDataSprite({
 			fillColor: '#FFFFFF',
@@ -407,13 +429,14 @@ public class MainView extends Block {
 	}
 
 	protected function hookAllButtons():void {
-		var b:Sprite;
-
-		for each(b in this.allButtons) {
-			b.mouseChildren = false;
-			b.addEventListener(MouseEvent.ROLL_OVER, this.hoverButton);
-			b.addEventListener(MouseEvent.ROLL_OUT, this.dimButton);
+		for each(var b:CoCButton in this.allButtons) {
+			hookButton(b);
 		}
+	}
+	public function hookButton(b:CoCButton):void{
+		b.mouseChildren = false;
+		b.addEventListener(MouseEvent.ROLL_OVER, this.hoverButton);
+		b.addEventListener(MouseEvent.ROLL_OUT, this.dimButton);
 	}
 
 	//////// Internal(?) view update methods ////////
@@ -731,8 +754,41 @@ public class MainView extends Block {
 		this.scrollBar.scrollTarget = this.mainText;
 
 	}
+		public function showMainText():void {
+			this.setTextBackground();
+			this.mainText.visible = true;
+			this.scrollBar.visible = true;
+		}
+		public function hideMainText():void {
+			this.clearTextBackground();
+			this.resetTextFormat();
+			this.mainText.visible = false;
+			this.scrollBar.visible = false;
+		}
+		public function resetTextFormat():void {
+			var normalFormat:TextFormat = new TextFormat();
+			normalFormat.font = "Times New Roman, serif";
+			normalFormat.bold = false;
+			normalFormat.italic = false;
+			normalFormat.underline = false;
+			normalFormat.bullet = false;
+			normalFormat.size = CoC.instance.flags[kFLAGS.CUSTOM_FONT_SIZE] || 20;
+			this.mainText.defaultTextFormat = normalFormat;
+		}
 
-	public function hideComboBox():void {
+		public function clearTextBackground():void {
+			this.textBGTranslucent.visible = false;
+			this.textBGWhite.visible = false;
+			this.textBGTan.visible = false;
+		}
+		public function setTextBackground(selection:int = -1):void {
+			clearTextBackground();
+			if (selection == 0) this.textBGTranslucent.visible = true;
+			if (selection == 1) this.textBGWhite.visible = true;
+			if (selection == 2) this.textBGTan.visible = true;
+		}
+
+		public function hideComboBox():void {
 		stage.focus = null;
 		if (aCb.parent != null) {
 			removeElement(aCb);

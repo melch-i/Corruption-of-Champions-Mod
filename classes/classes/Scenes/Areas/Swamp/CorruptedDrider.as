@@ -5,7 +5,6 @@ import classes.BodyParts.Butt;
 import classes.BodyParts.Hips;
 import classes.BodyParts.LowerBody;
 import classes.Scenes.SceneLib;
-import classes.Scenes.Places.HeXinDao;
 import classes.internals.*;
 
 /**
@@ -14,8 +13,6 @@ import classes.internals.*;
 	 */
 	public class CorruptedDrider extends AbstractSpiderMorph
 	{
-		public var drider:HeXinDao = new HeXinDao();
-		
 		//Drider kiss!
 		public function driderKiss():void {
 			var temp:int;
@@ -133,7 +130,7 @@ import classes.internals.*;
 
 		override public function defeated(hpVictory:Boolean):void
 		{
-			if (player.hasStatusEffect(StatusEffects.SoulArenaGaunlet)) drider.gaunletchallange2fight4();
+			if (player.hasStatusEffect(StatusEffects.SoulArenaGaunlet)) SceneLib.telAdre.arena.gaunletchallange2fight4();
 			else SceneLib.swamp.corruptedDriderScene.defeatDriderIntro();
 		}
 

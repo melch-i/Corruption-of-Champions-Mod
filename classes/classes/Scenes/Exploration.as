@@ -14,9 +14,7 @@ import classes.Scenes.Areas.Ocean;
 import classes.Scenes.Dungeons.HiddenCave;
 import classes.Scenes.Explore.ExploreDebug;
 import classes.Scenes.Monsters.*;
-import classes.Scenes.NPCs.EvangelineFollower;
 import classes.Scenes.NPCs.RyuBiDragon;
-import classes.Scenes.Places.HeXinDao;
 
 //import classes.Scenes.Areas.nazwa lokacji;
 	//import classes.Scenes.Areas.nazwa lokacji;
@@ -28,10 +26,8 @@ public class Exploration extends BaseContent
 		public var ocean:Ocean = new Ocean();
 		public var deepsea:DeepSea = new DeepSea();
 		//public var blightridge:BlightRidge = new BlightRidge();	//dla nowych lokacji
-		public var hexindao:HeXinDao = new HeXinDao();
 		public var hiddencave:HiddenCave = new HiddenCave();
 		public var TrueDemons:DemonScene = new DemonScene();
-		public var Evangeline:EvangelineFollower = new EvangelineFollower();
 
 		public function Exploration()
 		{
@@ -186,157 +182,61 @@ public class Exploration extends BaseContent
 				}
 				return;
 			}
-			//Encounter Gobbalin!
-			//Encounter Golemuuu!
 			else {
-				if (player.level >= 6 && rand(10) < 5) {
-					var golemChooser:int = rand(70);
-					//Limit chooser range
-					if (player.level < 12 && golemChooser >= 10) golemChooser = 9;
-					else if (player.level < 18 && golemChooser >= 20) golemChooser = 19;
-					else if (player.level < 24 && golemChooser >= 30) golemChooser = 29;
-					else if (player.level < 33 && golemChooser >= 40) golemChooser = 39;
-					else if (player.level < 42 && golemChooser >= 50) golemChooser = 49;
-					else if (player.level < 51 && golemChooser >= 60) golemChooser = 59;
+				var goblinChooser:int = rand(100);
+				//Level modifier
+				if (player.level < 20) goblinChooser += player.level;
+				else goblinChooser += 20;
+				//Limit chooser range
+				if (goblinChooser > 100) goblinChooser = 100;
+				if (player.level < 10 && goblinChooser >= 20) goblinChooser = 29;
+				else if (player.level < 12 && goblinChooser >= 60) goblinChooser = 49;
+				else if (player.level < 16 && goblinChooser >= 80) goblinChooser = 79;
+				//Goblin assassin!
+				if (goblinChooser >= 30 && goblinChooser < 50) {
+					SceneLib.goblinAssassinScene.goblinAssassinEncounter();
+					spriteSelect(24);
+					return;
+				}
+				//Goblin warrior! (Equal chance with Goblin Shaman)
+				else if (goblinChooser >= 50 && goblinChooser < 65) {
+					SceneLib.goblinWarriorScene.goblinWarriorEncounter();
+					spriteSelect(123);
+					return;
+				}
+				//Goblin shaman!
+				else if (goblinChooser >= 65 && goblinChooser < 80) {
+					SceneLib.goblinShamanScene.goblinShamanEncounter();
+					spriteSelect(124);
+					return;
+				}
+				//Goblin elder!
+				else if (goblinChooser >= 80) {
+					SceneLib.goblinElderScene.goblinElderEncounter();
+					spriteSelect(122);
+					return;
+				}
+				if (player.gender > 0) {
 					clearOutput();
-					//Improved dummy golem
-					if (golemChooser >= 10 && golemChooser < 20) {
-						outputText("As you take a stroll, out of nearby bushes emerge golem. Looks like you have encountered improved dummy golem! You ready your [weapon] for a fight!");
-						startCombat(new GolemDummyImproved());
-						return;
+					outputText("A goblin saunters out of the bushes with a dangerous glint in her eyes.\n\nShe says, \"<i>Time to get fucked, " + player.mf("stud", "slut") + ".</i>\"");
+					if (flags[kFLAGS.CODEX_ENTRY_GOBLINS] <= 0) {
+						flags[kFLAGS.CODEX_ENTRY_GOBLINS] = 1;
+						outputText("\n\n<b>New codex entry unlocked: Goblins!</b>")
 					}
-					//Advanced dummy golem or golems
-					if (golemChooser >= 20 && golemChooser < 30) {
-						if (rand(4) == 0) {
-							outputText("As you take a stroll, out of nearby bushes emerge group of golems. Looks like you have encountered advanced dummy golems! You ready your [weapon] for a fight!");
-							startCombat(new GolemsDummyAdvanced());
-							return;
-						}
-						else {
-							outputText("As you take a stroll, out of nearby bushes emerge golem. Looks like you have encountered advanced dummy golem! You ready your [weapon] for a fight!");
-							startCombat(new GolemDummyAdvanced());
-							return;
-						}
-					}
-					//Superior dummy golem or golems
-					if (golemChooser >= 30 && golemChooser < 40) {
-						if (rand(4) == 0) {
-							outputText("As you take a stroll, out of nearby bushes emerge group of golems. Looks like you have encountered superior dummy golems! You ready your [weapon] for a fight!");
-							startCombat(new GolemsDummySuperior());
-							return;
-						}
-						else {
-							outputText("As you take a stroll, out of nearby bushes emerge golem. Looks like you have encountered superior dummy golem! You ready your [weapon] for a fight!");
-							startCombat(new GolemDummySuperior());
-							return;
-						}
-					}
-					//Basic true golem or golems
-					if (golemChooser >= 40 && golemChooser < 50) {
-						if (rand(4) == 0) {
-							outputText("As you take a stroll, out of nearby bushes emerge group of golems. Looks like you have encountered basic true golems! You ready your [weapon] for a fight!");
-							startCombat(new GolemsTrueBasic());
-							return;
-						}
-						else {
-							outputText("As you take a stroll, out of nearby bushes emerge golem. Looks like you have encountered basic true golem! You ready your [weapon] for a fight!");
-							startCombat(new GolemTrueBasic());
-							return;
-						}
-					}
-					//Improved true golem or golems
-					if (golemChooser >= 50 && golemChooser < 60) {
-						if (rand(4) == 0) {
-							outputText("As you take a stroll, out of nearby bushes emerge group of golems. Looks like you have encountered improved true golems! You ready your [weapon] for a fight!");
-							startCombat(new GolemsTrueImproved());
-							return;
-						}
-						else {
-							outputText("As you take a stroll, out of nearby bushes emerge golem. Looks like you have encountered improved true golem! You ready your [weapon] for a fight!");
-							startCombat(new GolemTrueImproved());
-							return;
-						}
-					}
-					//Advanced true golem or golems
-					if (golemChooser >= 60) {
-						if (rand(4) == 0) {
-							outputText("As you take a stroll, out of nearby bushes emerge group of golems. Looks like you have encountered advanced true golems! You ready your [weapon] for a fight!");
-							startCombat(new GolemsTrueAdvanced());
-							return;
-						}
-						else {
-							outputText("As you take a stroll, out of nearby bushes emerge golem. Looks like you have encountered advanced true golem! You ready your [weapon] for a fight!");
-							startCombat(new GolemTrueAdvanced());
-							return;
-						}
-					}
-					//Dummy golem
-					else {
-						outputText("As you take a stroll, out of nearby bushes emerge golem. Looks like you have encountered dummy golem! You ready your [weapon] for a fight!");
-						if (flags[kFLAGS.CODEX_ENTRY_GOLEMS] <= 0) {
-							flags[kFLAGS.CODEX_ENTRY_GOLEMS] = 1;
-							outputText("\n\n<b>New codex entry unlocked: Golems!</b>")
-						}
-						startCombat(new GolemDummy());
-						return;
-					}
+					startCombat(new Goblin());
+					spriteSelect(24);
+					return;
 				}
 				else {
-					var goblinChooser:int = rand(100);
-					//Level modifier
-					if (player.level < 20) goblinChooser += player.level;
-					else goblinChooser += 20;
-					//Limit chooser range
-					if (goblinChooser > 100) goblinChooser = 100;
-					if (player.level < 10 && goblinChooser >= 20) goblinChooser = 29;
-					else if (player.level < 12 && goblinChooser >= 60) goblinChooser = 49;
-					else if (player.level < 16 && goblinChooser >= 80) goblinChooser = 79;
-					//Goblin assassin!
-					if (goblinChooser >= 30 && goblinChooser < 50) {
-						SceneLib.goblinAssassinScene.goblinAssassinEncounter();
-						spriteSelect(24);
-						return;
+					clearOutput();
+					outputText("A goblin saunters out of the bushes with a dangerous glint in her eyes.\n\nShe says, \"<i>Time to get fuc-oh shit, you don't even have anything to play with!  This is for wasting my time!</i>\"");
+					if (flags[kFLAGS.CODEX_ENTRY_GOBLINS] <= 0) {
+						flags[kFLAGS.CODEX_ENTRY_GOBLINS] = 1;
+						outputText("\n\n<b>New codex entry unlocked: Goblins!</b>")
 					}
-					//Goblin warrior! (Equal chance with Goblin Shaman)
-					else if (goblinChooser >= 50 && goblinChooser < 65) {
-						SceneLib.goblinWarriorScene.goblinWarriorEncounter();
-						spriteSelect(123);
-						return;
-					}
-					//Goblin shaman!
-					else if (goblinChooser >= 65 && goblinChooser < 80) {
-						SceneLib.goblinShamanScene.goblinShamanEncounter();
-						spriteSelect(124);
-						return;
-					}
-					//Goblin elder!
-					else if (goblinChooser >= 80) {
-						SceneLib.goblinElderScene.goblinElderEncounter();
-						spriteSelect(122);
-						return;
-					}
-					if (player.gender > 0) {
-						clearOutput();
-						outputText("A goblin saunters out of the bushes with a dangerous glint in her eyes.\n\nShe says, \"<i>Time to get fucked, " + player.mf("stud", "slut") + ".</i>\"");
-						if (flags[kFLAGS.CODEX_ENTRY_GOBLINS] <= 0) {
-							flags[kFLAGS.CODEX_ENTRY_GOBLINS] = 1;
-							outputText("\n\n<b>New codex entry unlocked: Goblins!</b>")
-						}
-						startCombat(new Goblin());
-						spriteSelect(24);
-						return;
-					}
-					else {
-						clearOutput();
-						outputText("A goblin saunters out of the bushes with a dangerous glint in her eyes.\n\nShe says, \"<i>Time to get fuc-oh shit, you don't even have anything to play with!  This is for wasting my time!</i>\"");
-						if (flags[kFLAGS.CODEX_ENTRY_GOBLINS] <= 0) {
-							flags[kFLAGS.CODEX_ENTRY_GOBLINS] = 1;
-							outputText("\n\n<b>New codex entry unlocked: Goblins!</b>")
-						}
-						startCombat(new Goblin());
-						spriteSelect(24);
-						return;
-					}
+					startCombat(new Goblin());
+					spriteSelect(24);
+					return;
 				}
 			}
 		}
@@ -398,55 +298,6 @@ public class Exploration extends BaseContent
 				return;
 			}
 		}
-		public function genericGolemsEncounters1(even:Boolean = false):void {
-			var golemsChooser:int = rand(60);
-			//Limit chooser range
-			if (player.level < 12 && golemsChooser >= 10) golemsChooser = 9;
-			else if (player.level < 18 && golemsChooser >= 20) golemsChooser = 19;
-			else if (player.level < 24 && golemsChooser >= 30) golemsChooser = 29;
-			else if (player.level < 33 && golemsChooser >= 40) golemsChooser = 39;
-			clearOutput();
-			//Improved dummy golems
-			if (golemsChooser >= 10 && golemsChooser < 20) {
-				outputText("As you take a stroll, from behind of nearby combatants remains emerge group of golems. Looks like you have encountered improved dummy golems! You ready your [weapon] for a fight!");
-				startCombat(new GolemsDummyImproved());
-				return;
-			}
-			//Advanced dummy golems
-			if (golemsChooser >= 20 && golemsChooser < 30) {
-				outputText("As you take a stroll, from behind of nearby combatants remains emerge group of golems. Looks like you have encountered advanced dummy golems! You ready your [weapon] for a fight!");
-				startCombat(new GolemsDummyAdvanced());
-				return;
-			}
-			//Superior dummy golems
-			if (golemsChooser >= 30 && golemsChooser < 40) {
-				outputText("As you take a stroll, from behind of nearby combatants remains emerge group of golems. Looks like you have encountered superior dummy golems! You ready your [weapon] for a fight!");
-				startCombat(new GolemsDummySuperior());
-				return;
-			}
-			//Basic true golems
-			if (golemsChooser >= 40 && golemsChooser < 50) {
-				outputText("As you take a stroll, from behind of nearby combatants remains emerge group of golems. Looks like you have encountered basic true golems! You ready your [weapon] for a fight!");
-				startCombat(new GolemsTrueBasic());
-				return;
-			}
-			//Improved true golems
-			if (golemsChooser >= 50) {
-				outputText("As you take a stroll, from behind of nearby combatants remains emerge group of golems. Looks like you have encountered improved true golems! You ready your [weapon] for a fight!");
-				startCombat(new GolemsTrueImproved());
-				return;
-			}
-			//Dummy golems
-			else {
-				outputText("As you take a stroll, from behind of nearby combatants remains emerge group of golems. Looks like you have encountered dummy golems! You ready your [weapon] for a fight!");
-				if (flags[kFLAGS.CODEX_ENTRY_GOLEMS] <= 0) {
-					flags[kFLAGS.CODEX_ENTRY_GOLEMS] = 1;
-					outputText("\n\n<b>New codex entry unlocked: Golems!</b>")
-				}
-				startCombat(new GolemsDummy());
-				return;
-			}
-		}
 		
 		//Try to find a new location - called from doExplore once the first location is found
 		public function tryDiscover():void
@@ -455,14 +306,6 @@ public class Exploration extends BaseContent
 			// CoC.instance.goblinAssassinScene.goblinAssassinEncounter();
 			// return;
 
-			if (flags[kFLAGS.EVANGELINE_AFFECTION] < 1 && rand(3) == 0) {
-				Evangeline.enterTheEvangeline();
-				return;
-			}
-			if (flags[kFLAGS.EVANGELINE_AFFECTION] == 2 && rand(6) == 0) {
-				Evangeline.alternativEvangelineRecruit();
-				return;
-			}
 			if (player.level > 2 && player.hasKeyItem("Sky Poison Pearl") < 0 && flags[kFLAGS.SKY_POISON_PEARL] < 1 && rand(10) == 0) {
 				pearldiscovery();
 				return;
@@ -650,21 +493,6 @@ public class Exploration extends BaseContent
 					outputText("Your curiosity draws you towards the smoke of a campfire on the edges of the forest. In the gloom ahead you see what appears to be a cage wagon surrounded by several tents, and hear the sounds of guttural voices engaged in boisterous conversation. Inexplicably you find yourself struck by an unwholesome sense of foreboding. <b>Even from here that cage looks like it is designed to carry people off to somewhere very unpleasant, some place where your life could be turned upside down and the rules you have become accustomed to in this world may no longer apply.</b> You take a long moment to consider turning back. Do you throw caution to the wind and investigate further?");
 					//outputText("\n\n(<b>NOTE:</b> Prisoner mod is currently under development and not all scenes are available.)");
 					doYesNo(SceneLib.prison.goDirectlyToPrisonDoNotPassGoDoNotCollect200Gems, camp.returnToCampUseOneHour);
-					return;
-				}
-				else if (choosey == 4 && flags[kFLAGS.HEXINDAO_UNLOCKED] < 1) {
-					player.explored++;
-					clearOutput();
-					outputText("Against your better judgement, curiosity gets the better of you and you find yourself walking into the strange area.");
-					outputText("\n\nNot long into your journey you see a hooded figure, looming across the landscape, moving at the same speed as it goes across the terrain. The odd creature captures your interest and you start to follow it. Taking a moment to look around, there's still no one else around so you continue to tail the mysterious being.");
-					outputText("\n\nHalf an hour or so later, still following the cloaked figure you begin to hear the sound of running water, moving on you eventually come across the source, a decently sized river flows across the land, populated by variously sized island. Stopping for a second to take a look around the hooded person seems to be moving towards one of the several islands. He, she… It is still oblivious to your presence.");
-					outputText("\n\n\"<i> Did you came to visit He'Xin'Dao stranger? </i>\" Suddenly you hear some voice from behind you.");
-					outputText("\n\nTurning around you see few hooded figures similar to the one you been following.  Cursing in thought on getting in such situation and fact that you not even notice them coming so close without you noticing anything, you reply you just been walking and just casually came here.  One of the them measure you for a moment before speaking again. \"<i>You not seems to have strong soulforce, but lucky your soul is enough intact to allow future cultivation. So since you already here what you think about visiting our village? Maybe you would come more often to it in the future?</i>\"");
-					outputText("\n\nYou ponder for a moment over the offer.  Well so far none of them tried to attack you nor rape so maybe it's a worth to check this place?  You shortly reply accepting offer and then their lead you over the wide bridge on the one of the islands.  After stepping on your way is blocked by few heavy armored guards that looking at you with suspicion but then one of your companions explaining to them your guest.  Only then their let you pass by.  Next thing you do is visiting one of smaller islands near the entrance to register yourself as guest and receiving guide to the village.");
-					outputText("\n\nAfter that you're left alone.  Spending some time you wander around checking few interesting places before you decides it's time to come back to the camp.  With guide in your hands you're sure you'll easily find this place again if you need to.");
-					outputText("\n\n\n<b>You have unlocked He'Xin'Dao in Places menu!</b>");
-					flags[kFLAGS.HEXINDAO_UNLOCKED] = 1;
-					doNext(camp.returnToCampUseTwoHours);
 					return;
 				}
 				//Monster - 50/50 imp/gob split.

@@ -6,18 +6,15 @@ package classes.Scenes.Monsters
 {
 import classes.*;
 import classes.GlobalFlags.kFLAGS;
-import classes.Scenes.Places.HeXinDao;
 import classes.Scenes.SceneLib;
 import classes.internals.*;
 
 public class GolemsDummy extends AbstractGolem
 	{
-		public var golems:HeXinDao = new HeXinDao();
-		
 		override public function defeated(hpVictory:Boolean):void
 		{
 			if (player.hasStatusEffect(StatusEffects.SoulArenaGaunlet)) {
-				golems.gaunletchallange1fight2();
+				SceneLib.telAdre.arena.gaunletchallange1fight2();
 			}
 			else SceneLib.combat.finishCombat();
 		}

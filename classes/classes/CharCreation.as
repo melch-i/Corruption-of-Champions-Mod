@@ -75,6 +75,7 @@ import coc.view.MainView;
 		}
 		
 		public function newGameGo():void {
+			CoC.instance.mainMenu.hideMainMenu();
 			XXCNPC.unloadSavedNPCs();
 			mainView.eventTestInput.x = -10207.5;
 			mainView.eventTestInput.y = -1055.1;

@@ -331,7 +331,7 @@ public class PerkLib
 		public static const CatlikeNimbleness:PerkType = mk("Cat-like Nimbleness", "Cat-like Nimbleness",
 				"Your transformed joins allows you to move more swiftly and with greater nimbleness.",
 				"You choose the 'Cat-like Nimbleness' perk. Your body joints due to repeadly usage of cat-like flexibility became more nimble.");
-		public static const CatlikeNimblenessEvolved:PerkType = mk("Cat-like Nimbleness", "Cat-like Nimbleness",
+		public static const CatlikeNimblenessEvolved:PerkType = mk("Cat-like Nimbleness (Evolved)", "Cat-like Nimbleness (Evolved)",
 				"Your nimble body allows you to move more swiftly and with greater nimbleness than before.",
 				"You choose the 'Cat-like Nimbleness (Evolved)' perk. Continuous usage of cat-like flexibility caused it to undergone change.");
 		public static const Channeling:PerkType = mk("Channeling", "Channeling",
@@ -3123,7 +3123,6 @@ public class PerkLib
                     .requireLib(50)
                     .requireStatusEffect(StatusEffects.KnowsArouse, "Arouse spell");
             JobCourtesan.requirePerk(JobSeducer)
-                    .requirePerk(Heroism)
                     .requireLib(50)
                     .requireLevel(12);
             DazzlingDisplay.requirePerk(JobCourtesan)
@@ -3231,23 +3230,23 @@ public class PerkLib
             // CORRUPTION
             //------------
             //Slot 7 - Corrupted Libido - lust raises 10% slower.
-            CorruptedLibido.requireCor(25);
+            CorruptedLibido.requireCor(10);
             CorruptedLibido.defaultValue1 = 20;
             //Slot 7 - Seduction (Must have seduced Jojo)
-            Seduction.requireCor(50);
+            Seduction.requireCor(15);
             //Slot 7 - Nymphomania
-            Nymphomania.requireCor(75)
+            Nymphomania.requireCor(15)
                     .requirePerk(CorruptedLibido);
             //Slot 7 - UNFINISHED :3
-            Acclimation.requireCor(50)
+            Acclimation.requireCor(15)
                     .requirePerk(CorruptedLibido)
                     .requireMinLust(20);
-            SenseCorruption.requireCor(75);
+            SenseCorruption.requireCor(15);
             //Tier 1 Corruption Perks - acclimation over-rides
-            Sadist.requireCor(60)
+            Sadist.requireCor(20)
                     .requirePerk(CorruptedLibido)
                     .requireLevel(6);
-            ArousingAura.requireCor(70)
+            ArousingAura.requireCor(25)
                     .requirePerk(CorruptedLibido)
                     .requireLevel(6);
             //Tier 2
@@ -3457,13 +3456,10 @@ public class PerkLib
             TrachealSystemEvolved.requireLevel(6).requirePerk(TrachealSystem).requireCustomFunction(function (player:Player):Boolean {
                 return player.beeScore() >= 8 || player.mantisScore() >= 8 || player.scorpionScore() >= 8 || player.spiderScore() >= 8;
             }, "Any insect race");
-            JobGolemancer.requireLevel(6)
-                    .requireInt(25)
-                    .requireWis(25);
             ArcanePoolI.requireLevel(6)
                     .requireInt(30)
                     .requireWis(30)
-                    .requireAnyPerk(JobElementalConjurer, JobGolemancer);
+                    .requirePerk(JobElementalConjurer);
             ArcanePoolII.requireLevel(8)
                     .requireInt(40)
                     .requireWis(40)
@@ -3473,24 +3469,6 @@ public class PerkLib
                     .requireInt(50)
                     .requireWis(50)
                     .requirePerk(ArcanePoolII)
-                    .requireNGPlus(2);
-            BeginnerGolemMaker.requireLevel(6)
-                    .requireInt(30)
-                    .requireWis(30)
-                    .requirePerk(JobGolemancer);
-            BiggerGolemBag1.requireLevel(6)
-                    .requireInt(40)
-                    .requireWis(40)
-                    .requirePerk(JobGolemancer);
-            BiggerGolemBag2.requireLevel(8)
-                    .requireInt(60)
-                    .requireWis(60)
-                    .requirePerk(BiggerGolemBag1)
-                    .requireNGPlus(1);
-            BiggerGolemBag3.requireLevel(10)
-                    .requireInt(80)
-                    .requireWis(80)
-                    .requirePerk(BiggerGolemBag2)
                     .requireNGPlus(2);
             ImprovingNaturesBlueprintsNaturalWeapons.requirePerk(JobBeastWarrior)
                     .requireStr(35)
@@ -3585,29 +3563,6 @@ public class PerkLib
                     .requireWis(80)
                     .requirePerk(ArcanePoolV)
                     .requireNGPlus(5);
-            ApprenticeGolemMaker.requireLevel(12)
-                    .requireInt(50)
-                    .requireWis(50)
-                    .requirePerk(BeginnerGolemMaker);
-            BiggerGolemBag4.requireLevel(12)
-                    .requireInt(100)
-                    .requireWis(100)
-                    .requirePerk(BiggerGolemBag3)
-                    .requireNGPlus(3);
-            BiggerGolemBag5.requireLevel(14)
-                    .requireInt(120)
-                    .requireWis(120)
-                    .requirePerk(BiggerGolemBag4)
-                    .requireNGPlus(4);
-            BiggerGolemBag6.requireLevel(14)
-                    .requireInt(140)
-                    .requireWis(140)
-                    .requirePerk(BiggerGolemBag5)
-                    .requireNGPlus(5);
-            ChargedCore.requireLevel(12)
-                    .requireInt(70)
-                    .requireWis(70)
-                    .requirePerk(ApprenticeGolemMaker);
             ImprovedCrinosShape.requirePerk(ImprovingNaturesBlueprintsNaturalWeapons)
                     .requireStr(50)
                     .requireTou(50)
@@ -3639,15 +3594,6 @@ public class PerkLib
                     .requireStr(50)
                     .requireTou(50)
                     .requirePerk(JobWarlord);
-            ExpertGolemMaker.requireLevel(18)
-                    .requireInt(70)
-                    .requireWis(70)
-                    .requirePerk(ApprenticeGolemMaker);
-            SuperChargedCore.requireLevel(18)
-                    .requireInt(90)
-                    .requireWis(90)
-                    .requirePerk(ExpertGolemMaker)
-                    .requirePerk(ChargedCore);
             MakeItDouble.requireLevel(18)
                     .requireStr(50)
                     .requireTou(50)
@@ -3696,10 +3642,6 @@ public class PerkLib
                     .requireStr(70)
                     .requireTou(70)
                     .requirePerk(CycloneStage1);
-            MasterGolemMaker.requireLevel(24)
-                    .requireInt(100)
-                    .requireWis(100)
-                    .requirePerk(ExpertGolemMaker);
             GiantsReach.requireLevel(24)
                     .requireStr(100)
                     .requireTou(100)
@@ -3710,10 +3652,6 @@ public class PerkLib
                     .requireTou(80)
                     .requireSpe(80)
                     .requireLevel(24);
-            FirstAttackGolems.requireLevel(24)
-                    .requirePerk(MasterGolemMaker);
-            //.requireLevel(24)
-            //				 .requirePerk(MasterGolemMaker);
             NaturalHealingEpic.requireLevel(24)
                     .requirePerk(NaturalHealingMajor)
                     .requireInt(25)
@@ -3731,7 +3669,6 @@ public class PerkLib
             /*		DeityJobMunchkin.requirePerk(JobWarlord)
                                             .requirePerk(JobMonk)
                                             .requirePerk(JobKnight)
-                                            .requirePerk(JobGolemancer)
                                             .requirePerk(JobHunter)
                                             .requirePerk(JobEromancer)
                                             .requirePerk(JobEnchanter)
@@ -3762,10 +3699,6 @@ public class PerkLib
                     .requireTou(95)
                     .requireSpe(95)
                     .requireLevel(30);
-            GolemArmyLieutenant.requireLevel(30)
-                    .requireInt(110)
-                    .requireWis(110)
-                    .requirePerk(MasterGolemMaker);
             SpeedyRejuvenation.requirePerk(SpeedyRecuperation)
 							  .requireLevel(30);
             RejuvenationSleep.requirePerk(RecuperationSleep)
@@ -3784,57 +3717,11 @@ public class PerkLib
                     .requireTou(110)
                     .requireSpe(110)
                     .requireLevel(36);
-            GrandMasterGolemMaker.requireLevel(36)
-                    .requireInt(125)
-                    .requireWis(125)
-                    .requirePerk(MasterGolemMaker);
-            //	if (requireMinLevel(36)) {
-            //		if (player.internalChimeraScore() >= 31 && requirePerk(ChimericalBodyPerfectStage)) {
-            //			ChimericalBodyUltimateStage;
-            //		}
             //Tier 7
             CycloneStage5.requireLevel(42)
                     .requireStr(160)
                     .requireTou(160)
                     .requirePerk(CycloneStage4);
-            GolemArmyCaptain.requireLevel(42)
-                    .requireInt(135)
-                    .requireWis(135)
-                    .requirePerk(GolemArmyLieutenant)
-                    .requirePerk(GrandMasterGolemMaker);
-            //Tier 8
-            EpicGolemMaker.requireLevel(48)
-                    .requireInt(150)
-                    .requireWis(150)
-                    .requirePerk(GrandMasterGolemMaker);
-            //Tier 9
-            GolemArmyMajor.requireLevel(54)
-                    .requireInt(160)
-                    .requireWis(160)
-                    .requirePerk(GolemArmyCaptain)
-                    .requirePerk(EpicGolemMaker);
-            //Tier 10
-            LegendaryGolemMaker.requireLevel(60)
-                    .requireInt(175)
-                    .requireWis(175)
-                    .requirePerk(EpicGolemMaker);
-            //Tier 11
-            GolemArmyColonel.requireLevel(66)
-                    .requireInt(185)
-                    .requireWis(185)
-                    .requirePerk(GolemArmyMajor)
-                    .requirePerk(LegendaryGolemMaker);
-            //Tier 12
-            MythicalGolemMaker.requireLevel(72)
-                    .requireInt(200)
-                    .requireWis(200)
-                    .requirePerk(LegendaryGolemMaker);
-            //Tier 13
-            GolemArmyGeneral.requireLevel(78)
-                    .requireInt(210)
-                    .requireWis(210)
-                    .requirePerk(GolemArmyColonel)
-                    .requirePerk(MythicalGolemMaker);
         } catch (e:Error) {
             trace(e.getStackTrace());
         }

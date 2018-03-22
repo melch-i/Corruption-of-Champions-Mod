@@ -33,7 +33,6 @@ import classes.Scenes.Monsters.DarkElfScout;
 import classes.Scenes.Monsters.DarkElfSlaver;
 import classes.Scenes.Monsters.DarkElfSniper;
 import classes.Scenes.NPCs.CelessScene;
-import classes.Scenes.NPCs.Diana;
 import classes.Scenes.NPCs.Electra;
 import classes.Scenes.NPCs.RyuBiDragon;
 import classes.Scenes.NPCs.Sonya;
@@ -190,7 +189,7 @@ use namespace CoC;
 			//addButton(5, "Upgrade", UpgradeItems).hint("."); //ulepszanie itemów
 			if (player.findPerk(PerkLib.Metamorph) >= 0) addButton(6, "Metamorf", SceneLib.metamorph.accessMetamorphMenu).hint("Use your soulforce to mold freely your body.");//używanie metamorfowania z użyciem soulforce
 			if (player.findPerk(PerkLib.SoulSense) >= 0) addButton(7, "Soul Sense", SoulSense).hint("Use your soul sense to trigger specific encounter."); //używanie divine sense aby znaleść określone event encounters: Tamani (lvl 6+), Tamani daugthers (lvl 6+), Kitsune mansion (lvl 12+), Izumi (lvl 18/24+), itp.
-			//addButton(10, "Cheats", SoulforceCheats).hint("Well as title saying those are cheats ^^");//block this option at each public version
+			addButton(10, "Cheats", SoulforceCheats).hint("Well as title saying those are cheats ^^");//block this option at each public version
 			addButton(14, "Back", playerMenu);
 		}//w lini 28 w oOnLoadVariables zmian wprowadzić i w lini conditionalConverters w folderze parser zmian dot. wraith wprowadzić, zablokować perki soul tyrant i dual wield w momencie robienia release version
 		public function SoulforceCheats():void {
@@ -208,36 +207,27 @@ use namespace CoC;
 			addButton(7, "RevertCabin", RevertCabinProgress).hint("Revert cabin flag back to value 2 (for bug fix test)");
 			addButton(8, "Gargoyle", GargoyleMenu).hint("To Be or Not To Be Gargoyle that is a question.");
 			addButton(9, "Camp NPC's", FasterOrInstantCampNPCRecruitment).hint("Menu to speed up recruitment of camp npc's due to testing needs.");
-			addButton(10, "Celess", celessIntroForced).hint("Due to hard time getting her intro here it's.");
-			addButton(11, "BodyPartEditor", SceneLib.debugMenu.bodyPartEditorRoot);
-			if (player.hasPerk(PerkLib.JobBarbarian)) addButton(12, "BarbToSword", replacingBarbsWithsSowrds).hint("Replacing Job: Barbarian with Job: Swordsman to keep integrity of test saves.");
-			//addButton(13, "13", );
+			addButton(10, "BodyPartEditor", SceneLib.debugMenu.bodyPartEditorRoot);
+			addButton(11, "Celess", celessIntroForced).hint("Due to hard time getting her intro here it's.");
+			addButton(12, "DERP", AddEnigmanium).hint("DERP.");
+			if (flags[kFLAGS.LUNA_MOON_CYCLE] > 8) addButton(12, "MoonCycleAdj", moonCycleAdjusting).hint("Adjusting wild moon cycle to pokeba... norm.");
+			if (player.hasPerk(PerkLib.Lycanthropy) && player.skin.coverage != Skin.COVERAGE_LOW) addButton(13, "WWFurFix", fixingWerewolfFur).hint("Fixing full to partial werewolf fur.");
 			addButton(14, "Back", accessSoulforceMenu);
 		}
 public function celessIntroForced():void {
 	clearOutput();
 	CelessScene.instance.birthScene();
 }
-public function replacingBarbsWithsSowrds():void {
-	player.removePerk(PerkLib.JobBarbarian);
-	player.createPerk(PerkLib.JobSwordsman, 0, 0, 0, 0);
+public function moonCycleAdjusting():void {
+	if (flags[kFLAGS.LUNA_MOON_CYCLE] > 8) flags[kFLAGS.LUNA_MOON_CYCLE] = 1;
 	doNext(SoulforceCheats);
 }
-public function LvLUPDiana():void {
-	outputText("\n\n<b>Diana get stronger! (cheat stop working when she reach max possible lvl (atm it's lvl 27))</b>");
-	if (flags[kFLAGS.DIANA_LVL_UP] < 8) flags[kFLAGS.DIANA_LVL_UP]++;
-	doNext(EnemiesMenu);
+public function fixingWerewolfFur():void {
+	player.skin.coverage = Skin.COVERAGE_LOW;
+	player.coatColor = player.hairColor;
+	doNext(SoulforceCheats);
 }
-public function AffectionUpDiana():void {
-	outputText("\n\n<b>+5% Diana affection</b>");
-	if (flags[kFLAGS.DIANA_AFFECTION] < 100) flags[kFLAGS.DIANA_AFFECTION] += 5;
-	doNext(EnemiesMenu);
-}
-public function DELvLDiana():void {
-	outputText("\n\n<b>Diana get weaker! (cheat stop working when she reach lvl 3)</b>");
-	if (flags[kFLAGS.DIANA_LVL_UP] > 0) flags[kFLAGS.DIANA_LVL_UP]--;
-	doNext(EnemiesMenu);
-}
+
 public function FightNightmare():void {
 	clearOutput();
 	outputText("Entering battle with Nightmare! Enjoy ^^");
@@ -693,8 +683,10 @@ public function FightNightmare():void {
 			addButton(8, "NineTailWhip", AddNineTailWhip).hint("Add 1 Nine Tail Whip.");
 			addButton(9, "Hodr's Bow", AddHodrsBow).hint("Add 1 Hodr's Bow.");
 		//	addButton(9, "L Ayo Arm", AddLightAyoArmor).hint("Add 1 Light Ayo Armor for testing purposes.");
-			addButton(10, "SeerHairpin", AddTheSeerHairpin).hint("Add 1 Seer's Hairpin.");
-			addButton(11, "D.Scythe", AddTheDemonicScythe).hint("Add 1 Demonic Scythe.");
+		//	addButton(10, "SeerHairpin", AddTheSeerHairpin).hint("Add 1 Seer's Hairpin.");
+			addButton(10, "TruestriekSword", AddTruestrikeSword).hint("Add 1 Truestrike Sword.");
+		//	addButton(11, "D.Scythe", AddTheDemonicScythe).hint("Add 1 Demonic Scythe.");
+			addButton(11, "ScepterComm", AddSceptreOfCommand).hint("Add 1 Sceptre of Command.");
 			addButton(12, "CatONIneTWhip", AddCatONineTailWhip).hint("Add 1 Bastet Whip.");
 			addButton(13, "InqTome", AddTheInquisitorsTome).hint("Add 1 Inquisitor's Tome.");
 			addButton(14, "Back", SoulforceCheats);
@@ -736,21 +728,15 @@ public function FightNightmare():void {
 			addButton(1, "Marae", FightMarae).hint("Test fight with Marae (depending on game stage she can be buffed or unbuffed).");
 			addButton(2, "Sonya", FightSonya).hint("Test fight with Sonya.");
 			//addButton(3, "RyuBi", FightRyuBi).hint("Test fight with RyuBi.");
-			addButton(3, "Diana", FightDiana).hint("Test fight with Diana.");
 			addButton(4, "Nightmare", FightNightmare).hint("Test fight with Nightmare.");
 			//addButton(4, "Alraune", FightAlraune).hint("Test fight with Alraune.");
 			addButton(5, "DE Scout", FightDarkElfScout).hint("Test fight with Dark Elf Scout. (lvl 15)");
 			addButton(6, "DE Slaver", FightDarkElfSlaver).hint("Test fight with Dark Elf Slaver. (lvl 27)");
 			addButton(7, "DE Ranger", FightDarkElfRanger).hint("Test fight with Dark Elf Ranger. (lvl 39)");
 			//addButton(8, "DE Sniper", FightDarkElfSniper).hint("Test fight with Dark Elf Sniper. (lvl 51)");
-			addButton(8, "DianaAffUp", AffectionUpDiana).hint("+5% Diana aff.");
 			addButton(9, "Electra", FightElectra).hint("Test fight with Electra.");
-			addButton(10, "LvLUP Eva", LvLUPEva).hint("LvL UP forcefully Evangeline for testing purpose up to the limit.");
-			addButton(11, "DELvL Eva", DELvLEva).hint("DE LvL forcefully Evangeline for testing purpose down toward the lvl 12.");
 			//addButton(12, "ObsidianGarg", FightObsidianGargoyle).hint("Test fight with Obsidian Gargoyle.");
 			//addButton(13, "HeroslayerOmni", FightHeroslayerOmnibus).hint("Test fight with Heroslayer Omnibus.");
-			addButton(12, "LvLUP Diana", LvLUPDiana).hint("LvL UP forcefully Diana for testing purpose up to the limit.");
-			addButton(13, "DELvL Diana", DELvLDiana).hint("DE LvL forcefully Diana for testing purpose down toward the lvl 3.");
 			addButton(14, "Back", SoulforceCheats);
 		}
 		public function AscensionMenu():void {
@@ -882,9 +868,17 @@ public function FightNightmare():void {
 			outputText("\n\n<b>(Gained 1 Seer's Hairpin!)</b>\n\n");
 			inventory.takeItem(jewelries.SEERPIN, EquipmentMenu);
 		}
+		public function AddTruestrikeSword():void {
+			outputText("\n\n<b>(Gained 1 Truestrike Sword!)</b>\n\n");
+			inventory.takeItem(weapons.TRSTSWO, EquipmentMenu);
+		}
 		public function AddTheDemonicScythe():void {
 			outputText("\n\n<b>(Gained 1 Demonic Scythe!)</b>\n\n");
 			inventory.takeItem(weapons.DEMSCYT, EquipmentMenu);
+		}
+		public function AddSceptreOfCommand():void {
+			outputText("\n\n<b>(Gained 1 Sceptre of Command!)</b>\n\n");
+			inventory.takeItem(weapons.SCECOMM, EquipmentMenu);
 		}
 		public function AddTheInquisitorsTome():void {
 			outputText("\n\n<b>(Gained 1 Inquisitor's Tome!)</b>\n\n");
@@ -1226,6 +1220,12 @@ public function FightNightmare():void {
 			outputText("\n\n<b>(Gained 1 Sky Poison Pearl!)</b>\n\n");
 			inventory.takeItem(consumables.SPPEARL, EquipmentMenu);
 		}
+
+		public function AddEnigmanium():void {
+			outputText("\n\n<b>(Gained 1 Enigmanium!)</b>\n\n");
+			inventory.takeItem(consumables.ENIGMANIUM, EquipmentMenu);
+		}
+
 		public function AddLightAyoArmor():void {
 			outputText("\n\n<b>(Gained 1 Light Ayo Armor!)</b>\n\n");
 			inventory.takeItem(armors.LAYOARM, EquipmentMenu);
@@ -1300,11 +1300,6 @@ public function FightNightmare():void {
 			outputText("Entering battle with RyuBi! Enjoy ^^");
 			startCombat(new RyuBiDragon());
 		}
-		public function FightDiana():void {
-			clearOutput();
-			outputText("Entering battle with Diana! Enjoy ^^");
-			startCombat(new Diana());
-		}
 		public function FightAlraune():void {
 			clearOutput();
 			outputText("Entering battle with Alraune! Enjoy ^^");
@@ -1344,16 +1339,6 @@ public function FightNightmare():void {
 			clearOutput();
 			outputText("Entering battle with Heroslayer Omnibus! Enjoy ^^");
 			startCombat(new HeroslayerOmnibus());
-		}
-		public function LvLUPEva():void {
-			outputText("\n\n<b>Evangeline get stronger! (cheat stop working when she reach max possible lvl for now (atm it's lvl 42))</b>");
-			if (flags[kFLAGS.EVANGELINE_LVL_UP] < 17) flags[kFLAGS.EVANGELINE_LVL_UP]++;
-			doNext(EnemiesMenu);
-		}
-		public function DELvLEva():void {
-			outputText("\n\n<b>Evangeline get weaker! (cheat stop working when she reach lvl 12)</b>");
-			if (flags[kFLAGS.EVANGELINE_LVL_UP] > 6) flags[kFLAGS.EVANGELINE_LVL_UP]--;
-			doNext(EnemiesMenu);
 		}
 		public function RevertCabinProgress():void {
 			flags[kFLAGS.CAMP_CABIN_PROGRESS] = 2;
