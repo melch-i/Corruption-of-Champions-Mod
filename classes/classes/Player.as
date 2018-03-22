@@ -6045,10 +6045,6 @@ use namespace CoC;
 				maxInt += (5 * newGamePlusMod);
 				maxLib += (5 * newGamePlusMod);
 			}
-			if (findPerk(PerkLib.JobGolemancer) >= 0) {
-				maxInt += (5 * newGamePlusMod);
-				maxWis += (5 * newGamePlusMod);
-			}
 			if (findPerk(PerkLib.JobGuardian) >= 0) maxTou += (5 * newGamePlusMod);
 			if (findPerk(PerkLib.JobHealer) >= 0) {
 				maxInt += (5 * newGamePlusMod);
@@ -6158,18 +6154,6 @@ use namespace CoC;
 			if (findPerk(PerkLib.SoulKing) >= 0) maxWis += 5;
 			if (findPerk(PerkLib.SoulEmperor) >= 0) maxWis += 5;
 			if (findPerk(PerkLib.SoulAncestor) >= 0) maxWis += 5;
-			if (findPerk(PerkLib.EpicGolemMaker) >= 0) {
-				maxInt += 10;
-				maxWis += 10;
-			}
-			if (findPerk(PerkLib.LegendaryGolemMaker) >= 0) {
-				maxInt += 20;
-				maxWis += 20;
-			}
-			if (findPerk(PerkLib.MythicalGolemMaker) >= 0) {
-				maxInt += 30;
-				maxWis += 30;
-			}
 			if (findPerk(PerkLib.CarefulButRecklessAimAndShooting) >= 0 && findPerk(PerkLib.ColdAim) < 0) maxTou -= (15 * newGamePlusMod);
 			if (hasPerk(PerkLib.Lycanthropy)) {
 				if (flags[kFLAGS.LUNA_MOON_CYCLE] == 3 || flags[kFLAGS.LUNA_MOON_CYCLE] == 5) {
@@ -6388,7 +6372,7 @@ use namespace CoC;
 				dynStats("spe", -statusEffectv3(StatusEffects.CrinosShape), "scale", false);
 				removeStatusEffect(StatusEffects.CrinosShape);
 			}
-			if(hasStatusEffect(StatusEffects.EzekielCurse) && flags[kFLAGS.EVANGELINE_AFFECTION] >= 3 && findPerk(PerkLib.EzekielBlessing) >= 0) {
+			if(hasStatusEffect(StatusEffects.EzekielCurse)) {
 				removeStatusEffect(StatusEffects.EzekielCurse);
 			}
 			if(hasStatusEffect(StatusEffects.DragonBreathCooldown) && findPerk(PerkLib.DraconicLungsEvolved) >= 0) {

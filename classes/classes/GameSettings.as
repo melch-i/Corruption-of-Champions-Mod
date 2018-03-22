@@ -19,6 +19,7 @@ public class GameSettings extends BaseContent {
 		return flags[kFLAGS.CHARVIEWER_ENABLED];
 	}
 	public function settingsScreenMain():void {
+		CoC.instance.mainMenu.hideMainMenu();
         CoC.instance.saves.savePermObject(false);
         mainView.showMenuButton(MainView.MENU_NEW_MAIN);
 		mainView.showMenuButton(MainView.MENU_DATA);
@@ -448,11 +449,12 @@ addButton(14, "Back", CoC.instance.mainMenu.mainMenu);
 	}
 	public function menuMainBackground():void {
 		menu();
-		addButton(0, "Map (Default)", setMainBackground, 0);
-		addButton(1, "Parchment", setMainBackground, 1);
-		addButton(2, "Marble", setMainBackground, 2);
-		addButton(3, "Obsidian", setMainBackground, 3);
-		addButton(4, "Black", setMainBackground, 4);
+		addButton(0, "Default", setMainBackground, 0);
+		addButton(1, "Map", setMainBackground, 1);
+		addButton(2, "Parchment", setMainBackground, 2);
+		addButton(3, "Marble", setMainBackground, 3);
+		addButton(4, "Obsidian", setMainBackground, 4);
+		addButton(5, "Black", setMainBackground, 5);
 
 		addButton(14, "Back", settingsScreenInterfaceSettings);
 	}
@@ -462,7 +464,7 @@ addButton(14, "Back", CoC.instance.mainMenu.mainMenu);
 		addButton(0, "Normal", setTextBackground, 0);
 		addButton(1, "White", setTextBackground, 1);
 		addButton(2, "Tan", setTextBackground, 2);
-
+		addButton(3, "Clear", setTextBackground, -1);
 		addButton(14, "Back", settingsScreenInterfaceSettings);
 	}
 
@@ -502,15 +504,12 @@ addButton(14, "Back", CoC.instance.mainMenu.mainMenu);
 			mainView.background.bitmapClass          = MainView.Backgrounds[flags[kFLAGS.BACKGROUND_STYLE]];
 			mainView.statsView.setBackground(StatsView.SidebarBackgrounds[flags[kFLAGS.BACKGROUND_STYLE]]);
 			mainView.monsterStatsView.setBackground(StatsView.SidebarBackgrounds[flags[kFLAGS.BACKGROUND_STYLE]]);
-			settingsScreenInterfaceSettings();
+			menuMainBackground();
 		}
 
 	public function setTextBackground(type:int):void {
-		mainView.textBGWhite.visible = false;
-		mainView.textBGTan.visible   = false;
-		if (type == 1) mainView.textBGWhite.visible = true;
-		if (type == 2) mainView.textBGTan.visible = true;
-		settingsScreenInterfaceSettings();
+		flags[kFLAGS.TEXT_BACKGROUND_STYLE] = type;
+		mainView.setTextBackground(type);
 	}
 
 	public function toggleSpritesFlag(enabled:Boolean, style:int):void {

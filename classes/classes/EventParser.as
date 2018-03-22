@@ -23,6 +23,7 @@ public class EventParser {
     private static var _campSet:Boolean = false;
 
     public static function playerMenu():void {
+        CoC.instance.mainMenu.hideMainMenu();
         CoC.instance.mainViewManager.hidePlayerDoll();
         if (!CoC.instance.inCombat) {
             CoC.instance.spriteSelect(-1);

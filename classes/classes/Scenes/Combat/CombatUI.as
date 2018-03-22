@@ -200,13 +200,6 @@ public class CombatUI extends BaseCombatContent {
 			if (player.hasStatusEffect(StatusEffects.SummonedElementalsIce)) addButton(7, "Ice", combat.baseelementalattacks, Combat.ICE);
 			if (player.hasStatusEffect(StatusEffects.SummonedElementalsLightning)) addButton(8, "Lightning", combat.baseelementalattacks, Combat.LIGHTNING);
 			if (player.hasStatusEffect(StatusEffects.SummonedElementalsDarkness)) addButton(9, "Darkness", combat.baseelementalattacks, Combat.DARKNESS);
-		} else if (player.hasPerk(PerkLib.FirstAttackGolems) && flags[kFLAGS.GOLEMANCER_PERM_GOLEMS] == 1 && flags[kFLAGS.IN_COMBAT_PLAYER_GOLEM_ATTACKED] != 1) {
-			menu();
-			addButton(0, "Send P.Gol/1", combat.pspecials.sendPernamentGolem1);
-			if (monster.plural) {
-				if (flags[kFLAGS.PERNAMENT_GOLEMS_BAG] > 2) addButton(1, "Send P.Gol/3", combat.pspecials.sendPernamentGolem3);
-				if (flags[kFLAGS.PERNAMENT_GOLEMS_BAG] > 4) addButton(2, "Send P.Gol/4", combat.pspecials.sendPernamentGolem5);
-			}
 		}
 		
 		// Modifications - monster-special actions

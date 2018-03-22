@@ -443,7 +443,6 @@ public function combatMenu(newRound:Boolean = true):void { //If returning from a
 	clearOutput();
 	flags[kFLAGS.IN_COMBAT_USE_PLAYER_WAITED_FLAG] = 0;
 	if (newRound) {
-		flags[kFLAGS.IN_COMBAT_PLAYER_GOLEM_ATTACKED] = 0;
 		flags[kFLAGS.IN_COMBAT_PLAYER_ELEMENTAL_ATTACKED] = 0;
 	}
 	mainView.hideMenuButton(MainView.MENU_DATA);
@@ -510,9 +509,6 @@ public function combatMenu(newRound:Boolean = true):void { //If returning from a
 		}
 		if (player.statusEffectv1(StatusEffects.SummonedElementals) >= 1) {
 			buttons.add("Elementals",CoC.instance.perkMenu.summonsbehaviourOptions,"You can adjust your elemental summons behaviour during combat.");
-		}
-		if (flags[kFLAGS.PERNAMENT_GOLEMS_BAG] > 0) {
-			buttons.add("P.Golems",CoC.instance.perkMenu.golemsbehaviourOptions,"You can adjust your pernament golems behaviour during combat.");
 		}
 		if (CoC_Settings.debugBuild && !debug) {
 			buttons.add("Inspect", combat.debugInspect).hint("Use your debug powers to inspect your enemy.");
@@ -3986,18 +3982,6 @@ private function combatStatusesUpdate():void {
 			outputText("<b>Everywhere and nowhere effect ended!</b>\n\n");
 		}
 		else player.addStatusValue(StatusEffects.EverywhereAndNowhere,1,-1);
-	}
-	//Ezekiel Curse
-	if (player.hasStatusEffect(StatusEffects.EzekielCurse)) {
-		if (flags[kFLAGS.EVANGELINE_AFFECTION] >= 2 && player.hasPerk(PerkLib.EzekielBlessing)) {
-			outputText("<b>You feel familiar feeling of your own lifeforce been slowly extinquished.  Maybe you should finish this fight as soon as possible to start healing this aligment?</b>\n\n");
-			player.takePhysDamage(500);
-		}
-		else if (flags[kFLAGS.EVANGELINE_AFFECTION] >= 2) {
-			outputText("<b>You suddenly feel like you very own lifeforce are been at steady pace extinquished the longer you keep fighting.  You better finsh this fight fast or find way to cure your current situation as otherwise...</b>\n\n");
-			if (player.maxHP() < 1000) player.takePhysDamage(player.maxHP() * 0.1);
-			else player.takePhysDamage(100);
-		}
 	}
 	//Flying
 	if(player.isFlying()) {
