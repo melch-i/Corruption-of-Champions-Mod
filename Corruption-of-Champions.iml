@@ -3,7 +3,7 @@
   <component name="FlexBuildConfigurationManager" active="CoC-debug">
     <configurations>
       <configuration name="CoC-debug" main-class="classes.CoC" output-file="CoC-debug.swf" output-folder="$MODULE_DIR$">
-        <dependencies target-player="11.1" component-set="MxOnly" framework-linkage="Merged">
+        <dependencies target-player="11.1" framework-linkage="Merged">
           <entries>
             <entry library-name="lib" library-level="project">
               <dependency linkage="Merged" />
@@ -17,6 +17,7 @@
             <entry key="compiler.keep-generated-actionscript" value="true" />
           </map>
           <option name="resourceFilesMode" value="None" />
+          <option name="additionalOptions" value="-use-network=false" />
         </compiler-options>
         <packaging-air-desktop />
         <packaging-android />
@@ -37,6 +38,7 @@
             <entry key="compiler.define" value="CONFIG::debug&#9;false&#10;CONFIG::release&#9;true&#10;CONFIG::AIR&#9;false&#10;CONFIG::STANDALONE&#9;true" />
           </map>
           <option name="resourceFilesMode" value="None" />
+          <option name="additionalOptions" value="-use-network=false" />
         </compiler-options>
         <packaging-air-desktop />
         <packaging-android />
@@ -50,6 +52,7 @@
           <map>
             <entry key="compiler.define" value="CONFIG::AIR&#9;true&#10;CONFIG::STANDALONE&#9;false&#10;CONFIG::debug&#9;false&#10;CONFIG::release&#9;true" />
           </map>
+          <option name="additionalOptions" value="-use-network=false" />
         </compiler-options>
         <packaging-air-desktop />
         <packaging-android enabled="true" package-file-name="CoC-Mobile" />
