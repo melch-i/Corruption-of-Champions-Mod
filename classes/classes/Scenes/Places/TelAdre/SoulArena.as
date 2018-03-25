@@ -4,11 +4,8 @@ package classes.Scenes.Places.TelAdre
 	import classes.Scenes.Areas.Forest.TentacleBeast;
 	import classes.Scenes.Areas.Mountain.HellHound;
 	import classes.Scenes.Areas.Swamp.CorruptedDrider;
-	import classes.Scenes.Dungeons.HiddenCave.BossGolems;
 	import classes.Scenes.Monsters.DarkElfScout;
 	import classes.Scenes.Monsters.GoblinAssassin;
-	import classes.Scenes.Monsters.GolemsDummy;
-	import classes.Scenes.Places.TelAdre.IgnisArenaSeerScene;
 	import classes.Scenes.SceneLib;
 	import classes.StatusEffects;
 
@@ -74,23 +71,25 @@ package classes.Scenes.Places.TelAdre
 			player.createStatusEffect(StatusEffects.SoulArena, 0, 0, 0, 0);
 			player.createStatusEffect(StatusEffects.SoulArenaGaunlet, 0, 0, 0, 0);
 		}
-		//TODO @Oxdeception Replace this fight with a different monster?
+
 		public function gaunletchallange1fight1():void {
 			clearOutput();
-			outputText("You register for the gauntlet challenge then when called, move out beyond the arena gate to face your opponent. The crowd is big, you sure will have quite the audience. A man with a necktie and a weird stick screams across the area.\n\n");
-			outputText("\"<i>Ladies and gentlemen! Today a new gladiator enter the arena seeking glory of the gauntlet! A triple battle for gold and fame!</i>\"\n\n");
-			outputText("The crowd cheers for you loudly.\n\n");
-			outputText("\"<i>We start with an old timer everyone know about yet even if it is only the warm up do beware... the Dummy golems!!!</i>\"\n\n");
-			outputText("A set of walking stone statues enter the arena, ready for battle. It seems you are to fight these first.\n\n");
+			outputText(
+					"You walk to the sandy center of the Tel’Adre Arena. The city folks are watching you with keen interest likely trying to figure if you will succeed or fail. An announcer using some kind of magical device address the audience.\n\n" +
+					"\"<i>Ladies and gentlemens welcome to the Arena! Today a new combatant has decided to attempt the gauntlet trials and defeat four consecutive opponents. I present you [name] champion of Ignam!</i>\"\n\n" +
+					"The crowd is agitated now the show is about to begin.\n\n" +
+					"\"<i>Ah but a contestant is nothing without the trial. You all love him, and he hates you all in return. This pit dog only lives to beat the crap out of our new would-be gladiator. His name…. BRUTUS!</i>\"\n\n" +
+					"A massive dog morph with the face of a pitbull enters the arena. He holds in his hand a chain linked to a spiked ball he pulls around like an anchor, leaving a deep trail in the arena sand. Your opponent examines you and starts to growl, lifting the steel ball like a kids toy."
+			);
 			player.createStatusEffect(StatusEffects.SoulArena, 0, 0, 0, 0);
 			player.createStatusEffect(StatusEffects.SoulArenaGaunlet, 0, 0, 0, 0);
 			if (flags[kFLAGS.CHI_CHI_AFFECTION] < 10) flags[kFLAGS.CHI_CHI_AFFECTION]++;
-			startCombat(new GolemsDummy());
+			startCombat(new ArenaBrutus());
 		}
 		public function gaunletchallange1fight2():void {
 			clearOutput();
 			gaunletsinbetween();
-			outputText("As the last of the golem falls down, the commentator resumes.\n\n");
+			outputText("The dog morphs defeated, falls over and is escorted out of the arena by a pair of healers. That said the fights are only beginning as the announcer’s voice rings out again.\n\n");
 			outputText("\"<i>This one is straight from the woods. Freshly caught and horny to boot. Can our champion’s strength overcome the beast’s lust? LET'S FIND OUT!!</i>\"\n\n");
 			outputText("A shadow moves out behind the gate, revealing the shape of a fluid starved tentacle beast.\n\n");
 			startCombat(new TentacleBeast());
@@ -145,31 +144,47 @@ package classes.Scenes.Places.TelAdre
 			outputText("\"<i>You are my opponent uh? Doesn’t look like much. Little pet, by the time I’m done binding you, you will seldom call me mistress!</i>\"\n\n");
 			startCombat(new CorruptedDrider());
 		}
-		//todo @Oxdeception replace this fight
+
 		public function gaunletchallange2fight4():void {
+			var raphMet:Boolean = flags[kFLAGS.RAPHAEL_MET] == 1;
 			clearOutput();
 			gaunletsinbetween();
-			outputText("As the drider falls defeated the crowd cheer to your victory. That said the battle is far from over yet. A large amount of shadows mass behind the opposite gate and already you can guess what's coming up for you.\n\n");
-			outputText("\"<i>The final contestant is both a new opponent and a test! The town golemancer has been working extra shifts on these thing she calls her babies!! Using the traditional gargoyle model but deprived of soul so for the purpose of mass production these living weapons will mercilessly beat the hell out of the contestant. Who do you think will win the living or the artificial creation? LEEEEETS FIND OUT!!!!!!</i>\"\n\n");
-			outputText("A full squad of stone gargoyle pour out of the gate their mace like tail trailing in the sands. Their claws are sharp and their soulless gaze tells you it will end poorly should you lose.\n\n");
-			startCombat(new BossGolems());
+			outputText(
+					"Your opponent is defeated, the arena cheers for you as the announcer resumes his speech.\n\n"+
+					"\"<i>Magnificent!!! The Champion of Ignam managed to obtain victory again! However, one final opponent remains! A man shrouded in mystery that is on everyone lips whenever this tournament is initiated. His true name, no one knows, for he is… The Red Avenger!!</i>\"\n\n" +
+					"A sleek, agile figure with a red fox mask moves past the arena gate. He wields a rapier and what could be called clothes with no armor. Whoever wears such low protection is either a fool or a dangerous opponent."
+			);
+			if (raphMet){
+				outputText(" Wait, you know him... That fox morph is Raphael! How did the russet rogue manage to enter the arena undetected by the guards?! Raphael addresses you as well, recognising you the moment he’s within reach.")
+			}
+			outputText(
+					"\"<i>I did not expect to meet you here, senior[if(isfemale)ita]. I go to this place to relax and keep my style sharp. That said, the people paid for this show so I shall not disappoint.[if(isfemale) Such a shame that my opponent has to be you [name], the arena sadly is no place for a lady, so I would ask your pardon for what I am going to do.]</i>\""
+			);
+			if(raphMet){
+				outputText("You never expected you would have to fight with your teacher someday, but so be it. ");
+			}
+			outputText("The fox makes a duel bow, and gets into a fighting stance.");
+			startCombat(new ArenaRaphael());
 		}
 		public function gaunletchallange2postfight():void {
+			var raphMet:Boolean = flags[kFLAGS.RAPHAEL_MET] == 1;
 			clearOutput();
-			outputText("The last gargoyle crumble to rubble and you hold its head up toward the public in victory.\n\n");
-			outputText("\"<i>The challenger defeated all of his opponent what a miracle! Challenger you may now exit the arena and claim your prize, well done!</i>\"\n\n");
-			outputText("You make your way toward the exit and to your surprise meet face to face with the town golemancer. She grudgingly handle you your reward.\n\n");
-			outputText("\"<i>I’m supposed to reward you ");
-			if (flags[kFLAGS.SOUL_ARENA_FINISHED_GAUNLETS] >= 2) {
-				outputText("a full chest of soulstone. Tsk I guess my golems were not ready yet. Next time if you do show up be ready because my future creation will definitely make a bloody mess out of you.</i>\"\n\n");
-				flags[kFLAGS.SPIRIT_STONES] += 20;
-				cleanupAfterCombat();
+			outputText(
+					(raphMet? "The Red Avenger ":"Raphael ") + "bows down in defeat.\n\n" +
+					"\"<i>Well played senior[if(isfemale)ita], I am outmatched. I will be leaving the arena now."
+			);
+			if(flags[kFLAGS.RAPHEAL_COUNTDOWN_TIMER] == -2 && SceneLib.raphael.RaphaelLikes()){
+				outputText(" Hope we meet again, you know where to find me.")
 			}
-			else {
-				outputText("with this scepter. Tsk I guess my golems were not ready yet. Next time if you do show up be ready because my future creation will definitely make a bloody mess out of you.</i>\"\n\n");
-				flags[kFLAGS.SOUL_ARENA_FINISHED_GAUNLETS] = 2;
-				inventory.takeItem(weapons.SCECOMM, cleanupAfterCombat);
+			outputText(
+					"</i>\"\n\n" +
+					"As the fox leaves the arena, the crowd cheers for you as the announcer declares your victory. You head back to the main lobby to claim your prize which awaits you in the form of a chest filled with gems."
+			);
+			if (flags[kFLAGS.SOUL_ARENA_FINISHED_GAUNLETS] > 2) {
+				flags[kFLAGS.SOUL_ARENA_FINISHED_GAUNLETS] = 2
 			}
+			player.gems += 200;
+			cleanupAfterCombat();
 		}
 	}
 }

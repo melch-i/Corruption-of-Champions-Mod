@@ -76,6 +76,9 @@ public class CombatUI extends BaseCombatContent {
 			} else if (player.hasStatusEffect(StatusEffects.KnockedBack)) {
 				outputText("\n<b>You'll need to close some distance before you can use any physical attacks!</b>");
 			}
+			if(player.hasStatusEffect(StatusEffects.Sealed) && player.statusEffectv2(StatusEffects.Sealed) == 11){
+				btnMelee.disable("You are currently unable to attack");
+			}
 		}
 		// Ranged
 		switch (player.weaponRangePerk) {
