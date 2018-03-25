@@ -11,7 +11,6 @@ import classes.Scenes.Areas.BlightRidge;
 import classes.Scenes.Areas.BlightRidge.*;
 import classes.Scenes.Areas.DeepSea;
 import classes.Scenes.Areas.Ocean;
-import classes.Scenes.Dungeons.HiddenCave;
 import classes.Scenes.Explore.ExploreDebug;
 import classes.Scenes.Monsters.*;
 import classes.Scenes.NPCs.RyuBiDragon;
@@ -26,7 +25,6 @@ public class Exploration extends BaseContent
 		public var ocean:Ocean = new Ocean();
 		public var deepsea:DeepSea = new DeepSea();
 		//public var blightridge:BlightRidge = new BlightRidge();	//dla nowych lokacji
-		public var hiddencave:HiddenCave = new HiddenCave();
 		public var TrueDemons:DemonScene = new DemonScene();
 
 		public function Exploration()
@@ -310,10 +308,6 @@ public class Exploration extends BaseContent
 				pearldiscovery();
 				return;
 			}
-			if (player.level > 5 && flags[kFLAGS.HIDDEN_CAVE_FOUND] < 1 && rand(10) == 0) {
-				hiddencavediscovery();
-				return;
-			}
 /*			if (player.level > 5 && flags[kFLAGS.RYUBI_LVL_UP] < 1 && rand(4) == 0) {
 				ryubifirstenc();
 				return;
@@ -512,15 +506,7 @@ public class Exploration extends BaseContent
 			outputText("While exploring, you feel something is off.  Wary of meeting new things in this world after your previous experiences, you decide to cautiously locate the source of this feeling.  Soon the object comes into view and you can see that it is an ordinary looking pearl.  Knowing that it may be more then it looks to be you check the suroundings next to it for a while before deciding to touch it.  Nothing happens so since it somehow attracted your attention you pocket this pearl.\n\n");
 			inventory.takeItem(consumables.SPPEARL, camp.returnToCampUseOneHour);
 		}
-		
-		public function hiddencavediscovery():void {
-			flags[kFLAGS.HIDDEN_CAVE_FOUND] = 1;
-			outputText("You aproach what looks like a cave at first but the shattered bones on the ground hint to something else. Still where theres bones and dead explorer is bound to be treasure. The entrance is decorated with a pair of fiery torch");
-			if (silly()) outputText(" and a sparkling arrow shaped sign post tell 'please come in adventurer, I'm in need of more bony decoration'");
-			outputText(".\n\n");
-			doNext(hiddencave.enterDungeon);
-		}
-		
+
 		public function ryubifirstenc():void {
 			flags[kFLAGS.RYUBI_LVL_UP] = 1;
 			clearOutput();

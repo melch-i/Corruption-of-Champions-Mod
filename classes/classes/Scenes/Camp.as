@@ -58,7 +58,6 @@ use namespace CoC;
 		public var dungeon2:DeepCave = new DeepCave();
 		public var dungeonS:DesertCave = new DesertCave();
 		public var dungeonH:HelDungeon = new HelDungeon();
-		public var dungeonHC:HiddenCave = new HiddenCave();
 		public var dungeonDD:DenOfDesire = new DenOfDesire();
 		public var dungeonAP:AnzuPalace = new AnzuPalace();
 		public var HolliPure:HolliPureScene = new HolliPureScene();
@@ -2454,7 +2453,6 @@ private function dungeonFound():Boolean { //Returns true as soon as any known du
 	if (flags[kFLAGS.DISCOVERED_WITCH_DUNGEON] > 0) return true;
 	if (flags[kFLAGS.D3_DISCOVERED] > 0) return true;
 	if (SceneLib.dungeons.checkPhoenixTowerClear()) return true;
-	if (flags[kFLAGS.HIDDEN_CAVE_FOUND] > 0) return true;
 	if (flags[kFLAGS.DEN_OF_DESIRE_BOSSES] > 0) return true;
 	if (flags[kFLAGS.LUMI_MET] > 0)  return true;
 	if (flags[kFLAGS.ANZU_PALACE_UNLOCKED] > 0)  return true;
@@ -2568,7 +2566,6 @@ private function dungeons():void {
 	//Side dungeons
 	if (flags[kFLAGS.DISCOVERED_WITCH_DUNGEON] > 0) addButton(5, "Desert Cave", dungeonS.enterDungeon).hint("Visit the cave you've found in the desert." + (flags[kFLAGS.SAND_WITCHES_COWED] + flags[kFLAGS.SAND_WITCHES_FRIENDLY] > 0 ? "\n\nFrom what you've known, this is the source of the Sand Witches." : "") + (SceneLib.dungeons.checkSandCaveClear() ? "\n\nCLEARED!" : ""));
 	if (SceneLib.dungeons.checkPhoenixTowerClear()) addButton(6, "Phoenix Tower", dungeonH.returnToHeliaDungeon).hint("Re-visit the tower you went there as part of Helia's quest." + (SceneLib.dungeons.checkPhoenixTowerClear() ? "\n\nYou've helped Helia in the quest and resolved the problems. \n\nCLEARED!" : ""));
-	if (flags[kFLAGS.HIDDEN_CAVE_FOUND] > 0) addButton(10, "Hidden Cave", dungeonHC.enterDungeon).hint("Visit the hidden cave in the hills." + (SceneLib.dungeons.checkHiddenCaveClear() ? "\n\nCLEARED!" : ""));
 	if (flags[kFLAGS.DEN_OF_DESIRE_BOSSES] > 0) addButton(11, "Den of Desire", dungeonDD.enterDungeon).hint("Visit the den in blight ridge." + (SceneLib.dungeons.checkDenOfDesireClear() ? "\n\nCLEARED!" : ""));
 	if (flags[kFLAGS.LUMI_MET] > 0) addButton(12, "Lumi's Lab", SceneLib.lumi.lumiEncounter).hint("Visit Lumi's laboratory.");
 	if (flags[kFLAGS.ANZU_PALACE_UNLOCKED] > 0) addButton(13, "Anzu's Palace", dungeonAP.enterDungeon).hint("Visit the palace in the Glacial Rift where Anzu the avian deity resides.");
@@ -2915,7 +2912,6 @@ private function ascendForReal():void {
 	if (SceneLib.dungeons.checkDeepCaveClear()) performancePoints++;
 	if (SceneLib.dungeons.checkLethiceStrongholdClear()) performancePoints++;
 	if (SceneLib.dungeons.checkSandCaveClear()) performancePoints++;
-	if (SceneLib.dungeons.checkHiddenCaveClear()) performancePoints++;
 	if (SceneLib.dungeons.checkDenOfDesireClear()) performancePoints++;
 	if (SceneLib.dungeons.checkPhoenixTowerClear()) performancePoints += 2;
 	//Quests
@@ -3618,10 +3614,6 @@ private function updateAchievements():void {
 	}
 	if (SceneLib.dungeons.checkLethiceStrongholdClear()) {
 		awardAchievement("End of Reign", kACHIEVEMENTS.DUNGEON_END_OF_REIGN);
-		dungeonsCleared++;
-	}
-	if (SceneLib.dungeons.checkHiddenCaveClear()) {
-		awardAchievement("Tiger stalking the Dragon", kACHIEVEMENTS.DUNGEON_TIGER_STALKING_THE_DRAGON);
 		dungeonsCleared++;
 	}
 	if (SceneLib.dungeons.checkDenOfDesireClear()) {

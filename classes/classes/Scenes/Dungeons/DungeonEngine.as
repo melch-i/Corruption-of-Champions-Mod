@@ -52,32 +52,6 @@ public class DungeonEngine extends BaseContent
 		private static const DUNGEON_WITCH_SACRIFICIAL_ALTAR:int	= 37;
 		private static const DUNGEON_WITCH_THRONE_ROOM:int			= 38;
 		
-		private static const DUNGEON_HIDDEN_CAVE_ENTRANCE:int		= 39;
-		private static const DUNGEON_HIDDEN_CAVE_SE_UP:int			= 40;
-		private static const DUNGEON_HIDDEN_CAVE_E_UP:int			= 41;
-		private static const DUNGEON_HIDDEN_CAVE_NE_UP:int			= 42;
-		private static const DUNGEON_HIDDEN_CAVE_N_UP:int			= 43;
-		private static const DUNGEON_HIDDEN_CAVE_S_STAIRCASE:int	= 44;
-		private static const DUNGEON_HIDDEN_CAVE_S_UP:int			= 45;
-		private static const DUNGEON_HIDDEN_CAVE_S_STORAGE:int		= 46;
-		private static const DUNGEON_HIDDEN_CAVE_NW_UP:int			= 47;
-		private static const DUNGEON_HIDDEN_CAVE_W_UP:int			= 48;
-		private static const DUNGEON_HIDDEN_CAVE_SW_UP:int			= 49;
-		private static const DUNGEON_HIDDEN_CAVE_NARROW_T_E:int		= 50;
-		private static const DUNGEON_HIDDEN_CAVE_NARROW_T  :int		= 51;
-		private static const DUNGEON_HIDDEN_CAVE_NARROW_T_N:int		= 52;
-		private static const DUNGEON_HIDDEN_CAVE_L_STORAGE_W:int	= 53;
-		private static const DUNGEON_HIDDEN_CAVE_L_STORAGE_E:int	= 54;
-		private static const DUNGEON_HIDDEN_CAVE_S_STAIRCASE_B:int	= 55;
-		private static const DUNGEON_HIDDEN_CAVE_TUNNEL_00:int  	= 56;
-		private static const DUNGEON_HIDDEN_CAVE_TUNNEL_01:int  	= 57;
-		private static const DUNGEON_HIDDEN_CAVE_TUNNEL_02:int  	= 58;
-		private static const DUNGEON_HIDDEN_CAVE_TEDS_LAIR:int   	= 59;
-		private static const DUNGEON_HIDDEN_CAVE_SMALL_CAVE_W:int  	= 60;
-		private static const DUNGEON_HIDDEN_CAVE_MEDIUM_CAVE:int  	= 61;
-		private static const DUNGEON_HIDDEN_CAVE_SMALL_CAVE_E:int  	= 62;
-		private static const DUNGEON_HIDDEN_CAVE_SMALL_CAVE_N:int  	= 63;
-		
 		private static const DUNGEON_DEN_OF_DESIRE_ENTRANCE:int  			= 64;
 		private static const DUNGEON_DEN_OF_DESIRE_GREAT_HALL_AREA:int  	= 65;
 		private static const DUNGEON_DEN_OF_DESIRE_LABORATORY:int  			= 66;
@@ -127,7 +101,6 @@ public class DungeonEngine extends BaseContent
 		public var desertcave:DesertCave = new DesertCave;
 		public var heltower:HelDungeon = new HelDungeon;
 		public var cabin:YourCabin = new YourCabin;
-		public var hiddencave:HiddenCave = new HiddenCave();
 		public var denofdesire:DenOfDesire = new DenOfDesire();
 		public var anzupalace:AnzuPalace = new AnzuPalace();
 		
@@ -182,32 +155,6 @@ public class DungeonEngine extends BaseContent
 			if (DungeonAbstractContent.dungeonLoc == DUNGEON_WITCH_CUM_WITCH_OFFICE) desertcave.roomCumWitchOffice();
 			if (DungeonAbstractContent.dungeonLoc == DUNGEON_WITCH_SACRIFICIAL_ALTAR) desertcave.roomSacrificalAltar();
 			if (DungeonAbstractContent.dungeonLoc == DUNGEON_WITCH_THRONE_ROOM) desertcave.roomSandMotherThrone();
-			//Hidden Cave
-			if (DungeonAbstractContent.dungeonLoc == DUNGEON_HIDDEN_CAVE_ENTRANCE) hiddencave.roomEntrance();
-			if (DungeonAbstractContent.dungeonLoc == DUNGEON_HIDDEN_CAVE_SE_UP) hiddencave.roomSEUP();
-			if (DungeonAbstractContent.dungeonLoc == DUNGEON_HIDDEN_CAVE_E_UP) hiddencave.roomEUP();
-			if (DungeonAbstractContent.dungeonLoc == DUNGEON_HIDDEN_CAVE_NE_UP) hiddencave.roomNEUP();
-			if (DungeonAbstractContent.dungeonLoc == DUNGEON_HIDDEN_CAVE_N_UP) hiddencave.roomNUP();
-			if (DungeonAbstractContent.dungeonLoc == DUNGEON_HIDDEN_CAVE_S_STAIRCASE) hiddencave.roomSStaircase();
-			if (DungeonAbstractContent.dungeonLoc == DUNGEON_HIDDEN_CAVE_S_UP) hiddencave.roomSUP();
-			if (DungeonAbstractContent.dungeonLoc == DUNGEON_HIDDEN_CAVE_S_STORAGE) hiddencave.roomSStorage();
-			if (DungeonAbstractContent.dungeonLoc == DUNGEON_HIDDEN_CAVE_NW_UP) hiddencave.roomNWUP();
-			if (DungeonAbstractContent.dungeonLoc == DUNGEON_HIDDEN_CAVE_W_UP) hiddencave.roomWUP();
-			if (DungeonAbstractContent.dungeonLoc == DUNGEON_HIDDEN_CAVE_SW_UP) hiddencave.roomSWUP();
-			if (DungeonAbstractContent.dungeonLoc == DUNGEON_HIDDEN_CAVE_NARROW_T_E) hiddencave.roomNTE();
-			if (DungeonAbstractContent.dungeonLoc == DUNGEON_HIDDEN_CAVE_NARROW_T) hiddencave.roomNT();
-			if (DungeonAbstractContent.dungeonLoc == DUNGEON_HIDDEN_CAVE_NARROW_T_N) hiddencave.roomNTN();
-			if (DungeonAbstractContent.dungeonLoc == DUNGEON_HIDDEN_CAVE_L_STORAGE_W) hiddencave.roomLStorageW();
-			if (DungeonAbstractContent.dungeonLoc == DUNGEON_HIDDEN_CAVE_L_STORAGE_E) hiddencave.roomLStorageE();
-			if (DungeonAbstractContent.dungeonLoc == DUNGEON_HIDDEN_CAVE_S_STAIRCASE_B) hiddencave.roomSStaircaseB();
-			if (DungeonAbstractContent.dungeonLoc == DUNGEON_HIDDEN_CAVE_TUNNEL_00) hiddencave.roomTunnel00();
-			if (DungeonAbstractContent.dungeonLoc == DUNGEON_HIDDEN_CAVE_TUNNEL_01) hiddencave.roomTunnel01();
-			if (DungeonAbstractContent.dungeonLoc == DUNGEON_HIDDEN_CAVE_TUNNEL_02) hiddencave.roomTunnel02();
-			if (DungeonAbstractContent.dungeonLoc == DUNGEON_HIDDEN_CAVE_TEDS_LAIR) hiddencave.roomTedsLair();
-			if (DungeonAbstractContent.dungeonLoc == DUNGEON_HIDDEN_CAVE_SMALL_CAVE_W) hiddencave.roomSmallCaveW();
-			if (DungeonAbstractContent.dungeonLoc == DUNGEON_HIDDEN_CAVE_MEDIUM_CAVE) hiddencave.roomMediumCave();
-			if (DungeonAbstractContent.dungeonLoc == DUNGEON_HIDDEN_CAVE_SMALL_CAVE_E) hiddencave.roomSmallCaveE();
-			if (DungeonAbstractContent.dungeonLoc == DUNGEON_HIDDEN_CAVE_SMALL_CAVE_N) hiddencave.roomSmallCaveN();
 			//Den of Desire
 			if (DungeonAbstractContent.dungeonLoc == DUNGEON_DEN_OF_DESIRE_ENTRANCE) denofdesire.roomEntrance();
 			if (DungeonAbstractContent.dungeonLoc == DUNGEON_DEN_OF_DESIRE_GREAT_HALL_AREA) denofdesire.roomGreatHallArea();
@@ -246,9 +193,6 @@ public class DungeonEngine extends BaseContent
 		}
 		public function checkPhoenixTowerClear():Boolean {
 			return (flags[kFLAGS.HARPY_QUEEN_EXECUTED] != 0 && flags[kFLAGS.HEL_HARPIES_DEFEATED] > 0 && flags[kFLAGS.HEL_PHOENIXES_DEFEATED] > 0 && flags[kFLAGS.HEL_BRIGID_DEFEATED] > 0);
-		}
-		public function checkHiddenCaveClear():Boolean {
-			return (flags[kFLAGS.HIDDEN_CAVE_BOSSES] > 1 && flags[kFLAGS.HIDDEN_CAVE_LOLI_BAT_GOLEMS] > 4 && flags[kFLAGS.HIDDEN_CAVE_GOLEM_GROUPS] > 7);
 		}
 		public function checkDenOfDesireClear():Boolean {
 			return (flags[kFLAGS.DEN_OF_DESIRE_BOSSES] > 2);
