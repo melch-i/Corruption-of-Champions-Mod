@@ -61,6 +61,10 @@ public class Combat extends BaseContent {
 	public static const WOOD:int      = 8;
 	public static const METAL:int     = 9;
 	public static const ETHER:int     = 10;
+
+	//Used to display image of the enemy while fighting
+	//Set once during startCombat() to prevent it from changing every combat turn
+	private var imageText:String = "";
 	
 	public function get inCombat():Boolean {
         return CoC.instance.inCombat;
@@ -238,6 +242,10 @@ public function cleanupAfterCombatImpl(nextFunc:Function = null):void {
 	if (inCombat) {
 		//clear status
 		clearStatuses(false);
+
+		//reset the stored image for next monster
+		imageText = "";
+
 		//Clear itemswapping in case it hung somehow
 //No longer used:		itemSwapping = false;
 		//Player won
@@ -4454,6 +4462,12 @@ public function startCombatImpl(monster_:Monster, plotFight_:Boolean = false):vo
 	//Flag the game as being "in combat"
 	inCombat = true;
 	monster = monster_;
+	if(monster.imageName != ""){
+		var monsterName:String = "monster-"+monster.imageName;
+		imageText = images.showImage(monsterName);
+	} else {
+		imageText = "";
+	}
 	monster.prepareForCombat();
 	if(monster.short == "Ember") {
 		monster.pronoun1 = SceneLib.emberScene.emberMF("he","she");
@@ -4526,13 +4540,9 @@ public function display():void {
 	}
 	var math:Number = monster.HPRatio();
 
-	//trace("trying to show monster image!");
-	if (monster.imageName != "")
-	{
-		var monsterName:String = "monster-" + monster.imageName;
-		//trace("Monster name = ", monsterName);
-		outputText(images.showImage(monsterName));
-	}
+	//imageText set in startCombat()
+	outputText(imageText);
+
 	outputText("<b>You are fighting ");
 	outputText(monster.a + monster.short + ":</b> \n");
 	if (player.hasStatusEffect(StatusEffects.Blind)) {
