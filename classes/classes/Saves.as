@@ -607,7 +607,7 @@ public function savePermObject(isFile:Boolean):void {
 	}
 	else
 	{
-		saveFile = SharedObject.getLocal("CoC_Main", "/");
+		saveFile = SharedObject.getLocal(sharedDir+"CoC_Main", "/");
 	}
 	
 	saveFile.data.exists = true;
@@ -668,7 +668,7 @@ public function savePermObject(isFile:Boolean):void {
 }
 
 public function loadPermObject():void {
-	var saveFile:* = SharedObject.getLocal("CoC_Main", "/");
+	var saveFile:* = SharedObject.getLocal(sharedDir+"CoC_Main", "/");
 	trace("Loading achievements!");
 	//Initialize the save file
 	//var saveFile:Object = loader.data.readObject();
