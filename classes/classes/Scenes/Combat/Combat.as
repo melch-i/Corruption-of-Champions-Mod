@@ -1043,9 +1043,7 @@ internal function wait():void {
 	else if (player.hasStatusEffect(StatusEffects.NagaBind)) {
 		clearOutput();
 		if(monster is Diva){(monster as Diva).moveBite();}
-		if (monster is CaiLin && flags[kFLAGS.CAILIN_AFFECTION] >= 10) outputText("Cai'Lin");
-		else outputText("The [monster name]");
-		outputText("'s grip on you tightens as you relax into the stimulating pressure.");
+		outputText("The [monster name]'s grip on you tightens as you relax into the stimulating pressure.");
 		dynStats("lus", player.sens / 5 + 5);
 		player.takePhysDamage(5 + rand(5));
 		skipMonsterAction = true;
@@ -1185,13 +1183,10 @@ internal function wait():void {
 			player.removeStatusEffect(StatusEffects.NagaBind);
 		}
 		else {
-			if (monster is CaiLin && flags[kFLAGS.CAILIN_AFFECTION] >= 10) outputText("Cai'Lin");
-			else outputText("The [monster name]");
-			outputText("'s grip on you tightens as you struggle to break free from the stimulating pressure.");
+			outputText("The [monster name]'s grip on you tightens as you struggle to break free from the stimulating pressure.");
 			dynStats("lus", player.sens / 10 + 2);
 			if (monster is Naga) player.takePhysDamage(7 + rand(5));
 			if (monster is Gorgon) player.takePhysDamage(17 + rand(15));
-			if (monster is CaiLin) player.takePhysDamage(10 + rand(8));
 			if (monster is Diva){(monster as Diva).moveBite();}
 		}
 		skipMonsterAction = true;

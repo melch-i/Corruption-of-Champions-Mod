@@ -35,7 +35,6 @@ import classes.Scenes.Monsters.DarkElfSniper;
 import classes.Scenes.NPCs.CelessScene;
 import classes.Scenes.NPCs.Electra;
 import classes.Scenes.NPCs.RyuBiDragon;
-import classes.Scenes.NPCs.Sonya;
 import classes.Scenes.Places.Boat.Marae;
 import classes.Scenes.Areas.Forest.Nightmare;
 
@@ -726,7 +725,6 @@ public function FightNightmare():void {
 			menu();
 			addButton(0, "FightForPearl", FightForPearl).hint("Test fight to get Sky Poison Pearl legally (aside we cheat to start fight)");
 			addButton(1, "Marae", FightMarae).hint("Test fight with Marae (depending on game stage she can be buffed or unbuffed).");
-			addButton(2, "Sonya", FightSonya).hint("Test fight with Sonya.");
 			//addButton(3, "RyuBi", FightRyuBi).hint("Test fight with RyuBi.");
 			addButton(4, "Nightmare", FightNightmare).hint("Test fight with Nightmare.");
 			//addButton(4, "Alraune", FightAlraune).hint("Test fight with Alraune.");
@@ -1289,11 +1287,6 @@ public function FightNightmare():void {
 			clearOutput();
 			outputText("Entering battle with Marae Boss! Enjoy ^^");
 			startCombat(new Marae());
-		}
-		public function FightSonya():void {
-			clearOutput();
-			outputText("Entering battle with Sonya! Enjoy ^^");
-			startCombat(new Sonya());
 		}
 		public function FightRyuBi():void {
 			clearOutput();

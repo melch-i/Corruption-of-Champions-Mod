@@ -160,8 +160,6 @@ public class SceneLib {
 
     public static var sophieScene:SophieScene = new SophieScene();
 
-    public static var tedScene:TedScenes = new TedScenes();
-
     public static var urta:Urta = new Urta();
 
     public static var urtaHeatRut:UrtaHeatRut = new UrtaHeatRut();
