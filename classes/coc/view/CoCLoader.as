@@ -82,6 +82,10 @@ public class CoCLoader {
 	public static var BUNDLE_RES_CHARVIEW_BODY_PNG:Class;
 	bundleImage("res/charview/body.png",BUNDLE_RES_CHARVIEW_BODY_PNG);
 
+	[Embed(source="../../../res/charview/extra.png", mimeType="image/png")]
+	public static var BUNDLE_RES_CHARVIEW_extra_PNG:Class;
+	bundleImage("res/charview/extra.png",BUNDLE_RES_CHARVIEW_extra_PNG);
+
 	[Embed(source="../../../res/charview/hair.png", mimeType="image/png")]
 	public static var BUNDLE_RES_CHARVIEW_HAIR_PNG:Class;
 	bundleImage("res/charview/hair.png",BUNDLE_RES_CHARVIEW_HAIR_PNG);
