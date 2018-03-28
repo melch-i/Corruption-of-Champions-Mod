@@ -1023,7 +1023,7 @@ import coc.view.MainView;
 			clearOutput();
 			outputText("You can choose a breast size. Breast size may be altered later in the game.");
 			menu();
-			if (player.femininity < 50) addButton(0, "Flat", chooseBreastSize, 0);
+			if (player.femininity < 50 || player.isMale()) addButton(0, "Flat", chooseBreastSize, 0);
 			if (player.femininity < 60) addButton(1, "A-cup", chooseBreastSize, 1);
 			if (player.femininity >= 40) addButton(2, "B-cup", chooseBreastSize, 2);
 			if (player.femininity >= 50) addButton(3, "C-cup", chooseBreastSize, 3);

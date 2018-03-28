@@ -11,7 +11,6 @@ import classes.Scenes.Areas.HighMountains.TempleOfTheDivine;
 import classes.Scenes.Camp.*;
 import classes.Scenes.Dungeons.*;
 import classes.Scenes.NPCs.*;
-import classes.Scenes.Places.HeXinDao;
 import classes.lists.Gender;
 
 import coc.view.ButtonDataList;
@@ -55,12 +54,10 @@ use namespace CoC;
 		public var codex:Codex = new Codex();
 		public var questlog:Questlog = new Questlog();
 		public var soulforce:Soulforce = new Soulforce();
-		public var hexindao:HeXinDao = new HeXinDao();
 		public var dungeon1:Factory = new Factory();
 		public var dungeon2:DeepCave = new DeepCave();
 		public var dungeonS:DesertCave = new DesertCave();
 		public var dungeonH:HelDungeon = new HelDungeon();
-		public var dungeonHC:HiddenCave = new HiddenCave();
 		public var dungeonDD:DenOfDesire = new DenOfDesire();
 		public var dungeonAP:AnzuPalace = new AnzuPalace();
 		public var HolliPure:HolliPureScene = new HolliPureScene();
@@ -862,7 +859,7 @@ CoC.instance.saves.saveGame(player.slotName);
 	if (player.fatigue > 40 || player.HP / player.maxHP() <= .9) addButton(12, "Rest", rest).hint("Rest for four hours.\n\nShift-click to rest until fully healed or night comes.");
 	if (model.time.hours >= 21 || model.time.hours < 6) addButton(12, "Sleep", doSleep).hint("Turn yourself in for the night.");
 //	if (flags[kFLAGS.EVANGELINE_FOLLOWER] >= 1 && player.findPerk(PerkLib.EzekielBlessing) < 0) addButton(13, "Remov. Curse", EzekielCurseQuickFix).hint("Quick fix for Ezekiel curse when ezekiel fruit was lost.");
-
+	if(debug || CONFIG::debug){addButton(13, "Debug Menu", SceneLib.debugMenu.accessDebugMenu);}
 	//Remove buttons according to conditions.
 	if (model.time.hours >= 21 || model.time.hours < 6) {
 		removeButton(0); //Explore
@@ -2456,7 +2453,6 @@ private function dungeonFound():Boolean { //Returns true as soon as any known du
 	if (flags[kFLAGS.DISCOVERED_WITCH_DUNGEON] > 0) return true;
 	if (flags[kFLAGS.D3_DISCOVERED] > 0) return true;
 	if (SceneLib.dungeons.checkPhoenixTowerClear()) return true;
-	if (flags[kFLAGS.HIDDEN_CAVE_FOUND] > 0) return true;
 	if (flags[kFLAGS.DEN_OF_DESIRE_BOSSES] > 0) return true;
 	if (flags[kFLAGS.LUMI_MET] > 0)  return true;
 	if (flags[kFLAGS.ANZU_PALACE_UNLOCKED] > 0)  return true;
@@ -2505,7 +2501,6 @@ public function placesCount():int {
 	if (flags[kFLAGS.AMILY_VILLAGE_ACCESSIBLE] > 0) places++;
 	if (flags[kFLAGS.MET_MINERVA] >= 4) places++;
 	if (flags[kFLAGS.KITSUNE_SHRINE_UNLOCKED] > 0) places++;
-	if (flags[kFLAGS.HEXINDAO_UNLOCKED] > 0) places++;
 	if (flags[kFLAGS.FOUND_TEMPLE_OF_THE_DIVINE] > 0) places++;
 	if (flags[kFLAGS.PRISON_CAPTURE_COUNTER] > 0) places++;
 	return places;
@@ -2528,8 +2523,6 @@ public function places():Boolean {
 	if (player.statusEffectv1(StatusEffects.TelAdre) >= 1) addButton(5, "Tel'Adre", SceneLib.telAdre.telAdreMenu).hint("Visit the city of Tel'Adre in desert, easily recognized by the massive tower.");
 	if (flags[kFLAGS.BAZAAR_ENTERED] > 0) addButton(6, "Bazaar", SceneLib.bazaar.enterTheBazaar).hint("Visit the Bizarre Bazaar where the demons and corrupted beings hang out.");
 	if (flags[kFLAGS.OWCA_UNLOCKED] == 1) addButton(7, "Owca", SceneLib.owca.gangbangVillageStuff).hint("Visit the sheep village of Owca, known for its pit where a person is hung on the pole weekly to be gang-raped by the demons.");
-	
-	if (flags[kFLAGS.HEXINDAO_UNLOCKED] == 1) addButton(10, "He'Xin'Dao", hexindao.riverislandVillageStuff).hint("Visit the village of He'xin'dao, place where all greenhorn soul cultivators come together.");
 	addButton(4, "Next", placesPage2);
 	addButton(14, "Back", playerMenu);
 	return true;
@@ -2573,7 +2566,6 @@ private function dungeons():void {
 	//Side dungeons
 	if (flags[kFLAGS.DISCOVERED_WITCH_DUNGEON] > 0) addButton(5, "Desert Cave", dungeonS.enterDungeon).hint("Visit the cave you've found in the desert." + (flags[kFLAGS.SAND_WITCHES_COWED] + flags[kFLAGS.SAND_WITCHES_FRIENDLY] > 0 ? "\n\nFrom what you've known, this is the source of the Sand Witches." : "") + (SceneLib.dungeons.checkSandCaveClear() ? "\n\nCLEARED!" : ""));
 	if (SceneLib.dungeons.checkPhoenixTowerClear()) addButton(6, "Phoenix Tower", dungeonH.returnToHeliaDungeon).hint("Re-visit the tower you went there as part of Helia's quest." + (SceneLib.dungeons.checkPhoenixTowerClear() ? "\n\nYou've helped Helia in the quest and resolved the problems. \n\nCLEARED!" : ""));
-	if (flags[kFLAGS.HIDDEN_CAVE_FOUND] > 0) addButton(10, "Hidden Cave", dungeonHC.enterDungeon).hint("Visit the hidden cave in the hills." + (SceneLib.dungeons.checkHiddenCaveClear() ? "\n\nCLEARED!" : ""));
 	if (flags[kFLAGS.DEN_OF_DESIRE_BOSSES] > 0) addButton(11, "Den of Desire", dungeonDD.enterDungeon).hint("Visit the den in blight ridge." + (SceneLib.dungeons.checkDenOfDesireClear() ? "\n\nCLEARED!" : ""));
 	if (flags[kFLAGS.LUMI_MET] > 0) addButton(12, "Lumi's Lab", SceneLib.lumi.lumiEncounter).hint("Visit Lumi's laboratory.");
 	if (flags[kFLAGS.ANZU_PALACE_UNLOCKED] > 0) addButton(13, "Anzu's Palace", dungeonAP.enterDungeon).hint("Visit the palace in the Glacial Rift where Anzu the avian deity resides.");
@@ -2920,7 +2912,6 @@ private function ascendForReal():void {
 	if (SceneLib.dungeons.checkDeepCaveClear()) performancePoints++;
 	if (SceneLib.dungeons.checkLethiceStrongholdClear()) performancePoints++;
 	if (SceneLib.dungeons.checkSandCaveClear()) performancePoints++;
-	if (SceneLib.dungeons.checkHiddenCaveClear()) performancePoints++;
 	if (SceneLib.dungeons.checkDenOfDesireClear()) performancePoints++;
 	if (SceneLib.dungeons.checkPhoenixTowerClear()) performancePoints += 2;
 	//Quests
@@ -3623,10 +3614,6 @@ private function updateAchievements():void {
 	}
 	if (SceneLib.dungeons.checkLethiceStrongholdClear()) {
 		awardAchievement("End of Reign", kACHIEVEMENTS.DUNGEON_END_OF_REIGN);
-		dungeonsCleared++;
-	}
-	if (SceneLib.dungeons.checkHiddenCaveClear()) {
-		awardAchievement("Tiger stalking the Dragon", kACHIEVEMENTS.DUNGEON_TIGER_STALKING_THE_DRAGON);
 		dungeonsCleared++;
 	}
 	if (SceneLib.dungeons.checkDenOfDesireClear()) {

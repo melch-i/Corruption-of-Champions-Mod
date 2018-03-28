@@ -79,6 +79,7 @@ public var versionProperties:Object = { "legacy" : 100, "0.8.3f7" : 124, "0.8.3f
 public var savedGameDir:String = "data/com.fenoxo.coc";
 
 public var notes:String = "";
+	public static const sharedDir:String = "CoC/EndlessJourney/";
 
 public function loadSaveDisplay(saveFile:Object, slotName:String):String
 {
@@ -244,7 +245,7 @@ public function getGameObjectFromFile(aFile:File):Object
 
 }
 
-public function loadScreen():void
+public function loadScreen(dir:String = sharedDir):void
 {
 	var slots:Array = new Array(saveFileNames.length);
 
@@ -253,7 +254,7 @@ public function loadScreen():void
 	
 	for (var i:int = 0; i < saveFileNames.length; i += 1)
 	{
-		var test:Object = SharedObject.getLocal(saveFileNames[i], "/");
+		var test:Object = SharedObject.getLocal(dir+saveFileNames[i], "/");
 		outputText(loadSaveDisplay(test, String(i + 1)));
 		if (test.data.exists/* && test.data.flags[2066] == undefined*/)
 		{
@@ -263,7 +264,7 @@ public function loadScreen():void
 				slots[i] = function() : void 		// Anonymous functions FTW
 				{
 					trace("Loading save with name", saveFileNames[i], "at index", i);
-					if (loadGame(saveFileNames[i])) 
+					if (loadGame(dir+saveFileNames[i]))
 					{
 						doNext(playerMenu);
 						showStats();
@@ -288,7 +289,7 @@ public function loadScreen():void
 	addButton(14, "Back", returnToSaveMenu);
 }
 
-public function saveScreen():void
+public function saveScreen(dir:String = sharedDir):void
 {
 	mainView.nameBox.x = 210;
 	mainView.nameBox.y = 620;
@@ -317,7 +318,7 @@ public function saveScreen():void
 	
 	for (var i:int = 0; i < saveFileNames.length; i += 1)
 	{
-		var test:Object = SharedObject.getLocal(saveFileNames[i], "/");
+		var test:Object = SharedObject.getLocal(dir + saveFileNames[i], "/");
 		outputText(loadSaveDisplay(test, String(i + 1)));
 		trace("Creating function with indice = ", i);
 		(function(i:int) : void		// messy hack to work around closures. See: http://en.wikipedia.org/wiki/Immediately-invoked_function_expression
@@ -325,7 +326,7 @@ public function saveScreen():void
 			saveFuncs[i] = function() : void 		// Anonymous functions FTW
 			{
 				trace("Saving game with name", saveFileNames[i], "at index", i);
-				saveGame(saveFileNames[i], true);
+				saveGame(dir+saveFileNames[i], true);
 			}
 		})(i);
 		
@@ -376,6 +377,7 @@ public function saveLoad(e:MouseEvent = null):void
 	//addButton(5, "Save to File", saveToFile);
 	addButton(6, "Load File", openSave);
 	//addButton(8, "AutoSave: " + autoSaveSuffix, autosaveToggle);
+	addButton(10, "Import",loadScreen,"").hint("Load a save from another mod. \n\n<b>This may cause issues</b>");
 	addButton(14, "Back", EventParser.gameOver, true);
 
 	if (mainView.getButtonText( 0 ) == "Game Over")
@@ -392,17 +394,15 @@ public function saveLoad(e:MouseEvent = null):void
 		addButton(14, "Back", playerMenu);
 		return;
 	}
+	addButton(0, "Save", saveScreen);
+	addButton(5, "Save to File", saveToFile);
+	addButton(3, "AutoSave: " + autoSaveSuffix, autosaveToggle);
+	addButton(11, "Export",saveScreen,"").hint("Export your save so it can be used by other mods");
 	if (gameStateGet() == 3) {
-		addButton(0, "Save", saveScreen);
-		addButton(5, "Save to File", saveToFile);
-		addButton(3, "AutoSave: " + autoSaveSuffix, autosaveToggle);
 		addButton(14, "Back", CoC.instance.mainMenu.mainMenu);
 	}
 	else
 	{
-		addButton(0, "Save", saveScreen);
-		addButton(5, "Save to File", saveToFile);
-		addButton(3, "AutoSave: " + autoSaveSuffix, autosaveToggle);
 		addButton(14, "Back", playerMenu);
 	}
 	if (flags[kFLAGS.HARDCORE_MODE] >= 1) {
@@ -607,7 +607,7 @@ public function savePermObject(isFile:Boolean):void {
 	}
 	else
 	{
-		saveFile = SharedObject.getLocal("CoC_Main", "/");
+		saveFile = SharedObject.getLocal(sharedDir+"CoC_Main", "/");
 	}
 	
 	saveFile.data.exists = true;
@@ -668,7 +668,7 @@ public function savePermObject(isFile:Boolean):void {
 }
 
 public function loadPermObject():void {
-	var saveFile:* = SharedObject.getLocal("CoC_Main", "/");
+	var saveFile:* = SharedObject.getLocal(sharedDir+"CoC_Main", "/");
 	trace("Loading achievements!");
 	//Initialize the save file
 	//var saveFile:Object = loader.data.readObject();

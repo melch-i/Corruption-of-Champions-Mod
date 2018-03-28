@@ -325,6 +325,7 @@ public class CoC extends MovieClip
 
         // *************************************************************************************
 
+	    mainViewManager.registerShiftKeys();
         //Used for stat tracking to keep up/down arrows correct.
         oldStats = {};
         model.oldStats = oldStats;

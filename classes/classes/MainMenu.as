@@ -71,7 +71,7 @@ package classes {
 				["Achievements", achievements.achievementsScreen, "View all achievements you have earned so far."],
 				["Instructions", howToPlay, "How to play. Starting tips. And hotkeys for easy left-handed play..."],
 				["Credits", creditsScreen, "See a list of all the cool people who have contributed to content for this game!"],
-				["Mod Thread", null, "Check the official mod thread on Fenoxo's forum."]
+				["Discord", curry(openURL,"https://discord.gg/R25MZEx"), "Check the official mod hub Discord server."]
 			];
 			var mainMenuContent:Block = new Block( {
 				name: "MainMenu",

@@ -34,160 +34,17 @@ internal class ControlBindings {
                     }
                 });
 
-            inputManager.AddBindableControl(
-                    "Quicksave 1",
-                    "Quicksave the current game to slot 1",
-                    function ():void {
-                        if (CoC.instance.mainView.menuButtonIsVisible(MainView.MENU_DATA) && CoC.instance.player.str > 0) {
-                            CoC.instance.mainView.nameBox.text = "";
-                            CoC.instance.saves.saveGame("CoC_1");
-                            EngineCore.clearOutput();
-                            EngineCore.outputText("Game saved to slot 1!");
-                            EngineCore.doNext(EventParser.playerMenu);
-                        }
-                    });
+	    inputManager.AddBindableControl("Quicksave 1", "Quicksave the current game to slot 1", function():void { Bindings.execQuickSave(1); });
+	    inputManager.AddBindableControl("Quicksave 2", "Quicksave the current game to slot 2", function():void { Bindings.execQuickSave(2); });
+	    inputManager.AddBindableControl("Quicksave 3", "Quicksave the current game to slot 3", function():void { Bindings.execQuickSave(3); });
+	    inputManager.AddBindableControl("Quicksave 4", "Quicksave the current game to slot 4", function():void { Bindings.execQuickSave(4); });
+	    inputManager.AddBindableControl("Quicksave 5", "Quicksave the current game to slot 5", function():void { Bindings.execQuickSave(5); });
 
-            inputManager.AddBindableControl(
-                    "Quicksave 2",
-                    "Quicksave the current game to slot 2",
-                    function ():void {
-                        if (CoC.instance.mainView.menuButtonIsVisible(MainView.MENU_DATA) && CoC.instance.player.str > 0) {
-                            CoC.instance.mainView.nameBox.text = "";
-                            CoC.instance.saves.saveGame("CoC_2");
-                            EngineCore.clearOutput();
-                            EngineCore.outputText("Game saved to slot 2!");
-                            EngineCore.doNext(EventParser.playerMenu);
-                        }
-                    });
-
-            inputManager.AddBindableControl(
-                    "Quicksave 3",
-                    "Quicksave the current game to slot 2",
-                    function ():void {
-                        if (CoC.instance.mainView.menuButtonIsVisible(MainView.MENU_DATA) && CoC.instance.player.str > 0) {
-                            CoC.instance.mainView.nameBox.text = "";
-                            CoC.instance.saves.saveGame("CoC_3");
-                            EngineCore.clearOutput();
-                            EngineCore.outputText("Game saved to slot 3!");
-                            EngineCore.doNext(EventParser.playerMenu);
-                        }
-                    });
-
-            inputManager.AddBindableControl(
-                    "Quicksave 4",
-                    "Quicksave the current game to slot 4",
-                    function ():void {
-                        if (CoC.instance.mainView.menuButtonIsVisible(MainView.MENU_DATA) && CoC.instance.player.str > 0) {
-                            CoC.instance.mainView.nameBox.text = "";
-                            CoC.instance.saves.saveGame("CoC_4");
-                            EngineCore.clearOutput();
-                            EngineCore.outputText("Game saved to slot 4!");
-                            EngineCore.doNext(EventParser.playerMenu);
-                        }
-                    });
-
-            inputManager.AddBindableControl(
-                    "Quicksave 5",
-                    "Quicksave the current game to slot 5",
-                    function ():void {
-                        if (CoC.instance.mainView.menuButtonIsVisible(MainView.MENU_DATA) && CoC.instance.player.str > 0) {
-                            CoC.instance.mainView.nameBox.text = "";
-                            CoC.instance.saves.saveGame("CoC_5");
-                            EngineCore.clearOutput();
-                            EngineCore.outputText("Game saved to slot 5!");
-                            EngineCore.doNext(EventParser.playerMenu);
-                        }
-                    });
-
-            inputManager.AddBindableControl(
-                    "Quickload 1",
-                    "Quickload the current game from slot 1",
-                    function ():void {
-                        if (CoC.instance.mainView.menuButtonIsVisible(MainView.MENU_DATA)) {
-                            var saveFile:* = SharedObject.getLocal("CoC_1", "/");
-                            if (saveFile.data.exists) {
-                                if (CoC.instance.saves.loadGame("CoC_1")) {
-                                    EngineCore.showStats();
-                                    EngineCore.statScreenRefresh();
-                                    EngineCore.clearOutput();
-                                    EngineCore.outputText("Slot 1 Loaded!");
-                                    EngineCore.doNext(EventParser.playerMenu);
-                                }
-                            }
-                        }
-                    });
-
-            inputManager.AddBindableControl(
-                    "Quickload 2",
-                    "Quickload the current game from slot 2",
-                    function ():void {
-                        if (CoC.instance.mainView.menuButtonIsVisible(MainView.MENU_DATA)) {
-                            var saveFile:* = SharedObject.getLocal("CoC_2", "/");
-                            if (saveFile.data.exists) {
-                                if (CoC.instance.saves.loadGame("CoC_2")) {
-                                    EngineCore.showStats();
-                                    EngineCore.statScreenRefresh();
-                                    EngineCore.clearOutput();
-                                    EngineCore.outputText("Slot 2 Loaded!");
-                                    EngineCore.doNext(EventParser.playerMenu);
-                                }
-                            }
-                        }
-                    });
-
-            inputManager.AddBindableControl(
-                    "Quickload 3",
-                    "Quickload the current game from slot 3",
-                    function ():void {
-                        if (CoC.instance.mainView.menuButtonIsVisible(MainView.MENU_DATA)) {
-                            var saveFile:* = SharedObject.getLocal("CoC_3", "/");
-                            if (saveFile.data.exists) {
-                                if (CoC.instance.saves.loadGame("CoC_3")) {
-                                    EngineCore.showStats();
-                                    EngineCore.statScreenRefresh();
-                                    EngineCore.clearOutput();
-                                    EngineCore.outputText("Slot 3 Loaded!");
-                                    EngineCore.doNext(EventParser.playerMenu);
-                                }
-                            }
-                        }
-                    });
-
-            inputManager.AddBindableControl(
-                    "Quickload 4",
-                    "Quickload the current game from slot 4",
-                    function ():void {
-                        if (CoC.instance.mainView.menuButtonIsVisible(MainView.MENU_DATA)) {
-                            var saveFile:* = SharedObject.getLocal("CoC_4", "/");
-                            if (saveFile.data.exists) {
-                                if (CoC.instance.saves.loadGame("CoC_4")) {
-                                    EngineCore.showStats();
-                                    EngineCore.statScreenRefresh();
-                                    EngineCore.clearOutput();
-                                    EngineCore.outputText("Slot 4 Loaded!");
-                                    EngineCore.doNext(EventParser.playerMenu);
-                                }
-                            }
-                        }
-                    });
-
-            inputManager.AddBindableControl(
-                    "Quickload 5",
-                    "Quickload the current game from slot 5",
-                    function ():void {
-                        if (CoC.instance.mainView.menuButtonIsVisible(MainView.MENU_DATA)) {
-                            var saveFile:* = SharedObject.getLocal("CoC_5", "/");
-                            if (saveFile.data.exists) {
-                                if (CoC.instance.saves.loadGame("CoC_5")) {
-                                    EngineCore.showStats();
-                                    EngineCore.statScreenRefresh();
-                                    EngineCore.clearOutput();
-                                    EngineCore.outputText("Slot 5 Loaded!");
-                                    EngineCore.doNext(EventParser.playerMenu);
-                                }
-                            }
-                        }
-                    });
+	    inputManager.AddBindableControl("Quickload 1", "Quickload the current game from slot 1", function():void { Bindings.execQuickLoad(1); });
+	    inputManager.AddBindableControl("Quickload 2", "Quickload the current game from slot 2", function():void { Bindings.execQuickLoad(2); });
+	    inputManager.AddBindableControl("Quickload 3", "Quickload the current game from slot 3", function():void { Bindings.execQuickLoad(3); });
+	    inputManager.AddBindableControl("Quickload 4", "Quickload the current game from slot 4", function():void { Bindings.execQuickLoad(4); });
+	    inputManager.AddBindableControl("Quickload 5", "Quickload the current game from slot 5", function():void { Bindings.execQuickLoad(5); });
 
             inputManager.AddBindableControl(
                     "Show Menu",

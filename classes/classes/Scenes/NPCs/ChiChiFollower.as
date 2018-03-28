@@ -7,7 +7,6 @@ package classes.Scenes.NPCs
 	import classes.*;
 	import classes.GlobalFlags.kFLAGS;
 	import classes.CoC;
-	import classes.Scenes.Places.HeXinDao;
 import classes.Scenes.SceneLib;
 
 use namespace CoC;
@@ -191,7 +190,7 @@ public function MeetingChiChiInHeXinDao():void {
 	addButton(0, "Yes", TrainingSoulArtsWithChiChi);
 	addButton(1, "No", NotReadyForTheTraining);
 	addButton(2, "Shop", SoulskilsManualsShop);
-	addButton(4, "Leave", SceneLib.hexindao.riverislandVillageStuff);
+	addButton(4, "Leave", SceneLib.telAdre.telAdreMenu);
 }
 
 public function MeetingChiChiInHeXinDao2():void {
@@ -202,7 +201,7 @@ public function MeetingChiChiInHeXinDao2():void {
 	addButton(0, "Yes", TrainingSoulArtsWithChiChi);
 	addButton(1, "No", NotReadyForTheTraining);
 	addButton(2, "Shop", SoulskilsManualsShop);
-	addButton(4, "Leave", SceneLib.hexindao.riverislandVillageStuff);
+	addButton(4, "Leave", SceneLib.telAdre.telAdreMenu);
 }
 
 public function NotReadyForTheTraining():void {

@@ -31,6 +31,7 @@ public class GameSettings extends BaseContent {
 		addButton(1, "Interface", settingsScreenInterfaceSettings);
 		addButton(3, "Font Size", fontSettingsMenu);
 		addButton(4, "Controls", displayControls);
+		addButton(10,"Debug Info",CoC.instance.debugInfoMenu.debugPane);
 
 addButton(14, "Back", CoC.instance.mainMenu.mainMenu);
         if (flags[kFLAGS.HARDCORE_MODE] > 0) {
@@ -434,6 +435,20 @@ addButton(14, "Back", CoC.instance.mainMenu.mainMenu);
 		else
 			outputText("Measurement: <b>Imperial</b>\n Height and cock size will be measured in feet and inches.");
 
+		outputText("\n\nQuicksave Confirmation Dialog: ");
+		if(flags[kFLAGS.DISABLE_QUICKSAVE_CONFIRM] > 0){
+			outputText("<font color=\"#800000\"><b>OFF</b></font>")
+		} else {
+			outputText("<font color=\"#008000\"><b>ON</b></font>")
+		}
+
+		outputText("\n\nQuickload Confirmation Dialog: ");
+		if(flags[kFLAGS.DISABLE_QUICKLOAD_CONFIRM] > 0){
+			outputText("<font color=\"#800000\"><b>OFF</b></font>")
+		} else {
+			outputText("<font color=\"#008000\"><b>ON</b></font>")
+		}
+
 		menu();
 		addButton(0, "Side Bar Font", toggleFont).hint("Toggle between old and new font for side bar.");
 		addButton(1, "Main BG", menuMainBackground).hint("Choose a background for main game interface.");
@@ -445,6 +460,8 @@ addButton(14, "Back", CoC.instance.mainMenu.mainMenu);
 		addButton(7, "Measurements", toggleMeasurements).hint("Switch between imperial and metric measurements.  \n\nNOTE: Only applies to your appearance screen.");
 		addButton(8, "Toggle CharView", toggleCharViewer).hint("Turn PC visualizer on/off.");
 		addButton(9, "Charview Style",toggleCharViewer,kFLAGS.CHARVIEW_STYLE).hint("Change between in text and sidebar display");
+		addButton(10, "QuickSave Confirm", toggleFlag, kFLAGS.DISABLE_QUICKSAVE_CONFIRM,settingsScreenInterfaceSettings);
+		addButton(11, "QuickLoad Confirm", toggleFlag, kFLAGS.DISABLE_QUICKLOAD_CONFIRM,settingsScreenInterfaceSettings);
 		addButton(14, "Back", settingsScreenMain);
 	}
 	public function menuMainBackground():void {
@@ -476,7 +493,14 @@ addButton(14, "Back", CoC.instance.mainMenu.mainMenu);
 
 		addButton(14, "Back", settingsScreenInterfaceSettings);
 	}
-
+	private function toggleFlag(flag:int, returnTo:Function):void{
+		if(flags[flag] > 0){
+			flags[flag] = 0;
+		} else {
+			flags[flag] = 1;
+		}
+		returnTo();
+	}
 	public function toggleCharViewer(flag:int = kFLAGS.CHARVIEWER_ENABLED):void {
 		if (flags[flag] < 1) {
 			flags[flag] = 1;

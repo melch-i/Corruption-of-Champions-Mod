@@ -40,11 +40,6 @@ public class Questlog extends BaseContent
 			if (flags[kFLAGS.CLEARED_HEL_TOWER] == 2) outputText("Completed (Reward taken)");
 			else if (SceneLib.dungeons.checkPhoenixTowerClear()) outputText("Completed");
 			else outputText("Not Started");
-			outputText("\n<b>Tiger stalking the Dragon:</b> ");
-			if (flags[kFLAGS.HIDDEN_CAVE_BOSSES] == 3) outputText("Completed (Reward taken)");
-			else if (SceneLib.dungeons.checkHiddenCaveClear()) outputText("Completed");
-			else if (flags[kFLAGS.HIDDEN_CAVE_FOUND] > 0) outputText("In Progress");
-			else outputText("Not Started");
 			outputText("\n<b>Slain the Heroslayer:</b> ");
 			if (flags[kFLAGS.DEN_OF_DESIRE_QUEST] == 2) outputText("Completed (Reward taken)");
 			else if (SceneLib.dungeons.checkDenOfDesireClear()) outputText("Completed");
@@ -56,7 +51,6 @@ public class Questlog extends BaseContent
 			if (SceneLib.dungeons.checkLethiceStrongholdClear() && flags[kFLAGS.LETHICE_DEFEATED] < 2) addButton(2, "Stronghold", takeRewardForStronghold);
 			if (SceneLib.dungeons.checkSandCaveClear() && flags[kFLAGS.DISCOVERED_WITCH_DUNGEON] < 2) addButton(5, "Sand Cave", takeRewardForSandCave);
 			if (SceneLib.dungeons.checkPhoenixTowerClear() && flags[kFLAGS.CLEARED_HEL_TOWER] < 2) addButton(6, "Phoenix Tower", takeRewardForPhoenixTower);
-			if (SceneLib.dungeons.checkHiddenCaveClear() && flags[kFLAGS.HIDDEN_CAVE_BOSSES] < 3) addButton(10, "Hidden Cave", takeRewardForHiddenCave);
 			if (SceneLib.dungeons.checkDenOfDesireClear() && flags[kFLAGS.DEN_OF_DESIRE_QUEST] < 2) addButton(11, "Den of Desire", takeRewardForDenOfDesire);
 			//button 13 - Lia undersea chtulu dungeon
 			addButton(14, "Back", playerMenu);
@@ -110,16 +104,6 @@ public class Questlog extends BaseContent
 			player.statPoints = player.statPoints + 10;
 			statScreenRefresh();
 			flags[kFLAGS.CLEARED_HEL_TOWER] = 2;
-			doNext(accessQuestlogMainMenu);
-		}
-		public function takeRewardForHiddenCave():void {
-			clearOutput();
-			outputText("Your contribution in changing Mareth have been noticed.\n\n");
-			outputText("<b>Gained 1 perk points and 5 stat points</b>");
-			player.perkPoints = player.perkPoints + 1;
-			player.statPoints = player.statPoints + 5;
-			statScreenRefresh();
-			flags[kFLAGS.HIDDEN_CAVE_BOSSES] = 3;
 			doNext(accessQuestlogMainMenu);
 		}
 		public function takeRewardForDenOfDesire():void {

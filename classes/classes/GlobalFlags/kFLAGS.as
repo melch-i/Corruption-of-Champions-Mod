@@ -1303,8 +1303,8 @@ public static const UNKNOWN_FLAG_NUMBER_01294:int                               
 public static const UNKNOWN_FLAG_NUMBER_01295:int                                   = 1295;
 public static const UNKNOWN_FLAG_NUMBER_01296:int                                   = 1296;
 public static const UNKNOWN_FLAG_NUMBER_01297:int                                   = 1297;
-public static const UNKNOWN_FLAG_NUMBER_01298:int                                   = 1298;
-public static const UNKNOWN_FLAG_NUMBER_01299:int                                   = 1299;
+public static const DISABLE_QUICKLOAD_CONFIRM:int                                   = 1298; // Disable the confirmation-dialog on quickload
+public static const DISABLE_QUICKSAVE_CONFIRM:int                                   = 1299; // Disable the confirmation-dialog on quicksave
 public static const UNKNOWN_FLAG_NUMBER_01300:int                                   = 1300;
 public static const UNKNOWN_FLAG_NUMBER_01301:int                                   = 1301;
 public static const UNKNOWN_FLAG_NUMBER_01302:int                                   = 1302;
