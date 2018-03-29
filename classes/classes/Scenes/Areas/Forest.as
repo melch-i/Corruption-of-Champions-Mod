@@ -14,6 +14,7 @@ import classes.Scenes.Monsters.DarkElfScene;
 import classes.Scenes.NPCs.CelessScene;
 import classes.Scenes.NPCs.JojoScene;
 import classes.Scenes.SceneLib;
+import classes.Scenes.Areas.Forest.DryadScene;
 
 import coc.xxc.BoundStory;
 import coc.xxc.stmts.ZoneStmt;
@@ -35,6 +36,7 @@ use namespace CoC;
 		public var alrauneScene:AlrauneScene = new AlrauneScene();
 		public var darkelfScene:DarkElfScene = new DarkElfScene();
 		// public var dullahanScene:DullahanScene = new DullahanScene(); // [INTERMOD:8chan]
+		public var dryadScene:DryadScene = new DryadScene();
 
 		public function Forest() {
 			onGameInit(init);
@@ -360,7 +362,14 @@ use namespace CoC;
 				name  : "walk",
 				call  : deepwoodsWalkFn,
 				chance: 0.01
-			});
+			}
+			, {
+				name	: 	"spriggan",
+				call	: 	dryadScene.encounterdryad,
+				when	: 	Encounters.fn.ifLevelMin(3),
+				chance	:  	0.5
+			}
+		);
 			// what we do here: create a Story (ZoneStmt) and register it in game.rootStory
 			// so it will be accessible from external files
 			forestStory = ZoneStmt.wrap(_forestEncounter,game.rootStory).bind(game.context);

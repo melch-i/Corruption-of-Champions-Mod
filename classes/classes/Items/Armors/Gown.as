@@ -26,12 +26,12 @@ package classes.Items.Armors
 		}
 		override public function useText():void{ //Produces any text seen when equipping the armor normally
 			switch (player.gender) {
-				case Gender.FEMALE:   
+				case 2:   
 					outputText("You comfortably slide into the forest gown.   You spin around several times and giggle happily."
 					          +" Where did that come from?");
 					break;
 
-				case  Gender.MALE:
+				case  1:
 					outputText("You slide forest gown over your head and down to your toes. It obviously would fit someone more female."
 					          +" You feel sad and wish you had the svelte body that would look amazing in this gown."
 					          +" Wait, did you always think that way?");
@@ -46,7 +46,7 @@ package classes.Items.Armors
 		}
 		public function timeChangeLarge():Boolean { return false; }
 		public function timeChange():Boolean {
-			if (player.armor is Gown && CoC.time.hours == 5) { //only call function once per day as time change is called every hour
+			if (player.armor is Gown && CoC.instance.model.time.hours == 5) { //only call function once per day as time change is called every hour
 				dryadProgression(); 
 				return true;
 			}
@@ -77,9 +77,9 @@ package classes.Items.Armors
 			clearOutput();
 			outputText("\n\n"+dryadDreams[rand(dryadDreams.length)]+"\n\n");
 			//build a list of non ideal parts 
-			if (player.hips.rating != 5 )
+			if (player.hipRating != 5 )
 				 tfChoice.push("hips");
-			if (player.butt.rating != 5 )
+			if (player.buttRating != 5 )
 				tfChoice.push("butt");
 			if (player.hasCock() != false )
 				tfChoice.push("cock");
@@ -93,15 +93,15 @@ package classes.Items.Armors
 				case "hips":
 						outputText("You wiggle around in your gown, pleasant feeling of flower petals rubbing against your skin washes over you.  The feeling settles on your [hips].\n");
 
-						if (player.hips.rating < 5) {
+						if (player.hipRating < 5) {
 							verb = "enlarge";
-							player.hips.rating++;
+							player.hipRating++;
 						}
-						if (player.hips.rating > 5) {
+						if (player.hipRating > 5) {
 							verb = "shrink";
-							player.hips.rating--;
+							player.hipRating--;
 						} 
-						if (player.hips.rating == 5)
+						if (player.hipRating == 5)
 							break;
 						outputText("You feel them slowly " + verb + ".<b>  You now have [hips].</b>\n"); 
 						changed = 1;
@@ -110,15 +110,15 @@ package classes.Items.Armors
 				case "butt":
 					outputText("You wiggle around in your gown, the pleasant feeling of flower petals rubbing against your skin washes over you.  The feeling settles on your [butt].\n");
 				
-					if (player.butt.rating < 5) {
+					if (player.buttRating < 5) {
 						verb = "enlarge";
-						player.butt.rating++;
+						player.buttRating++;
 					}
-					if (player.butt.rating > 5) {
+					if (player.buttRating > 5) {
 						verb = "shrink";	
-						player.butt.rating--;
+						player.buttRating--;
 					} 
-					if (player.butt.rating == 5)
+					if (player.buttRating == 5)
 						break;
 
 					outputText("You feel them slowly " + verb + ". <b>You now have a [butt].</b>"); 
@@ -179,50 +179,50 @@ package classes.Items.Armors
 			outputText("\n\n");
 			switch (tfChoice) {
 			case "ears":
-				if (player.ears.type !== Ears.ELFIN) {
+				if (player.earType!== Ears.ELFIN) {
 					outputText("There is a tingling on the sides of your head as your ears change to pointed elfin ears.");
-					player.ears.type = Ears.ELFIN;
+					player.earType = Ears.ELFIN;
 				}
 				break;
 
 			case "skin":
-				if (player.skin.type !== Skin.PLAIN) {
+				if (player.skinType!== Skin.PLAIN) {
 					outputText("A tingling runs up along your [skin] as it changes back to normal");
-				} else if (player.skin.tone !== "bark" && player.skin.type == Skin.PLAIN) {
+				} else if (player.skinType !== Skin.BARK && player.skin.type == Skin.PLAIN) {
 					outputText("Your skin hardens and becomes the consistency of tree’s bark."); 
-					player.skin.tone = "woodly brown";
-					player.skin.type = Skin.BARK;
+					player.skinTone = "woodly brown";
+					player.skinType= Skin.BARK;
 				}
 				break;
 
 			case "lowerbody":
-				if (player.lowerBody.type !== LowerBody.HUMAN) {
+				if (player.lowerBody !== LowerBody.HUMAN) {
 					outputText("There is a rumbling in your lower body as it returns to a human shape.");
-					player.lowerBody.type = LowerBody.HUMAN;
+					player.lowerBody = LowerBody.HUMAN;
 				}
 				break;
 
 			case "arms":
-				if (player.arms.type !== Arms.HUMAN) {
+				if (player.armType !== Arms.HUMAN) {
 					outputText("Your hands shake and shudder as they slowly transform back into normal human hands.");
-					player.arms.type = Arms.HUMAN;
+					player.armType = Arms.HUMAN;
 					//kGAMECLASS.mutations.updateClaws();
-					//needs mutations updated to revamp
+					//needs mutations updated from revamp
 				}
 				break;
 
 			case "face":
-				if (player.face.type !== Face.HUMAN) {
+				if (player.faceType !== Face.HUMAN) {
 					outputText("Your face twitches a few times and slowly morphs itself back to a normal human face.");
-					player.face.type = Face.HUMAN;
+					player.faceType = Face.HUMAN;
 				}
 				break;
 
 			case "hair":
-				if (player.hair.type !== Hair.LEAF) {
+				if (player.hairType !== Hair.LEAF) {
 					outputText("Much to your shock, your hair begins falling out in tuffs onto the ground. "
 					          +" Moments later, your scalp sprouts vines all about that extend down and bloom into leafy hair.");
-					player.hair.type = Hair.LEAF;
+					player.hairType = Hair.LEAF;
 				}
 
 				break;

@@ -28,10 +28,10 @@ package classes.Scenes.Areas.Forest
 			outputText("The spriggan creaks like old wood as she collapses to the ground, too [if (monster.HP <= 0)injured|aroused] to continue fighting. ");
 			if (player.hasCock() && player.lust >= 33) {
 				outputText("\n\nWhile gazing on her prone figure carnal desire wells up inside you.   Do you have your way with her? ");
-				doYesNo( winAgainstdryadRape , SceneLib.combat.cleanupAfterCombat);
+				doYesNo( winAgainstdryadRape , cleanupAfterCombat);
 			}
 			else {
-				SceneLib.combat.cleanupAfterCombat();
+				cleanupAfterCombat();
 			}
 		}
 		
@@ -44,7 +44,7 @@ package classes.Scenes.Areas.Forest
 			else
 			   outputText("You saunter over to the defeated spriggan and roughly grab her by the hair.  \n  'Lick it!' you demand and she she complies.   You keep her licking until you are satisfied then toss her aside and head back to camp smelling of tree sap.");
 			dynStats("lib", -2, "cor", 3);
-			SceneLib.combat.cleanupAfterCombat();
+			cleanupAfterCombat();
 		}
 		
 		public  function loseTodryad(fromBattle:Boolean = true):void {
@@ -64,7 +64,7 @@ package classes.Scenes.Areas.Forest
 			player.orgasm('Generic');
 			dynStats("lib", -2, "cor", 3);
 			if (fromBattle)
-				SceneLib.combat.cleanupAfterCombat();
+				cleanupAfterCombat();
 			else
 				doNext(camp.returnToCampUseTwoHours);
 		}
