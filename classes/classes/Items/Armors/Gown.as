@@ -77,9 +77,9 @@ package classes.Items.Armors
 			clearOutput();
 			outputText("\n\n"+dryadDreams[rand(dryadDreams.length)]+"\n\n");
 			//build a list of non ideal parts 
-			if (player.hipRating != 5 )
+			if (player.hips.type != 5 )
 				 tfChoice.push("hips");
-			if (player.buttRating != 5 )
+			if (player.butt.type != 5 )
 				tfChoice.push("butt");
 			if (player.hasCock() != false )
 				tfChoice.push("cock");
@@ -93,15 +93,15 @@ package classes.Items.Armors
 				case "hips":
 						outputText("You wiggle around in your gown, pleasant feeling of flower petals rubbing against your skin washes over you.  The feeling settles on your [hips].\n");
 
-						if (player.hipRating < 5) {
+						if (player.hips.type < 5) {
 							verb = "enlarge";
-							player.hipRating++;
+							player.hips.type++;
 						}
-						if (player.hipRating > 5) {
+						if (player.hips.type > 5) {
 							verb = "shrink";
-							player.hipRating--;
+							player.hips.type--;
 						} 
-						if (player.hipRating == 5)
+						if (player.hips.type== 5)
 							break;
 						outputText("You feel them slowly " + verb + ".<b>  You now have [hips].</b>\n"); 
 						changed = 1;
@@ -110,15 +110,15 @@ package classes.Items.Armors
 				case "butt":
 					outputText("You wiggle around in your gown, the pleasant feeling of flower petals rubbing against your skin washes over you.  The feeling settles on your [butt].\n");
 				
-					if (player.buttRating < 5) {
+					if (player.butt.type < 5) {
 						verb = "enlarge";
-						player.buttRating++;
+						player.butt.type++;
 					}
-					if (player.buttRating > 5) {
+					if (player.butt.type > 5) {
 						verb = "shrink";	
-						player.buttRating--;
+						player.butt.type--;
 					} 
-					if (player.buttRating == 5)
+					if (player.butt.type == 5)
 						break;
 
 					outputText("You feel them slowly " + verb + ". <b>You now have a [butt].</b>"); 
@@ -179,9 +179,9 @@ package classes.Items.Armors
 			outputText("\n\n");
 			switch (tfChoice) {
 			case "ears":
-				if (player.earType!== Ears.ELFIN) {
+				if (player.ears.type!== Ears.ELFIN) {
 					outputText("There is a tingling on the sides of your head as your ears change to pointed elfin ears.");
-					player.earType = Ears.ELFIN;
+					player.ears.type = Ears.ELFIN;
 				}
 				break;
 
@@ -203,9 +203,9 @@ package classes.Items.Armors
 				break;
 
 			case "arms":
-				if (player.armType !== Arms.HUMAN) {
+				if (player.arms.type !== Arms.HUMAN) {
 					outputText("Your hands shake and shudder as they slowly transform back into normal human hands.");
-					player.armType = Arms.HUMAN;
+					player.arms.type = Arms.HUMAN;
 					//kGAMECLASS.mutations.updateClaws();
 					//needs mutations updated from revamp
 				}

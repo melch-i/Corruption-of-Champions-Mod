@@ -19,7 +19,7 @@ package classes.Scenes.Areas.Forest
 
 		//Melee special
 		public function slash():void {
-			outputText("The dryad reaches for you with claw-like wooden hands!  As soon as she is close, she slashes with her claws ");
+			outputText("The Spriggan reaches for you with claw-like wooden hands!  As soon as she is close, she slashes with her claws ");
 			if (player.getEvasionRoll()) {
 				outputText("and you deftly avoid her claws!");
 			}
@@ -36,7 +36,7 @@ package classes.Scenes.Areas.Forest
 		//lust special
 		public function pollen():void {
 			var lustDmg:int = player.lib / 10 + player.cor / 10 + 10;
-			outputText("The dryad runs her hands through her leafy hair and spins around.   \n\n Yellow and pink sparkles of pollen gently float through the air in your direction. ");
+			outputText("The Spriggan runs her hands through her leafy hair and spins around.   \n\n Yellow and pink sparkles of pollen gently float through the air in your direction. ");
 			if (player.getEvasionRoll()) {
 				outputText("You cover your mouth and nose and avoid breathing in most of the pollen!");
 			}
@@ -65,9 +65,9 @@ package classes.Scenes.Areas.Forest
 		function Dryad() 
 		{
 			this.a = "the ";
-			this.short = "Corrupted Dryad";
-			this.imageName = "dryad";
-			this.long = "The dryad before you is brimming with corruption, her hair is composed of dark brown leaves. Her skin looks to be made of corrupted wood, especially her fingers which are shaped like sharp claws. Her clothing is nothing more than leaves and straw put into a gown. Her eyes are a deep and hungry dark red. Her bark-like skin seeps a thick pink substance.  ";
+			this.short = "Corrupted Spriggan";
+			this.imageName = "Spriggan";
+			this.long = "The Spriggan before you is brimming with corruption, her hair is composed of dark brown leaves. Her skin looks to be made of corrupted wood, especially her fingers which are shaped like sharp claws. Her clothing is nothing more than leaves and straw put into a gown. Her eyes are a deep and hungry dark red. Her bark-like skin seeps a thick pink substance.  ";
 			this.createVagina(false, VaginaClass.WETNESS_DRY, VaginaClass.LOOSENESS_NORMAL);
 			this.createStatusEffect(StatusEffects.BonusVCapacity, 40, 0, 0, 0);
 			createBreastRow(Appearance.breastCupInverse("C"));
@@ -75,8 +75,8 @@ package classes.Scenes.Areas.Forest
 			this.ass.analWetness = AssClass.WETNESS_DRY;
 			this.createStatusEffect(StatusEffects.BonusACapacity,30,0,0,0);
 			this.tallness = 60;
-			this.hipRating = Hips.RATING_AMPLE+2;
-			this.buttRating = Butt.RATING_LARGE;
+			this.hips.type = Hips.RATING_AMPLE+2;
+			this.butt.type = Butt.RATING_LARGE;
 			this.skinTone = "birch-white";
 			this.hairColor = "black";
 			this.hairLength = 4;
