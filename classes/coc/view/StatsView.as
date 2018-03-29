@@ -20,7 +20,7 @@ public class StatsView extends Block {
 	public static var SidebarBg4:Class;
 	[Embed(source = "../../../res/ui/sidebarKaizo.png")]
 	public static var SidebarBgKaizo:Class;
-	public static var SidebarBackgrounds:Array = [SidebarBg1,SidebarBg2,SidebarBg3,SidebarBg4,null,SidebarBgKaizo];
+	public static var SidebarBackgrounds:Array = [SidebarBg1,SidebarBg1,SidebarBg2,SidebarBg3,SidebarBg4,null,SidebarBgKaizo];
 	public static const ValueFontOld:String    = 'Lucida Sans Typewriter';
 	public static const ValueFont:String       = 'Georgia';
 	

@@ -38,15 +38,15 @@ public class PerkMenu extends BaseContent {
 			addButton(button++, "Perk Up", CoC.instance.playerInfo.perkBuyMenu);
 		}
 		addButton(4, "Database", perkDatabase);
-		if (player.findPerk(PerkLib.DoubleAttack) >= 0 || player.findPerk(PerkLib.DoubleAttackLarge) >= 0 || player.findPerk(PerkLib.Combo) >= 0) {
+		if (player.hasPerk(PerkLib.DoubleAttack) || player.hasPerk(PerkLib.DoubleAttackLarge) || player.findPerk(PerkLib.Combo) >= 0 || (player.hasPerk(PerkLib.JobBeastWarrior) && (player.haveNaturalClaws() || player.haveNaturalClawsTypeWeapon()))) {
 			outputText("\n<b>You can adjust your melee attack settings.</b>");
 			addButton(5, "Melee Opt",doubleAttackOptions);
 		}
-		if (player.findPerk(PerkLib.DoubleStrike) >= 0 || player.findPerk(PerkLib.ElementalArrows) >= 0 || player.findPerk(PerkLib.Cupid) >= 0 || player.findPerk(PerkLib.EnvenomedBolt) >= 0) {
+		if (player.hasPerk(PerkLib.DoubleStrike) || player.hasPerk(PerkLib.ElementalArrows) || player.hasPerk(PerkLib.Cupid) || player.hasPerk(PerkLib.EnvenomedBolt)) {
 			outputText("\n<b>You can adjust your range strike settings.</b>");
 			addButton(6, "Range Opt",doubleStrikeOptions);
 		}
-		if (player.findPerk(PerkLib.Spellsword) >= 0 || player.findPerk(PerkLib.Spellarmor) >= 0 || player.findPerk(PerkLib.Battleflash) >= 0 || player.findPerk(PerkLib.Battlemage) >= 0 || player.findPerk(PerkLib.FortressOfIntellect) >= 0) {
+		if (player.hasPerk(PerkLib.Spellsword) || player.hasPerk(PerkLib.Spellarmor) || player.hasPerk(PerkLib.Battleflash) || player.hasPerk(PerkLib.Battlemage) || player.hasPerk(PerkLib.FortressOfIntellect)) {
 			outputText("\n<b>You can adjust your spell autocast settings.</b>");
 			addButton(7, "Spells Opt",spellautocastOptions);
 		}
@@ -54,15 +54,12 @@ public class PerkMenu extends BaseContent {
 			outputText("\n<b>You can adjust your elemental summons behaviour during combat.</b>");
 			addButton(8, "Elementals",summonsbehaviourOptions);
 		}
-		if (flags[kFLAGS.PERNAMENT_GOLEMS_BAG] > 0 && player.findPerk(PerkLib.FirstAttackGolems) >= 0) {
-			outputText("\n<b>You can adjust your pernament golems behaviour during combat.</b>");
-			addButton(9, "P.Golems",golemsbehaviourOptions);
-		}
 		addButton(10, "Number of", EngineCore.doNothing);
 		addButton(11, "perks: " + player.perks.length, EngineCore.doNothing);
 	}
 
 	public function doubleAttackOptions():void {
+		var toggleflag:Function = curry(toggleFlag,doubleAttackOptions);
 		clearOutput();
 		menu();
 		outputText("You will always attack ");
@@ -82,9 +79,14 @@ public class PerkMenu extends BaseContent {
 		if (doubleAttackVal == 1) outputText(" using 95% of your current strength");
 		outputText(".");
 		outputText("\n\nYou can change it to different amount of attacks.");
+		if (player.findPerk(PerkLib.JobBeastWarrior) >= 0 && (player.haveNaturalClaws() || player.haveNaturalClawsTypeWeapon())) {
+			outputText("\n\nYou can choose between fighting feral or normaly with your fists.");
+			if (flags[kFLAGS.FERAL_COMBAT_MODE] == 0) outputText("\n\nFighting Style: <b>Normal</b>");
+			if (flags[kFLAGS.FERAL_COMBAT_MODE] == 1) outputText("\n\nFighting Style: <b>Feral</b>");
+		}
 
         var maxCurrentAttacks:int = combat.maxCurrentAttacks();
-		var maxAttacks:int = Math.max(combat.maxFistAttacks(),combat.maxLargeAttacks(),combat.maxCommonAttacks());
+		var maxAttacks:int = Math.max(combat.maxFistAttacks(),combat.maxClawsAttacks(),combat.maxLargeAttacks(),combat.maxCommonAttacks());
 
 		if (doubleAttackVal != 0) addButton(0, "All Single", doubleAttackStyle,0);
 		if (maxAttacks >= 2 && doubleAttackVal != 1) {
@@ -106,6 +108,10 @@ public class PerkMenu extends BaseContent {
 		if (maxAttacks >= 6 && doubleAttackVal != 5) {
 			if (maxCurrentAttacks < 6) addButtonDisabled(11, "All Hexe", "You current melee weapon not allow to use this option");
 			else addButton(11, "All Hexa", doubleAttackStyle,5);
+		}
+		if (player.findPerk(PerkLib.JobBeastWarrior) >= 0) {
+			if (flags[kFLAGS.FERAL_COMBAT_MODE] != 0) addButton(4, "Normal", toggleflag, kFLAGS.FERAL_COMBAT_MODE, false);
+			if (((player.weaponName == "fists" && player.haveNaturalClaws()) || player.haveNaturalClawsTypeWeapon()) && flags[kFLAGS.FERAL_COMBAT_MODE] != 1) addButton(9, "Feral", toggleflag ,kFLAGS.FERAL_COMBAT_MODE, true);
 		}
 
 		if (CoC.instance.inCombat) addButton(14, "Back", combat.combatMenu);
@@ -314,27 +320,6 @@ public class PerkMenu extends BaseContent {
                 if (player.hasStatusEffect(StatusEffects.SummonedElementalsLightning)) addButton(8, "Lightning", attackingElementalType,6);
                 if (player.hasStatusEffect(StatusEffects.SummonedElementalsDarkness)) addButton(9, "Darkness", attackingElementalType,7);
             }
-        }
-	}
-
-
-
-	public function golemsbehaviourOptions():void {
-		clearOutput();
-		menu();
-		outputText("You can choose how your pernament golems will behave during each fight.\n\n");
-		outputText("\n<b>Pernament golems behavious:</b>\n");
-		if (flags[kFLAGS.GOLEMANCER_PERM_GOLEMS] == 1) outputText("Attacking at the begining of each turn (owner would need to just choose how many of them will be sent).");
-		if (flags[kFLAGS.GOLEMANCER_PERM_GOLEMS] < 1) outputText("Waiting for the owner to give an attack command each turn.");
-		if (flags[kFLAGS.GOLEMANCER_PERM_GOLEMS] == 1) addButton(10, "Waiting", golemsAttacking,false);
-		if (flags[kFLAGS.GOLEMANCER_PERM_GOLEMS] != 1) addButton(11, "Attacking", golemsAttacking,true);
-
-		var e:MouseEvent;
-		if (SceneLib.combat.inCombat) addButton(14, "Back", combat.combatMenu);
-		else addButton(14, "Back", displayPerks);
-        function golemsAttacking(attacking:Boolean):void {
-            flags[kFLAGS.GOLEMANCER_PERM_GOLEMS] = (attacking)?1:0;
-            golemsbehaviourOptions();
         }
 	}
 

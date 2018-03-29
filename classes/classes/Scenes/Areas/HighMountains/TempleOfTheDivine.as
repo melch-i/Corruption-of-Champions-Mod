@@ -81,6 +81,8 @@ use namespace CoC;
 			mainmenu();
 		}
 		private function mainmenu():void {
+			outputText("\n\nGargoyle Quest progress: " + flags[kFLAGS.GARGOYLE_QUEST] + "");
+			outputText("\n\nTemple Repair progress: " + flags[kFLAGS.TEMPLE_OF_THE_DIVINE_PROGRESS] + "");
 			menu();
 			if (flags[kFLAGS.TEMPLE_OF_THE_DIVINE_PROGRESS] >= 1) {
 				addButton(0, "Pray", PlayerPrayAtTemple).hint("Offer your prayer to one of the temple altar.");
@@ -261,11 +263,11 @@ use namespace CoC;
 					if (flags[kFLAGS.CAMP_CABIN_STONE_RESOURCES] >= 150) addButton(1, "Statue of Marae", rebuildStatueOfMarae).hint("Repair the statue.");
 					else addButtonDisabled(1, "Statue of Marae", "You not have enough stones.");
 				}
-				if (flags[kFLAGS.TEMPLE_OF_THE_DIVINE_PROGRESS] >= 6 && flags[kFLAGS.TEMPLE_OF_THE_DIVINE_PROGRESS] < 8) {
-					if (flags[kFLAGS.CAMP_CABIN_STONE_RESOURCES] >= 500) addButton(2, "Repairing the gargoyles on the walls", repairGargoylesOnTheWalls).hint("Repair some of the decorative gargoyles.");
-					else addButtonDisabled(2, "Repairing the gargoyles on the walls", "You not have enough stones.");
+				if (flags[kFLAGS.TEMPLE_OF_THE_DIVINE_PROGRESS] >= 5 && flags[kFLAGS.TEMPLE_OF_THE_DIVINE_PROGRESS] < 7) {
+					if (flags[kFLAGS.CAMP_CABIN_STONE_RESOURCES] >= 500) addButton(2, "Gargoyles", repairGargoylesOnTheWalls).hint("Repair some of the decorative gargoyles.");
+					else addButtonDisabled(2, "Gargoyles", "You not have enough stones.");
 				}
-				if (flags[kFLAGS.TEMPLE_OF_THE_DIVINE_PROGRESS] >= 8 && flags[kFLAGS.TEMPLE_OF_THE_DIVINE_PROGRESS] < 18) {
+				if (flags[kFLAGS.TEMPLE_OF_THE_DIVINE_PROGRESS] >= 7 && flags[kFLAGS.TEMPLE_OF_THE_DIVINE_PROGRESS] < 17) {
 					if (flags[kFLAGS.CAMP_CABIN_WOOD_RESOURCES] >= 50 && flags[kFLAGS.CAMP_CABIN_NAILS_RESOURCES] >= 10) addButton(3, "Prayer Bench", makeNewPrayerBenches).hint("Repair some of the temple banches.");
 					else addButtonDisabled(3, "Prayer Bench", "You not have enough wood or/and nails.");
 				}
@@ -338,7 +340,7 @@ use namespace CoC;
 		}*/
 		public function rebuildStatueOfMarae():void {
 			clearOutput();
-			if (flags[kFLAGS.TEMPLE_OF_THE_DIVINE_PROGRESS] < 5) outputText("You work for the entire day sculpting stone and repairing the statue of Marae. It looks slightly better but it is far from finished.");
+			if (flags[kFLAGS.TEMPLE_OF_THE_DIVINE_PROGRESS] < 4) outputText("You work for the entire day sculpting stone and repairing the statue of Marae. It looks slightly better but it is far from finished.");
 			else outputText("You work for the entire day sculpting stone and repairing the statue of Marae. By the time you're done you can feel divine power radiate from it empowering the entire temple.");
 			flags[kFLAGS.CAMP_CABIN_STONE_RESOURCES] -= 150;
 			flags[kFLAGS.TEMPLE_OF_THE_DIVINE_PROGRESS]++;
@@ -377,11 +379,11 @@ use namespace CoC;
 			if (flags[kFLAGS.TEMPLE_OF_THE_DIVINE_FENRIR] < 1) outputText("broken altar of Fera. You believe it was damaged way before the demons came in, likely by the priesthood tending the temple.");
 			if (flags[kFLAGS.TEMPLE_OF_THE_DIVINE_FENRIR] == 1) outputText("Altar of Fera. An aura of depraved lust rise from it, inviting you to unknown pleasure. This altar radiate a clearly demonic aura and dims the sanctity of the temple like an idol.");
 			outputText("\n\nMarae's statue ");
-			if (flags[kFLAGS.TEMPLE_OF_THE_DIVINE_PROGRESS] < 6) outputText("lies on the ground, its head shattered to pieces");
-			if (flags[kFLAGS.TEMPLE_OF_THE_DIVINE_PROGRESS] >= 6) outputText("in the background awaits the worshippers with its serene and compassionate expression");
+			if (flags[kFLAGS.TEMPLE_OF_THE_DIVINE_PROGRESS] < 5) outputText("lies on the ground, its head shattered to pieces");
+			if (flags[kFLAGS.TEMPLE_OF_THE_DIVINE_PROGRESS] >= 5) outputText("in the background awaits the worshippers with its serene and compassionate expression");
 			outputText(". Lining both walls");
-			if (flags[kFLAGS.TEMPLE_OF_THE_DIVINE_PROGRESS] < 8) outputText(" are the destroyed remains of the many gargoyles who fought to defend this place. Sadly, of all the guardians, only Sapphire remains now.");
-			if (flags[kFLAGS.TEMPLE_OF_THE_DIVINE_PROGRESS] >= 8) {
+			if (flags[kFLAGS.TEMPLE_OF_THE_DIVINE_PROGRESS] < 7) outputText(" are the destroyed remains of the many gargoyles who fought to defend this place. Sadly, of all the guardians, only Sapphire remains now.");
+			if (flags[kFLAGS.TEMPLE_OF_THE_DIVINE_PROGRESS] >= 7) {
 				outputText(", many decorative gargoyles are displayed.");
 				if (flags[kFLAGS.ONYX_PATH] < 1) outputText(" While Sapphire is the last living stony guardian of the temple, this still gives off the illusion of a platoon of guardians watching faithfully over this divine place.");
 				if (player.isGargoyle()) outputText(" Your own pedestal stands right next to Sapphire's, allowing you to keep close to her when you need to rest (using your pedestal allows you to sleep with Sapphire if your relation is high enough).");
@@ -392,7 +394,7 @@ use namespace CoC;
 					outputText(" is looking at you expectantly.");
 				}
 			}
-			if (flags[kFLAGS.TEMPLE_OF_THE_DIVINE_PROGRESS] >= 9) {
+			if (flags[kFLAGS.TEMPLE_OF_THE_DIVINE_PROGRESS] >= 8) {
 				outputText(" There are " + player.statusEffectv1(StatusEffects.TempleOfTheDivineTracker) + " benches in the temple for the worshipers to sit upon.");
 			}
 			doNext(TempleAltairsRebuildMenu);
@@ -1206,11 +1208,11 @@ use namespace CoC;
 			outputText(".\n\nIt's arms ");
 			if (player.statusEffectv4(StatusEffects.GargoyleTFSettingTracker1) == 1) outputText("ends with a set of bestial four fingered sharp stone claws");
 			if (player.statusEffectv4(StatusEffects.GargoyleTFSettingTracker1) == 2) outputText("ends with very human fist");
-			if (!player.hasStatusEffect(StatusEffects.GargoyleTFSettingTracker1) || player.statusEffectv3(StatusEffects.GargoyleTFSettingTracker1) == 0) outputText("have yet to be sculpted");
+			if (!player.hasStatusEffect(StatusEffects.GargoyleTFSettingTracker1) || player.statusEffectv4(StatusEffects.GargoyleTFSettingTracker1) == 0) outputText("have yet to be sculpted");
 			outputText(". It's legs ");
 			if (player.statusEffectv3(StatusEffects.GargoyleTFSettingTracker1) == 1) outputText("ends with clawed bestial feets with three toe at the front and one at the back");
 			if (player.statusEffectv3(StatusEffects.GargoyleTFSettingTracker1) == 2) outputText("are human like");
-			if (!player.hasStatusEffect(StatusEffects.GargoyleTFSettingTracker1) || player.statusEffectv4(StatusEffects.GargoyleTFSettingTracker1) == 0) outputText("have yet to be defined");
+			if (!player.hasStatusEffect(StatusEffects.GargoyleTFSettingTracker1) || player.statusEffectv3(StatusEffects.GargoyleTFSettingTracker1) == 0) outputText("have yet to be defined");
 			outputText(". Its ");
 			if (player.statusEffectv2(StatusEffects.GargoyleTFSettingTracker1) == 1) outputText("mace like");
 			if (player.statusEffectv2(StatusEffects.GargoyleTFSettingTracker1) == 2) outputText("axe like");
@@ -1634,9 +1636,9 @@ use namespace CoC;
 			player.skin.setBaseOnly({type:Skin.STONE});
 			player.hairType = Hair.NORMAL;
 			player.faceType = Face.DEVIL_FANGS;
-			player.tongueType = Tongue.DEMONIC;
-			player.hornType = Horns.GARGOYLE;
-			player.horns = 12 + rand(4);
+			player.tongue.type = Tongue.DEMONIC;
+			player.horns.type = Horns.GARGOYLE;
+			player.horns.count = 12 + rand(4);
 			player.beardLength = 0;
 			player.beardStyle = 0;
 			if (player.statusEffectv1(StatusEffects.GargoyleTFSettingTracker1) == 1) player.femininity = 100;
@@ -1649,21 +1651,21 @@ use namespace CoC;
 			if (player.statusEffectv1(StatusEffects.GargoyleTFSettingTracker2) == 2) player.hairLength = 2;
 			if (player.statusEffectv1(StatusEffects.GargoyleTFSettingTracker2) == 3) player.hairLength = 8;
 			if (player.statusEffectv1(StatusEffects.GargoyleTFSettingTracker2) == 4) player.hairLength = 14;
-			if (player.statusEffectv4(StatusEffects.GargoyleTFSettingTracker1) == 1) player.armType = Arms.GARGOYLE;
-			if (player.statusEffectv4(StatusEffects.GargoyleTFSettingTracker1) == 2) player.armType = Arms.GARGOYLE_2;
+			if (player.statusEffectv4(StatusEffects.GargoyleTFSettingTracker1) == 1) player.arms.type = Arms.GARGOYLE;
+			if (player.statusEffectv4(StatusEffects.GargoyleTFSettingTracker1) == 2) player.arms.type = Arms.GARGOYLE_2;
 			if (player.statusEffectv2(StatusEffects.GargoyleTFSettingTracker1) == 1) player.tailType = Tail.GARGOYLE;
 			if (player.statusEffectv2(StatusEffects.GargoyleTFSettingTracker1) == 2) player.tailType = Tail.GARGOYLE_2;
 			player.tailRecharge = 0;
-			player.wingType = Wings.GARGOYLE_LIKE_LARGE;
+			player.wings.type = Wings.GARGOYLE_LIKE_LARGE;
 			if (player.statusEffectv3(StatusEffects.GargoyleTFSettingTracker1) == 1) player.lowerBody = LowerBody.GARGOYLE;
 			if (player.statusEffectv3(StatusEffects.GargoyleTFSettingTracker1) == 2) player.lowerBody = LowerBody.GARGOYLE_2;
 			player.legCount = 2;
-			player.eyeType = Eyes.GEMSTONES;
-			player.antennae = Antennae.NONE;
-			player.tongueType = Tongue.HUMAN;
-			player.earType = Ears.ELFIN;
-			player.gillType = Gills.NONE;
-			player.rearBody = RearBody.NONE;
+			player.eyes.type = Eyes.GEMSTONES;
+			player.antennae.type = Antennae.NONE;
+			player.tongue.type = Tongue.HUMAN;
+			player.ears.type = Ears.ELFIN;
+			player.gills.type = Gills.NONE;
+			player.rearBody.type = RearBody.NONE;
 			if (player.hasStatusEffect(StatusEffects.BlackNipples)) player.removeStatusEffect(StatusEffects.BlackNipples);
 			if (player.averageNipplesPerBreast() > 1) player.breastRows[0].nipplesPerBreast = 1;
 			if (player.breastRows.length > 1) player.breastRows.length = 1;

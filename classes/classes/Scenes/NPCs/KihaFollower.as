@@ -413,11 +413,8 @@ internal function winSparWithKiha():void {
 		outputText("[pg]\"<i>W-what are you doing!?</i>\"  she starts, pushing away.  \"<i>You - you dumbass!</i>\"  Face as red as her scales, she storms off to the other side of camp.");
 		outputText("[pg]You sigh and head back towards your stuff.");
 		kihaAffection(20);
-		/*if(flags[kFLAGS.KIHA_FOLLOWER] == 1) {
-			if (flags[kFLAGS.KIHA_DEFEATS_COUNTER] >= 1) flags[kFLAGS.KIHA_DEFEATS_COUNTER]++;
-			else flags[kFLAGS.KIHA_DEFEATS_COUNTER] = 1;
-		}*/
 	}
+	lvlUpCheckup();
 	cleanupAfterCombat();
 }
 //Spar with Friendly Kiha - Kiha Wins (Z)
@@ -1069,11 +1066,11 @@ private function boneTheShitOutofKihaHolesWithHorsecock():void {
 	var y:Number = -1;
 	//Find appropriately large horsecock
 	if(player.horseCocks() > 0) {
-		temp = player.cockTotal();
-		while(temp > 0) {
-			temp--;
-			if(player.cocks[temp].cockType == CockTypesEnum.HORSE && player.cockArea(temp) >= 40) {
-				x = temp;
+		var i:int = player.cockTotal();
+		while(i > 0) {
+			i--;
+			if(player.cocks[i].cockType == CockTypesEnum.HORSE && player.cockArea(i) >= 40) {
+				x = i;
 				y = x+1;
 				break;
 			}
@@ -1597,24 +1594,24 @@ private function fuckKihaWithATentacle():void {
 	var y:Number = -1;
 	var z:Number = -1;
 	var zz:Number = -1;
-	temp = player.cockTotal();
-	while(temp > 0) {
-		temp--;
-		if(player.cocks[temp].cockType == CockTypesEnum.TENTACLE) {
+	var i:int = player.cockTotal();
+	while(i > 0) {
+		i--;
+		if(player.cocks[i].cockType == CockTypesEnum.TENTACLE) {
 			if(x == -1) {
-				x = temp;
+				x = i;
 				x++;
 			}
 			else if(y == -1) {
-				y = temp;
+				y = i;
 				y++;
 			}
 			else if(z == -1) {
-				z = temp;
+				z = i;
 				z++;
 			}
 			else if(zz == -1) {
-				zz = temp;
+				zz = i;
 				zz++;
 			}
 			else break;
@@ -1853,54 +1850,7 @@ internal function pcLosesDomFight():void {
 //[PC wins the fight]
 internal function pcWinsDomFight():void {
 	clearOutput();
-	if (flags[kFLAGS.SPARRABLE_NPCS_TRAINING] == 2) {
-		if (flags[kFLAGS.KIHA_FOLLOWER] == 1) {
-			if (flags[kFLAGS.KIHA_DEFEATS_COUNTER] >= 1) flags[kFLAGS.KIHA_DEFEATS_COUNTER]++;
-			else flags[kFLAGS.KIHA_DEFEATS_COUNTER] = 1;
-		}
-		if (flags[kFLAGS.KIHA_DEFEATS_COUNTER] == 4 && flags[kFLAGS.KIHA_LVL_UP] < 1) {
-			if (player.hasStatusEffect(StatusEffects.CampSparingNpcsTimers1)) player.addStatusValue(StatusEffects.CampSparingNpcsTimers1, 3, 24);
-			else player.createStatusEffect(StatusEffects.CampSparingNpcsTimers1, 0, 0, 24, 0);
-			flags[kFLAGS.KIHA_DEFEATS_COUNTER] = 0;
-			flags[kFLAGS.KIHA_LVL_UP] = 1;
-		}
-		if (flags[kFLAGS.KIHA_DEFEATS_COUNTER] == 5 && flags[kFLAGS.KIHA_LVL_UP] == 1) {
-			if (player.hasStatusEffect(StatusEffects.CampSparingNpcsTimers1)) player.addStatusValue(StatusEffects.CampSparingNpcsTimers1, 3, 30);
-			else player.createStatusEffect(StatusEffects.CampSparingNpcsTimers1, 0, 0, 30, 0);
-			flags[kFLAGS.KIHA_DEFEATS_COUNTER] = 0;
-			flags[kFLAGS.KIHA_LVL_UP] = 2;
-		}
-		if (flags[kFLAGS.KIHA_DEFEATS_COUNTER] == 6 && flags[kFLAGS.KIHA_LVL_UP] == 2) {
-			if (player.hasStatusEffect(StatusEffects.CampSparingNpcsTimers1)) player.addStatusValue(StatusEffects.CampSparingNpcsTimers1, 3, 36);
-			else player.createStatusEffect(StatusEffects.CampSparingNpcsTimers1, 0, 0, 36, 0);
-			flags[kFLAGS.KIHA_DEFEATS_COUNTER] = 0;
-			flags[kFLAGS.KIHA_LVL_UP] = 3;
-		}
-		if (flags[kFLAGS.KIHA_DEFEATS_COUNTER] == 7 && flags[kFLAGS.KIHA_LVL_UP] == 3) {
-			if (player.hasStatusEffect(StatusEffects.CampSparingNpcsTimers1)) player.addStatusValue(StatusEffects.CampSparingNpcsTimers1, 3, 42);
-			else player.createStatusEffect(StatusEffects.CampSparingNpcsTimers1, 0, 0, 42, 0);
-			flags[kFLAGS.KIHA_DEFEATS_COUNTER] = 0;
-			flags[kFLAGS.KIHA_LVL_UP] = 4;
-		}
-		if (flags[kFLAGS.KIHA_DEFEATS_COUNTER] == 8 && flags[kFLAGS.KIHA_LVL_UP] == 4) {
-			if (player.hasStatusEffect(StatusEffects.CampSparingNpcsTimers1)) player.addStatusValue(StatusEffects.CampSparingNpcsTimers1, 3, 48);
-			else player.createStatusEffect(StatusEffects.CampSparingNpcsTimers1, 0, 0, 48, 0);
-			flags[kFLAGS.KIHA_DEFEATS_COUNTER] = 0;
-			flags[kFLAGS.KIHA_LVL_UP] = 5;
-		}
-		if (flags[kFLAGS.KIHA_DEFEATS_COUNTER] == 9 && flags[kFLAGS.KIHA_LVL_UP] == 5) {
-			if (player.hasStatusEffect(StatusEffects.CampSparingNpcsTimers1)) player.addStatusValue(StatusEffects.CampSparingNpcsTimers1, 3, 54);
-			else player.createStatusEffect(StatusEffects.CampSparingNpcsTimers1, 0, 0, 54, 0);
-			flags[kFLAGS.KIHA_DEFEATS_COUNTER] = 0;
-			flags[kFLAGS.KIHA_LVL_UP] = 6;
-		}
-		if (flags[kFLAGS.KIHA_DEFEATS_COUNTER] == 10 && flags[kFLAGS.KIHA_LVL_UP] == 6) {
-			if (player.hasStatusEffect(StatusEffects.CampSparingNpcsTimers1)) player.addStatusValue(StatusEffects.CampSparingNpcsTimers1, 3, 60);
-			else player.createStatusEffect(StatusEffects.CampSparingNpcsTimers1, 0, 0, 60, 0);
-			flags[kFLAGS.KIHA_DEFEATS_COUNTER] = 0;
-			flags[kFLAGS.KIHA_LVL_UP] = 7;
-		}
-	}
+	lvlUpCheckup();
 	outputText(images.showImage("kiha-dom-win"));
 	spriteSelect(72);
 	var x:Number = player.cockThatFits(67);
@@ -2014,11 +1964,11 @@ internal function pcWinsDomFight():void {
 		outputText("[pg]Pinning her arms to the cold ground, you move your head down to her supple breast, gently flicking the little stubs of her nipples with your tongue.");
 
 		//PC has a demon/snake tongue: 
-		if(player.hasLongTongue() || player.tongueType == Tongue.SNAKE) {
+		if(player.hasLongTongue() || player.tongue.type == Tongue.SNAKE) {
 			outputText("[pg]Kiha initially reacts with titillation, then a sense of perverted violation as you wrap the hardening nub with your mouth muscle, ");
 			//Demon: 
 			if(player.hasLongTongue()) outputText("taking to her pointed mammary like a boa to prey as you lather up each teat separately.  The hot-tempered dragon girl squirms, completely at your mercy while you have your fun."); 
-			else if(player.tongueType == Tongue.SNAKE) outputText("stimulating the soft, nubby flesh with your forked tongue, hissing for effect as you do it.  Imagine the look on her face if you worked that little bugger over her clit; she'd go berserk!  But she hasn't earned that yet; what you want to hear is her begging for a good dicking first.");
+			else if(player.tongue.type == Tongue.SNAKE) outputText("stimulating the soft, nubby flesh with your forked tongue, hissing for effect as you do it.  Imagine the look on her face if you worked that little bugger over her clit; she'd go berserk!  But she hasn't earned that yet; what you want to hear is her begging for a good dicking first.");
 		}
 		outputText("[pg]Her breathing becoming plagued with arousal and stimulus overload, she finally yields, beseeching you to stop playing with her breasts and to get on with \"<i>more important things.</i>\"");
 
@@ -2083,6 +2033,57 @@ private function guardMyCampKiha():void {
 	}
 	menu();
 	addButton(0,"Next",warmLoverKihaIntro);
+}
+
+private function lvlUpCheckup():void {
+	if (flags[kFLAGS.SPARRABLE_NPCS_TRAINING] == 2) {
+		if (flags[kFLAGS.KIHA_FOLLOWER] == 1) {
+			if (flags[kFLAGS.KIHA_DEFEATS_COUNTER] >= 1) flags[kFLAGS.KIHA_DEFEATS_COUNTER]++;
+			else flags[kFLAGS.KIHA_DEFEATS_COUNTER] = 1;
+		}
+		if (flags[kFLAGS.KIHA_DEFEATS_COUNTER] == 4 && flags[kFLAGS.KIHA_LVL_UP] < 1) {
+			if (player.hasStatusEffect(StatusEffects.CampSparingNpcsTimers1)) player.addStatusValue(StatusEffects.CampSparingNpcsTimers1, 3, 24);
+			else player.createStatusEffect(StatusEffects.CampSparingNpcsTimers1, 0, 0, 24, 0);
+			flags[kFLAGS.KIHA_DEFEATS_COUNTER] = 0;
+			flags[kFLAGS.KIHA_LVL_UP] = 1;
+		}
+		if (flags[kFLAGS.KIHA_DEFEATS_COUNTER] == 5 && flags[kFLAGS.KIHA_LVL_UP] == 1) {
+			if (player.hasStatusEffect(StatusEffects.CampSparingNpcsTimers1)) player.addStatusValue(StatusEffects.CampSparingNpcsTimers1, 3, 30);
+			else player.createStatusEffect(StatusEffects.CampSparingNpcsTimers1, 0, 0, 30, 0);
+			flags[kFLAGS.KIHA_DEFEATS_COUNTER] = 0;
+			flags[kFLAGS.KIHA_LVL_UP] = 2;
+		}
+		if (flags[kFLAGS.KIHA_DEFEATS_COUNTER] == 6 && flags[kFLAGS.KIHA_LVL_UP] == 2) {
+			if (player.hasStatusEffect(StatusEffects.CampSparingNpcsTimers1)) player.addStatusValue(StatusEffects.CampSparingNpcsTimers1, 3, 36);
+			else player.createStatusEffect(StatusEffects.CampSparingNpcsTimers1, 0, 0, 36, 0);
+			flags[kFLAGS.KIHA_DEFEATS_COUNTER] = 0;
+			flags[kFLAGS.KIHA_LVL_UP] = 3;
+		}
+		if (flags[kFLAGS.KIHA_DEFEATS_COUNTER] == 7 && flags[kFLAGS.KIHA_LVL_UP] == 3) {
+			if (player.hasStatusEffect(StatusEffects.CampSparingNpcsTimers1)) player.addStatusValue(StatusEffects.CampSparingNpcsTimers1, 3, 42);
+			else player.createStatusEffect(StatusEffects.CampSparingNpcsTimers1, 0, 0, 42, 0);
+			flags[kFLAGS.KIHA_DEFEATS_COUNTER] = 0;
+			flags[kFLAGS.KIHA_LVL_UP] = 4;
+		}
+		if (flags[kFLAGS.KIHA_DEFEATS_COUNTER] == 8 && flags[kFLAGS.KIHA_LVL_UP] == 4) {
+			if (player.hasStatusEffect(StatusEffects.CampSparingNpcsTimers1)) player.addStatusValue(StatusEffects.CampSparingNpcsTimers1, 3, 48);
+			else player.createStatusEffect(StatusEffects.CampSparingNpcsTimers1, 0, 0, 48, 0);
+			flags[kFLAGS.KIHA_DEFEATS_COUNTER] = 0;
+			flags[kFLAGS.KIHA_LVL_UP] = 5;
+		}
+		if (flags[kFLAGS.KIHA_DEFEATS_COUNTER] == 9 && flags[kFLAGS.KIHA_LVL_UP] == 5) {
+			if (player.hasStatusEffect(StatusEffects.CampSparingNpcsTimers1)) player.addStatusValue(StatusEffects.CampSparingNpcsTimers1, 3, 54);
+			else player.createStatusEffect(StatusEffects.CampSparingNpcsTimers1, 0, 0, 54, 0);
+			flags[kFLAGS.KIHA_DEFEATS_COUNTER] = 0;
+			flags[kFLAGS.KIHA_LVL_UP] = 6;
+		}
+		if (flags[kFLAGS.KIHA_DEFEATS_COUNTER] == 10 && flags[kFLAGS.KIHA_LVL_UP] == 6) {
+			if (player.hasStatusEffect(StatusEffects.CampSparingNpcsTimers1)) player.addStatusValue(StatusEffects.CampSparingNpcsTimers1, 3, 60);
+			else player.createStatusEffect(StatusEffects.CampSparingNpcsTimers1, 0, 0, 60, 0);
+			flags[kFLAGS.KIHA_DEFEATS_COUNTER] = 0;
+			flags[kFLAGS.KIHA_LVL_UP] = 7;
+		}
+	}
 }
 
 		private function giveKihaUndergarmentsPrompt():void {

@@ -23,9 +23,9 @@ public class MainViewManager extends BaseContent {
 	//Interface flags
 	public var registeredShiftKey:Boolean = false;
 
-	public const textColorArray:Array = [0, 0, 0, 0xFFFFFF, 0xFFFFFF, 0, 0, 0, 0, 0];
-	public const darkThemes:Array = [false, false, false, false, true, false, false, false, false, false];
-	public const barAlphaArray:Array  = [0.4, 0.4, 0.5, 1, 1, 1, 1, 1, 1, 1];
+	public const textColorArray:Array = [0, 0, 0, 0, 0xFFFFFF, 0xFFFFFF, 0, 0, 0, 0, 0];
+	public const darkThemes:Array = [false, false, false, false, false, true, false, false, false, false, false];
+	public const barAlphaArray:Array  = [0.4, 0.4, 0.4, 0.5, 1, 1, 1, 1, 1, 1, 1];
 
 	public var statsHidden:Boolean    = false;
 	public var buttonsTweened:Boolean = false;
@@ -37,8 +37,11 @@ public class MainViewManager extends BaseContent {
 	//------------
 	// SHOW/HIDE
 	//------------
-	public function darkThemeImpl():Boolean {
+	public function isDarkTheme():Boolean {
 		return darkThemes[flags[kFLAGS.BACKGROUND_STYLE]];
+	}
+	public function isDarkText():Boolean {
+		return isDarkTheme() && !mainView.textBGTan.visible && !mainView.textBGWhite.visible;
 	}
 
 	public function setTheme():void {
@@ -94,8 +97,16 @@ public class MainViewManager extends BaseContent {
 		mainView.charView.setCharacter(player);
 		mainView.charView.redraw();
 		mainView.charView.visible = true;
-		BoundClip.nextContent = mainView.charView;
-		outputText("<img src='coc.view::BoundClip' align='left' id='charview'/>");
+		if(flags[kFLAGS.CHARVIEW_STYLE] < 1){
+			mainView.charView.x = 0;
+			mainView.charView.y = 0;
+			BoundClip.nextContent = mainView.charView;
+			outputText("<img src='coc.view::BoundClip' align='left' id='charview'/>");
+		} else {
+			mainView.charView.x = 208 + 796 + 4; //TEXTZONE_X + TEXTZONE_W + GAP
+			mainView.charView.y = 52; // TEXTZONE_Y;
+			mainView.addElement(mainView.charView);
+		}
 	}
 	public function hidePlayerDoll():void {
 		mainView.charView.visible = false;

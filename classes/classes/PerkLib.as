@@ -331,7 +331,7 @@ public class PerkLib
 		public static const CatlikeNimbleness:PerkType = mk("Cat-like Nimbleness", "Cat-like Nimbleness",
 				"Your transformed joins allows you to move more swiftly and with greater nimbleness.",
 				"You choose the 'Cat-like Nimbleness' perk. Your body joints due to repeadly usage of cat-like flexibility became more nimble.");
-		public static const CatlikeNimblenessEvolved:PerkType = mk("Cat-like Nimbleness", "Cat-like Nimbleness",
+		public static const CatlikeNimblenessEvolved:PerkType = mk("Cat-like Nimbleness (Evolved)", "Cat-like Nimbleness (Evolved)",
 				"Your nimble body allows you to move more swiftly and with greater nimbleness than before.",
 				"You choose the 'Cat-like Nimbleness (Evolved)' perk. Continuous usage of cat-like flexibility caused it to undergone change.");
 		public static const Channeling:PerkType = mk("Channeling", "Channeling",
@@ -374,12 +374,21 @@ public class PerkLib
 		public static const ChimericalBodyPerfectStage:PerkType = mk("Chimerical Body: Perfect Stage", "Chimerical Body: Perfect Stage",
 				".",
 				"You choose the 'Chimerical Body: Perfect Stage' perk.  Coś coś!");	
+		public static const ChimericalBodySemiPerfectStage:PerkType = mk("Chimerical Body: Semi-Perfect Stage", "Chimerical Body: Semi-Perfect Stage",
+				"prless lub completed stage.",
+				"You choose the 'Chimerical Body: Semi-Perfect Stage' perk.  Coś coś!");	
 		public static const ChimericalBodyUltimateStage:PerkType = mk("Chimerical Body: Ultimate Stage", "Chimerical Body: Ultimate Stage",
 				".",
 				"You choose the 'Chimerical Body: Ultimate Stage' perk.  Coś coś!");	
 		public static const ChimericalBodyStage:PerkType = mk("Chimerical Body:  Stage", "Chimerical Body:  Stage",
 				"prless lub completed stage.",
 				"You choose the 'Chimerical Body:  Stage' perk.  Coś coś!");	
+		public static const ClawingFlurry:PerkType = mk("Clawing flurry", "Clawing flurry",
+				"When attacking with your claws, add an additional attack striking up to 5 times.",
+				"You choose the 'Clawing flurry' perk, gaining an additional attack with your claws!");
+		public static const ClawTraining:PerkType = mk("Claw training", "Claw training",
+				"Gain 1 extra natural attack with your claws.",
+				"You choose the 'Claw training' perk, gain 1 extra natural attack with your claws!");
 		public static const ColdBlooded:PerkType = mk("Cold Blooded", "Cold Blooded",
 				"Reduces minimum lust by up to 20, down to min of 20. Caps min lust at 80.",
 				"You choose the 'Cold Blooded' perk.  Thanks to increased control over your desires, your minimum lust is reduced! (Caps minimum lust at 80. Won't reduce minimum lust below 20 though.)");
@@ -611,6 +620,9 @@ public class PerkLib
 		public static const ExpertGolemMaker:PerkType = mk("Expert Golem Maker", "Expert Golem Maker",
 				"Your proficiency in making golems allows them to attack even flying enemies, lower by 5% chance of core shattering and storing more golems.",
 				"You choose 'Expert Golem Maker' perk, increasing your proficiency in making golems.");
+		public static const ExtraClawAttack:PerkType = mk("Extra claw attack", "Extra claw attack",
+				"When attacking with your claws, add an additional attack striking up to 3 times.",
+				"You choose the 'Extra claw attack' perk, gaining an additional attack with your claws!");
 		public static const EyesOfTheHunterAdept:PerkType = mk("Eyes of the Hunter (Adept)", "Eyes of the Hunter (Adept)",
 				"Allow see another few infomations about enemy (as long it apply to current viewed enemy) (req. 50+ sensitivity).",
 				"You choose the 'Eyes of the Hunter (Adept)' perk, allowing you to gain wider than before range of information about enemy you fight.");
@@ -620,6 +632,9 @@ public class PerkLib
 		public static const EyesOfTheHunterNovice:PerkType = mk("Eyes of the Hunter (Novice)", "Eyes of the Hunter (Novice)",
 				"Allow see few more than usual infomations about enemy (req. 25+ sensitivity).",
 				"You choose the 'Eyes of the Hunter (Novice)' perk, allowing you to gain more information about enemy you fight.");
+		public static const FeralArmor:PerkType = mk("Feral Armor", "Feral Armor",
+				"Gain extra armor based on your toughness so long as you’re naked and have any form of natural armor.",
+				"You choose the 'Feral Armor' perk, gaining extra armor as long you are naked and have any natural armor!");
 		public static const FertilityMinus:PerkType = mk("Fertility-", "Fertility-",
 				"Decreases fertility rating by 15 and cum volume by up to 30%. (Req's libido of less than 25.)",
 				"You choose the 'Fertility-' perk, making it harder to get pregnant.  It also decreases your cum volume by up to 30% (if appropriate)!");
@@ -975,6 +990,9 @@ public class PerkLib
 		public static const JobHunter:PerkType = mk("Job: Hunter", "Job: Hunter",
 				"You've trained in hunter combat.",
 				"You choose 'Job: Hunter' perk, training yourself to became Hunter.");
+		public static const JobHealer:PerkType = mk("Job: Healer", "Job: Healer",
+				"You've trained in using more effectively heal spells and effects.",
+				"You choose 'Job: Healer' perk, training yourself to became Healer.");
 		public static const JobKnight:PerkType = mk("Job: Knight", "Job: Knight",
 				"You've trained in combat using shields and heaviest armors.",
 				"You choose 'Job: Knight' perk, training yourself to became Knight.");
@@ -993,6 +1011,9 @@ public class PerkLib
 		public static const JobSoulCultivator:PerkType = mk("Job: Soul Cultivator", "Job: Soul Cultivator",
 				"You've cultivated powers of your soul.",
 				"You choose the 'Job: Soul Cultivator' perk, starting journey of the soul cultivation path!");
+		public static const JobSwordsman:PerkType = mk("Job: Swordsman", "Job: Swordsman",
+				"You've trained in using large weapons in fights.",
+				"You choose 'Job: Swordsman' perk, training yourself to became Swordsman.");
 		public static const JobWarlord:PerkType = mk("Job: Warlord", "Job: Warlord",
 				"You've trained in combat against group of enemies.",
 				"You choose 'Job: Warlord' perk, training yourself to became Warlord.");
@@ -1107,6 +1128,18 @@ public class PerkLib
 		public static const Medicine:PerkType = mk("Medicine", "Medicine",
 				"Grants 15% chance per round of cleansing poisons/drugs from your body. Increases HP restoration on rest.",
 				"You choose the 'Medicine' perk, giving you a chance to remove debilitating poisons automatically! Also, increases HP restoration on rest.");
+		public static const NaturalHealingEpic:PerkType = mk("Natural healing (Epic)", "Natural healing (Epic)",
+				"Incease healing power by 60% and lower healing spells mana costs by 25%.",
+				"You choose the 'Natural healing (Epic)' perk, increasing healing spells effectivnes and lowering their costs.");
+		public static const NaturalHealingLegendary:PerkType = mk("Natural healing (Legendary)", "Natural healing (Legendary)",
+				"Incease healing power by 50% and lower healing spells mana costs by 20%.",
+				"You choose the 'Natural healing (Legendary)' perk, increasing healing spells effectivnes and lowering their costs.");
+		public static const NaturalHealingMajor:PerkType = mk("Natural healing (Major)", "Natural healing (Major)",
+				"Incease healing power by 40% and lower healing spells mana costs by 15%.",
+				"You choose the 'Natural healing (Major)' perk, increasing healing spells effectivnes and lowering their costs.");
+		public static const NaturalHealingMinor:PerkType = mk("Natural healing (Minor)", "Natural healing (Minor)",
+				"Incease healing power by 30% and lower healing spells mana costs by 10%.",
+				"You choose the 'Natural healing (Minor)' perk, increasing healing spells effectivnes and lowering their costs.");
 		public static const Metamorph:PerkType = mk("Metamorph", "Metamorph",
 				"Mold your own body using genetic memory and soulforce.",
 				"You choose the 'Metamorph' perk, giving you a chance to mold your own body.");
@@ -1128,6 +1161,9 @@ public class PerkLib
 		public static const MindOverBodyVI:PerkType = mk("Mind over Body VI", "Mind over Body VI",
 				"+2 extra mana per point of intelligence.",
 				"You choose the 'Mind over Body VI' perk, granting +2 extra maximum mana for each point of intelligence.");
+		public static const MultiClawAttack:PerkType = mk("Multi Claw Attack", "Multi Claw Attack",
+				"When attacking with your claws, add an additional attack striking up to 4 times.",
+				"You choose the 'Multi Claw Attack' perk, gaining an additional attack with your claws!");
 		public static const Multishot:PerkType = mk("Multishot", "Multishot",
 				"Allows you to perform additional range attack per round.",
 				"You choose the 'Multishot' perk, This allows you to make additional range attack.");
@@ -1427,6 +1463,13 @@ public class PerkLib
 						"<b>You are too dumb to gain benefit from this perk.</b>" +
 						"]",
 				"You choose the 'Spellpower' perk.  Thanks to your sizeable intellect and willpower, you are able to more effectively use magic, boosting base spell effects by 10% and mana pool by 15.");
+		public static const SpellpowerHealing:PerkType = mk("Spellpower: Healing", "Spellpower: Healing",
+				"[if (player.wis>=50)" +
+						"Increases base spell strength by 20% and mana pool by 30." +
+						"|" +
+						"<b>You are too dumb to gain benefit from this perk.</b>" +
+						"]",
+				"You choose the 'Spellpower: Healing' perk.  Thanks to your sizeable intellect and willpower, you are able to more effectively use magic, boosting base healing spell effects by 20% and mana pool by 30.");
 		public static const Spellsword:PerkType = mk("Spellsword", "Spellsword",
 				"Start every battle with Charge Weapon enabled, if you meet White Magic requirements before it starts.",
 				"You choose the 'Spellsword' perk. You start every battle with Charge Weapon effect, as long as your Lust is not preventing you from casting it before battle.");
@@ -1509,6 +1552,9 @@ public class PerkLib
 		public static const Tornado:PerkType = mk("Tornado", "Tornado",
 				"Increasing damage of aoe like whirlwind by 100% of base value.",
 				"You choose the 'Tornado' perk, increasing damage by aoe specials like whirlwind.");
+		public static const ToughHide:PerkType = mk("Tough Hide", "Tough Hide",
+				"Increase your natural armor by 2 so long as you have scale chitin fur or other natural armor.",
+				"You choose the 'Tough Hide' perk, increase your natural armor as long you have any natural armor!");
 		public static const TrachealSystem:PerkType = mk("Tracheal System", "Tracheal System",
 				"Your body posses rudimentary respiratory system of the insects.",
 				"You choose the 'Tracheal System' perk, by becoming much more insect-like your body started to denvelop crude version of insects breathing system.");
@@ -1598,9 +1644,15 @@ public class PerkLib
 		public static const Whirlwind:PerkType = mk("Whirlwind", "Whirlwind",
 				"Whirlwind special deal increased damage based on current strength.",
 				"You choose the 'Whirlwind' perk, making your Whirlwind special stronger.");
+		public static const WhirlwindFeral:PerkType = mk("Feral Whirlwind", "Feral Whirlwind",
+				"Feral Whirlwind special deal increased damage based on current strength and unarmed bonus.",
+				"You choose the 'Feral Whirlwind' perk, making your Feral Whirlwind special stronger.");
 		public static const WildQuiver:PerkType = mk("Wild Quiver", "Wild Quiver",
 				"You grab and shoot arrows at blinding speed, gaining an extra shot.",
 				"You choose the 'Wild Quiver' perk, you combine it with triple attack and manyshot to shoot up to 5 times.");
+		public static const WisenedHealer:PerkType = mk("Wisened Healer", "Wisened Healer",
+				"Adds wisdom based scaling to healing spells at cost of doubling spells costs.",
+				"You choose the 'Wisened Healer' perk. Increasing healing spells effects based on current wisdom.");
 		public static const JobSoulArcher:PerkType = mk("Job: Soul Archer", "Job: Soul Archer",
 				"You've trained in art of combining soulforce and arrows.",
 				"You choose 'Job: Soul Archer' perk, training yourself to became Soul Archer.");
@@ -1646,6 +1698,8 @@ public class PerkLib
 
 		// Non-weapon equipment perks
 		public static const Ambition:AmbitionPerk = new AmbitionPerk();
+		public static const DexterousSwordsmanship:PerkType = mk("Dexterous swordsmanship", "Dexterous swordsmanship",
+				"Increases parry chance by 10% while wielding a weapon.",null,true);
 		public static const BloodMage:PerkType = mk("Blood Mage", "Blood Mage",
 				"Spellcasting now consumes health instead of mana!",null,true);
 		public static const LastResort:PerkType = mk("Last Resort", "Last Resort",
@@ -1695,6 +1749,8 @@ public class PerkLib
 				"Enables your eggs to be properly fertilized into basilisks of both genders!");
 		public static const BeeOvipositor:PerkType = mk("Bee Ovipositor", "Bee Ovipositor",
 				"Allows you to lay eggs through a special organ on your insect abdomen, though you need at least 10 eggs to lay.");
+		public static const BicornBlessing:PerkType = mk("Bicorn Blessing", "Bicorn Blessing",
+				"Your are blessed with the unholy power of a bicorn and while above 80 corruption your black magic  is increased by 20% and lust resistance by 10%.");
 		public static const BimboBody:PerkType = mk("Bimbo Body", "Bimbo Body",
 				"Gives the body of a bimbo.  Tits will never stay below a 'DD' cup, libido is raised, lust resistance is raised, and upgrades tease.");
 		public static const BimboBrains:PerkType = mk("Bimbo Brains", "Bimbo Brains",
@@ -1769,6 +1825,10 @@ public class PerkLib
 				"Allows you to shoot blinding and probably slightly arousing ink out of your genitalia similar like octopus.");
 		public static const JunglesWanderer:PerkType = mk("Jungle’s Wanderer", "Jungle’s Wanderer",
 				"Your nimble body has adapted to moving through jungles and forests, evading enemy attacks with ease and making yourself harder to catch. (+35 to the Evasion percentage)");
+		public static const Lycanthropy:PerkType = mk("Lycanthropy", "Lycanthropy",
+				"Your strength and urges are directly tied to the cycle of the moon. Furthermore, your skin is resistant to normal damage and your claws are sharper than normal.");
+		public static const LycanthropyDormant:PerkType = mk("Dormant Lycanthropy", "Dormant Lycanthropy",
+				"You sometimes hear echoes of the call of the moon. If you were more of a werebeast you likely would feel its pull again. A lycanthrope is never truly cured.");
 		public static const LightningAffinity:PerkType = mk("Lightning Affinity", "Lightning Affinity",
 				"Increase all damage dealt with lightning spells by 100% and reduce lightning damage taken by 50%.");
 		public static const LizanRegeneration:PerkType = mk("Lizan Regeneration", "Lizan Regeneration",
@@ -1872,6 +1932,8 @@ public class PerkLib
 				"Your strong affinity toward soullforce helped to denvelop another sense called 'Soul Sense' by a fellow soul cultivators.");
 		public static const TransformationImmunity:PerkType = mk("Transformation immunity", "Transformation immunity",
 				"As a magical construct you are immune to all effects that change the body of living beings, including most transformatives on Mareth (work as the regular transformative resistance except it reduce the odds of getting a body part tfed to 0 although score increasers do still works).");
+		public static const UnicornBlessing:PerkType = mk("Unicorn Blessing", "Unicorn Blessing",
+				"You are blessed with the power of a unicorn and while below 20 corruption all white magic spells are 20% stronger and lust resistance increased by 10%.");
 		public static const Whispered:PerkType = mk("Whispered", "Whispered",
 				"Akbal's blessings grant limited telepathy that can induce fear.");
 				
@@ -1899,6 +1961,7 @@ public class PerkLib
 		public static const LightningNature:PerkType = mk("Lightning Nature", "Lightning Nature", "");
 		public static const LightningVulnerability:PerkType = mk("Lightning Vulnerability", "Lightning Vulnerability", "");
 		public static const MonsterRegeneration:PerkType = mk("Monster Regeneration", "Monster Regeneration", "");
+		public static const NoGemsLost:PerkType = mk("No Gems Lost", "No Gems Lost", "");
 		public static const ShieldWielder:PerkType = mk("Shield wielder", "Shield wielder", "");
 		public static const TeaseResistance:PerkType = mk("Tease Resistance", "Tease Resistance", "");
 		//public static const EnemyGooType:PerkType = mk("", "", "");
@@ -1933,7 +1996,7 @@ public class PerkLib
                     .requirePerk(JobWarrior);
             JobBrawler.requireLevel(6)
                     .requireStr(60);
-            JobBarbarian.requireLevel(6)
+            JobSwordsman.requireLevel(6)
                     .requireStr(60);
             IronFistsI.requireLevel(6)
                     .requireStr(60)
@@ -1979,10 +2042,10 @@ public class PerkLib
                     .requireStr(80)
                     .requireTou(60);
             WeaponMastery.requireLevel(12)
-                    .requirePerk(JobBarbarian)
+                    .requirePerk(JobSwordsman)
                     .requireStr(100);
             DoubleAttackLarge.requireLevel(12)
-                    .requirePerk(JobBarbarian)
+                    .requirePerk(JobSwordsman)
                     .requireStr(75)
                     .requireStr(50);
             ImprovedTranquilness.requireStr(90)
@@ -1999,7 +2062,7 @@ public class PerkLib
                     .requirePerk(WeaponMastery)
                     .requireStr(100);
             HiddenMomentum.requireLevel(18)
-                    .requirePerk(JobBarbarian)
+                    .requirePerk(JobSwordsman)
                     .requireStr(75)
                     .requireSpe(50);
             HalfStepToAdvancedTranquilness.requireStr(120)
@@ -2048,7 +2111,7 @@ public class PerkLib
             //a może właśnie perk dodający do max str cap tyle ile wynosi obecnie PC tone?
             //Tier 7 Strength Perks
             PrestigeJobBerserker.requirePrestigeJobSlot()
-                    .requirePerk(JobBarbarian)
+                    .requirePerk(JobSwordsman)
                     .requirePerk(JobGuardian)
                     .requireAnyPerk(Berzerker, Lustzerker)
                     .requireStr(200)
@@ -2574,7 +2637,7 @@ public class PerkLib
             Spellpower.requirePerk(JobSorcerer)
                     .requireInt(50);
             UnlockMind.requireInt(20);
-            ManaAffinityI.requirePerk(JobSorcerer)
+            ManaAffinityI.requireAnyPerk(JobSorcerer, JobHealer)
                     .requireInt(25);
             ManaAffinityII.requirePerk(ManaAffinityI)
                     .requireInt(45)
@@ -3060,7 +3123,6 @@ public class PerkLib
                     .requireLib(50)
                     .requireStatusEffect(StatusEffects.KnowsArouse, "Arouse spell");
             JobCourtesan.requirePerk(JobSeducer)
-                    .requirePerk(Heroism)
                     .requireLib(50)
                     .requireLevel(12);
             DazzlingDisplay.requirePerk(JobCourtesan)
@@ -3168,23 +3230,23 @@ public class PerkLib
             // CORRUPTION
             //------------
             //Slot 7 - Corrupted Libido - lust raises 10% slower.
-            CorruptedLibido.requireCor(25);
+            CorruptedLibido.requireCor(10);
             CorruptedLibido.defaultValue1 = 20;
             //Slot 7 - Seduction (Must have seduced Jojo)
-            Seduction.requireCor(50);
+            Seduction.requireCor(15);
             //Slot 7 - Nymphomania
-            Nymphomania.requireCor(75)
+            Nymphomania.requireCor(15)
                     .requirePerk(CorruptedLibido);
             //Slot 7 - UNFINISHED :3
-            Acclimation.requireCor(50)
+            Acclimation.requireCor(15)
                     .requirePerk(CorruptedLibido)
                     .requireMinLust(20);
-            SenseCorruption.requireCor(75);
+            SenseCorruption.requireCor(15);
             //Tier 1 Corruption Perks - acclimation over-rides
-            Sadist.requireCor(60)
+            Sadist.requireCor(20)
                     .requirePerk(CorruptedLibido)
                     .requireLevel(6);
-            ArousingAura.requireCor(70)
+            ArousingAura.requireCor(25)
                     .requirePerk(CorruptedLibido)
                     .requireLevel(6);
             //Tier 2
@@ -3314,7 +3376,7 @@ public class PerkLib
                 return player.dragonScore() >= 4;
             }, "Dragon race");
             GorgonsEyes.requireCustomFunction(function (player:Player):Boolean {
-                return player.gorgonScore() >= 5 && player.eyeType == 4;
+                return player.gorgonScore() >= 5 && player.eyes.type == 4;
             }, "Gorgon race and eyes");
             KitsuneThyroidGland.requireAnyPerk(EnlightenedKitsune, CorruptedKitsune).requireCustomFunction(function (player:Player):Boolean {
                 return player.kitsuneScore() >= 5;
@@ -3362,15 +3424,17 @@ public class PerkLib
             //	JobArtificer.requireInt(25)
             //				.requireWis(25);
             JobBeastWarrior.requireStr(20)
-                    .requireTou(20)
-                    .requireSpe(20);
+					.requireTou(20)
+					.requireSpe(20);
             PrimalFuryI.requirePerk(JobBeastWarrior);
             PrimalFuryII.requirePerk(PrimalFuryI)
-                    .requireLevel(2)
-                    .requireNGPlus(1);
+					.requireLevel(2)
+					.requireNGPlus(1);
             PrimalFuryIII.requirePerk(PrimalFuryII)
-                    .requireLevel(4)
-                    .requireNGPlus(2);
+					.requireLevel(4)
+					.requireNGPlus(2);
+			ToughHide.requirePerk(JobBeastWarrior)
+					.requireTou(30);
             //Tier 1
             //Speedy Recovery - Regain Fatigue 50% faster.
             SpeedyRecovery.requireLevel(6);
@@ -3392,13 +3456,10 @@ public class PerkLib
             TrachealSystemEvolved.requireLevel(6).requirePerk(TrachealSystem).requireCustomFunction(function (player:Player):Boolean {
                 return player.beeScore() >= 8 || player.mantisScore() >= 8 || player.scorpionScore() >= 8 || player.spiderScore() >= 8;
             }, "Any insect race");
-            JobGolemancer.requireLevel(6)
-                    .requireInt(25)
-                    .requireWis(25);
             ArcanePoolI.requireLevel(6)
                     .requireInt(30)
                     .requireWis(30)
-                    .requireAnyPerk(JobElementalConjurer, JobGolemancer);
+                    .requirePerk(JobElementalConjurer);
             ArcanePoolII.requireLevel(8)
                     .requireInt(40)
                     .requireWis(40)
@@ -3408,24 +3469,6 @@ public class PerkLib
                     .requireInt(50)
                     .requireWis(50)
                     .requirePerk(ArcanePoolII)
-                    .requireNGPlus(2);
-            BeginnerGolemMaker.requireLevel(6)
-                    .requireInt(30)
-                    .requireWis(30)
-                    .requirePerk(JobGolemancer);
-            BiggerGolemBag1.requireLevel(6)
-                    .requireInt(40)
-                    .requireWis(40)
-                    .requirePerk(JobGolemancer);
-            BiggerGolemBag2.requireLevel(8)
-                    .requireInt(60)
-                    .requireWis(60)
-                    .requirePerk(BiggerGolemBag1)
-                    .requireNGPlus(1);
-            BiggerGolemBag3.requireLevel(10)
-                    .requireInt(80)
-                    .requireWis(80)
-                    .requirePerk(BiggerGolemBag2)
                     .requireNGPlus(2);
             ImprovingNaturesBlueprintsNaturalWeapons.requirePerk(JobBeastWarrior)
                     .requireStr(35)
@@ -3440,6 +3483,23 @@ public class PerkLib
             PrimalFuryVI.requirePerk(PrimalFuryV)
                     .requireLevel(10)
                     .requireNGPlus(5);
+            FeralArmor.requirePerk(ToughHide)
+					.requireLevel(6)
+					.requireTou(60);
+            ClawTraining.requirePerk(JobBeastWarrior)
+					.requireLevel(6)
+					.requireCustomFunction(function (player:Player):Boolean {
+					return player.haveNaturalClaws() || player.haveNaturalClawsTypeWeapon();
+					}, "Any claws");
+            JobHealer.requireLevel(6)
+                    .requireInt(30)
+                    .requireWis(30);
+            SpellpowerHealing.requireLevel(6)
+                    .requirePerk(JobHealer)
+                    .requireWis(50);
+            WisenedHealer.requireLevel(6)
+                    .requirePerk(JobHealer)
+                    .requireWis(50);
             //Tier 2
             Survivalist2.requireLevel(12)
                     .requireHungerEnabled()
@@ -3459,9 +3519,11 @@ public class PerkLib
                         return player.internalChimeraScore() >= 3;
                     }, "Three racial perks");
             Whirlwind.requireLevel(12)
-                    .requirePerk(JobBarbarian);
+                    .requirePerk(JobSwordsman);
             Whipping.requireLevel(12)
                     .requirePerk(JobEromancer);
+            WhirlwindFeral.requireLevel(12)
+                    .requirePerk(JobBeastWarrior);
             CatlikeNimblenessEvolved.requireLevel(12)
 					.requirePerk(CatlikeNimbleness)
 					.requireCustomFunction(function (player:Player):Boolean {
@@ -3501,41 +3563,27 @@ public class PerkLib
                     .requireWis(80)
                     .requirePerk(ArcanePoolV)
                     .requireNGPlus(5);
-            ApprenticeGolemMaker.requireLevel(12)
-                    .requireInt(50)
-                    .requireWis(50)
-                    .requirePerk(BeginnerGolemMaker);
-            BiggerGolemBag4.requireLevel(12)
-                    .requireInt(100)
-                    .requireWis(100)
-                    .requirePerk(BiggerGolemBag3)
-                    .requireNGPlus(3);
-            BiggerGolemBag5.requireLevel(14)
-                    .requireInt(120)
-                    .requireWis(120)
-                    .requirePerk(BiggerGolemBag4)
-                    .requireNGPlus(4);
-            BiggerGolemBag6.requireLevel(14)
-                    .requireInt(140)
-                    .requireWis(140)
-                    .requirePerk(BiggerGolemBag5)
-                    .requireNGPlus(5);
-            ChargedCore.requireLevel(12)
-                    .requireInt(70)
-                    .requireWis(70)
-                    .requirePerk(ApprenticeGolemMaker);
             ImprovedCrinosShape.requirePerk(ImprovingNaturesBlueprintsNaturalWeapons)
                     .requireStr(50)
                     .requireTou(50)
                     .requireSpe(50)
                     .requireLevel(12);
+            ExtraClawAttack.requireLevel(12)
+                    .requirePerk(ClawTraining)
+					.requireCustomFunction(function (player:Player):Boolean {
+					return player.haveNaturalClaws() || player.haveNaturalClawsTypeWeapon();
+					}, "Any claws");
+            NaturalHealingMinor.requireLevel(12)
+                    .requirePerk(WisenedHealer)
+                    .requireInt(15)
+                    .requireWis(60);
             //Tier 3
             ChimericalBodyAdvancedStage.requirePerk(ChimericalBodyBasicStage)
                     .requireLevel(18)
                     .requireCustomFunction(function (player:Player):Boolean {
                         return player.internalChimeraScore() >= 6;
                     }, "Six racial perks");
-            JobWarlord.requireAnyPerk(Whirlwind, Whipping)
+            JobWarlord.requireAnyPerk(Whirlwind, Whipping, WhirlwindFeral)
                     .requireLevel(18);
             PowerSweep.requireLevel(18)
                     .requireStr(60)
@@ -3546,15 +3594,6 @@ public class PerkLib
                     .requireStr(50)
                     .requireTou(50)
                     .requirePerk(JobWarlord);
-            ExpertGolemMaker.requireLevel(18)
-                    .requireInt(70)
-                    .requireWis(70)
-                    .requirePerk(ApprenticeGolemMaker);
-            SuperChargedCore.requireLevel(18)
-                    .requireInt(90)
-                    .requireWis(90)
-                    .requirePerk(ExpertGolemMaker)
-                    .requirePerk(ChargedCore);
             MakeItDouble.requireLevel(18)
                     .requireStr(50)
                     .requireTou(50)
@@ -3568,6 +3607,15 @@ public class PerkLib
 							  .requireLevel(18);
             RecuperationSleep.requirePerk(SpeedyRecovery)
 							 .requireLevel(18);
+            NaturalHealingMajor.requireLevel(18)
+                    .requirePerk(NaturalHealingMinor)
+                    .requireInt(20)
+                    .requireWis(80);
+            MultiClawAttack.requireLevel(18)
+                    .requirePerk(ExtraClawAttack)
+					.requireCustomFunction(function (player:Player):Boolean {
+					return player.haveNaturalClaws() || player.haveNaturalClawsTypeWeapon();
+					}, "Any claws");
             //Tier 4
             JobAllRounder.requireLevel(24)
                     .requirePerk(JobGuardian)
@@ -3584,7 +3632,7 @@ public class PerkLib
                     .requireLib(45)
                     .requireSen(45);
             //	if(player.internalChimeraScore() >= 10 && requirePerk(ChimericalBodyAdvancedStage)) {
-            //		ChimericalBodyPerfectStage;
+            //		ChimericalBodySemiPerfectStage;
             //	}
             Tornado.requireLevel(24)
                     .requireStr(75)
@@ -3594,10 +3642,6 @@ public class PerkLib
                     .requireStr(70)
                     .requireTou(70)
                     .requirePerk(CycloneStage1);
-            MasterGolemMaker.requireLevel(24)
-                    .requireInt(100)
-                    .requireWis(100)
-                    .requirePerk(ExpertGolemMaker);
             GiantsReach.requireLevel(24)
                     .requireStr(100)
                     .requireTou(100)
@@ -3608,19 +3652,23 @@ public class PerkLib
                     .requireTou(80)
                     .requireSpe(80)
                     .requireLevel(24);
-            FirstAttackGolems.requireLevel(24)
-                    .requirePerk(MasterGolemMaker);
-            //.requireLevel(24)
-            //				 .requirePerk(MasterGolemMaker);
+            NaturalHealingEpic.requireLevel(24)
+                    .requirePerk(NaturalHealingMajor)
+                    .requireInt(25)
+                    .requireWis(100);
+            ClawingFlurry.requireLevel(24)
+                    .requirePerk(MultiClawAttack)
+					.requireCustomFunction(function (player:Player):Boolean {
+					return player.haveNaturalClaws() || player.haveNaturalClawsTypeWeapon();
+					}, "Any claws");
             //Tier 5
             //	if (requireMinLevel(30)) {
-            //		if (player.internalChimeraScore() >= 15 && requirePerk(ChimericalBodyPerfectStage)) {
-            //			ChimericalBodyUltimateStage;
+            //		if (player.internalChimeraScore() >= 15 && requirePerk(ChimericalBodySemiPerfectStage)) {
+            //			ChimericalBodyPerfectStage;
             //		}
             /*		DeityJobMunchkin.requirePerk(JobWarlord)
                                             .requirePerk(JobMonk)
                                             .requirePerk(JobKnight)
-                                            .requirePerk(JobGolemancer)
                                             .requirePerk(JobHunter)
                                             .requirePerk(JobEromancer)
                                             .requirePerk(JobEnchanter)
@@ -3630,7 +3678,7 @@ public class PerkLib
                                             .requirePerk(JobDefender)
                                             .requirePerk(JobBrawler)
                                             .requirePerk(JobBeastWarrior)
-                                            .requirePerk(JobBarbarian)
+                                            .requirePerk(JobSwordsman)
                                             .requirePerk(JobAllRounder)
                                             .requireStr(150)
                                             .requireTou(150)
@@ -3651,14 +3699,14 @@ public class PerkLib
                     .requireTou(95)
                     .requireSpe(95)
                     .requireLevel(30);
-            GolemArmyLieutenant.requireLevel(30)
-                    .requireInt(110)
-                    .requireWis(110)
-                    .requirePerk(MasterGolemMaker);
             SpeedyRejuvenation.requirePerk(SpeedyRecuperation)
 							  .requireLevel(30);
             RejuvenationSleep.requirePerk(RecuperationSleep)
 							 .requireLevel(30);
+            NaturalHealingLegendary.requireLevel(30)
+                    .requirePerk(NaturalHealingEpic)
+                    .requireInt(30)
+                    .requireWis(120);
             //Tier 6
             CycloneStage4.requireLevel(36)
                     .requireStr(120)
@@ -3669,53 +3717,11 @@ public class PerkLib
                     .requireTou(110)
                     .requireSpe(110)
                     .requireLevel(36);
-            GrandMasterGolemMaker.requireLevel(36)
-                    .requireInt(125)
-                    .requireWis(125)
-                    .requirePerk(MasterGolemMaker);
             //Tier 7
             CycloneStage5.requireLevel(42)
                     .requireStr(160)
                     .requireTou(160)
                     .requirePerk(CycloneStage4);
-            GolemArmyCaptain.requireLevel(42)
-                    .requireInt(135)
-                    .requireWis(135)
-                    .requirePerk(GolemArmyLieutenant)
-                    .requirePerk(GrandMasterGolemMaker);
-            //Tier 8
-            EpicGolemMaker.requireLevel(48)
-                    .requireInt(150)
-                    .requireWis(150)
-                    .requirePerk(GrandMasterGolemMaker);
-            //Tier 9
-            GolemArmyMajor.requireLevel(54)
-                    .requireInt(160)
-                    .requireWis(160)
-                    .requirePerk(GolemArmyCaptain)
-                    .requirePerk(EpicGolemMaker);
-            //Tier 10
-            LegendaryGolemMaker.requireLevel(60)
-                    .requireInt(175)
-                    .requireWis(175)
-                    .requirePerk(EpicGolemMaker);
-            //Tier 11
-            GolemArmyColonel.requireLevel(66)
-                    .requireInt(185)
-                    .requireWis(185)
-                    .requirePerk(GolemArmyMajor)
-                    .requirePerk(LegendaryGolemMaker);
-            //Tier 12
-            MythicalGolemMaker.requireLevel(72)
-                    .requireInt(200)
-                    .requireWis(200)
-                    .requirePerk(LegendaryGolemMaker);
-            //Tier 13
-            GolemArmyGeneral.requireLevel(78)
-                    .requireInt(210)
-                    .requireWis(210)
-                    .requirePerk(GolemArmyColonel)
-                    .requirePerk(MythicalGolemMaker);
         } catch (e:Error) {
             trace(e.getStackTrace());
         }

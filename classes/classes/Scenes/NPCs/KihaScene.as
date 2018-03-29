@@ -21,7 +21,12 @@ public class KihaScene extends NPCAwareContent {
 //const PC_WIN_LAST_KIHA_FIGHT:int = 345;
 //const KIHA_CHOKED_OUT_PC:int = 432;
 
-//Encounter Dragon-Gal 
+//Encounter Dragon-Gal
+public function encounterKiha2():void {
+	if ((flags[kFLAGS.LUNA_JEALOUSY] > 100 && rand(10) < 4) || (flags[kFLAGS.LUNA_JEALOUSY] > 150 && rand(10) < 8)) mishapsLunaKiha();
+	else encounterKiha();
+}
+
 public function encounterKiha():void {
 	var temp:Function;
 	clearOutput();
@@ -585,11 +590,11 @@ private function victoryDickKiha():void {
 		flags[kFLAGS.KIHA_CHOKED_OUT_PC] = 1;
 		//[if PC has naga tail or 40</i>\"+ tentacle dick not currently in use:
 		var z:Number = -1;
-		temp = player.cocks.length;
-		while(temp > 0) {
-			temp--;
-			if(player.cocks[temp].cockType == CockTypesEnum.TENTACLE && temp != x && temp != y) {
-				z = temp;
+		var i:int = player.cocks.length;
+		while(i > 0) {
+			i--;
+			if(player.cocks[i].cockType == CockTypesEnum.TENTACLE && i != x && i != y) {
+				z = i;
 				break;
 			}
 		}
@@ -652,7 +657,7 @@ private function kihaRapesLittleGirlsISawItOnTheNews():void {
 	outputText("Despite the pleasure of your crumbling restraint, the pleading shudders of your cumming body makes her even more aggressive than before.  \"<i>Yes!  Beg for mercy!  You don't deserve a minute of my time! How could someone like me ever be interested in a pig like you?</i>\"  To punctuate the game she's playing with your honeypot, Kiha pinches your " + clitDescript() + " between her fingers, the narrow nails of her claws squeezing your sensitive nub so tightly your jaw drops in a soundless scream of bliss.\n\n");
 
 	outputText("\"<i>Here's how this is going to go,</i>\" she murmurs when you've finally stopped gasping for breath.  \"<i>You will lick me until I tell you to stop, and every time you displease me I'm going to take it out on your sensitive little fuck hole.</i>\"  She swings around and sits on your face, smashing her wet cunt on your [face].  \"<i>Be grateful that I'm letting you do this,</i>\" she gurgles, pinching your clit again for emphasis.  Doing as you're told, you lick deeply into the warm velvet of the dragon's folds.");
-	if(player.tongueType == Tongue.SNAKE) outputText("  You are grateful for your forked tongue, which allows you to cover more of her pussy at once.");
+	if(player.tongue.type == Tongue.SNAKE) outputText("  You are grateful for your forked tongue, which allows you to cover more of her pussy at once.");
 	else if(player.hasLongTongue()) outputText("  Your inhumanly long, prehensile tongue is a blessing here; you can reach into her deepest recesses, slurp your way into every nook and cranny, and generally provide a tongue-fuck that no human ever could.");
 	outputText("\n\n");
 
@@ -900,6 +905,18 @@ private function analRapuzulaKiha():void {
 			//[Player receives: 1x Inquisitor's Tome]
 			flags[kFLAGS.GOTTEN_INQUISITOR_ARMOR] = 2;
 			inventory.takeItem(weaponsrange.I_TOME_, camp.returnToCampUseOneHour);
+		}
+		
+		public function mishapsLunaKiha():void {
+			clearOutput();
+			outputText("As you walk up to Kiha, you notice the dragon girl appears to be having a tantrum.\n\n");
+			outputText("\"<i>[name], are you the asshole that left all that burnt meat right next to my sleep area? What's the message behind this, you don’t like my cooking?!</i>\"\n\n");
+			outputText("You swear it's not you. Besides, you don’t hunt for food, so where would you even find the meat?\n\n");
+			outputText("\"<i>Umph! Whatever. Come back later, doofus, I need to clean up this mess!</i>\"\n\n");
+			outputText("You walk away and notice Luna in the distance cooking today’s meal with a satisfied smile.\n\n");
+			if (player.hasStatusEffect(StatusEffects.CampLunaMishaps1)) player.addStatusValue(StatusEffects.CampLunaMishaps1, 3, 1);
+			else player.createStatusEffect(StatusEffects.CampLunaMishaps1, 0, 0, 1, 0);
+			doNext(playerMenu);
 		}
 }
 }

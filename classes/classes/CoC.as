@@ -72,7 +72,7 @@ public class CoC extends MovieClip
     public var date:Date = new Date();
 
     //Mod save version.
-    public var modSaveVersion:Number = 19;
+    public var modSaveVersion:Number = 21;
     public var levelCap:Number = 150;
 
     //Used to restrict random drops from overlapping uniques
@@ -145,12 +145,6 @@ public class CoC extends MovieClip
     public var time :TimeModel;
     public var textHistory:Array;
     public var currentText:String;
-    public var whitney:Number;
-    public var sand:Number;
-    public var giacomo:int;
-    public var temp:int;
-    public var args:Array;
-    public var funcs:Array;
     public var oldStats:*; // I *think* this is a generic object
     public var inputManager:InputManager;
     public var monkey:ChaosMonkey;
@@ -253,8 +247,8 @@ public class CoC extends MovieClip
         //model.debug = debug; // TODO: Set on model?
 
 			//Version NUMBER
-			ver = "1.0.2_mod_Xianxia_0.8h2";
-			version = ver + " (<b>Bugfixing</b>)";
+			ver = "Endless Journey 0.0.1";
+			version = ver + " (Initial)";
 
         this.images = new ImageManager(stage, mainView);
         this.inputManager = new InputManager(stage, mainView, false);
@@ -324,33 +318,12 @@ public class CoC extends MovieClip
         textHistory = [];
         //}endregion
 
-        /**
-         * Plot Variables
-         * Booleans and numbers about whether you've found certain places
-         */
-        //{ region PlotVariables
-
-        whitney = 0;
-        JojoScene.monk = 0;
-        sand           = 0;
-        giacomo        = 0;
-
-        //}endregion
-
 
         // These are toggled between by the [home] key.
         mainView.textBGWhite.visible = false;
         mainView.textBGTan.visible = false;
 
         // *************************************************************************************
-
-
-        //Fenoxo loves his temps
-        temp = 0;
-
-        //Used to set what each action buttons displays and does.
-        args = [];
-        funcs = [];
 
         //Used for stat tracking to keep up/down arrows correct.
         oldStats = {};
@@ -406,6 +379,7 @@ public class CoC extends MovieClip
 
     public function run():void
     {
+	    mainView.setTextBackground(flags[kFLAGS.TEXT_BACKGROUND_STYLE]);
         mainMenu.mainMenu();
         this.stop();
 
@@ -482,7 +456,7 @@ public class CoC extends MovieClip
         var fmt:TextFormat = mainView.mainText.defaultTextFormat;
 
         if (flags[kFLAGS.CUSTOM_FONT_SIZE] != 0) fmt.size = flags[kFLAGS.CUSTOM_FONT_SIZE];
-        fmt.color                           = mainViewManager.darkThemeImpl() ? 0xffffff : 0;
+        fmt.color                           = mainViewManager.isDarkTheme() ? 0xffffff : 0;
         mainView.mainText.defaultTextFormat = fmt;
         mainView.setOutputText(currentText);
     }

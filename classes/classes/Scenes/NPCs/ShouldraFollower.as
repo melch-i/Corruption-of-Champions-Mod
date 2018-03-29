@@ -535,7 +535,7 @@ private function shouldraTongueLicksPCs():void {
 	//if event occurrence == 0
 	if(flags[kFLAGS.SHOULDRA_TONGUE_LICKS_TIMES] == 0) {
 		outputText("\n\n\"<i>Aah, but it's all the same anyways</i>,\" Shouldra sighs, rolling the long phallic objects over each other in your palm.  \"<i>Where's the excitement in going back to the same old thing?</i>\" she laments, suddenly quite sad about the whole situation despite her earlier eagerness.  Sensing your displeasure, she snaps back, \"<i>Hey, I told you my deal already.  How am I supposed to feel when I've seen it all before?</i>\"  Trying to hurry her along, you ask if there's <b>anything </b> new that she might try.  \"<i>Well what else am I gonna play with on you?</i>\" She breaks out into your own voice.  \"<i>You've got tits, an ass and a cunt, just like the rest of 'em! What am I mi-...</i>\"  She cuts herself off.  Shouldra closes one of your eyes and sticks ");
-		if(player.tongueType > Tongue.HUMAN) outputText("some of ");
+		if(player.tongue.type > Tongue.HUMAN) outputText("some of ");
 		outputText("your tongue out, examining it.  Already, you think you've got a pretty good idea of where she's going to take this.");
 		outputText("\n\n\"<i>I suppose none of my hosts have actually quite been able to reach themselves with a tongue yet... can you, Champ?</i>\"");
 	}
@@ -1031,12 +1031,12 @@ private function shouldraGivesYaSomeFukkinTeats():void {
 	var temp2:Number = 0;
 	//NIPPLECUNTZZZ
 	if(!player.hasFuckableNipples() && rand(4) == 0) {
-		temp = player.breastRows.length;
+		var i:int = player.breastRows.length;
 		//Set nipplecunts on every row.
-		while(temp > 0) {
-			temp--;
-			if(!player.breastRows[temp].fuckable && player.nippleLength >= 2) {
-				player.breastRows[temp].fuckable = true;
+		while(i > 0) {
+			i--;
+			if(!player.breastRows[i].fuckable && player.nippleLength >= 2) {
+				player.breastRows[i].fuckable = true;
 				//Keep track of changes.
 				temp2++;
 			}
@@ -1053,8 +1053,8 @@ private function shouldrasButtBigginator():void {
 	clearOutput();
 	spriteSelect(67);
 	outputText("Shouldra's haunting laugh works its way out from your mouth.  \"<i>Looking for a little more jiggle in your step, Champ?  I can get BEHIND that.</i>\"  This damnable ghost won't let you roll your eyes!  Is there no end to her torment?  After a quick crack of your knuckles, Shouldra directs your hands back onto your derriere as she transitions into spellcasting.");
-	//this.player.buttRating = this.player.buttRating + 1 + rand(3)); or so
-	player.buttRating += 1 + rand(3);
+	//this.player.butt.type = this.player.butt.type + 1 + rand(3)); or so
+	player.butt.type += 1 + rand(3);
 	outputText("\n\nYour cheeks quake as the magic takes hold, warm ripples greeting the inches of new retail estate on your hind quarters.  Shouldra can't resist herself, giving your [butt] a vigorous slap.");
 	doNext(camp.returnToCampUseOneHour);
 }
@@ -1077,7 +1077,7 @@ private function shouldraReductoMenu():void {
 	var nipples:Function = null;
 	if(player.nippleLength > .25) nipples = shrinkDemNipplzForYoGhost;
 	if(player.biggestTitSize() >= 1) breasts = shouldraReductosYourTits;
-	if(player.buttRating >= 2) butt = shrinkDatBootyForYoGhost;
+	if(player.butt.type >= 2) butt = shrinkDatBootyForYoGhost;
 	if(player.balls > 0 && player.ballSize > 1) balls = shouldraReductosYourBallsUpInsideYa;
 	if(player.hasCock() && player.longestCockLength() > 4) cock = shouldraMakesCocksDisappear;
 	if(player.hasVagina() && player.clitLength > .25) clit = clittyVanishingActShouldra;
@@ -1185,17 +1185,17 @@ private function shrinkDatBootyForYoGhost():void {
 	clearOutput();
 	spriteSelect(67);
 	outputText("Your hands quickly grasp at your bare [butt].  \"<i>You... you're desecrating a national treasure here!</i>\"  The rather odd declaration gets a chuckle from you, but you remain firm in your request to dull your derriere.  The ghost girl furthers her attempts to change your mind, but without literally changing your mind, you remain steadfast.  Defeated, your hands take one last trip around your posterior before the poltergeist recites her incantation.");
-	if(player.buttRating >= 15) {
-		player.buttRating -= 3 + int(player.buttRating/3);
+	if(player.butt.type >= 15) {
+		player.butt.type -= 3 + int(player.butt.type / 3);
 		outputText("\n\nWithin seconds, your cheeks feel noticeably lighter.  You confirm with a glance that your [butt] is much smaller than before.  Shouldra confirms with a pouting sigh that she is much sadder than before.");
 	}
-	else if(player.buttRating >= 10) {
-		player.buttRating -= 3;
+	else if(player.butt.type >= 10) {
+		player.butt.type -= 3;
 		outputText("\n\nYour ass jiggles as it recedes into your body.  A few moments later and your [butt] settles into its new, compact form.  The ghost girl recedes deep back into your body with a depressing sigh.");
 	}
 	else {
-		player.buttRating -= 1 + rand(3);
-		if(player.buttRating < 1) player.buttRating = 1;
+		player.butt.type -= 1 + rand(3);
+		if(player.butt.type < 1) player.butt.type = 1;
 		outputText("\n\nIn a few brief seconds, your [butt] relaxes into its new, slightly tinier form.  Shouldra huffs and puffs inside you, not wanting to discuss your bottom any further.");
 	}
 	dynStats("lib", -2, "lus", -10);
@@ -1950,7 +1950,7 @@ private function goAlongWIthShouldrasEatingSpree():void {
 		outputText("\n\nYou struggle forward in your seat and resume grazing on a stack of donuts, though you are hindered somewhat by both the ghost girl's pussy worship and your cramped stomach.  The bloated orb has by now pushed your shirt up around your [fullChest] and left your skirt in tatters; it rests between your thighs, your legs having been forced to part under its growing weight.  An ominous gurgle erupts from your overtaxed gut; perhaps you've overestimated yourself?  You massage the complaining flesh with one hand to ease the pressure while continuing to sate your insatiable appetite with the other, heavenly gouts of angel cake dropping into your abyss of a stomach.  Shouldra smiles as the churning and gurgling continues; her fucksucking lips slip off your drooling pussy-flesh and ascend, trailing supersized kisses across your crotch and up to your navel.  She nuzzles your bloated belly like a pillow, her hands digging gently into the flesh and kneading with equal parts care and roughness.  Your free hand stops massaging and cradles her head, and in a moment of impishness you shove a slice of something gooey and triple-layered into her unsuspecting candied maw.  She swallows, surprise turning quickly to a grin of friendly vengeance.  \"<i>So that's how we're playing it, big girl?</i>\"  Shouldra snickers, before giving your sensitive stomach a hearty slap.");
 		outputText("\n\nYou wince slightly before returning a sloppy food-filled grin...  Wait.  You're not feeding yourself.  What the fuck?  The ghost girl answers your confusion with a profiterole that soars into your slack mouth.  Damned ghoul, that's just playing dirty!  You both devolve into a fierce stuffing contest; your desperate hands snag anything they can from the spread and cram them into the ghost's gullet, while waves of pastries ram themselves into your own defenseless mouth.  The combination of the adrenaline-fueled force-feeding frenzy and the increasing pressure of your swelling gut on your button forms a familiar sensation; prickling loins, skipped heartbeats, an intense heat in your flushed cheeks.  As you feel the giddy euphoria of an oncoming food coma, Shouldra seizes the moment and dives down into your crotch, lapping and licking every oh-so-sensitive inch she can, teasing and tickling, probing your wet cunt with her jellied tongue.");
 		outputText("\n\nA guttural moan escapes your icing-caked lips as you sink into a creamy smooth orgasm, like sliding into a hot bath.  [if (isSquiter = true) \"Hot streams of liquid lust spurt across Maddie's face, drizzling her with your copious fem-spunk.  \"][if (isLactating = true) \"Droplets of milk form on your [nipples], soon forming rivers of cream that cascade down your fiery-hot flesh.  \"]After a moment of rest, Shouldra squeezes out from under the table, licking your girl-cum from her lips with a satisfied slurp, and helps you to your feet; a task made seriously annoying by your titanic tummy digging in to the edge of the counter.  The other patrons remain blissfully unaware of the whole act, including your current nudity. Speaking of which...");
-		outputText("\n\n\"<i>Oh, don't worry, Champ,</i>\" Shouldra says, having returned to your head, \"<i>No permanent damage intended.  Here ya go!</i>\"  You feel slightly woozy as your abdomen collapses inwards, soon returning to its original, non-bloated state.  A moment later and you are once again clad in your [armor].  \"<i>Well, enough shenanigans for now, right?  Though you do look pretty cute with a pot belly...  Heh, just teasing,</i>\" laughs the ghost, \"<i>Now c'mon, let's blow this joint!");
+		outputText("\n\n\"<i>Oh, don't worry, Champ,</i>\" Shouldra says, having returned to your head, \"<i>No permanent damage intended.  Here ya go!</i>\"  You feel slightly woozy as your abdomen collapses inwards, soon returning to its original, non-bloated state.  A moment later and you are once again clad in your [armor].  \"<i>Well, enough shenanigans for now, right?  Though you do look pretty cute with a pot belly...  Heh, just teasing,</i>\" laughs the ghost, \"<i>Now c'mon, let's blow this joint!\"</i>");
 		outputText("\n\nYou leave the bakery and head back to camp, leaving behind a very confused Maddie.");
 		player.orgasm();
 		doNext(camp.returnToCampUseOneHour);

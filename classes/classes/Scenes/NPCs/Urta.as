@@ -175,13 +175,9 @@ public function knockUpUrtaChance():void { //Moved here from UrtaPregs since it 
 	if (flags[kFLAGS.URTA_FERTILE] != 1) return;
 	//10% + up to 40% @ 1000mLs of cum, with bonus virility!
 	var chance:Number = 10;
-	temp = player.cumQ() / 25;
-	if (temp > 40) temp = 40;
-	chance += temp;
+	chance += Math.min(player.cumQ() / 25,40);
 	//Bonus virility time!
-	temp = player.virilityQ() * 100;
-	if (temp > 50) temp = 50;
-	chance += temp;
+	chance += Math.min(player.virilityQ() * 100, 50);
 	//FINAL ROLL!
 	if (chance > rand(100)) {
 		pregnancy.knockUpForce(PregnancyStore.PREGNANCY_PLAYER, 384);
@@ -2608,7 +2604,7 @@ private function tellUrtaNoMoreScylla():void {
 	flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00147] = 1;
 	outputText("You let Urta know that you're willing to overlook this, but that Scylla is a slippery slope that's best avoided.  She nods, a sober expression on her vulpine face.  Once you finish, she replies, \"<i>I understand, but you need to know – when 'it' gets too much for me to handle... if you aren't around to help I'm going to see Edryn.  S-she helps... if it wasn't for her I probably would've given up and done something stupid a long time ago.  What we have is more important, but unless we can get together every couple days I'll NEED to visit her.  ");
 	if(urtaLove()) outputText("Just please, don't doubt my love for you.  ");
-	outputText("Do I need to stop drinking too?");
+	outputText("Do I need to stop drinking too?</i>");
 	//[Drink More] [Drink Less] [No Change] [Leave Her]
 	simpleChoices("Drink More", tellUrtaToBeADrunkenHussy, "Drink Less", tellUrtaToStopBeingALush, "No Change", tellUrtaToStayTheSame, "Leave Her", leaveUrtaAfterScyllaConfrontation, "", null);
 }
@@ -2619,7 +2615,7 @@ private function tellUrtaMoreScyllaIsFine():void {
 	outputText("You give Urta a raunchy, lewd smile and let her know that you're okay with her 'helping' Scylla, and vice-versa, so long as they don't mind you popping in.  She smiles and gives you a wink, but her expression darkens after a moment of thought.  Urta interrupts to mention, \"<i>There's something else.  If I can't find you or Scylla and I NEED to cum, I'll have to visit Edryn.  She's probably the only thing that's kept me sane, and if you aren't around to help with my needs I'll visit her.  ");
 	if(urtaLove()) outputText("Just remember that YOU'RE the one I love, not her.  ");
 	else outputText("Me and her, we've been partners in the guard for a long time, but the sex is just mechanical, to sate us.  You don't have to worry about her stealing me away.  ");
-	outputText("But what about my drinking or how I get when I'm drunk?  It doesn't bother you, does it?");
+	outputText("But what about my drinking or how I get when I'm drunk?  It doesn't bother you, does it?</i>");
 	//[Drink More] [Drink Less] [No Change] [Leave Her]
 	simpleChoices("Drink More", tellUrtaToBeADrunkenHussy, "Drink Less", tellUrtaToStopBeingALush, "No Change", tellUrtaToStayTheSame, "Leave Her", leaveUrtaAfterScyllaConfrontation, "", null);
 }
@@ -3919,7 +3915,7 @@ private function fillMeUpPleaseUrta():void {
 	outputText(images.showImage("urta-home-female-fucked"));
 	outputText("Lazily discarding the latex, you caress Urta's stocking-clad leg and coyly climb into bed.  She starts to reciprocate your affections, but you push her arm away, instructing, \"<i>Let me... let me have this.</i>\"");
 	outputText("\n\nGingerly holding the beast between her thighs, you take a moment to admire the texture, the forgiving sponginess of the stiffening flesh and its smooth surface, broken only by a collection of pulsating veins and a thick ring that splits the middle.  You squeeze the musky fur of her snatch and pull it down, revealing another inch or two of moist dick for you to tease; Urta shivers at your touches on her sensitive flesh.  Looking up to meet her gaze, you bend down with glacial slowness, eventually laying the flat of your ");
-	if(player.tongueType > Tongue.HUMAN) outputText("prodigious ");
+	if(player.tongue.type > Tongue.HUMAN) outputText("prodigious ");
 	outputText("tongue upon her turgid mass.  Lewdly, you kiss the underside, worshipping it with your lips as you trail moist affection up the horse-cock's gradual arch.  You nibble on her medial ring when you find it, lashing it with your tongue as you stop to harass her nerves.  Then, without warning, you resume your upward travels, watching the fox whimper and shake as your tongue tantalizes her equine member.");
 	outputText("\n\nUrta's hips silently work, trembling slightly each time they start to lift up.  Of course, you force them down into stillness and return to lubricating the horse-like length before you.  Her tip flares a little as you near it, pulsing with pleasure at every idle oral affection you plant.  You stretch your jaw to fully encompass her tip, taking it into your mouth and looking up at the herm.  Her eyes are closed, her mouth open and panting.  Hanging to the side, Urta's tongue pulsates in time with her unrestrained panting.  You circle her urethra with your tongue and smile around the throbbing dick when a salty drop of pre-cum lands on your tongue.");
 	outputText("\n\nYou release Urta from your oral embrace, laying her rod back down on her soft fur with great care.  Whining, she tries to grab your head and pull you back in place, but you twist to the side and slap her searching hands away, sliding up her body to hold them above her head.  You pin them to the headboard, leering over your prize with ardor, your [vagina] heavy with lust and equally wet.");
@@ -4968,9 +4964,9 @@ private function getAPetReward():void {
 		outputText(", your pussy is as wet as it's ever been, constantly leaking juices that run down your legs, pooling on the floor.");
 	}
 	outputText("  You swirl your tongue around Urta's flare, paying homage to the horsecocked goddess.  Lapping at the slit for a moment, you slip your ");
-	if(player.tongueType == Tongue.SNAKE) outputText("serpentine ");
-	else if(player.tongueType == Tongue.DEMONIC) outputText("demonic ");
-	else if(player.tongueType == Tongue.DRACONIC) outputText("draconic ");
+	if(player.tongue.type == Tongue.SNAKE) outputText("serpentine ");
+	else if(player.tongue.type == Tongue.DEMONIC) outputText("demonic ");
+	else if(player.tongue.type == Tongue.DRACONIC) outputText("draconic ");
 	else if(player.hasLongTongue()) outputText("inhumanly long ");
 	outputText("tongue along the vixen's thick cumvein, which pulses lightly.  Urta groans and runs a hand through your " + hairDescript() + ", gripping it solidly.  You can't help as you're forced further onto the warm rod.");
 
@@ -4981,9 +4977,9 @@ private function getAPetReward():void {
 	outputText("\n\n\"<i>Mmm, by Marae that felt good...</i>\"  Urta stretches out for a moment and then quirks an eyebrow at you over her deflating member.  \"<i>Well, what are you waiting for?  There's your reward,</i>\" she nudges the dog bowl with a fishnet-clad, semen-splattered paw.  \"<i>Eat it all up, pet... you want to be a good puppy, don't you?</i>\"");
 
 	outputText("\n\nYou gulp loudly.  You do want to be a good pet, so you lower your head down to the bowl and extend your ");
-	if(player.tongueType == Tongue.SNAKE) outputText("serpentine ");
-	else if(player.tongueType == Tongue.DEMONIC) outputText("demonic ");
-	else if(player.tongueType == Tongue.DRACONIC) outputText("draconic ");
+	if(player.tongue.type == Tongue.SNAKE) outputText("serpentine ");
+	else if(player.tongue.type == Tongue.DEMONIC) outputText("demonic ");
+	else if(player.tongue.type == Tongue.DRACONIC) outputText("draconic ");
 	else if(player.hasLongTongue()) outputText("inhumanly long ");
 	outputText("tongue, lapping at the top layer and swallowing it down.  It's still warm, and quite salty with a bit of a sweet tang to it.  You quickly dive back into your 'reward', using your tongue as a spoon to consume every last drop in the bowl.  While you're busy doing that, Urta slides off the bed and takes up a position behind your body, ass high into the air, showing off all her goods.  The fox raises a paw, smearing some of her cum along your ");
 	if(player.hasCock()) outputText("shaft ");

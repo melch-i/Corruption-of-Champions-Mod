@@ -234,6 +234,7 @@ import classes.Items.JewelryLib;
 	public function hasBeard():Boolean{ return facePart.hasBeard(); }
 	public function beard():String{ return facePart.beard(); }
 	public function hasMuzzle():Boolean{ return facePart.hasMuzzle(); }
+	public function hasBeak():Boolean{ return facePart.hasBeak(); }
 	public function face():String { return facePart.describe(); }
 	public function faceDesc():String { return facePart.describeMF(); }
 	public function hasLongTail():Boolean { return tail.isLong(); }
@@ -606,7 +607,7 @@ import classes.Items.JewelryLib;
 		
 		public override function maxFatigue():Number
 		{
-			var max:Number = 100;
+			var max:Number = 150;
 			if (game.player.alicornScore() >= 6) max += (50 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
 			if (game.player.dragonScore() >= 20) max += (100 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
 			if (game.player.dragonScore() >= 28) max += (100 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
@@ -671,6 +672,7 @@ import classes.Items.JewelryLib;
 			if (game.player.alicornScore() >= 6) max += (150 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));//przenieść do mnożnika?
 			if (game.player.unicornScore() >= 5) max += (50 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));//przenieść do mnożnika?
 			if (hasPerk(PerkLib.DemonicLethicite)) max += Math.round(lib);
+			if (hasPerk(PerkLib.Metamorph)) max += 50;
 			if (flags[kFLAGS.SOUL_CULTIVATION] >= 2) max += 25;
 			if (flags[kFLAGS.SOUL_CULTIVATION] >= 3) max += 25;
 			if (flags[kFLAGS.SOUL_CULTIVATION] >= 4) max += 30;
@@ -793,6 +795,11 @@ import classes.Items.JewelryLib;
 			if (findPerk(PerkLib.PrimalFuryIV) >= 0) max += 10;
 			if (findPerk(PerkLib.PrimalFuryV) >= 0) max += 10;
 			if (findPerk(PerkLib.PrimalFuryVI) >= 0) max += 10;
+			if (findPerk(PerkLib.FeralArmor) >= 0) max += 20;
+			if (findPerk(PerkLib.ClawTraining) >= 0) max += 20;
+			if (findPerk(PerkLib.ExtraClawAttack) >= 0) max += 30;
+			if (findPerk(PerkLib.MultiClawAttack) >= 0) max += 40;
+			if (findPerk(PerkLib.ClawingFlurry) >= 0) max += 50;
 			if (findPerk(PerkLib.BasicTranquilness) >= 0) max += 15;
 			if (findPerk(PerkLib.HalfStepToImprovedTranquilness) >= 0) max += 25;
 			if (findPerk(PerkLib.ImprovedTranquilness) >= 0) max += 40;
@@ -808,7 +815,7 @@ import classes.Items.JewelryLib;
 			if (findPerk(PerkLib.EpicTranquilness) >= 0) max += 2250;
 			if (findPerk(PerkLib.HalfStepToMythicalTranquilness) >= 0) max += 4000;
 			if (findPerk(PerkLib.MythicalTranquilness) >= 0) max += 7000;
-			if (findPerk(PerkLib.JobBarbarian) >= 0) max += 20;
+			if (findPerk(PerkLib.JobSwordsman) >= 0) max += 20;
 			if (findPerk(PerkLib.JobBeastWarrior) >= 0) max += 20;
 			if (findPerk(PerkLib.JobDervish) >= 0) max += 20;
 			if (findPerk(PerkLib.JobWarlord) >= 0) max += 20;
@@ -819,18 +826,18 @@ import classes.Items.JewelryLib;
 			if (findPerk(PerkLib.Berzerker) >= 0) max += 100;
 			if (findPerk(PerkLib.Lustzerker) >= 0) max += 100;
 			if (findPerk(PerkLib.PrestigeJobBerserker) >= 0) max += 200;
-			if (findPerk(PerkLib.Rage) >= 0) max += 250;
-			if (findPerk(PerkLib.Anger) >= 0) max += 300;
+			if (findPerk(PerkLib.Rage) >= 0) max += 300;
+			if (findPerk(PerkLib.Anger) >= 0) max += 400;
 			if (findPerk(PerkLib.AscensionFury) >= 0) max += perkv1(PerkLib.AscensionFury) * 20;
 			if (findPerk(PerkLib.UnlockId2ndStage) >= 0) max += level;
 			if (findPerk(PerkLib.AscensionUnlockedPotential2ndStage) >= 0) max += level * 2;
-			if (max > 20699) max = 20699;//obecnie max to 20670
+			if (max > 20899) max = 20899;//obecnie max to 20890
 			return max;
 		}
 		
 		public override function maxMana():Number
 		{
-			var max:Number = 100;
+			var max:Number = 200;
 			if (findPerk(PerkLib.ManaAffinityI) >= 0) max += 35;
 			if (findPerk(PerkLib.ManaAffinityII) >= 0) max += 35;
 			if (findPerk(PerkLib.ManaAffinityIII) >= 0) max += 35;
@@ -890,6 +897,8 @@ import classes.Items.JewelryLib;
 			if (findPerk(PerkLib.Mage) >= 0 && inte >= 50) max += 30;
 			if (findPerk(PerkLib.Spellpower) >= 0 && inte >= 50) max += 15;
 			if (findPerk(PerkLib.JobSorcerer) >= 0) max += 15;
+			if (findPerk(PerkLib.JobHealer) >= 0) max += 30;
+			if (findPerk(PerkLib.SpellpowerHealing) >= 0 && wis >= 50) max += 30;
 			if (findPerk(PerkLib.ArcaneRegenerationMinor) >= 0 && inte >= 50) {
 				var multimax:Number = 1;
 				multimax += 0.1;

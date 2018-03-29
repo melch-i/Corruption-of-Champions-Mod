@@ -1,5 +1,6 @@
 package classes.Scenes {
 import classes.CoC;
+import classes.Items.Mutations;
 import classes.Scenes.Areas.*;
 import classes.Scenes.Areas.Forest.KitsuneScene;
 import classes.Scenes.Combat.Combat;
@@ -26,6 +27,8 @@ public class SceneLib {
     public static var inventory:Inventory = new Inventory(CoC.instance.saves);
 
     public static var masturbation:Masturbation = new Masturbation();
+
+    public static var mutationsTable:Mutations = new Mutations();
 
     public static var beach:Beach = new Beach();
 
@@ -99,8 +102,6 @@ public class SceneLib {
 
     public static var etnaScene:EtnaFollower = new EtnaFollower();
 
-    public static var evangelineFollower:EvangelineFollower = new EvangelineFollower();
-
     public static var exgartuan:Exgartuan = new Exgartuan();
 
     public static var helFollower:HelFollower = new HelFollower();
@@ -131,6 +132,8 @@ public class SceneLib {
 
     public static var latexGirl:LatexGirl = new LatexGirl();
 
+    public static var lunaFollower:LunaFollower = new LunaFollower();
+
     public static var marbleScene:MarbleScene = new MarbleScene();
 
     public static var marblePurification:MarblePurification = new MarblePurification();
@@ -148,6 +151,8 @@ public class SceneLib {
     public static var shouldraFollower:ShouldraFollower = new ShouldraFollower();
 
     public static var shouldraScene:ShouldraScene = new ShouldraScene();
+
+    public static var sidonieFollower:SidonieFollower = new SidonieFollower();
 
     public static var sophieBimbo:SophieBimbo = new SophieBimbo();
 

@@ -171,9 +171,9 @@ public class Appearance extends Utils
 		 */
 		public static function tongueDescription(i_character:Creature):String
 		{
-			if (i_character.tongueType == 1) return "serpentine tongue";
-			else if (i_character.tongueType == 2) return "demonic tongue";
-			else if (i_character.tongueType == 3) return "draconic tongue";
+			if (i_character.tongue.type == 1) return "serpentine tongue";
+			else if (i_character.tongue.type == 2) return "demonic tongue";
+			else if (i_character.tongue.type == 3) return "draconic tongue";
 			else return "tongue";
 		}
 
@@ -388,7 +388,7 @@ public class Appearance extends Utils
 			var description:String    = "";
 			var options:Array;
 			var i_character:Character = i_creature as Character;
-			var hipRating:Number      = i_creature.hipRating;
+			var hipRating:Number      = i_creature.hips.type;
 			var thickness:Number      = i_character ? i_character.thickness : 50;
 			if (hipRating <= 1) {
 				options = ["tiny ",
@@ -1770,7 +1770,7 @@ public class Appearance extends Utils
 			var options:Array;
 			var i_character:Character = i_creature as Character;
 			var tone:Number           = i_character ? i_character.tone : 50;
-			var buttRating:Number     = i_creature.buttRating;
+			var buttRating:Number     = i_creature.butt.type;
 			if (buttRating <= 1) {
 				if (tone >= 60)
 					description += "incredibly tight, perky ";
@@ -2081,53 +2081,53 @@ public class Appearance extends Utils
 		{
 			var description:String = "";
 			var options:Array;
-			if (i_creature.buttRating <= 1) {
+			if (i_creature.butt.type <= 1) {
 				options = ["insignificant ",
 					"very small "];
 				description = randomChoice(options);
 			}
-			if (i_creature.buttRating > 1 && i_creature.buttRating < 4) {
+			if (i_creature.butt.type > 1 && i_creature.butt.type < 4) {
 				options = ["tight ",
 					"firm ",
 					"compact "];
 				description = randomChoice(options);
 			}
-			if (i_creature.buttRating >= 4 && i_creature.buttRating < 6) {
+			if (i_creature.butt.type >= 4 && i_creature.butt.type < 6) {
 				options = ["regular ",
 					"unremarkable "];
 				description = randomChoice(options);
 			}
-			if (i_creature.buttRating >= 6 && i_creature.buttRating < 8) {
+			if (i_creature.butt.type >= 6 && i_creature.butt.type < 8) {
 				if (rand(3) == 0) return "handful of ass";
 				options = ["full ",
 					"shapely "];
 				description = randomChoice(options);
 			}
-			if (i_creature.buttRating >= 8 && i_creature.buttRating < 10) {
+			if (i_creature.butt.type >= 8 && i_creature.butt.type < 10) {
 				options = ["squeezable ",
 					"large ",
 					"substantial "];
 				description = randomChoice(options);
 			}
-			if (i_creature.buttRating >= 10 && i_creature.buttRating < 13) {
+			if (i_creature.butt.type >= 10 && i_creature.butt.type < 13) {
 				options = ["jiggling ",
 					"spacious ",
 					"heavy "];
 				description = randomChoice(options);
 			}
-			if (i_creature.buttRating >= 13 && i_creature.buttRating < 16) {
+			if (i_creature.butt.type >= 13 && i_creature.butt.type < 16) {
 				if (rand(3) == 0) return "generous amount of ass";
 				options = ["expansive ",
 					"voluminous "];
 				description = randomChoice(options);
 			}
-			if (i_creature.buttRating >= 16 && i_creature.buttRating < 20) {
+			if (i_creature.butt.type >= 16 && i_creature.butt.type < 20) {
 				if (rand(3) == 2) return "jiggling expanse of ass";
 				options = ["huge ",
 					"vast "];
 				description = randomChoice(options);
 			}
-			if (i_creature.buttRating >= 20) {
+			if (i_creature.butt.type >= 20) {
 				options = ["ginormous ",
 					"colossal ",
 					"tremendous "];
@@ -2195,11 +2195,15 @@ public class Appearance extends Utils
 		
 		public static function wingsDescript(i_creature:Creature):String
 		{
-			return DEFAULT_WING_NAMES[i_creature.wingType] + " wings";
+			return DEFAULT_WING_NAMES[i_creature.wings.type] + " wings";
 		}
 		public static function eyesDescript(i_creature:Creature):String
 		{
-			return i_creature.eyeColor+ " "+DEFAULT_EYES_NAMES[i_creature.eyeType] + " eyes";
+			return i_creature.eyes.colour + " " + DEFAULT_EYES_NAMES[i_creature.eyes.type] + " eyes";
+		}
+		public static function earsDescript(i_creature:Creature):String
+		{
+			return i_creature.ears.type + " ears";
 		}
 
 /* All of these functions have been replaced with direct calls to the appropriate form of cockNoun().
@@ -2382,6 +2386,7 @@ public class Appearance extends Utils
 			[Skin.DRAGON_SCALES, "dragon scales", "dragon scales", "", true],
 			[Skin.MOSS, "moss", "moss", "", false],
 			[Skin.AQUA_RUBBER_LIKE, "AQUA_RUBBER_LIKE", "slippery rubber-like skin", "", false],
+			[Skin.FEATHER, "FEATHER", "feather", "", false],
 			[Skin.TATTOED_ONI, "TATTOED_ONI", "tattooed skin", "", false],
 			[Skin.PARTIAL_DRAGON_SCALES, "partial dragon scales", "partial dragon scales", "", true],
 			[Skin.PARTIAL_STONE, "partial stone", "partial stone", "", false],
@@ -2442,6 +2447,7 @@ public class Appearance extends Utils
 					[Face.ECHIDNA, "echidna"],
 					[Face.DEER, "deer"],
 					[Face.WOLF, "wolf"],
+					[Face.WOLF_FANGS, "wolf fangs"],
 					[Face.MANTICORE, "manticore"],
 					[Face.SALAMANDER_FANGS, "salamander"],
 					[Face.YETI_FANGS, "yeti"],
@@ -2455,7 +2461,8 @@ public class Appearance extends Utils
 					[Face.RED_PANDA, "red-panda"],
 					[Face.CAT_CANINES, "cat canines"],
 					[Face.CHESHIRE, "cheshire"],
-					[Face.CHESHIRE_SMILE, "cheshire"]
+					[Face.CHESHIRE_SMILE, "cheshire"],
+					[Face.AVIAN, "avian"]
 				]
 		);
 		public static const DEFAULT_TONGUE_NAMES:Object = createMapFromPairs(
@@ -2466,7 +2473,8 @@ public class Appearance extends Utils
 					[Tongue.DRACONIC, "draconic"],
 					[Tongue.ECHIDNA, "echidna"],
 					[Tongue.CAT, "cat"],
-					[Tongue.ELF, "elf"]
+					[Tongue.ELF, "elf"],
+					[Tongue.DOG, "dog"]
 				]
 		);
 		public static const DEFAULT_EYES_NAMES:Object = createMapFromPairs(
@@ -2486,7 +2494,9 @@ public class Appearance extends Utils
 					[Eyes.ONI, "oni"],
 					[Eyes.ELF, "elf"],
 					[Eyes.RAIJU, "raiju"],
-					[Eyes.GEMSTONES, "gemstones"]
+					[Eyes.GEMSTONES, "gemstones"],
+					[Eyes.FERAL, "feral"],
+					[Eyes.GRYPHON, "gryphon"]
 				]
 		);
 		public static const DEFAULT_EARS_NAMES:Object = createMapFromPairs(
@@ -2518,7 +2528,9 @@ public class Appearance extends Utils
 					[Ears.ONI, "oni"],
 					[Ears.ELVEN, "elven"],
 					[Ears.WEASEL, "weasel"],
-					[Ears.RED_PANDA, "red-panda"]
+					[Ears.RED_PANDA, "red-panda"],
+					[Ears.AVIAN, "avian"],
+					[Ears.GRYPHON, "gryphon"]
 				]
 		);
 		public static const DEFAULT_HORNS_NAMES:Object = createMapFromPairs(
@@ -2536,7 +2548,8 @@ public class Appearance extends Utils
 					[Horns.GARGOYLE, "gargoyle"],
 					[Horns.ORCHID, "orchid"],
 					[Horns.ONI, "1 oni"],
-					[Horns.ONI_X2, "2 oni"]
+					[Horns.ONI_X2, "2 oni"],
+					[Horns.BICORN, "bicorn"]
 				]
 		);
 		public static const DEFAULT_ANTENNAE_NAMES:Object = createMapFromPairs(
@@ -2561,6 +2574,7 @@ public class Appearance extends Utils
 					[Arms.GARGOYLE_2, "gargoyle"],
 					[Arms.WOLF, "wolf"],
 					[Arms.LION, "lion"],
+					[Arms.SPHINX, "sphinx"],
 					[Arms.KITSUNE, "kitsune"],
 					[Arms.FOX, "fox"],
 					[Arms.LIZARD, "lizard"],
@@ -2573,7 +2587,9 @@ public class Appearance extends Utils
 					[Arms.ELF, "elf"],
 					[Arms.RAIJU, "raiju"],
 					[Arms.RED_PANDA, "red-panda"],
-					[Arms.CAT, "cat"]
+					[Arms.CAT, "cat"],
+					[Arms.AVIAN, "avian"],
+					[Arms.GRYPHON, "gryphon"]
 				]
 		);
 		public static const DEFAULT_TAIL_NAMES:Object = createMapFromPairs(
@@ -2606,13 +2622,16 @@ public class Appearance extends Utils
 					[Tail.KITSHOO, "kitshoo"],
 					[Tail.MANTIS_ABDOMEN, "mantis abdomen"],
 					[Tail.WOLF, "wolf"],
+					[Tail.LION, "lion"],
 					[Tail.GARGOYLE, "mace-shaped gargoyle"],
 					[Tail.MANTICORE_PUSSYTAIL, "manticore pussytail"],
 					[Tail.ORCA, "orca"],
 					[Tail.YGGDRASIL, "yggdrasil"],
 					[Tail.RAIJU, "raiju"],
 					[Tail.RED_PANDA, "red-panda"],
-					[Tail.GARGOYLE_2, "axe-shaped gargoyle"]
+					[Tail.GARGOYLE_2, "axe-shaped gargoyle"],
+					[Tail.AVIAN, "avian"],
+					[Tail.GRIFFIN, "griffin"]
 				]
 		);
 		public static const DEFAULT_WING_NAMES:Object = createMapFromPairs(
@@ -2633,6 +2652,7 @@ public class Appearance extends Utils
 					[Wings.DRACONIC_HUGE, "large majestic draconic"],
 					[Wings.FEATHERED_PHOENIX, "phoenix"],
 					[Wings.FEATHERED_ALICORN, "alicorn"],
+					[Wings.FEATHERED_SPHINX, "sphinx"],
 					[Wings.MANTIS_LIKE_SMALL, "small mantis-like"],
 					[Wings.MANTIS_LIKE_LARGE, "large mantis-like"],
 					[Wings.MANTIS_LIKE_LARGE_2, "two large pairs of mantis-like"],
@@ -2642,7 +2662,9 @@ public class Appearance extends Utils
 					[Wings.MANTICORE_LIKE_LARGE, "large manticore-like"],
 					[Wings.BAT_ARM, "large manticore-like"],
 					[Wings.VAMPIRE, "large manticore-like"],
-					[Wings.FEY_DRAGON_WINGS, "large majestic fey draconic"]
+					[Wings.FEY_DRAGON_WINGS, "large majestic fey draconic"],
+					[Wings.FEATHERED_AVIAN, "avian"],
+					[Wings.NIGHTMARE, "leathery"]
 				]
 		);
 		public static const DEFAULT_WING_DESCS:Object = createMapFromPairs(
@@ -2663,6 +2685,7 @@ public class Appearance extends Utils
 					[Wings.DRACONIC_HUGE, "large, majestic draconic"],
 					[Wings.FEATHERED_PHOENIX, "large crimson feathered"],
 					[Wings.FEATHERED_ALICORN, "large white feathered"],
+					[Wings.FEATHERED_SPHINX, "large feathered"],
 					[Wings.MANTIS_LIKE_SMALL, "small mantis-like"],
 					[Wings.MANTIS_LIKE_LARGE, "large mantis-like"],
 					[Wings.MANTIS_LIKE_LARGE_2, "two large pairs of mantis-like"],
@@ -2670,7 +2693,9 @@ public class Appearance extends Utils
 					[Wings.PLANT, "three pairs of cockvines"],
 					[Wings.MANTICORE_LIKE_SMALL, "small manticore-like"],
 					[Wings.MANTICORE_LIKE_LARGE, "large manticore-like"],
-					[Wings.FEY_DRAGON_WINGS, "large majestic fey draconic"]
+					[Wings.FEY_DRAGON_WINGS, "large majestic fey draconic"],
+					[Wings.FEATHERED_AVIAN, "large feathery"],
+					[Wings.NIGHTMARE, "large leathery"]
 				]
 		);
 		public static const DEFAULT_LOWER_BODY_NAMES:Object = createMapFromPairs(
@@ -2716,7 +2741,9 @@ public class Appearance extends Utils
 					[LowerBody.ONI, "oni"],
 					[LowerBody.ELF, "elf"],
 					[LowerBody.RAIJU, "raiju"],
-					[LowerBody.RED_PANDA, "red-panda"]
+					[LowerBody.RED_PANDA, "red-panda"],
+					[LowerBody.AVIAN, "avian"],
+					[LowerBody.GRYPHON, "gryphon"]
 				]
 		);
 		// <mod name="Dragon patch" author="Stadler76">
@@ -2730,7 +2757,8 @@ public class Appearance extends Utils
 					[RearBody.LION_MANE, "lion mane"],
 					[RearBody.SHARK_FIN, "shark fin"],
 					[RearBody.ORCA_BLOWHOLE, "orca blowhole"],
-					[RearBody.RAIJU_MANE, "raiju mane"]
+					[RearBody.RAIJU_MANE, "raiju mane"],
+					[RearBody.WOLF_COLLAR, "wolf mane"]
 				]
 		);
 		public static const DEFAULT_PIERCING_NAMES:Object = createMapFromPairs(

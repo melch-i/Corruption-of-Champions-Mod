@@ -846,37 +846,7 @@ import coc.xxc.StoryContext;
 			CoC.instance.gearStorage = val;
 		}
 */
-		
-		protected function get temp():int
-		{
-			return CoC.instance.temp;
-		}
-		
-		protected function set temp(val:int):void
-		{
-			CoC.instance.temp = val;
-		}
-		
-		protected function get args():Array
-		{
-			return CoC.instance.args;
-		}
-		
-		protected function set args(val:Array):void
-		{
-			CoC.instance.args = val;
-		}
-		
-		protected function get funcs():Array
-		{
-			return CoC.instance.funcs;
-		}
-		
-		protected function set funcs(val:Array):void
-		{
-			CoC.instance.funcs = val;
-		}
-		
+
 		protected function get mainView():MainView
 		{
 			return CoC.instance.mainView;
@@ -944,7 +914,7 @@ import coc.xxc.StoryContext;
 		}
 				
 		protected function darkTheme():Boolean {
-			return CoC.instance.mainViewManager.darkThemeImpl();
+			return CoC.instance.mainViewManager.isDarkTheme();
 		}
 		protected static function onGameInit(f:Function):void {
 			CoC.onGameInit(f);
@@ -952,17 +922,24 @@ import coc.xxc.StoryContext;
 		protected function get context():StoryContext {
 			return CoC.instance.context;
 		}
-		protected function submenu(buttons:ButtonDataList,back:Function=null,page:int=0):void {
+		protected function submenu(buttons:ButtonDataList,back:Function=null,page:int=0,sort:Boolean = true):void {
 			var list:/*ButtonData*/Array = buttons.list.filter(function(e:ButtonData, i:int, a:Array):Boolean{
 				return e.visible;
-			}).sortOn('text');
+			});
+			if(sort){
+				list.sortOn('text');
+			}
 			menu();
 			var total:int = list.length;
-			var n:int = Math.min(total,(page+1)*12);
-			for (var bi:int = 0,li:int=page*12; li<n; li++,bi++) {
-				list[li].applyTo(button(bi%12));
+			var perPage:int = 12;
+			if(total <= 14){
+				perPage = 14;
 			}
-			if (page!=0 || total>12) {
+			var n:int = Math.min(total,(page+1)*perPage);
+			for (var bi:int = 0,li:int=page*perPage; li<n; li++,bi++) {
+				list[li].applyTo(button(bi%perPage));
+			}
+			if (page!=0 || total>perPage) {
 				button(12).show("Prev Page", curry(submenu, buttons, back, page - 1)).disableIf(page == 0);
 				button(13).show("Next Page", curry(submenu, buttons, back, page + 1)).disableIf(n >= total);
 			}

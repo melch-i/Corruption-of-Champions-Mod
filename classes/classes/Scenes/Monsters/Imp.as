@@ -5,24 +5,17 @@ import classes.BodyParts.Butt;
 import classes.BodyParts.Hips;
 import classes.BodyParts.Wings;
 import classes.GlobalFlags.kFLAGS;
-import classes.Scenes.NPCs.EvangelineFollower;
 import classes.Scenes.SceneLib;
 import classes.internals.*;
 
 public class Imp extends Monster
 	{
-		public var Evangeline:EvangelineFollower = new EvangelineFollower();
-		
 		override public function defeated(hpVictory:Boolean):void
 		{
 			game.flags[kFLAGS.DEMONS_DEFEATED]++;
 			if (hasStatusEffect(StatusEffects.KitsuneFight)) {
 				SceneLib.forest.kitsuneScene.winKitsuneImpFight();
-			}
-			else if (flags[kFLAGS.EVANGELINE_AFFECTION] == 1) {
-				Evangeline.winEvangelineImpFight();
-			}
-			else {
+			} else {
 				SceneLib.impScene.impVictory();
 			}
 		}
@@ -36,10 +29,6 @@ public class Imp extends Monster
 				outputText("\n\nThe imp grins at your already corrupted state...");
 				player.lust = player.maxLust();
 				doNext(SceneLib.impScene.impRapesYou);
-			}
-			else if (flags[kFLAGS.EVANGELINE_AFFECTION] == 1) {
-				flags[kFLAGS.EVANGELINE_AFFECTION] = 2;
-				SceneLib.impScene.impRapesYou();
 			}
 			else {
 				SceneLib.impScene.impRapesYou();
@@ -151,8 +140,8 @@ public class Imp extends Monster
 			this.ass.analLooseness = AssClass.LOOSENESS_STRETCHED;
 			this.ass.analWetness = AssClass.WETNESS_NORMAL;
 			this.tallness = rand(24) + 25;
-			this.hipRating = Hips.RATING_BOYISH;
-			this.buttRating = Butt.RATING_TIGHT;
+			this.hips.type = Hips.RATING_BOYISH;
+			this.butt.type = Butt.RATING_TIGHT;
 			this.skinTone = "red";
 			this.hairColor = "black";
 			this.hairLength = 5;
@@ -173,7 +162,7 @@ public class Imp extends Monster
 					add(consumables.INCUBID,3).
 					add(consumables.IMPFOOD,4);
 			this.special1 = lustMagicAttack1;
-			this.wingType = Wings.IMP;
+			this.wings.type = Wings.IMP;
 			this.createPerk(PerkLib.EnemyTrueDemon, 0, 0, 0, 0);
 			checkMonster();
 		}
