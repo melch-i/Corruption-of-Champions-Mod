@@ -15,6 +15,7 @@ import classes.internals.Utils;
 
 import flash.display.MovieClip;
 import flash.display.Sprite;
+import flash.filters.DropShadowFilter;
 import flash.text.Font;
 import flash.text.TextField;
 import flash.text.TextFormat;
@@ -30,7 +31,8 @@ public class CoCButton extends Block {
 	private static const ButtonLabelFont:Class;
 	public static const ButtonLabelFontName:String = (new ButtonLabelFont() as Font).fontName;
 	public static const ButtonKeyFontName:String = ButtonLabelFontName;
-	public static const ButtonKeyFontColor:* = "#442266";
+	public static const ButtonKeyFontColor:* = "#bbddaa";
+	public static const ButtonKeyShadowColor:* = "#442266";
 	public static const ButtonKeyFontSize:int = 10;
 
 
@@ -78,6 +80,9 @@ public class CoCButton extends Block {
 				align: 'right'
 			}
 		});
+		_key1label.filters = [new DropShadowFilter(
+				0.0,0,ButtonKeyShadowColor,1.0,4.0,4.0,10.0
+		)];
 		_key2label = addTextField({
 			x                : 8,
 			width            : MainView.BTN_W - 16,
@@ -90,6 +95,7 @@ public class CoCButton extends Block {
 				align: 'left'
 			}
 		});
+		_key2label.filters = _key1label.filters.slice();
 
 		this.mouseChildren = true;
 		this.buttonMode    = true;
