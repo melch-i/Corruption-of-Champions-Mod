@@ -90,7 +90,13 @@ use namespace CoC;
 						//General Golems, Goblin and Imp Encounters
 						name: "common",
 						call: SceneLib.exploration.genericGolGobImpEncounters
-					}, {
+					}, 
+					 {
+						//spriggan
+						name: "spriggan",
+						call: SceneLib.forest.dryadScene.encounterdryad,
+						chance: 0.2 
+					},	{
 						//Helia monogamy fucks
 						name  : "helcommon",
 						call  : SceneLib.helScene.helSexualAmbush,

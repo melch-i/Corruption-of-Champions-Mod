@@ -80,7 +80,7 @@ package classes.Scenes.Areas.Forest
 			this.skinTone = "birch-white";
 			this.hairColor = "black";
 			this.hairLength = 4;
-			initStrTouSpeInte(95, 75, 70, 100);
+			initStrTouSpeInte(95, 75, 70, 10);
 			initWisLibSensCor(10,55, 35, 45);
 			this.weaponName = "claws";
 			this.weaponVerb = "slash";

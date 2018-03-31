@@ -4,8 +4,7 @@ package classes.Items.Armors
 {
 	import classes.BodyParts.*;
 	import classes.Items.Armor;
-	//import classes.Scenes.BimboProgression;
-	// can't use, bimbo progresson removed in X :(
+	import classes.BaseContent;
 	import classes.TimeAwareInterface;
 	import classes.lists.Gender;
 	import classes.lists.BreastCup;
@@ -13,9 +12,12 @@ package classes.Items.Armors
 	import classes.EventParser;
 	import classes.Player;
 	import classes.Items.MutationsHelper;
+	import classes.Scenes.SceneLib;
+	import classes.EngineCore;
 
 	public class Gown extends Armor implements TimeAwareInterface {
-
+ 
+		
 		public function Gown():void {
 			super("FrsGown","FrsGown","Forest Gown","A Forest Gown.",1,10,"This the very earthy gown commonly worn by dryads.   It is made from a mixture of plants.   The predominate fabric looks like a weave of fresh grass.   It is decorated by simple flowers that are attached to it.   Strangely, everything seems alive like it was still planted.   There must be some peculiar magic at work here.","Light");
 		
@@ -28,23 +30,24 @@ package classes.Items.Armors
 			switch (player.gender) {
 				case 2:   
 					outputText("You comfortably slide into the forest gown.   You spin around several times and giggle happily."
-					          +" Where did that come from?");
+					          +" Where did that come from?\n");
 					break;
 
 				case  1:
 					outputText("You slide forest gown over your head and down to your toes. It obviously would fit someone more female."
 					          +" You feel sad and wish you had the svelte body that would look amazing in this gown."
-					          +" Wait, did you always think that way?");
+					          +" Wait, did you always think that way?\n");
 			     break;
 			  default :  //non-binary
-				  outputText("You slide the gown over your head and slip it into place.");
+				  outputText("You slide the gown over your head and slip it into place.\n");
 			}
 			if (player.hasCock()) 
 				outputText("You notice the bulge from [cock] in the folds of the dress and wish it wasn't there.\n");
 
 			
 		}
-		public function timeChangeLarge():Boolean { return false; }
+		public function timeChangeLarge():Boolean {	return false;	}
+		
 		public function timeChange():Boolean {
 			if (player.armor is Gown && CoC.instance.model.time.hours == 5) { //only call function once per day as time change is called every hour
 				dryadProgression(); 
@@ -52,6 +55,7 @@ package classes.Items.Armors
 			}
 			return false; //stop if not wearing
 		}
+
 		public function dryadProgression():void {
 			var verb:String; 
 			var text:String;
@@ -113,10 +117,12 @@ package classes.Items.Armors
 					if (player.butt.type < 5) {
 						verb = "enlarge";
 						player.butt.type++;
+					
 					}
 					if (player.butt.type > 5) {
 						verb = "shrink";	
 						player.butt.type--;
+						
 					} 
 					if (player.butt.type == 5)
 						break;
@@ -126,14 +132,13 @@ package classes.Items.Armors
 					break;
 
 				case "cock":
-					outputText("Your [cock] feels strange as it brushes against the fabric of your gown.\n");
-					//(new BimboProgression).shrinkCock();
-					//to do, try to find way to use mutation.as to do this
+					outputText("You wake up to find a nice <b>pink egg</b> on your gown. \n\n What a nice treat. \n\n  You gobble it down not giving through as to how it got there.\n");
+					SceneLib.mutationsTable.pinkEgg(false, player, false);
 					changed = 1;
 					break;
 
-	case "breasts":
-		outputText("You feel like a beautful flower in your gown.  Dawn approaches and you place your hands on your chest as if expecting your nipples to bloom to greet the rising sun.\n");
+				case "breasts":
+					outputText("You feel like a beautful flower in your gown.  Dawn approaches and you place your hands on your chest as if expecting your nipples to bloom to greet the rising sun.\n");
 		
 				if (player.bRows() > 1) {
 					x = 1;
@@ -155,7 +160,7 @@ package classes.Items.Armors
 						outputText("Heat builds in chest and your boobs become bigger.\n\n<b>You now have [breasts]</b>");
 						changed = 1;
 					}
-				}
+				}break;
 
 				case "girlyness":
 					text = player.modFem(70, 2);
@@ -220,9 +225,11 @@ package classes.Items.Armors
 
 			case "hair":
 				if (player.hairType !== Hair.LEAF) {
-					outputText("Much to your shock, your hair begins falling out in tuffs onto the ground. "
+					outputText("Much to your shock, your [haircolor] hair begins falling out in tuffs onto the ground. "
 					          +" Moments later, your scalp sprouts vines all about that extend down and bloom into leafy hair.");
 					player.hairType = Hair.LEAF;
+					player.hairColor = "green";
+					outputText("\n<b> You now have [haircolor] leaf hair.</b>");
 				}
 
 				break;
