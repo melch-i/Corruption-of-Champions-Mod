@@ -224,10 +224,10 @@ package classes.Items.Armors
 				break;
 
 			case "hair":
-				if (player.hairType !== Hair.LEAF) {
+				if (player.hairType !== Hair.GRASS) {
 					outputText("Much to your shock, your [haircolor] hair begins falling out in tuffs onto the ground. "
 					          +" Moments later, your scalp sprouts vines all about that extend down and bloom into leafy hair.");
-					player.hairType = Hair.LEAF;
+					player.hairType = Hair.GRASS;
 					player.hairColor = "green";
 					outputText("\n<b> You now have [haircolor] leaf hair.</b>");
 				}
