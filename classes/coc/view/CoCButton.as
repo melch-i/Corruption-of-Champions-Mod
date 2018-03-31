@@ -29,9 +29,14 @@ public class CoCButton extends Block {
 			embedAsCFF='false')]
 	private static const ButtonLabelFont:Class;
 	public static const ButtonLabelFontName:String = (new ButtonLabelFont() as Font).fontName;
+	public static const ButtonKeyFontName:String = ButtonLabelFontName;
+	public static const ButtonKeyFontColor:* = "#442266";
+	public static const ButtonKeyFontSize:int = 10;
 
 
 	private var _labelField:TextField,
+				_key1label:TextField,
+				_key2label:TextField,
 				_backgroundGraphic:BitmapDataSprite,
 				_enabled:Boolean = true,
 				_callback:Function = null,
@@ -40,9 +45,9 @@ public class CoCButton extends Block {
 	public var toolTipHeader:String,
 			   toolTipText:String;
 
-		/**
-		 * @param options  enabled, labelText, bitmapClass, callback
-		 */
+	/**
+	 * @param options  enabled, labelText, bitmapClass, callback
+	 */
 	public function CoCButton(options:Object = null):void {
 		super();
 		_backgroundGraphic = addBitmapDataSprite({
@@ -59,6 +64,30 @@ public class CoCButton extends Block {
 				font : ButtonLabelFontName,
 				size : 18,
 				align: 'center'
+			}
+		});
+		_key1label = addTextField({
+			x                : 8,
+			width            : MainView.BTN_W - 16,
+			y                : 4,
+			height           : MainView.BTN_H - 8,
+			textColor        : ButtonKeyFontColor,
+			defaultTextFormat: {
+				font : ButtonKeyFontName,
+				size : ButtonKeyFontSize,
+				align: 'right'
+			}
+		});
+		_key2label = addTextField({
+			x                : 8,
+			width            : MainView.BTN_W - 16,
+			y                : 4,
+			height           : MainView.BTN_H - 8,
+			textColor        : ButtonKeyFontColor,
+			defaultTextFormat: {
+				font : ButtonKeyFontName,
+				size : ButtonKeyFontSize,
+				align: 'left'
 			}
 		});
 
@@ -111,6 +140,22 @@ public class CoCButton extends Block {
 
 	public function set labelText(value:String):void {
 		this._labelField.text = value;
+	}
+
+	public function get key1text():String {
+		return this._key1label.text;
+	}
+
+	public function set key1text(value:String):void {
+		this._key1label.text = value;
+	}
+
+	public function get key2text():String {
+		return this._key2label.text;
+	}
+
+	public function set key2text(value:String):void {
+		this._key2label.text = value;
 	}
 
 	public function set bitmapClass(value:Class):void {

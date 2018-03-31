@@ -1,7 +1,9 @@
 ﻿package classes 
 {
 	import classes.display.BindingPane;
-	import coc.view.MainView;
+
+import coc.view.CoCButton;
+import coc.view.MainView;
 	import fl.controls.UIScrollBar;
 	import fl.containers.ScrollPane;
 	import flash.display.Stage;
@@ -149,15 +151,19 @@
 		 * @param	func		A function object that defines the BoundControlMethods action
 		 * @param	isCheat		Differentiates between a cheat method (not displayed in the UI) and normal controls.
 		 */
-		public function AddBindableControl(name:String, desc:String, func:Function, isCheat:Boolean = false):void
+		public function AddBindableControl(name:String, desc:String, func:Function, button:CoCButton=null, isCheat:Boolean = false):void
 		{
 			if (isCheat)
 			{
-				_cheatControlMethods.push(new BoundControlMethod(func, name, desc, _availableCheatControlMethods++));
+				var bcm:BoundControlMethod = new BoundControlMethod(func, name, desc, _availableCheatControlMethods++);
+				if (button) bcm.button = button;
+				_cheatControlMethods.push(bcm);
 			}
 			else
 			{
-				_controlMethods[name] = new BoundControlMethod(func, name, desc, _availableControlMethods++);
+				bcm = new BoundControlMethod(func, name, desc, _availableControlMethods++);
+				if (button) bcm.button = button;
+				_controlMethods[name] = bcm;
 			}
 		}
 		
