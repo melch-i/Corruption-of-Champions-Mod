@@ -368,12 +368,15 @@
         <cell rect="121,150,29,32" name="eyes/sandtrap" dx="80" dy="37"/>
         <cell rect="151,150,29,32" name="eyes/manticore" dx="80" dy="37"/>
         <cell rect="181,150,29,32" name="eyes/orca" dx="80" dy="37"/>
+        <cell rect="211,150,29,32" name="eyes/raiju" dx="80" dy="37"/>
         <cell rect="1,190,29,32" name="ears_bg/human" dx="80" dy="37"/>
         <cell rect="31,190,29,32" name="ears/fur" dx="80" dy="37"/>
         <cell rect="61,190,59,32" name="ears_bg/elfin" dx="65" dy="37"/>
         <cell rect="61,223,59,32" name="ears/elfin" dx="65" dy="37"/>
         <cell rect="121,190,59,32" name="ears_bg/goat" dx="65" dy="37"/>
         <cell rect="121,223,59,32" name="ears/goat" dx="65" dy="37"/>
+        <cell rect="121,256,29,32" name="ears_bg/dragon" dx="80" dy="37"/>
+        <cell rect="151,256,29,32" name="ears/dragon" dx="80" dy="37"/>
         <cell rect="181,190,29,65" name="ears_bg/fox" dx="80" dy="4"/>
         <cell rect="181,256,29,65" name="ears/fox" dx="80" dy="4"/>
         <cell rect="211,190,29,65" name="ears_bg/wolf" dx="80" dy="4"/>
@@ -398,6 +401,7 @@
         <cell rect="121,396,59,65" name="horns/cow" dx="65" dy="4"/>
         <cell rect="181,330,29,65" name="horns/2small" dx="80" dy="4"/>
         <cell rect="211,330,29,65" name="horns/2large" dx="80" dy="4"/>
+        <cell rect="181,396,29,65" name="horns_bg/dragon" dx="80" dy="4"/>
         <cell rect="241,330,59,65" name="horns_bg/kraken" dx="65" dy="4"/>
         <cell rect="301,330,59,65" name="horns_bg/demon" dx="65" dy="4"/>
         <cell rect="1,470,59,65" name="antennae/bee" dx="65" dy="4"/>
@@ -553,7 +557,10 @@
                 <show part="horns/2small"/>
                 <show part="horns_bg/kraken"/>
             </case>
-            <default><!--TODO DRACONIC_X2, DRACONIC_X4_12_INCH_LONG, ANTLERS, RHINO, OAK, GARGOYLE, ONI_X2, ONI-->
+            <case value="Horns.DRACONIC_X4_12_INCH_LONG">
+                <show part="horns_bg/dragon"/>
+            </case>
+            <default><!--TODO DRACONIC_X2, , ANTLERS, RHINO, OAK, GARGOYLE, ONI_X2, ONI-->
                 <show part="horns/2large"/>
             </default>
         </switch>
@@ -578,10 +585,14 @@
                 <show part="ears/cat"/>
                 <show part="ears_bg/cat"/>
             </case>
-            <case values="Ears.LIZARD,Ears.DRAGON"></case>
+            <case values="Ears.LIZARD"></case>
             <case values="Ears.BUNNY">
                 <show part="ears/bunny"/>
                 <show part="ears_bg/bunny"/>
+            </case>
+            <case values="Ears.DRAGON">
+                <show part="ears/dragon"/>
+                <show part="ears_bg/dragon"/>
             </case>
             <case values="Ears.FOX,Ears.BAT">
                 <show part="ears/fox"/>
@@ -636,7 +647,7 @@
             <case value="Eyes.MANTICORE">
                 <show part="eyes/manticore"/>
             </case>
-            <case values="Eyes.GORGON,Eyes.FENRIR,Eyes.FOX,Eyes.REPTILIAN,Eyes.SNAKE,Eyes.DRAGON,Eyes.ONI,Eyes.ELF,Eyes.RAIJU,Eyes.VAMPIRE">
+            <case values="Eyes.GORGON,Eyes.FENRIR,Eyes.FOX,Eyes.REPTILIAN,Eyes.SNAKE,Eyes.DRAGON,Eyes.ONI,Eyes.ELF,Eyes.VAMPIRE">
                 <show part="eyes/cat"/>
             </case>
             <case value="Eyes.MANTICORE">
@@ -644,6 +655,9 @@
             </case>
             <case value="Eyes.DEVIL">
                 <show part="eyes/devil"/>
+            </case>
+            <case value="Eyes.RAIJU">
+                <show part="eyes/raiju"/>
             </case>
             <default>
                 <show part="eyes/human"/>
