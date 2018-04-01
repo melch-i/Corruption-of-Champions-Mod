@@ -37,12 +37,12 @@ package classes.Items.Armors
 					outputText("You slide forest gown over your head and down to your toes. It obviously would fit someone more female."
 					          +" You feel sad and wish you had the svelte body that would look amazing in this gown."
 					          +" Wait, did you always think that way?\n");
-			     break;
+					break;
 			  default :  //non-binary
-				  outputText("You slide the gown over your head and slip it into place.\n");
+					outputText("You slide the gown over your head and slip it into place.\n");
 			}
 			if (player.hasCock()) 
-				outputText("You notice the bulge from [cock] in the folds of the dress and wish it wasn't there.\n");
+					outputText("You notice the bulge from [cock] in the folds of the dress and wish it wasn't there.\n");
 
 			
 		}
@@ -133,23 +133,27 @@ package classes.Items.Armors
 				case "cock":
 					outputText("You wake up to find a nice <b>pink egg</b> on your gown. \n\n What a nice treat. \n\n  You gobble it down not giving through as to how it got there.\n");
 					SceneLib.mutationsTable.pinkEgg(false, player, false);
-
 					break;
 
 				case "breasts":
-					outputText("You feel like a beautful flower in your gown.  Dawn approaches and you place your hands on your chest as if expecting your nipples to bloom to greet the rising sun.\n");
+					outputText("You feel like a beautful flower in your gown.  Dawn approaches and you place your hands on your [breasts] as if expecting your nipples to bloom to greet the rising sun.\n");
 		
 				if (player.bRows() > 1) {
 					x = 1;
-					outputText("Some of your breasts shrink back into your body leaving you with just two.");
+					outputText("<b>Some of your breasts shrink back into your body leaving you with just two.</b>");
 					while (x < player.bRows()) {
-						if (player.breastRows[x].breastRating < 1) player.breastRows[x].breastRating = 1;
+						if (player.breastRows[x].breastRating < 1) {
+							player.breastRows[x].breastRating = 1;
+							outputText("Your extra breasts shrink back into your body.");
+						}
+					
 						x++;
 					}
+				}
 				if (player.breastRows[0].breastRating > BreastCup.D )
 					{
 						player.breastRows[0].breastRating = BreastCup.D;
-						outputText("A chill runs against your chest and <b>your boobs become smaller. You now have [breasts]</b>\n\n");
+						outputText("A chill runs against your chest and your boobs become smaller.\n<b> You now have [breasts]</b>\n\n");
 
 					}
 					
@@ -159,12 +163,13 @@ package classes.Items.Armors
 						outputText("Heat builds in chest and your boobs become bigger.\n\n<b>You now have [breasts]</b>");
 
 					}
-				}break;
+				
+				break;
 
 				case "girlyness":
 					text = player.modFem(70, 2);
 					if (text == "") break;
-					outputText("You run your [hands] across the fabric of your Gown, then against your face as it feels like there is something you need to wipe off.\n");
+					outputText("You run your hands across the fabric of your Gown, then against your face as it feels like there is something you need to wipe off.\n");
 					outputText(text);
 					break;
 					
