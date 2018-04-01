@@ -60,7 +60,6 @@ package classes.Items.Armors
 			var verb:String; 
 			var text:String;
 			var x :int;
-			var changed :int = 0;
 			var tfChoice :Array = []; 
 			var dryadDreams:Array = [
 				"In your dream you find yourself in a lush forest standing next to a tree. The tree seems like your best friend and You give it a hug before sitting down next to it. Looking around, there is grass and flowers all about. You can’t help but hum a cheery tune enjoying nature as a bright butterfly flutters nearby, holding out your hand the butterfly lands softly on your finger and smile sweetly to it.",
@@ -108,7 +107,7 @@ package classes.Items.Armors
 						if (player.hips.type== 5)
 							break;
 						outputText("You feel them slowly " + verb + ".<b>  You now have [hips].</b>\n"); 
-						changed = 1;
+
 					break;
 
 				case "butt":
@@ -128,13 +127,13 @@ package classes.Items.Armors
 						break;
 
 					outputText("You feel them slowly " + verb + ". <b>You now have a [butt].</b>"); 
-					changed = 1;
+	
 					break;
 
 				case "cock":
 					outputText("You wake up to find a nice <b>pink egg</b> on your gown. \n\n What a nice treat. \n\n  You gobble it down not giving through as to how it got there.\n");
 					SceneLib.mutationsTable.pinkEgg(false, player, false);
-					changed = 1;
+
 					break;
 
 				case "breasts":
@@ -151,14 +150,14 @@ package classes.Items.Armors
 					{
 						player.breastRows[0].breastRating = BreastCup.D;
 						outputText("A chill runs against your chest and <b>your boobs become smaller. You now have [breasts]</b>\n\n");
-						changed = 1;	
+
 					}
 					
 				if ( player.smallestTitSize() < BreastCup.D )
 					{
 						player.breastRows[0].breastRating = BreastCup.D;
 						outputText("Heat builds in chest and your boobs become bigger.\n\n<b>You now have [breasts]</b>");
-						changed = 1;
+
 					}
 				}break;
 
@@ -167,14 +166,13 @@ package classes.Items.Armors
 					if (text == "") break;
 					outputText("You run your [hands] across the fabric of your Gown, then against your face as it feels like there is something you need to wipe off.\n");
 					outputText(text);
-					changed = 1;
 					break;
 					
 				default:
 					outputText("\nERROR: this forest gown TF choice shouldn't ever get called.");
 			}
 			outputText("\n\n"); //spacing issues
-			if (changed !== 1) DryadProg();   //if no small changes, start big changes
+			if (tfChoice.length == 0) DryadProg();   //if no small changes, start big changes
 		}
 
 		public function DryadProg():void {
@@ -212,7 +210,7 @@ package classes.Items.Armors
 					outputText("Your hands shake and shudder as they slowly transform back into normal human hands.");
 					player.arms.type = Arms.HUMAN;
 					//kGAMECLASS.mutations.updateClaws();
-					//needs mutations updated from revamp
+					//needs mutations updated from revamp, or some workaround, or wood claws added?
 				}
 				break;
 
