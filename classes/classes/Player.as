@@ -5825,8 +5825,8 @@ use namespace CoC;
 					maxInt += (70 * newGamePlusMod);
 				}
 				if (flags[kFLAGS.GARGOYLE_BODY_MATERIAL] == 2) {
-					maxTou += (70 * newGamePlusMod);
-					maxInt += (100 * newGamePlusMod);
+					maxStr += (70 * newGamePlusMod);
+					maxTou += (100 * newGamePlusMod);
 					maxInt += (90 * newGamePlusMod);
 				}
 			}
