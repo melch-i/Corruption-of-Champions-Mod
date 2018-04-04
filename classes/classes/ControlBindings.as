@@ -183,15 +183,18 @@ internal class ControlBindings {
                     });
 
         for (var i:int=0; i< 15; i++) {
+            var callback:Function = (function(j:int):Function{
+                return function ():void {
+					if (mainView.buttonIsVisible(j)) {
+						mainView.toolTipView.hide();
+						executeButtonClick(j);
+					}
+				}
+            })(i);
 			inputManager.AddBindableControl(
 					"Button "+(i+1),
 					"Activate button "+(i+1),
-					function ():void {
-						if (mainView.buttonIsVisible(i)) {
-							mainView.toolTipView.hide();
-							executeButtonClick(i);
-						}
-					},
+					callback,
 					mainView.bottomButtons[i]
 			);
 		}
