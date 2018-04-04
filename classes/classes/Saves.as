@@ -1176,6 +1176,8 @@ public function saveGameObject(slot:String, isFile:Boolean):void
 		
 		// Keybinds
         saveFile.data.controls = CoC.instance.inputManager.SaveBindsToObj();
+		saveFile.data.settings = [];
+		saveFile.data.settings.showHotkeys = CoC.instance.inputManager.showHotkeys;
         // TODO @Oxdeception recheck
 		saveFile.data.world = [];
 		saveFile.data.world.x = [];
@@ -2350,6 +2352,8 @@ public function loadGameObject(saveData:Object, slot:String = "VOID"):void
 		
 		// TODO @Oxdeception recheck
 		XXCNPC.unloadSavedNPCs();
+		if(saveFile.data.settings == undefined){saveFile.data.settings = [];}
+		if ('showHotkeys' in saveFile.data.settings) game.inputManager.showHotkeys = saveFile.data.settings.showHotkeys;
 		if(saveFile.data.world == undefined){saveFile.data.world = [];}
 		if(saveFile.data.world.x == undefined){saveFile.data.world.x = [];}
 		for each(var savedNPC:* in saveFile.data.world.x){

@@ -460,6 +460,20 @@ import coc.view.MainView;
 			
 			return controls;
 		}
+		
+		public function set showHotkeys(display:Boolean):void {
+			for (var key:String in _controlMethods) {
+				(_controlMethods[key] as BoundControlMethod).showHotkeys = display;
+			}
+		}
+		
+		public function get showHotkeys():Boolean {
+			//noinspection LoopStatementThatDoesntLoopJS
+			for (var key:String in _controlMethods) {
+				return (_controlMethods[key] as BoundControlMethod).showHotkeys;
+			}
+			return false;
+		}
 	}
 	
 	/**

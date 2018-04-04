@@ -462,6 +462,7 @@ addButton(14, "Back", CoC.instance.mainMenu.mainMenu);
 		addButton(9, "Charview Style",toggleCharViewer,kFLAGS.CHARVIEW_STYLE).hint("Change between in text and sidebar display");
 		addButton(10, "QuickSave Confirm", toggleFlag, kFLAGS.DISABLE_QUICKSAVE_CONFIRM,settingsScreenInterfaceSettings);
 		addButton(11, "QuickLoad Confirm", toggleFlag, kFLAGS.DISABLE_QUICKLOAD_CONFIRM,settingsScreenInterfaceSettings);
+		addButton(12, "Hotkey Visibility", toggleHotkeyVisibility).hint("Show/hide hotkeys.");
 		addButton(14, "Back", settingsScreenMain);
 	}
 	public function menuMainBackground():void {
@@ -500,6 +501,10 @@ addButton(14, "Back", CoC.instance.mainMenu.mainMenu);
 			flags[flag] = 1;
 		}
 		returnTo();
+	}
+	public function toggleHotkeyVisibility():void {
+		CoC.instance.inputManager.showHotkeys = !CoC.instance.inputManager.showHotkeys;
+		settingsScreenInterfaceSettings();
 	}
 	public function toggleCharViewer(flag:int = kFLAGS.CHARVIEWER_ENABLED):void {
 		if (flags[flag] < 1) {

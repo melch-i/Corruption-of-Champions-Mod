@@ -24,6 +24,7 @@ import coc.view.CoCButton;
 		
 		private var _index:int;
 		private var _button:CoCButton;
+		private var _showHotkeys:Boolean = true;
 		
 		/**
 		 * Define a new bindable control method with "Unbound" keys.
@@ -78,9 +79,7 @@ import coc.view.CoCButton;
 		public function set PrimaryKey(keyCode:int):void
 		{
 			_primaryKey = keyCode;
-			if (_button != null) {
-				_button.key1text = BindingPane.keyName(_primaryKey,"");
-			}
+			updateHotkeys();
 		}
 		
 		public function get SecondaryKey():int
@@ -91,9 +90,7 @@ import coc.view.CoCButton;
 		public function set SecondaryKey(keyCode:int):void
 		{
 			_secondaryKey = keyCode;
-			if (_button != null) {
-				_button.key2text = BindingPane.keyName(_secondaryKey,"");
-			}
+			updateHotkeys();
 		}
 		
 		public function get Index():int
@@ -111,9 +108,20 @@ import coc.view.CoCButton;
 				_button.key2text = "";
 			}
 			_button = value;
+			updateHotkeys();
+		}
+		
+		public function get showHotkeys():Boolean {
+			return _showHotkeys;
+		}
+		public function set showHotkeys(value:Boolean):void {
+			_showHotkeys = value;
+			updateHotkeys();
+		}
+		private function updateHotkeys():void {
 			if (_button != null) {
-				_button.key1text = BindingPane.keyName(_primaryKey,"");
-				_button.key2text = BindingPane.keyName(_secondaryKey,"");
+				_button.key1text = _showHotkeys ? BindingPane.keyName(_primaryKey,"") : "";
+				_button.key2text = _showHotkeys ? BindingPane.keyName(_secondaryKey,"") : "";
 			}
 		}
 	}
