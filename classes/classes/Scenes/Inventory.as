@@ -3,27 +3,26 @@
  */
 package classes.Scenes
 {
-import classes.*;
-import classes.GlobalFlags.kFLAGS;
-import classes.CoC;
-import classes.Items.Armor;
-import classes.Items.ArmorLib;
-import classes.Items.Consumable;
-import classes.Items.Jewelry;
-import classes.Items.JewelryLib;
-import classes.Items.Shield;
-import classes.Items.ShieldLib;
-import classes.Items.Undergarment;
-import classes.Items.UndergarmentLib;
-import classes.Items.Useable;
-import classes.Items.Weapon;
-import classes.Items.WeaponLib;
-import classes.Items.WeaponRange;
-import classes.Items.WeaponRangeLib;
-import classes.Scenes.Camp.UniqueCampScenes;
-import classes.Scenes.NPCs.HolliPureScene;
+	import classes.*;
+	import classes.GlobalFlags.kFLAGS;
+	import classes.Items.Armor;
+	import classes.Items.ArmorLib;
+	import classes.Items.Consumable;
+	import classes.Items.Jewelry;
+	import classes.Items.JewelryLib;
+	import classes.Items.Shield;
+	import classes.Items.ShieldLib;
+	import classes.Items.Undergarment;
+	import classes.Items.UndergarmentLib;
+	import classes.Items.Useable;
+	import classes.Items.Weapon;
+	import classes.Items.WeaponLib;
+	import classes.Items.WeaponRange;
+	import classes.Items.WeaponRangeLib;
+	import classes.Scenes.Camp.UniqueCampScenes;
+	import classes.Scenes.NPCs.HolliPureScene;
 
-use namespace CoC;
+	use namespace CoC;
 
 	public class Inventory extends BaseContent {
 		private static const inventorySlotName:Array = ["first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth", "tenth"];
@@ -190,39 +189,69 @@ if (!CoC.instance.inCombat && inDungeon == false && inRoomedDungeon == false && 
 			hideMenus();
 			spriteSelect(-1);
 			menu();
-			addButton(0, "Bag Store", pickItemToPlaceInBagOfCosmos);
-			addButton(1, "Bag Take", pickItemToTakeFromBagOfCosmos);
+			addButton(0, "Bag Store", curry(pickItemToPlace,inventoryMenu,gearStorage,bagOCosmos,"bag of cosmos"));
+			addButton(1, "Bag Take", curry(pickItemToTake,inventoryMenu, gearStorage, bagOCosmos, "bag"));
 			addButton(14, "Back", inventoryMenu);
 		}
 		
 		public function SkyPoisonPearlMenu():void {
+			var toPlace:Function = curry(pickItemToPlace,inventoryMenu,pearlStorage);
+			var toTake:Function = curry(pickItemToTake,inventoryMenu,pearlStorage);
 			hideMenus();
 			spriteSelect(-1);
 			menu();
-			addButton(0, "Pearl Store 1", pickItemToPlaceInSkyPoisonPearl5).hint("Store item in Sky Poison Pearl (central section).");
-			addButton(5, "Pearl Take 1", pickItemToTakeFromSkyPoisonPearl5).hint("Take item from Sky Poison Pearl (central section).");
-			if (player.level >= 6) addButton(6, "Pearl Take 2", pickItemToTakeFromSkyPoisonPearl1).hint("Take item from Sky Poison Pearl (east section).");
-			if (player.level >= 12) addButton(7, "Pearl Take 3", pickItemToTakeFromSkyPoisonPearl2).hint("Take item from Sky Poison Pearl (south section).");
-			if (player.level >= 18) addButton(8, "Pearl Take 4", pickItemToTakeFromSkyPoisonPearl3).hint("Take item from Sky Poison Pearl (west section).");
-			if (player.level >= 24) addButton(9, "Pearl Take 5", pickItemToTakeFromSkyPoisonPearl4).hint("Take item from Sky Poison Pearl (north section).");
-			if (player.level >= 30) addButton(11, "Pearl Take 6", pickItemToTakeFromSkyPoisonPearl6).hint("Take item from Sky Poison Pearl (above section).");
-			if (player.level >= 36) addButton(13, "Pearl Take 7", pickItemToTakeFromSkyPoisonPearl7).hint("Take item from Sky Poison Pearl (below section).");
-			if (player.level >= 6) addButton(1, "Pearl Store 2", pickItemToPlaceInSkyPoisonPearl1).hint("Store item in Sky Poison Pearl (east section).");
-			else addButtonDisabled(1, "Pearl Store 2", "Req. LvL 6+ to unlock this.");
-			if (player.level >= 12) addButton(2, "Pearl Store 3", pickItemToPlaceInSkyPoisonPearl2).hint("Store item in Sky Poison Pearl (south section).");
-			else addButtonDisabled(2, "Pearl Store 3", "Req. LvL 12+ to unlock this.");
-			if (player.level >= 18) addButton(3, "Pearl Store 4", pickItemToPlaceInSkyPoisonPearl3).hint("Store item in Sky Poison Pearl (west section).");
-			else addButtonDisabled(3, "Pearl Store 4", "Req. LvL 18+ to unlock this.");
-			if (player.level >= 24) addButton(4, "Pearl Store 5", pickItemToPlaceInSkyPoisonPearl4).hint("Store item in Sky Poison Pearl (north section).");
-			else addButtonDisabled(4, "Pearl Store 5", "Req. LvL 24+ to unlock this.");
-			if (player.level >= 30) addButton(10, "Pearl Store 6", pickItemToPlaceInSkyPoisonPearl6).hint("Store item in Sky Poison Pearl (above section).");
-			else addButtonDisabled(10, "Pearl Store 6", "Req. LvL 30+ to unlock this.");
-			if (player.level >= 36) addButton(12, "Pearl Store 7", pickItemToPlaceInSkyPoisonPearl7).hint("Store item in Sky Poison Pearl (below section).");
-			else addButtonDisabled(12, "Pearl Store 7", "Req. LvL 36+ to unlock this.");
+
+			addButton(0, "Pearl Store 1", toPlace, pearlCentre, "sky poison pearl (central section)").hint("Store item in Sky Poison Pearl (central section).");
+			addButton(5, "Pearl Take 1", toTake, pearlCentre, "sky poison pearl (central section)").hint("Take item from Sky Poison Pearl (central section).");
+
+			if (player.level >= 6) {
+				addButton(1, "Pearl Store 2", toPlace, pearlEast, "sky poison pearl (east section)").hint("Store item in Sky Poison Pearl (east section).");
+				addButton(6, "Pearl Take 2", toTake, pearlEast, "sky poison pearl (east section)").hint("Take item from Sky Poison Pearl (east section).");
+			} else {
+				addButtonDisabled(1, "Pearl Store 2", "Req. LvL 6+ to unlock this.");
+			}
+
+			if (player.level >= 12) {
+				addButton(2, "Pearl Store 3", toPlace, pearlSouth, "sky poison pearl (south section)").hint("Store item in Sky Poison Pearl (south section).");
+				addButton(7, "Pearl Take 3", toTake, pearlSouth, "sky poison pearl (south section)").hint("Take item from Sky Poison Pearl (south section).");
+			} else {
+				addButtonDisabled(2, "Pearl Store 3", "Req. LvL 12+ to unlock this.");
+			}
+
+			if (player.level >= 18) {
+				addButton(3, "Pearl Store 4", toPlace, pearlWest, "sky poison pearl (west section)").hint("Store item in Sky Poison Pearl (west section).");
+				addButton(8, "Pearl Take 4", toTake, pearlWest, "sky poison pearl (west section)").hint("Take item from Sky Poison Pearl (west section).");
+			} else {
+				addButtonDisabled(3, "Pearl Store 4", "Req. LvL 18+ to unlock this.");
+			}
+
+			if (player.level >= 24) {
+				addButton(4, "Pearl Store 5", toPlace, pearlNorth, "sky poison pearl (north section)").hint("Store item in Sky Poison Pearl (north section).");
+				addButton(9, "Pearl Take 5", toTake, pearlNorth, "sky poison pearl (north section)").hint("Take item from Sky Poison Pearl (north section).");
+			} else {
+				addButtonDisabled(4, "Pearl Store 5", "Req. LvL 24+ to unlock this.");
+			}
+
+			if (player.level >= 30) {
+				addButton(10, "Pearl Store 6", toPlace, pearlAbove, "sky poison pearl (above section)").hint("Store item in Sky Poison Pearl (above section).");
+				addButton(11, "Pearl Take 6", toTake, pearlAbove, "sky poison pearl (above section)").hint("Take item from Sky Poison Pearl (above section).");
+			} else {
+				addButtonDisabled(10, "Pearl Store 6", "Req. LvL 30+ to unlock this.");
+			}
+
+			if (player.level >= 36) {
+				addButton(12, "Pearl Store 7", toPlace, pearlBelow, "sky poison pearl (below section)").hint("Store item in Sky Poison Pearl (below section).");
+				addButton(13, "Pearl Take 7", toTake, pearlBelow, "sky poison pearl (below section)").hint("Take item from Sky Poison Pearl (below section).");
+			} else {
+				addButtonDisabled(12, "Pearl Store 7", "Req. LvL 36+ to unlock this.");
+			}
+
 			addButton(14, "Back", inventoryMenu);
 		}
 		
 		public function stash():void {
+			var toTake:Function = curry(pickItemToTake,stash,gearStorage);
+			var toPlace:Function = curry(pickItemToPlace,stash,gearStorage);
 			/*Hacked in cheat to enable shit
 			flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00254] = 1;
 			flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00255] = 1;*/
@@ -241,8 +270,8 @@ if (!CoC.instance.inCombat && inDungeon == false && inRoomedDungeon == false && 
 				if (camp.homeDesc() == "cabin") outputText("inside your cabin");
 				else outputText("near the portal entrance");
 				outputText(".\n\n");
-				addButton(0, "Chest Store", pickItemToPlaceInCampStorage);
-				if (hasItemsInStorage()) addButton(1, "Chest Take", pickItemToTakeFromCampStorage);
+				addButton(0, "Chest Store", curry(pickItemToPlace, stash, itemStorage, campStorage, "storage containers"));
+				if (hasItemsInStorage()) addButton(1, "Chest Take", curry(pickItemToTake,stash, itemStorage, campStorage, "storage"));
 			}
 			//Jewelry box
 			if(player.hasKeyItem("Equipment Storage - Jewelry Box") >= 0) {
@@ -257,37 +286,37 @@ if (!CoC.instance.inCombat && inDungeon == false && inRoomedDungeon == false && 
 					}
 				}
 				else outputText("next to your bedroll.");	
-				addButton(2, "J.Box Put", inventory.pickItemToPlaceInJewelryBox);
-				if (inventory.jewelryBoxDescription()) addButton(3, "J.Box Take", inventory.pickItemToTakeFromJewelryBox);
+				addButton(2, "J.Box Put", toPlace,jewelryBox,"jewelry box");
+				if (storageDescription(jewelryBox)) addButton(3, "J.Box Take", toTake, jewelryBox, "box");
 				outputText("\n\n");
 			}
 			//Dresser
 			if (flags[kFLAGS.CAMP_CABIN_FURNITURE_DRESSER] > 0) {
 				outputText("You have a dresser inside your cabin to store nine different types of undergarments.");
-				addButton(5, "Dresser Put", inventory.pickItemToPlaceInDresser);
-				if (inventory.dresserDescription()) addButton(6, "Dresser Take", inventory.pickItemToTakeFromDresser);
+				addButton(5, "Dresser Put", toPlace, dresserBox, "dresser");
+				if (storageDescription(dresserBox)) addButton(6, "Dresser Take", toTake, dresserBox, "dresser");
 				outputText("\n\n");
 			}
 			if (flags[kFLAGS.CAMP_UPGRADES_WAREHOUSE_GRANARY] < 2) {
 			//Weapon Rack
 			if (player.hasKeyItem("Equipment Rack - Weapons") >= 0) {
 				outputText("There's a weapon rack set up here, set up to hold up to nine various weapons.");
-				addButton(7, "W.Rack Put", pickItemToPlaceInWeaponRack);
-				if (weaponRackDescription()) addButton(8, "W.Rack Take", pickItemToTakeFromWeaponRack);
+				addButton(7, "W.Rack Put", toPlace, weaponRack, "rack");
+				if (storageDescription(weaponRack)) addButton(8, "W.Rack Take", toTake, weaponRack, "rack");
 				outputText("\n\n");
 			}
 			//Armor Rack
 			if(player.hasKeyItem("Equipment Rack - Armor") >= 0) {
 				outputText("Your camp has an armor rack set up to hold your various sets of gear.  It appears to be able to hold nine different types of armor.");
-				addButton(10, "A.Rack Put", pickItemToPlaceInArmorRack);
-				if (armorRackDescription()) addButton(11, "A.Rack Take", pickItemToTakeFromArmorRack);
+				addButton(10, "A.Rack Put", toPlace, armourRack, "armor rack");
+				if (storageDescription(armourRack)) addButton(11, "A.Rack Take", toTake, armourRack, "rack");
 				outputText("\n\n");
 			}
 			//Shield Rack
 			if(player.hasKeyItem("Equipment Rack - Shields") >= 0) {
 				outputText("There's a shield rack set up here, set up to hold up to nine various shields.");
-				addButton(12, "S.Rack Put", pickItemToPlaceInShieldRack);
-				if (shieldRackDescription()) addButton(13, "S.Rack Take", pickItemToTakeFromShieldRack);
+				addButton(12, "S.Rack Put", toPlace, shieldRack, "shield rack");
+				if (storageDescription(shieldRack)) addButton(13, "S.Rack Take", toTake, shieldRack, "rack");
 				outputText("\n\n");
 			}
 			}
@@ -295,6 +324,8 @@ if (!CoC.instance.inCombat && inDungeon == false && inRoomedDungeon == false && 
 		}
 		
 		public function warehouse():void {
+			var toPlace:Function = curry(pickItemToPlace,warehouse,gearStorage);
+			var toTake:Function = curry(pickItemToTake,warehouse,gearStorage);
 			hideMenus();
 			clearOutput();
 			spriteSelect(-1);
@@ -313,37 +344,37 @@ if (!CoC.instance.inCombat && inDungeon == false && inRoomedDungeon == false && 
 			}
 			//Warehouse part 1 and 2
 			if (flags[kFLAGS.CAMP_UPGRADES_WAREHOUSE_GRANARY] >= 2) {
-				addButton(0, "Warehouse P1", pickItemToPlaceInWarehouse1).hint("Put item in 1st Warehouse.");
-				if (warehouse1Description()) addButton(1, "Warehouse T1", pickItemToTakeFromWarehouse1).hint("Take item from 1st Warehouse.");
+				addButton(0, "Warehouse P1", toTake, warehouse1, "1st warehouse").hint("Put item in 1st Warehouse.");
+				if (storageDescription(warehouse1)) addButton(1, "Warehouse T1", toTake,warehouse1,"1st warehouse").hint("Take item from 1st Warehouse.");
 			}
 			if (flags[kFLAGS.CAMP_UPGRADES_WAREHOUSE_GRANARY] >= 6) {
-				addButton(2, "Warehouse P2", pickItemToPlaceInWarehouse2).hint("Put item in 2nd Warehouse.");
-				if (warehouse2Description()) addButton(3, "Warehouse T2", pickItemToTakeFromWarehouse2).hint("Take item from 2nd Warehouse.");
+				addButton(2, "Warehouse P2", toTake, warehouse2, "2nd warehouse").hint("Put item in 2nd Warehouse.");
+				if (storageDescription(warehouse2)) addButton(3, "Warehouse T2", toTake,warehouse2,"2nd warehouse").hint("Take item from 2nd Warehouse.");
 			}
 			//Granary
 			if (flags[kFLAGS.CAMP_UPGRADES_WAREHOUSE_GRANARY] >= 4) {
-				addButton(5, "Granary Put", pickItemToPlaceInGranary).hint("Put food in Granary.");
-				if (granaryDescription()) addButton(6, "Granary Take", pickItemToTakeFromGranary).hint("Take food from Granary.");
+				addButton(5, "Granary Put", toTake,granaryBox,"granary").hint("Put food in Granary.");
+				if (storageDescription(granaryBox)) addButton(6, "Granary Take", toTake,granaryBox,"granary").hint("Take food from Granary.");
 			}
 			//Weapon Rack
 			if (player.hasKeyItem("Equipment Rack - Weapons") >= 0) {
 				outputText("There's a weapon rack set up here, set up to hold up to nine various weapons.");
-				addButton(7, "W.Rack Put", pickItemToPlaceInWeaponRack2).hint("Put weapon on the rack.");
-				if (weaponRackDescription()) addButton(8, "W.Rack Take", pickItemToTakeFromWeaponRack2).hint("Take weapon from the rack.");
+				addButton(7, "W.Rack Put", toPlace,weaponRack,"weapon rack").hint("Put weapon on the rack.");
+				if (storageDescription(weaponRack)) addButton(8, "W.Rack Take", toTake,weaponRack,"rack").hint("Take weapon from the rack.");
 				outputText("\n\n");
 			}
 			//Armor Rack
 			if(player.hasKeyItem("Equipment Rack - Armor") >= 0) {
 				outputText("Your camp has an armor rack set up to hold your various sets of gear.  It appears to be able to hold nine different types of armor.");
-				addButton(10, "A.Rack Put", pickItemToPlaceInArmorRack2).hint("Put armor on the rack.");
-				if (armorRackDescription()) addButton(11, "A.Rack Take", pickItemToTakeFromArmorRack2).hint("Take armor from the rack.");
+				addButton(10, "A.Rack Put", toPlace,armourRack,"armor rack").hint("Put armor on the rack.");
+				if (storageDescription(armourRack)) addButton(11, "A.Rack Take", toTake,armourRack,"rack").hint("Take armor from the rack.");
 				outputText("\n\n");
 			}
 			//Shield Rack
 			if(player.hasKeyItem("Equipment Rack - Shields") >= 0) {
 				outputText("There's a shield rack set up here, set up to hold up to nine various shields.");
-				addButton(12, "S.Rack Put", pickItemToPlaceInShieldRack2).hint("Put shield on the rack.");
-				if (shieldRackDescription()) addButton(13, "S.Rack Take", pickItemToTakeFromShieldRack2).hint("Take shield from the rack.");
+				addButton(12, "S.Rack Put", toPlace,shieldRack,"shield rack").hint("Put shield on the rack.");
+				if (storageDescription(shieldRack)) addButton(13, "S.Rack Take", toTake,shieldRack,"rack").hint("Take shield from the rack.");
 				outputText("\n\n");
 			}
 			addButton(14, "Back", playerMenu);
@@ -662,96 +693,45 @@ if (!CoC.instance.inCombat && inDungeon == false && inRoomedDungeon == false && 
 		//	clearOutput();
 		//	takeItem(player.setWeapon(WeaponLib.FISTS), inventoryMenu);
 		//}
-		
+
 /* Never called
 		public function hasItemsInRacks(itype:ItemType, armor:Boolean):Boolean {
 			if (armor) return itemTypeInStorage(gearStorage, 9, 18, itype);
 			return itemTypeInStorage(gearStorage, 0, 9, itype);
 		}
 */
-		
-		public function armorRackDescription():Boolean {
-			if (itemAnyInStorage(gearStorage, 9, 18)) {
-				var itemList:Array = [];
-				for (var x:int = 9; x < 18; x++)
-					if (gearStorage[x].quantity > 0) itemList[itemList.length] = gearStorage[x].itype.longName;
-				outputText("  It currently holds " + formatStringArray(itemList) + ".");
-				return true;
-			}
-			return false;
+		private const weaponRack:Object = {start: 0, end: 9, acceptable:weaponAcceptable};
+		private const armourRack:Object = {start: 9, end: 18, acceptable:armorAcceptable};
+		private const jewelryBox:Object = {start: 18, end: 27, acceptable:jewelryAcceptable};
+		private const dresserBox:Object = {start: 27, end: 36, acceptable:undergarmentAcceptable};
+		private const shieldRack:Object = {start: 36, end: 45, acceptable:shieldAcceptable};
+		private const bagOCosmos:Object = {start: 45, end: 57};
+		private const warehouse1:Object = {start: 57, end: 69};
+		private const granaryBox:Object = {start: 69, end: 78, acceptable:consumableAcceptable};
+		private const warehouse2:Object = {start: 78, end: 90};
+
+		private const pearlEast:Object = {start: 0, end: 14};
+		private const pearlSouth:Object = {start: 14, end: 28};
+		private const pearlWest:Object = {start: 28, end: 42};
+		private const pearlNorth:Object = {start: 42, end: 56};
+		private const pearlCentre:Object = {start: 56, end: 70};
+		private const pearlAbove:Object = {start: 70, end: 84};
+		private const pearlBelow:Object = {start: 84, end: 98};
+
+		private function get campStorage():Object {
+			return {start:0, end:itemStorage.length}
 		}
-		
-		public function weaponRackDescription():Boolean {
-			if (itemAnyInStorage(gearStorage, 0, 9)) {
+
+		private function storageDescription(def:Object):Boolean{
+			var start:int = def.start;
+			var end:int = def.end;
+			if(itemAnyInStorage(gearStorage,start,end)){
 				var itemList:Array = [];
-				for (var x:int = 0; x < 9; x++)
-					if (gearStorage[x].quantity > 0) itemList[itemList.length] = gearStorage[x].itype.longName;
-				outputText("  It currently holds " + formatStringArray(itemList) + ".");
-				return true;
-			}
-			return false;
-		}
-		
-		public function shieldRackDescription():Boolean {
-			if (itemAnyInStorage(gearStorage, 36, 45)) {
-				var itemList:Array = [];
-				for (var x:int = 36; x < 45; x++)
-					if (gearStorage[x].quantity > 0) itemList[itemList.length] = gearStorage[x].itype.longName;
-				outputText("  It currently holds " + formatStringArray(itemList) + ".");
-				return true;
-			}
-			return false;
-		}
-		
-		public function jewelryBoxDescription():Boolean {
-			if (itemAnyInStorage(gearStorage, 18, 27)) {
-				var itemList:Array = [];
-				for (var x:int = 18; x < 27; x++)
-					if (gearStorage[x].quantity > 0) itemList[itemList.length] = gearStorage[x].itype.longName;
-				outputText("  It currently holds " + formatStringArray(itemList) + ".");
-				return true;
-			}
-			return false;
-		}
-		
-		public function dresserDescription():Boolean {
-			if (itemAnyInStorage(gearStorage, 27, 36)) {
-				var itemList:Array = [];
-				for (var x:int = 27; x < 36; x++)
-					if (gearStorage[x].quantity > 0) itemList[itemList.length] = gearStorage[x].itype.longName;
-				outputText("  It currently holds " + formatStringArray(itemList) + ".");
-				return true;
-			}
-			return false;
-		}
-		
-		public function warehouse1Description():Boolean {
-			if (itemAnyInStorage(gearStorage, 57, 69)) {
-				var itemList:Array = [];
-				for (var x:int = 57; x < 69; x++)
-					if (gearStorage[x].quantity > 0) itemList[itemList.length] = gearStorage[x].itype.longName;
-				outputText("  It currently holds " + formatStringArray(itemList) + ".");
-				return true;
-			}
-			return false;
-		}
-		
-		public function warehouse2Description():Boolean {
-			if (itemAnyInStorage(gearStorage, 78, 90)) {
-				var itemList:Array = [];
-				for (var x:int = 78; x < 90; x++)
-					if (gearStorage[x].quantity > 0) itemList[itemList.length] = gearStorage[x].itype.longName;
-				outputText("  It currently holds " + formatStringArray(itemList) + ".");
-				return true;
-			}
-			return false;
-		}
-		
-		public function granaryDescription():Boolean {
-			if (itemAnyInStorage(gearStorage, 69, 78)) {
-				var itemList:Array = [];
-				for (var x:int = 69; x < 78; x++)
-					if (gearStorage[x].quantity > 0) itemList[itemList.length] = gearStorage[x].itype.longName;
+				for (var x:int = start; x < end; x++){
+					if (gearStorage[x].quantity > 0) {
+						itemList[itemList.length] = gearStorage[x].itype.longName;
+					}
+				}
 				outputText("  It currently holds " + formatStringArray(itemList) + ".");
 				return true;
 			}
@@ -814,34 +794,7 @@ if (!CoC.instance.inCombat && inDungeon == false && inRoomedDungeon == false && 
 			if (player.lowerGarment != UndergarmentLib.NOTHING)
 			{
 				addButton(7, "Lowerwear", unequipLowerwear).hint(player.lowerGarment.description, capitalizeFirstLetter(player.lowerGarment.name));
-			}/*			
-			if (player.jewelry != JewelryLib.NOTHING)
-			{
-				addButton(10, "Necklace", unequipJewel).hint(player.jewelry.description, capitalizeFirstLetter(player.jewelry.name));
 			}
-			if (player.jewelry != JewelryLib.NOTHING)
-			{
-				addButton(11, "Ring 1", unequipJewel).hint(player.jewelry.description, capitalizeFirstLetter(player.jewelry.name));
-			}
-			if (player.jewelry != JewelryLib.NOTHING)
-			{
-				addButton(12, "Ring 2", unequipJewel).hint(player.jewelry.description, capitalizeFirstLetter(player.jewelry.name));
-			}
-			if (player.jewelry != JewelryLib.NOTHING)
-			{
-				addButton(2, "Accessory", unequipJewel).hint(player.jewelry.description, capitalizeFirstLetter(player.jewelry.name));
-			}
-			zrobić sloty:
-			na broń dystansową
-			może jeszcze 1-3 kolejne ringi (poza pierwszym orginalnym slotem)
-			na naszyjnik
-			coś w stylu slotu na prawdziwe akcesoria
-			może coś na item związany z soulforce - ala latający miecz lub takie tam itemy ^^
-			przy dodawaniu tych slotow popatrzec czy ktorys nie bedzie musial uzywac tego fragmentu kodu:
-			else if (item is Shield) {
-				player.shield.removeText();
-				item = player.setShield(item as Shield); //Item is now the player's old shield
-			*/
 			addButton(14, "Back", inventoryMenu);
 			
 		}
@@ -874,152 +827,21 @@ if (!CoC.instance.inCombat && inDungeon == false && inRoomedDungeon == false && 
 		}
 
 		//Pick item to take from storage
-		private function pickItemToTakeFromCampStorage():void {
-			callNext = pickItemToTakeFromCampStorage;
-			pickItemToTakeFromStorage(itemStorage, 0, itemStorage.length, "storage");
-		}
-		
-		private function pickItemToTakeFromBagOfCosmos():void {
-			callNext = pickItemToTakeFromBagOfCosmos;
-			pickItemToTakeFromStorage2(gearStorage, 45, 57, "bag");
-		}
-		
-		private function pickItemToTakeFromSkyPoisonPearl1():void {
-			callNext = pickItemToTakeFromSkyPoisonPearl1;
-			pickItemToTakeFromStorage2(pearlStorage, 0, 14, "sky poison pearl (east section)");
-		}
-		
-		private function pickItemToTakeFromSkyPoisonPearl2():void {
-			callNext = pickItemToTakeFromSkyPoisonPearl2;
-			pickItemToTakeFromStorage2(pearlStorage, 14, 28, "sky poison pearl (south section)");
-		}
-		
-		private function pickItemToTakeFromSkyPoisonPearl3():void {
-			callNext = pickItemToTakeFromSkyPoisonPearl3;
-			pickItemToTakeFromStorage2(pearlStorage, 28, 42, "sky poison pearl (west section)");
-		}
-		
-		private function pickItemToTakeFromSkyPoisonPearl4():void {
-			callNext = pickItemToTakeFromSkyPoisonPearl4;
-			pickItemToTakeFromStorage2(pearlStorage, 42, 56, "sky poison pearl (north section)");
-		}
-		
-		private function pickItemToTakeFromSkyPoisonPearl5():void {
-			callNext = pickItemToTakeFromSkyPoisonPearl5;
-			pickItemToTakeFromStorage2(pearlStorage, 56, 70, "sky poison pearl (central section)");
-		}
-		
-		private function pickItemToTakeFromSkyPoisonPearl6():void {
-			callNext = pickItemToTakeFromSkyPoisonPearl6;
-			pickItemToTakeFromStorage2(pearlStorage, 70, 84, "sky poison pearl (above section)");
-		}
-		
-		private function pickItemToTakeFromSkyPoisonPearl7():void {
-			callNext = pickItemToTakeFromSkyPoisonPearl7;
-			pickItemToTakeFromStorage2(pearlStorage, 84, 98, "sky poison pearl (below section)");
-		}
-		
-		private function pickItemToTakeFromWarehouse1():void {
-			callNext = pickItemToTakeFromWarehouse1;
-			pickItemToTakeFromStorage3(gearStorage, 57, 69, "1st warehouse");
-		}
-		
-		private function pickItemToTakeFromWarehouse2():void {
-			callNext = pickItemToTakeFromWarehouse2;
-			pickItemToTakeFromStorage3(gearStorage, 78, 90, "2nd warehouse");
-		}
-		
-		private function pickItemToTakeFromGranary():void {
-			callNext = pickItemToTakeFromGranary;
-			pickItemToTakeFromStorage3(gearStorage, 69, 78, "granary");
-		}
-		
-		private function pickItemToTakeFromShieldRack():void {
-			callNext = pickItemToTakeFromShieldRack;
-			pickItemToTakeFromStorage(gearStorage, 36, 45, "rack");
-		}
-		
-		private function pickItemToTakeFromShieldRack2():void {
-			callNext = pickItemToTakeFromShieldRack2;
-			pickItemToTakeFromStorage3(gearStorage, 36, 45, "rack");
-		}
-		
-		private function pickItemToTakeFromArmorRack():void {
-			callNext = pickItemToTakeFromArmorRack;
-			pickItemToTakeFromStorage(gearStorage, 9, 18, "rack");
-		}
-		
-		private function pickItemToTakeFromArmorRack2():void {
-			callNext = pickItemToTakeFromArmorRack2;
-			pickItemToTakeFromStorage3(gearStorage, 9, 18, "rack");
-		}
-		
-		private function pickItemToTakeFromWeaponRack():void {
-			callNext = pickItemToTakeFromWeaponRack;
-			pickItemToTakeFromStorage(gearStorage, 0, 9, "rack");
-		}
-		
-		private function pickItemToTakeFromWeaponRack2():void {
-			callNext = pickItemToTakeFromWeaponRack2;
-			pickItemToTakeFromStorage3(gearStorage, 0, 9, "rack");
-		}
-		
-		public function pickItemToTakeFromJewelryBox():void {
-			callNext = pickItemToTakeFromJewelryBox;
-			pickItemToTakeFromStorage(gearStorage, 18, 27, "box");
-		}
-		
-		public function pickItemToTakeFromDresser():void {
-			callNext = pickItemToTakeFromDresser;
-			pickItemToTakeFromStorage(gearStorage, 27, 36, "dresser");
-		}
-		
-		private function pickItemToTakeFromStorage(storage:Array, startSlot:int, endSlot:int, text:String):void {
+		private function pickItemToTake(back:Function, storage:Array, range:Object, text:String):void{
+			callNext = curry(pickItemToTake,back,storage,range,text);
 			clearOutput(); //Selects an item from a gear slot. Rewritten so that it no longer needs to use numbered events
 			hideUpDown();
-			if (!itemAnyInStorage(storage, startSlot, endSlot)) { //If no items are left then return to the camp menu. Can only happen if the player removes the last item.
+			if (!itemAnyInStorage(storage, range.start, range.end)) { //If no items are left then return to the camp menu. Can only happen if the player removes the last item.
 				playerMenu();
 				return;
 			}
 			outputText("What " + text + " slot do you wish to take an item from?");
 			var button:int = 0;
 			menu();
-			for (var x:int = startSlot; x < endSlot; x++, button++) {
+			for (var x:int = range.start; x < range.end; x++, button++) {
 				if (storage[x].quantity > 0) addButton(button, (storage[x].itype.shortName + " x" + storage[x].quantity), createCallBackFunction2(pickFrom, storage, x));
 			}
-			addButton(14, "Back", stash);
-		}
-		
-		private function pickItemToTakeFromStorage2(storage:Array, startSlot:int, endSlot:int, text:String):void {
-			clearOutput(); //Selects an item from a gear slot. Rewritten so that it no longer needs to use numbered events
-			hideUpDown();
-			if (!itemAnyInStorage(storage, startSlot, endSlot)) { //If no items are left then return to the camp menu. Can only happen if the player removes the last item.
-				playerMenu();
-				return;
-			}
-			outputText("What " + text + " slot do you wish to take an item from?");
-			var button:int = 0;
-			menu();
-			for (var x:int = startSlot; x < endSlot; x++, button++) {
-				if (storage[x].quantity > 0) addButton(button, (storage[x].itype.shortName + " x" + storage[x].quantity), createCallBackFunction2(pickFrom, storage, x));
-			}
-			addButton(14, "Back", inventoryMenu);
-		}
-		
-		private function pickItemToTakeFromStorage3(storage:Array, startSlot:int, endSlot:int, text:String):void {
-			clearOutput(); //Selects an item from a gear slot. Rewritten so that it no longer needs to use numbered events
-			hideUpDown();
-			if (!itemAnyInStorage(storage, startSlot, endSlot)) { //If no items are left then return to the camp menu. Can only happen if the player removes the last item.
-				playerMenu();
-				return;
-			}
-			outputText("What " + text + " slot do you wish to take an item from?");
-			var button:int = 0;
-			menu();
-			for (var x:int = startSlot; x < endSlot; x++, button++) {
-				if (storage[x].quantity > 0) addButton(button, (storage[x].itype.shortName + " x" + storage[x].quantity), createCallBackFunction2(pickFrom, storage, x));
-			}
-			addButton(14, "Back", warehouse);
+			addButton(14, "Back", back);
 		}
 		
 		private function pickFrom(storage:Array, slotNum:int):void {
@@ -1028,48 +850,7 @@ if (!CoC.instance.inCombat && inDungeon == false && inRoomedDungeon == false && 
 			storage[slotNum].quantity--;
 			inventory.takeItem(itype, callNext, callNext, storage[slotNum]);
 		}
-		
-		//Pick items to place in storage
-		private function pickItemToPlaceInCampStorage():void { pickItemToPlaceInStorage(placeInCampStorage, allAcceptable, "storage containers", false); }
-		
-		private function pickItemToPlaceInBagOfCosmos():void { pickItemToPlaceInStorage2(placeInBagOfCosmos, allAcceptable, "bag of cosmos", false); }
-		
-		private function pickItemToPlaceInSkyPoisonPearl1():void { pickItemToPlaceInStorage2(placeInSkyPoisonPearl1, allAcceptable, "sky poison pearl (east section)", false); }
-		
-		private function pickItemToPlaceInSkyPoisonPearl2():void { pickItemToPlaceInStorage2(placeInSkyPoisonPearl2, allAcceptable, "sky poison pearl (south section)", false); }
-		
-		private function pickItemToPlaceInSkyPoisonPearl3():void { pickItemToPlaceInStorage2(placeInSkyPoisonPearl3, allAcceptable, "sky poison pearl (west section)", false); }
-		
-		private function pickItemToPlaceInSkyPoisonPearl4():void { pickItemToPlaceInStorage2(placeInSkyPoisonPearl4, allAcceptable, "sky poison pearl (north section)", false); }
-		
-		private function pickItemToPlaceInSkyPoisonPearl5():void { pickItemToPlaceInStorage2(placeInSkyPoisonPearl5, allAcceptable, "sky poison pearl (central section)", false); }
-		
-		private function pickItemToPlaceInSkyPoisonPearl6():void { pickItemToPlaceInStorage2(placeInSkyPoisonPearl6, allAcceptable, "sky poison pearl (above section)", false); }
-		
-		private function pickItemToPlaceInSkyPoisonPearl7():void { pickItemToPlaceInStorage2(placeInSkyPoisonPearl7, allAcceptable, "sky poison pearl (below section)", false); }
-		
-		private function pickItemToPlaceInWarehouse1():void { pickItemToPlaceInStorage3(placeInWarehouse1, allAcceptable, "1st warehouse", false); }
-		
-		private function pickItemToPlaceInWarehouse2():void { pickItemToPlaceInStorage3(placeInWarehouse2, allAcceptable, "2nd warehouse", false); }
-		
-		private function pickItemToPlaceInGranary():void { pickItemToPlaceInStorage3(placeInGranary, consumableAcceptable, "granary", true); }
-		
-		private function pickItemToPlaceInArmorRack():void { pickItemToPlaceInStorage(placeInArmorRack, armorAcceptable, "armor rack", true); }
-		
-		private function pickItemToPlaceInArmorRack2():void { pickItemToPlaceInStorage3(placeInArmorRack2, armorAcceptable, "armor rack", true); }
-		
-		private function pickItemToPlaceInWeaponRack():void { pickItemToPlaceInStorage(placeInWeaponRack, weaponAcceptable, "weapon rack", true); }
-		
-		private function pickItemToPlaceInWeaponRack2():void { pickItemToPlaceInStorage3(placeInWeaponRack2, weaponAcceptable, "weapon rack", true); }
-		
-		private function pickItemToPlaceInShieldRack():void { pickItemToPlaceInStorage(placeInShieldRack, shieldAcceptable, "shield rack", true); }
-		
-		private function pickItemToPlaceInShieldRack2():void { pickItemToPlaceInStorage3(placeInShieldRack2, shieldAcceptable, "shield rack", true); }
-		
-		public function pickItemToPlaceInJewelryBox():void { pickItemToPlaceInStorage(placeInJewelryBox, jewelryAcceptable, "jewelry box", true); }
-		
-		public function pickItemToPlaceInDresser():void { pickItemToPlaceInStorage(placeInDresser, undergarmentAcceptable, "dresser", true); }
-		
+
 		//Acceptable type of items
 		private function allAcceptable(itype:ItemType):Boolean { return true; }
 		
@@ -1086,155 +867,30 @@ if (!CoC.instance.inCombat && inDungeon == false && inRoomedDungeon == false && 
 		private function undergarmentAcceptable(itype:ItemType):Boolean { return itype is Undergarment; }
 		
 		//Place in storage functions
-		private function pickItemToPlaceInStorage(placeInStorageFunction:Function, typeAcceptableFunction:Function, text:String, showEmptyWarning:Boolean):void {
+		private function pickItemToPlace(back:Function,storage:Array,range:Object,text:String):void{
+			var next:Function = curry(pickItemToPlace,back,storage,range,text);
+			var showEmptyWarning:Boolean = false;
+			var acceptable:Function = allAcceptable;
+			if(range.acceptable != undefined){
+				acceptable = range.acceptable;
+				showEmptyWarning = true;
+			}
 			clearOutput(); //Selects an item to place in a gear slot. Rewritten so that it no longer needs to use numbered events
 			hideUpDown();
 			outputText("What item slot do you wish to empty into your " + text + "?");
 			menu();
 			var foundItem:Boolean = false;
 			for (var x:int = 0; x < 10; x++) {
-				if (player.itemSlots[x].unlocked && player.itemSlots[x].quantity > 0 && typeAcceptableFunction(player.itemSlots[x].itype)) {
-					addButton(x, (player.itemSlots[x].itype.shortName + " x" + player.itemSlots[x].quantity), placeInStorageFunction, x);
+				if (player.itemSlots[x].unlocked && player.itemSlots[x].quantity > 0 && acceptable(player.itemSlots[x].itype)) {
+					addButton(x, (player.itemSlots[x].itype.shortName + " x" + player.itemSlots[x].quantity), curry(placeIn,storage,range.start,range.end,x,next));
 					foundItem = true;
 				}
 			}
 			if (showEmptyWarning && !foundItem) outputText("\n<b>You have no appropriate items to put in this " + text + ".</b>");
-			addButton(14, "Back", stash);
+			addButton(14, "Back", back);
 		}
 		
-		private function pickItemToPlaceInStorage2(placeInStorageFunction:Function, typeAcceptableFunction:Function, text:String, showEmptyWarning:Boolean):void {
-			clearOutput(); //Selects an item to place in a gear slot. Rewritten so that it no longer needs to use numbered events
-			hideUpDown();
-			outputText("What item slot do you wish to empty into your " + text + "?");
-			menu();
-			var foundItem:Boolean = false;
-			for (var x:int = 0; x < 10; x++) {
-				if (player.itemSlots[x].unlocked && player.itemSlots[x].quantity > 0 && typeAcceptableFunction(player.itemSlots[x].itype)) {
-					addButton(x, (player.itemSlots[x].itype.shortName + " x" + player.itemSlots[x].quantity), placeInStorageFunction, x);
-					foundItem = true;
-				}
-			}
-			if (showEmptyWarning && !foundItem) outputText("\n<b>You have no appropriate items to put in this " + text + ".</b>");
-			addButton(14, "Back", inventoryMenu);
-		}
-		
-		private function pickItemToPlaceInStorage3(placeInStorageFunction:Function, typeAcceptableFunction:Function, text:String, showEmptyWarning:Boolean):void {
-			clearOutput(); //Selects an item to place in a gear slot. Rewritten so that it no longer needs to use numbered events
-			hideUpDown();
-			outputText("What item slot do you wish to empty into your " + text + "?");
-			menu();
-			var foundItem:Boolean = false;
-			for (var x:int = 0; x < 10; x++) {
-				if (player.itemSlots[x].unlocked && player.itemSlots[x].quantity > 0 && typeAcceptableFunction(player.itemSlots[x].itype)) {
-					addButton(x, (player.itemSlots[x].itype.shortName + " x" + player.itemSlots[x].quantity), placeInStorageFunction, x);
-					foundItem = true;
-				}
-			}
-			if (showEmptyWarning && !foundItem) outputText("\n<b>You have no appropriate items to put in this " + text + ".</b>");
-			addButton(14, "Back", warehouse);
-		}
-		
-		private function placeInCampStorage(slotNum:int):void {
-			placeIn(itemStorage, 0, itemStorage.length, slotNum);
-			doNext(pickItemToPlaceInCampStorage);
-		}
-		
-		private function placeInBagOfCosmos(slotNum:int):void {
-			placeIn(gearStorage, 45, 57, slotNum);
-			doNext(pickItemToPlaceInBagOfCosmos);
-		}
-		
-		private function placeInSkyPoisonPearl1(slotNum:int):void {
-			placeIn(pearlStorage, 0, 14, slotNum);
-			doNext(pickItemToPlaceInSkyPoisonPearl1);
-		}
-		
-		private function placeInSkyPoisonPearl2(slotNum:int):void {
-			placeIn(pearlStorage, 14, 28, slotNum);
-			doNext(pickItemToPlaceInSkyPoisonPearl2);
-		}
-		
-		private function placeInSkyPoisonPearl3(slotNum:int):void {
-			placeIn(pearlStorage, 28, 42, slotNum);
-			doNext(pickItemToPlaceInSkyPoisonPearl3);
-		}
-		
-		private function placeInSkyPoisonPearl4(slotNum:int):void {
-			placeIn(pearlStorage, 42, 56, slotNum);
-			doNext(pickItemToPlaceInSkyPoisonPearl4);
-		}
-		
-		private function placeInSkyPoisonPearl5(slotNum:int):void {
-			placeIn(pearlStorage, 56, 70, slotNum);
-			doNext(pickItemToPlaceInSkyPoisonPearl5);
-		}
-		
-		private function placeInSkyPoisonPearl6(slotNum:int):void {
-			placeIn(pearlStorage, 70, 84, slotNum);
-			doNext(pickItemToPlaceInSkyPoisonPearl6);
-		}
-		
-		private function placeInSkyPoisonPearl7(slotNum:int):void {
-			placeIn(pearlStorage, 84, 98, slotNum);
-			doNext(pickItemToPlaceInSkyPoisonPearl7);
-		}
-		
-		private function placeInWarehouse1(slotNum:int):void {
-			placeIn(gearStorage, 57, 69, slotNum);
-			doNext(pickItemToPlaceInWarehouse1);
-		}
-		
-		private function placeInWarehouse2(slotNum:int):void {
-			placeIn(gearStorage, 78, 90, slotNum);
-			doNext(pickItemToPlaceInWarehouse2);
-		}
-		
-		private function placeInGranary(slotNum:int):void {
-			placeIn(gearStorage, 69, 78, slotNum);
-			doNext(pickItemToPlaceInGranary);
-		}
-		
-		private function placeInArmorRack2(slotNum:int):void {
-			placeIn(gearStorage, 9, 18, slotNum);
-			doNext(pickItemToPlaceInArmorRack2);
-		}
-		
-		private function placeInArmorRack(slotNum:int):void {
-			placeIn(gearStorage, 9, 18, slotNum);
-			doNext(pickItemToPlaceInArmorRack);
-		}
-		
-		private function placeInWeaponRack2(slotNum:int):void {
-			placeIn(gearStorage, 0, 9, slotNum);
-			doNext(pickItemToPlaceInWeaponRack2);
-		}
-		
-		private function placeInWeaponRack(slotNum:int):void {
-			placeIn(gearStorage, 0, 9, slotNum);
-			doNext(pickItemToPlaceInWeaponRack);
-		}
-		
-		private function placeInShieldRack2(slotNum:int):void {
-			placeIn(gearStorage, 36, 45, slotNum);
-			doNext(pickItemToPlaceInShieldRack2);
-		}
-		
-		private function placeInShieldRack(slotNum:int):void {
-			placeIn(gearStorage, 36, 45, slotNum);
-			doNext(pickItemToPlaceInShieldRack);
-		}
-		
-		private function placeInJewelryBox(slotNum:int):void {
-			placeIn(gearStorage, 18, 27, slotNum);
-			doNext(pickItemToPlaceInJewelryBox);
-		}
-		
-		private function placeInDresser(slotNum:int):void {
-			placeIn(gearStorage, 27, 36, slotNum);
-			doNext(pickItemToPlaceInDresser);
-		}
-		
-		private function placeIn(storage:Array, startSlot:int, endSlot:int, slotNum:int):void {
+		private function placeIn(storage:Array, startSlot:int, endSlot:int, slotNum:int,next:Function):void {
 			clearOutput();
 			var x:int;
 			var temp:int;
@@ -1249,7 +905,10 @@ if (!CoC.instance.inCombat && inDungeon == false && inRoomedDungeon == false && 
 					outputText("You add " + temp + "x " + itype.shortName + " into storage slot " + num2Text(x + 1 - startSlot) + ".\n");
 					storage[x].quantity += temp;
 					qty -= temp;
-					if (qty == 0) return;
+					if (qty == 0){
+						doNext(next);
+						return;
+					}
 				}
 			}
 			for (x = startSlot; x < endSlot && qty > 0; x++) { //Find any empty slots and put the item(s) there
@@ -1257,11 +916,13 @@ if (!CoC.instance.inCombat && inDungeon == false && inRoomedDungeon == false && 
 					storage[x].setItemAndQty(itype, qty);
 					outputText("You place " + qty + "x " + itype.shortName + " into storage slot " + num2Text(x + 1 - startSlot) + ".\n");
 					qty = 0;
+					doNext(next);
 					return;
 				}
 			}
 			outputText("There is no room for " + (orig == qty ? "" : "the remaining ") + qty + "x " + itype.shortName + ".  You leave " + (qty > 1 ? "them" : "it") + " in your inventory.\n");
 			player.itemSlots[slotNum].setItemAndQty(itype, qty);
+			doNext(next);
 		}
 	}
 }
