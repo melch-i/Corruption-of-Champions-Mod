@@ -1,6 +1,10 @@
 package classes 
 {
-	/**
+import classes.display.BindingPane;
+
+import coc.view.CoCButton;
+
+/**
 	 * Defines a container to wrap a closure around a game function, associating the callable object
 	 * with a string name representation of the action undertaken, a description, and the associated
 	 * keyCodes that the action is triggered by.
@@ -19,6 +23,8 @@ package classes
 		private var _secondaryKey:int;
 		
 		private var _index:int;
+		private var _button:CoCButton;
+		private var _showHotkeys:Boolean = true;
 		
 		/**
 		 * Define a new bindable control method with "Unbound" keys.
@@ -73,6 +79,7 @@ package classes
 		public function set PrimaryKey(keyCode:int):void
 		{
 			_primaryKey = keyCode;
+			updateHotkeys();
 		}
 		
 		public function get SecondaryKey():int
@@ -83,11 +90,39 @@ package classes
 		public function set SecondaryKey(keyCode:int):void
 		{
 			_secondaryKey = keyCode;
+			updateHotkeys();
 		}
 		
 		public function get Index():int
 		{
 			return _index;
+		}
+		
+		
+		public function get button():CoCButton {
+			return _button;
+		}
+		public function set button(value:CoCButton):void {
+			if (_button != null) {
+				_button.key1text = "";
+				_button.key2text = "";
+			}
+			_button = value;
+			updateHotkeys();
+		}
+		
+		public function get showHotkeys():Boolean {
+			return _showHotkeys;
+		}
+		public function set showHotkeys(value:Boolean):void {
+			_showHotkeys = value;
+			updateHotkeys();
+		}
+		private function updateHotkeys():void {
+			if (_button != null) {
+				_button.key1text = _showHotkeys ? BindingPane.keyName(_primaryKey,"") : "";
+				_button.key2text = _showHotkeys ? BindingPane.keyName(_secondaryKey,"") : "";
+			}
 		}
 	}
 

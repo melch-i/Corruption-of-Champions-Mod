@@ -5016,10 +5016,10 @@ use namespace CoC;
 			if (this.gender > 0) minLib = 15;
 			else minLib = 10;
 	
-			if (this.armorName == "lusty maiden's armor" && this.findPerk(PerkLib.GargoylePure) >= 0) {
+			if (this.armorName == "lusty maiden's armor") {
 				if (minLib < 50) minLib = 50;
 			}
-			if (minLib < (minLust() * 2 / 3) && this.findPerk(PerkLib.GargoylePure) >= 0)
+			if (minLib < (minLust() * 2 / 3))
 			{
 				minLib = (minLust() * 2 / 3);
 			}
@@ -5825,8 +5825,8 @@ use namespace CoC;
 					maxInt += (70 * newGamePlusMod);
 				}
 				if (flags[kFLAGS.GARGOYLE_BODY_MATERIAL] == 2) {
-					maxTou += (70 * newGamePlusMod);
-					maxInt += (100 * newGamePlusMod);
+					maxStr += (70 * newGamePlusMod);
+					maxTou += (100 * newGamePlusMod);
 					maxInt += (90 * newGamePlusMod);
 				}
 			}

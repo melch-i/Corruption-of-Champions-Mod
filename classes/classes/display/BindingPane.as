@@ -32,7 +32,7 @@ import mx.core.ScrollControlBase;
 		private var _stage:Stage;
 		
 		// A lookup for integer keyCodes -> string representations
-		private var _keyDict:Dictionary;
+		private static  var _keyDict:Dictionary;
 		
 		private var _functions:Array;
 		private var _newFuncs:Array;
@@ -60,8 +60,6 @@ import mx.core.ScrollControlBase;
 			var blank:MovieClip = new MovieClip();
 			this.setStyle("upSkin", blank);
 			
-			// Build the keyCode->string lookup object
-			this.PopulateKeyboardDict();
 			
 			// Initiate a new container for content that will be placed in the scroll pane
 			_content = new Block({layoutConfig:{
@@ -164,8 +162,8 @@ import mx.core.ScrollControlBase;
 				var newLabel:BindDisplay = new BindDisplay(this.width-20);
 				newLabel.name = _functions[i].Name;
 				newLabel.htmlText = "<b>" + _functions[i].Name + ":</b>";
-				newLabel.buttons[0].labelText = _keyDict[_functions[i].PrimaryKey];
-				newLabel.buttons[1].labelText = _keyDict[_functions[i].SecondaryKey];
+				newLabel.buttons[0].labelText = keyName(_functions[i].PrimaryKey,"Unbound");
+				newLabel.buttons[1].labelText = keyName(_functions[i].SecondaryKey,"Unbound");
 				
 				// This is going to look crazy...
 				var genPrimaryCallback:Function = function(funcName:String, inMan:InputManager):Function
@@ -205,8 +203,8 @@ import mx.core.ScrollControlBase;
 			{
 				var currLabel:BindDisplay = _content.getElementByName(_functions[i].Name) as BindDisplay;
 				
-				currLabel.buttons[0].labelText = _keyDict[_functions[i].PrimaryKey];
-				currLabel.buttons[1].labelText = _keyDict[_functions[i].SecondaryKey];
+				currLabel.buttons[0].labelText = keyName(_functions[i].PrimaryKey,"Unbound");
+				currLabel.buttons[1].labelText = keyName(_functions[i].SecondaryKey,"Unbound");
 			}
 		}
 		
@@ -216,7 +214,7 @@ import mx.core.ScrollControlBase;
 		 * character.
 		 * TODO: Probably work out a good way of shortening some possibly long key names.
 		 */
-		private function PopulateKeyboardDict():void
+		private static function PopulateKeyboardDict():void
 		{
 		
 			var keyDescriptions:XML = describeType(Keyboard);
@@ -226,10 +224,21 @@ import mx.core.ScrollControlBase;
 			
 			for (var i:int = 0; i < keyNames.length(); i++)
 			{
-				_keyDict[Keyboard[keyNames[i]]] = keyNames[i];
+				_keyDict[Keyboard[keyNames[i]]] = humanize(keyNames[i].toString());
 			}
 			
-			_keyDict[ -1] = "Unbound";
+			//_keyDict[ -1] = "Unbound";
+		}
+		
+		private static function humanize(name:String):String {
+			if (name.indexOf("NUMBER_") == 0) name = name.slice("NUMBER_".length);
+			return name;
+		}
+		
+		// Build the keyCode->string lookup object
+		PopulateKeyboardDict();
+		public static function keyName(keyCode:int,defaultName:String):String {
+			return _keyDict[keyCode] || defaultName;
 		}
 		
 		public function set functions(funcs:Array):void

@@ -306,7 +306,8 @@ public class Block extends Sprite {
 		}
 		UIUtils.setProperties(e, options, {
 			defaultTextFormat: UIUtils.convertTextFormat,
-			background: UIUtils.convertColor
+			background: UIUtils.convertColor,
+			textColor: UIUtils.convertColor
 		});
 		if (!('mouseEnabled' in options) && options['type'] != 'input') e.mouseEnabled = false;
 		if (!('width' in options || 'height' in options || 'autoSize' in options)) {
