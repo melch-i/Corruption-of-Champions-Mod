@@ -83,12 +83,6 @@ addButton(14, "Back", CoC.instance.mainMenu.mainMenu);
 			outputText("Difficulty: <b><font color=\"#FF0000\">Xianxia</font></b>\n Opponent has 200% more HP and does more 100% damage.");
 		}
 
-		/*if(flags[kFLAGS.EASY_MODE_ENABLE_FLAG])
-		 outputText("Easy Mode: <font color=\"#008000\"><b>ON</b></font>\n Bad-ends can be ignored and combat is easier.");
-		 else
-		 outputText("Easy Mode: <font color=\"#800000\"><b>OFF</b></font>\n Bad-ends can ruin your game and combat is challenging.");
-
-		 outputText("\n\n");*/
 		outputText("\n\n");
 		if (flags[kFLAGS.SILLY_MODE_ENABLE_FLAG])
 			outputText("Silly Mode: <font color=\"#008000\"><b>ON</b></font>\n Crazy, nonsensical, and possibly hilarious things may occur.");
@@ -140,21 +134,22 @@ addButton(14, "Back", CoC.instance.mainMenu.mainMenu);
 		else
 			outputText("Automatic Leveling: <font color=\"#800000\"><b>OFF</b></font>\n Leveling up is done manually.");
 
+		var flag:Function = curry(toggleFlag,settingsScreenGameSettings);
 		menu();
 		addButton(0, "Toggle Debug", toggleDebug).hint("Turn on debug mode. Debug mode is intended for testing purposes but can be thought of as a cheat mode.  Items are infinite and combat is easy to escape from.  Weirdness and bugs are to be expected.");
 		if (player) addButton(1, "Difficulty", difficultySelectionMenu).hint("Adjust the game difficulty to make it easier or harder.");
 		//addButton(1, "Easy Mode", toggleEasyModeFlag).hint("Toggles easy mode.  Enemy damage is halved and bad-ends can be ignored.");
-		addButton(2, "Silly Toggle", toggleSillyFlag).hint("Toggles silly mode. Funny, crazy and nonsensical scenes may occur if enabled.");
-		addButton(3, "Low Standards", toggleStandards);
-		addButton(4, "Hyper Happy", toggleHyperHappy);
+		addButton(2, "Silly Toggle", flag, kFLAGS.SILLY_MODE_ENABLE_FLAG).hint("Toggles silly mode. Funny, crazy and nonsensical scenes may occur if enabled.");
+		addButton(3, "Low Standards", flag, kFLAGS.LOW_STANDARDS_FOR_ALL);
+		addButton(4, "Hyper Happy", flag, kFLAGS.HYPER_HAPPY);
 
-		addButton(5, "SFW Toggle", toggleSFW).hint("Toggles SFW Mode. If enabled, sex scenes are hidden and all adult materials are censored. \n\nCurrently under development, only disables most sex scenes. Soon, it'll disable rape scenes."); //Softcore Mode
-		addButton(6, "Auto level", toggleAutoLevel).hint("Toggles automatic leveling when you accumulate sufficient experience.");
-		addButton(7, "Stat Pts", toggleStatGain).hint("Toggles stat gain mode");
+		addButton(5, "SFW Toggle", flag, kFLAGS.SFW_MODE).hint("Toggles SFW Mode. If enabled, sex scenes are hidden and all adult materials are censored. \n\nCurrently under development, only disables most sex scenes. Soon, it'll disable rape scenes."); //Softcore Mode
+		addButton(6, "Auto level", flag, kFLAGS.AUTO_LEVEL).hint("Toggles automatic leveling when you accumulate sufficient experience.");
+		addButton(7, "Stat Pts", flag, kFLAGS.STAT_GAIN_MODE).hint("Toggles stat gain mode");
 		if (player) addButton(8, "Enable Surv", enableSurvivalPrompt).hint("Enable Survival mode. This will enable hunger. \n\n<font color=\"#080000\">Note: This is permanent and cannot be turned off!</font>");
 		if (player) addButton(9, "Enable Real", enableRealisticPrompt).hint("Enable Realistic mode. This will make the game a bit realistic. \n\n<font color=\"#080000\">Note: This is permanent and cannot be turned off! Do not turn this on if you have hyper endowments.</font>");
 		
-		addButton(10, "Eternal Holiday", toggleEternalHoliday).hint("Toggles etenral holiday mode. All holiday events like Eastern/X-mas and etc. would happen at any day of the year.");
+		addButton(10, "Eternal Holiday", flag,kFLAGS.ITS_EVERY_DAY).hint("Toggles etenral holiday mode. All holiday events like Eastern/X-mas and etc. would happen at any day of the year.");
 		addButton(11, "Fetishes", fetishSubMenu).hint("Toggle some of the weird fetishes such as watersports and worms.");
 
 		if (flags[kFLAGS.HUNGER_ENABLED] >= 0.5) {
@@ -231,70 +226,9 @@ addButton(14, "Back", CoC.instance.mainMenu.mainMenu);
 		settingsScreenGameSettings();
 	}
 
-//Not used anymore as there's difficulty settings.
-	/*public function toggleEasyModeFlag():void
-	 {
-	 //toggle easy mode
-	 if(flags[kFLAGS.EASY_MODE_ENABLE_FLAG] == 0)
-	 flags[kFLAGS.EASY_MODE_ENABLE_FLAG] = 1;
-	 else
-	 flags[kFLAGS.EASY_MODE_ENABLE_FLAG] = 0;
-	 mainView.showMenuButton(MainView.MENU_DATA);
-	 settingsScreenGameSettings();
-	 return;
-	 }*/
-
-	public function toggleSillyFlag():void {
-		//toggle silly mode
-		flags[kFLAGS.SILLY_MODE_ENABLE_FLAG] = !flags[kFLAGS.SILLY_MODE_ENABLE_FLAG];
-		settingsScreenGameSettings();
-	}
-
-	public function toggleStandards():void {
-		//toggle low standards
-		flags[kFLAGS.LOW_STANDARDS_FOR_ALL] = !flags[kFLAGS.LOW_STANDARDS_FOR_ALL];
-		settingsScreenGameSettings();
-	}
-
-	public function toggleHyperHappy():void {
-		//toggle hyper happy
-		flags[kFLAGS.HYPER_HAPPY] = !flags[kFLAGS.HYPER_HAPPY];
-		settingsScreenGameSettings();
-	}
-
-	public function toggleEternalHoliday():void {
-		//toggle eternal holiday
-		flags[kFLAGS.ITS_EVERY_DAY] = !flags[kFLAGS.ITS_EVERY_DAY];
-		settingsScreenGameSettings();
-	}
-
-	public function toggleSFW():void {
-		if (flags[kFLAGS.SFW_MODE] < 1) flags[kFLAGS.SFW_MODE] = 1;
-		else flags[kFLAGS.SFW_MODE] = 0;
-		settingsScreenGameSettings();
-	}
-
-	public function toggleWatersports():void {
-		if (flags[kFLAGS.WATERSPORTS_ENABLED] < 1) flags[kFLAGS.WATERSPORTS_ENABLED] = 1;
-		else flags[kFLAGS.WATERSPORTS_ENABLED] = 0;
-		settingsScreenGameSettings();
-	}
-
-	public function toggleAutoLevel():void {
-		if (flags[kFLAGS.AUTO_LEVEL] < 1) flags[kFLAGS.AUTO_LEVEL] = 1;
-		else flags[kFLAGS.AUTO_LEVEL] = 0;
-		settingsScreenGameSettings();
-	}
-
-	public function toggleStatGain():void {
-		if (flags[kFLAGS.STAT_GAIN_MODE] == CoC.STAT_GAIN_CLASSIC) flags[kFLAGS.STAT_GAIN_MODE] = CoC.STAT_GAIN_DAILY;
-		else flags[kFLAGS.STAT_GAIN_MODE] = CoC.STAT_GAIN_CLASSIC;
-		settingsScreenGameSettings();
-	}
-
 	public function fetishSubMenu():void {
 		menu();
-		addButton(0, "Watersports", toggleWatersports).hint("Toggles watersports scenes. (Scenes related to urine fetish)"); //Enables watersports.
+		addButton(0, "Watersports", toggleFlag, fetishSubMenu, kFLAGS.WATERSPORTS_ENABLED).hint("Toggles watersports scenes. (Scenes related to urine fetish)"); //Enables watersports.
 		if (player.hasStatusEffect(StatusEffects.WormsOn) || player.hasStatusEffect(StatusEffects.WormsOff)) addButton(1, "Worms", toggleWormsMenu).hint("Enable or disable worms. This will NOT cure infestation, if you have any.");
 		else addButtonDisabled(1, "Worms", "Find the sign depicting the worms in the mountains to unlock this.");
 		addButton(4, "Back", settingsScreenGameSettings);
@@ -372,15 +306,6 @@ addButton(14, "Back", CoC.instance.mainMenu.mainMenu);
 		clearOutput();
 		displayHeader("Interface Settings");
 
-		/*if (flags[kFLAGS.USE_OLD_INTERFACE] >= 1)
-		 {
-		 outputText("Stats Pane Style: <b>Old</b>\n Old stats panel will be used.");
-		 }
-		 else
-		 outputText("Stats Pane Style: <b>New</b>\n New stats panel will be used.");
-
-		 outputText("\n\n");*/
-
 		if (flags[kFLAGS.USE_OLD_FONT] >= 1) {
 			outputText("Font: <b>Lucida Sans Typewriter</b>\n");
 		}
@@ -448,21 +373,22 @@ addButton(14, "Back", CoC.instance.mainMenu.mainMenu);
 		} else {
 			outputText("<font color=\"#008000\"><b>ON</b></font>")
 		}
-
+		var flag:Function = curry(toggleFlag,settingsScreenInterfaceSettings);
+		var setting:Function = curry(toggleSetting,settingsScreenInterfaceSettings);
 		menu();
-		addButton(0, "Side Bar Font", toggleFont).hint("Toggle between old and new font for side bar.");
+		addButton(0, "Side Bar Font", flag, kFLAGS.USE_OLD_FONT).hint("Toggle between old and new font for side bar.");
 		addButton(1, "Main BG", menuMainBackground).hint("Choose a background for main game interface.");
 		addButton(2, "Text BG", menuTextBackground).hint("Choose a background for text.");
 		addButton(3, "Sprites", menuSpriteSelect).hint("Turn sprites on/off and change sprite style preference.");
 
-		addButton(5, "Toggle Images", toggleImages).hint("Enable or disable image pack.");
-		addButton(6, "Time Format", toggleTimeFormat).hint("Toggles between 12-hour and 24-hour format.");
-		addButton(7, "Measurements", toggleMeasurements).hint("Switch between imperial and metric measurements.  \n\nNOTE: Only applies to your appearance screen.");
+		addButton(5, "Toggle Images", flag,kFLAGS.IMAGEPACK_OFF).hint("Enable or disable image pack.");
+		addButton(6, "Time Format", flag, kFLAGS.USE_12_HOURS).hint("Toggles between 12-hour and 24-hour format.");
+		addButton(7, "Measurements", setting, Measurements,"useMetrics").hint("Switch between imperial and metric measurements.  \n\nNOTE: Only applies to your appearance screen.");
 		addButton(8, "Toggle CharView", toggleCharViewer).hint("Turn PC visualizer on/off.");
 		addButton(9, "Charview Style",toggleCharViewer,kFLAGS.CHARVIEW_STYLE).hint("Change between in text and sidebar display");
-		addButton(10, "QuickSave Confirm", toggleFlag, kFLAGS.DISABLE_QUICKSAVE_CONFIRM,settingsScreenInterfaceSettings);
-		addButton(11, "QuickLoad Confirm", toggleFlag, kFLAGS.DISABLE_QUICKLOAD_CONFIRM,settingsScreenInterfaceSettings);
-		addButton(12, "Hotkey Visibility", toggleHotkeyVisibility).hint("Show/hide hotkeys.");
+		addButton(10, "QuickSave Confirm", flag, kFLAGS.DISABLE_QUICKSAVE_CONFIRM);
+		addButton(11, "QuickLoad Confirm", flag, kFLAGS.DISABLE_QUICKLOAD_CONFIRM);
+		addButton(12, "Hotkey Visibility", setting,CoC.instance.inputManager,"showHotkeys").hint("Show/hide hotkeys.");
 		addButton(14, "Back", settingsScreenMain);
 	}
 	public function menuMainBackground():void {
@@ -494,18 +420,17 @@ addButton(14, "Back", CoC.instance.mainMenu.mainMenu);
 
 		addButton(14, "Back", settingsScreenInterfaceSettings);
 	}
-	private function toggleFlag(flag:int, returnTo:Function):void{
-		if(flags[flag] > 0){
-			flags[flag] = 0;
-		} else {
-			flags[flag] = 1;
-		}
+	private function toggleFlag(returnTo:Function, flag:int):void
+	{
+		flags[flag] ^= 1; // Bitwise XOR. Neat trick to toggle between 0 and 1
 		returnTo();
 	}
-	public function toggleHotkeyVisibility():void {
-		CoC.instance.inputManager.showHotkeys = !CoC.instance.inputManager.showHotkeys;
-		settingsScreenInterfaceSettings();
+	private function toggleSetting(returnTo:Function, obj:Object, setting:String):void
+	{
+		obj[setting] = !obj[setting];
+		returnTo();
 	}
+
 	public function toggleCharViewer(flag:int = kFLAGS.CHARVIEWER_ENABLED):void {
 		if (flags[flag] < 1) {
 			flags[flag] = 1;
@@ -513,18 +438,6 @@ addButton(14, "Back", CoC.instance.mainMenu.mainMenu);
 		} else {
 			flags[flag] = 0;
 		}
-		settingsScreenInterfaceSettings();
-	}
-
-	public function toggleInterface():void {
-		if (flags[kFLAGS.USE_OLD_INTERFACE] < 1) flags[kFLAGS.USE_OLD_INTERFACE] = 1;
-		else flags[kFLAGS.USE_OLD_INTERFACE] = 0;
-		settingsScreenInterfaceSettings();
-	}
-
-	public function toggleFont():void {
-		if (flags[kFLAGS.USE_OLD_FONT] < 1) flags[kFLAGS.USE_OLD_FONT] = 1;
-		else flags[kFLAGS.USE_OLD_FONT] = 0;
 		settingsScreenInterfaceSettings();
 	}
 
@@ -568,34 +481,6 @@ addButton(14, "Back", CoC.instance.mainMenu.mainMenu);
         else if (CoC.instance.stage.quality == StageQuality.MEDIUM) CoC.instance.stage.quality = StageQuality.HIGH;
         else if (CoC.instance.stage.quality == StageQuality.HIGH) CoC.instance.stage.quality = StageQuality.LOW;
         settingsScreenInterfaceSettings();
-	}
-
-	public function toggleImages():void {
-		if (flags[kFLAGS.IMAGEPACK_OFF] < 1) flags[kFLAGS.IMAGEPACK_OFF] = 1;
-		else flags[kFLAGS.IMAGEPACK_OFF] = 0;
-		settingsScreenInterfaceSettings();
-	}
-
-	public function toggleTimeFormat():void {
-		if (flags[kFLAGS.USE_12_HOURS] < 1) flags[kFLAGS.USE_12_HOURS] = 1;
-		else flags[kFLAGS.USE_12_HOURS] = 0;
-		settingsScreenInterfaceSettings();
-	}
-
-	/* [INTERMOD: Revamp
-	 public function toggleQuickLoadConfirm():void {
-	 flags[kFLAGS.DISABLE_QUICKLOAD_CONFIRM] ^= 1; // Bitwise XOR. Neat trick to toggle between 0 and 1
-	 settingsScreenInterfaceSettings();
-	 }
-
-	 public function toggleQuickSaveConfirm():void {
-	 flags[kFLAGS.DISABLE_QUICKSAVE_CONFIRM] ^= 1; // Bitwise XOR. Neat trick to toggle between 0 and 1
-	 settingsScreenInterfaceSettings();
-	 }
-	 */
-	public function toggleMeasurements():void {
-		Measurements.useMetrics = !Measurements.useMetrics;
-		settingsScreenInterfaceSettings();
 	}
 
 	//------------
