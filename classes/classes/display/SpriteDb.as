@@ -10,7 +10,7 @@ import flash.display.BitmapData;
 
 public class SpriteDb {
 	private static function get is8bit():Boolean {
-		return CoC.instance.flags[kFLAGS.SPRITE_STYLE] === 1;
+		return CoC.instance.flags[kFLAGS.SHOW_SPRITES_FLAG] === 1;
 	}
 
 	[Embed(source="../../../res/sprites/akbal.png")]

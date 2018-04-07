@@ -90,9 +90,9 @@ import coc.view.MainView;
 			//Hide perk boxes
 			mainView.hideComboBox();
 			//If first PC, track status of EZ mode and other such nonsense.
-			var silly:Boolean = flags[kFLAGS.SILLY_MODE_ENABLE_FLAG];
-			var easy:Boolean = flags[kFLAGS.EASY_MODE_ENABLE_FLAG];
-			var sprite:Boolean = flags[kFLAGS.SHOW_SPRITES_FLAG];
+//			var silly:Boolean = flags[kFLAGS.SILLY_MODE_ENABLE_FLAG];
+//			var easy:Boolean = flags[kFLAGS.EASY_MODE_ENABLE_FLAG];
+//			var sprite:Boolean = flags[kFLAGS.SHOW_SPRITES_FLAG];
 			mainView.setButtonText(0, "Newgame"); // b1Text.text = "Newgame";
 			//flags[kFLAGS.CUSTOM_PC_ENABLED] = 0;
 			
