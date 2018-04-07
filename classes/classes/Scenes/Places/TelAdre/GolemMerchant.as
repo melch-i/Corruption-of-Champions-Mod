@@ -30,7 +30,7 @@ package classes.Scenes.Places.TelAdre
 					sayLine(consumables.LG_SFRP,"It's quite useful item for all soul cultivators, this little pill can help you restore some of used up soulforce.")).hint("Low-grade Soulforce Recovery Pill.");
 			addButton(1, "Bag of Cosmos", buyItem,consumables.BAGOCOS,
 					sayLine(consumables.BAGOCOS,"It's quintessential item for all soul cultivators, this little bag can hold much more things inside that it own size.")).hint("Bag of Cosmos.");
-			if (player.findPerk(PerkLib.JobSoulCultivator) >= 0) {
+			if (player.hasPerk(PerkLib.JobSoulCultivator)) {
 				addButton(2, "Triple Thrust", buyItem,consumables.TRITMAN,
 						sayLine(consumables.TRITMAN,"It's manual for Triple Thrust, this simple technique allows to unleash three thrusts that will became stronger and stronger as you train your body and soul."),
 						"\n\nWherever you gonna try to go deeper into all that 'soulforce' stuff or not at least you now got something to begin.  Although seems even name of the manual mentioning thrusting seems like it could have been influenced by this realm nature...or it's just a coincidence.  "
@@ -44,7 +44,7 @@ package classes.Scenes.Places.TelAdre
 						"\n\nWherever you gonna try to go deeper into all that 'soulforce' stuff or not at least you now got something to begin.  Although seems name of the manual is odd but it makes you remember something...but what and from where you not certain.  "
 				).hint("Many Birds Manual.");
 			}
-			if (player.findPerk(PerkLib.SoulWarrior) >= 0) {
+			if (player.hasPerk(PerkLib.SoulWarrior)) {
 				addButton(5, "MGSFRecovPill", buyItem,consumables.MG_SFRP,
 						sayLine(consumables.MG_SFRP,"It's quite useful item for all cultivators at Soul Personage or above stage, this small pill can help you restore some of used up soulforce and it would be much more than the low-grade one.")).hint("Mid-grade Soulforce Recovery Pill.");
 				addButton(6, "Comet", buyItem,consumables.COMETMA,
@@ -56,7 +56,7 @@ package classes.Scenes.Places.TelAdre
 						"\n\nSeems like it's similar to healing spell soul skill and on top of that the one which isn't one time used one time healed but with enough soulforce could be kept active for very long period of time.  It should give you another edge during your crusade against demons.  Additionaly ability to healing from brink of death could prove to be usefull in future fights.  "
 				).hint("Violet Pupil Transformation Manual.");
 			}
-			if (player.findPerk(PerkLib.SoulOverlord) >= 0) {
+			if (player.hasPerk(PerkLib.SoulOverlord)) {
 				addButton(10, "HGSFRecovPill", buyItem,consumables.HG_SFRP,
 						sayLine(consumables.HG_SFRP,"It's quite useful item for all cultivators at Soul Personage or above stage, this small pill can help you restore some of used up soulforce and it would be much more than the low-grade one.")).hint("High-grade Soulforce Recovery Pill.");
 			}

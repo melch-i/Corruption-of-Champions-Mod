@@ -49,9 +49,9 @@ public class AbstractEquinum extends Consumable {
 		//Chancee to raise limit
 		if (rand(2) == 0) changeLimit++;
 		if (rand(3) == 0) changeLimit++;
-		if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-		if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-		if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+		if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+		if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+		if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 		//Used for random chances
 		//Set up output
 		clearOutput();
@@ -72,7 +72,7 @@ public class AbstractEquinum extends Consumable {
 				player.createStatusEffect(StatusEffects.HorseWarning, 0, 0, 0, 0);
 			}
 			//Bad End
-			if (rand(4) == 0 && player.hasStatusEffect(StatusEffects.HorseWarning) && player.findPerk(PerkLib.TransformationResistance) < 0) {
+			if (rand(4) == 0 && player.hasStatusEffect(StatusEffects.HorseWarning) && !player.hasPerk(PerkLib.TransformationResistance)) {
 				//Must have been warned first...
 				if (player.statusEffectv1(StatusEffects.HorseWarning) > 0) {
 					//If player has dicks check for horsedicks

@@ -18,8 +18,8 @@ public class Brigid extends Monster
 			//(Effect: Heavy Damage)
 			var damage:Number = Math.round((str + weaponAttack) - rand(player.tou) - player.armorDef);
 			if (damage < 30) damage = 30;
-			if (player.findPerk(PerkLib.FromTheFrozenWaste) >= 0 || player.findPerk(PerkLib.ColdAffinity) >= 0) damage *= 3;
-			if (player.findPerk(PerkLib.FireAffinity) >= 0) damage *= 0.3;
+			if (player.hasPerk(PerkLib.FromTheFrozenWaste) || player.hasPerk(PerkLib.ColdAffinity)) damage *= 3;
+			if (player.hasPerk(PerkLib.FireAffinity)) damage *= 0.3;
 			damage = Math.round(damage);
 			damage = player.takeMagicDamage(damage, true);
 		}
@@ -30,7 +30,7 @@ public class Brigid extends Monster
 			//(Effect: Stagger/Stun)
 			var damage:Number = 5;
 			damage = player.takePhysDamage(damage, true);
-			if(player.findPerk(PerkLib.Resolute) >= 0) outputText("  Of course, your resolute posture prevents her from accomplishing much.");
+			if(player.hasPerk(PerkLib.Resolute)) outputText("  Of course, your resolute posture prevents her from accomplishing much.");
 			else player.createStatusEffect(StatusEffects.Stunned,0,0,0,0);
 		}
 

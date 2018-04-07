@@ -189,7 +189,7 @@ CoC.instance.saves.saveGame(player.slotName);
 		//Purifying Murble
 		if(player.cor < 50 && !campCorruptJojo() && !amilyScene.amilyCorrupt() && !vapulaSlave() 
 			&& flags[kFLAGS.MARBLE_PURIFICATION_STAGE] == 0 && flags[kFLAGS.MARBLE_COUNTUP_TO_PURIFYING] >= 200
-			&& player.findPerk(PerkLib.MarblesMilk) < 0)
+			&& !player.hasPerk(PerkLib.MarblesMilk))
 		{
 			hideMenus();
 			marblePurification.BLUHBLUH();
@@ -853,12 +853,12 @@ CoC.instance.saves.saveGame(player.slotName);
 	var canFap:Boolean = !player.hasStatusEffect(StatusEffects.Dysfunction) && (flags[kFLAGS.UNABLE_TO_MASTURBATE_BECAUSE_CENTAUR] == 0 && !player.isTaur());
 	if (player.lust >= 30) {
 		addButton(11, "Masturbate", SceneLib.masturbation.masturbateMenu);
-		if ((((player.findPerk(PerkLib.HistoryReligious) >= 0 || player.findPerk(PerkLib.PastLifeReligious) >= 0) && player.cor <= 66) || (player.findPerk(PerkLib.Enlightened) >= 0 && player.cor < 10)) && !(player.hasStatusEffect(StatusEffects.Exgartuan) && player.statusEffectv2(StatusEffects.Exgartuan) == 0) || flags[kFLAGS.SFW_MODE] >= 1) addButton(11, "Meditate", SceneLib.masturbation.masturbateMenu);
+		if ((((player.hasPerk(PerkLib.HistoryReligious) || player.hasPerk(PerkLib.PastLifeReligious)) && player.cor <= 66) || (player.hasPerk(PerkLib.Enlightened) && player.cor < 10)) && !(player.hasStatusEffect(StatusEffects.Exgartuan) && player.statusEffectv2(StatusEffects.Exgartuan) == 0) || flags[kFLAGS.SFW_MODE] >= 1) addButton(11, "Meditate", SceneLib.masturbation.masturbateMenu);
 	}
 	addButton(12, "Wait", doWait).hint("Wait for four hours.\n\nShift-click to wait until the night comes.");
 	if (player.fatigue > 40 || player.HP / player.maxHP() <= .9) addButton(12, "Rest", rest).hint("Rest for four hours.\n\nShift-click to rest until fully healed or night comes.");
 	if (model.time.hours >= 21 || model.time.hours < 6) addButton(12, "Sleep", doSleep).hint("Turn yourself in for the night.");
-//	if (flags[kFLAGS.EVANGELINE_FOLLOWER] >= 1 && player.findPerk(PerkLib.EzekielBlessing) < 0) addButton(13, "Remov. Curse", EzekielCurseQuickFix).hint("Quick fix for Ezekiel curse when ezekiel fruit was lost.");
+//	if (flags[kFLAGS.EVANGELINE_FOLLOWER] >= 1 && !player.hasPerk(PerkLib.EzekielBlessing)) addButton(13, "Remov. Curse", EzekielCurseQuickFix).hint("Quick fix for Ezekiel curse when ezekiel fruit was lost.");
 	if(debug || CONFIG::debug){addButton(13, "Debug Menu", SceneLib.debugMenu.accessDebugMenu);}
 	//Remove buttons according to conditions.
 	if (model.time.hours >= 21 || model.time.hours < 6) {
@@ -1965,11 +1965,11 @@ public function rest():void {
 		fatRecovery += 2;
 		hpRecovery += 5;
 	}
-	if (player.findPerk(PerkLib.Medicine) >= 0) hpRecovery *= 1.5;
-	if (player.findPerk(PerkLib.SpeedyRecovery) >= 0) fatRecovery += 2;
-	if (player.findPerk(PerkLib.SpeedyRecuperation) >= 0) fatRecovery += 4;
-	if (player.findPerk(PerkLib.SpeedyRejuvenation) >= 0) fatRecovery += 8;
-	if (player.findPerk(PerkLib.ControlledBreath) >= 0) fatRecovery *= 1.1;
+	if (player.hasPerk(PerkLib.Medicine)) hpRecovery *= 1.5;
+	if (player.hasPerk(PerkLib.SpeedyRecovery)) fatRecovery += 2;
+	if (player.hasPerk(PerkLib.SpeedyRecuperation)) fatRecovery += 4;
+	if (player.hasPerk(PerkLib.SpeedyRejuvenation)) fatRecovery += 8;
+	if (player.hasPerk(PerkLib.ControlledBreath)) fatRecovery *= 1.1;
 	if (player.hasStatusEffect(StatusEffects.BathedInHotSpring)) fatRecovery *= 1.2;
 	if (flags[kFLAGS.AYANE_FOLLOWER] >= 2) fatRecovery *= 3;
 	if (flags[kFLAGS.CAMP_BUILT_CABIN] > 0 && flags[kFLAGS.CAMP_CABIN_FURNITURE_BED] > 0 && !prison.inPrison && !ingnam.inIngnam)
@@ -2062,10 +2062,10 @@ public function doWait():void {
 	var fatRecovery:Number = 2;
 	if (player.level >= 24) fatRecovery += 1;
 	if (player.level >= 42) fatRecovery += 1;
-	if (player.findPerk(PerkLib.SpeedyRecovery) >= 0) fatRecovery += 1;
-	if (player.findPerk(PerkLib.SpeedyRecuperation) >= 0) fatRecovery += 2;
-	if (player.findPerk(PerkLib.SpeedyRejuvenation) >= 0) fatRecovery += 4;
-	if (player.findPerk(PerkLib.ControlledBreath) >= 0) fatRecovery *= 1.1;
+	if (player.hasPerk(PerkLib.SpeedyRecovery)) fatRecovery += 1;
+	if (player.hasPerk(PerkLib.SpeedyRecuperation)) fatRecovery += 2;
+	if (player.hasPerk(PerkLib.SpeedyRejuvenation)) fatRecovery += 4;
+	if (player.hasPerk(PerkLib.ControlledBreath)) fatRecovery *= 1.1;
 	if (player.hasStatusEffect(StatusEffects.BathedInHotSpring)) fatRecovery *= 1.2;
 	if (timeQ == 0) {
 		timeQ = 4;
@@ -2303,14 +2303,14 @@ public function sleepRecovery(display:Boolean = false):void {
 	{
 		multiplier += 0.5;
 	}
-	if (player.findPerk(PerkLib.SpeedyRecovery) >= 0) fatRecovery += 5;
-	if (player.findPerk(PerkLib.SpeedyRecuperation) >= 0) fatRecovery += 10;
-	if (player.findPerk(PerkLib.SpeedyRejuvenation) >= 0) fatRecovery += 20;
-	if (player.findPerk(PerkLib.ControlledBreath) >= 0) fatRecovery *= 1.1;
+	if (player.hasPerk(PerkLib.SpeedyRecovery)) fatRecovery += 5;
+	if (player.hasPerk(PerkLib.SpeedyRecuperation)) fatRecovery += 10;
+	if (player.hasPerk(PerkLib.SpeedyRejuvenation)) fatRecovery += 20;
+	if (player.hasPerk(PerkLib.ControlledBreath)) fatRecovery *= 1.1;
 	if (player.hasStatusEffect(StatusEffects.BathedInHotSpring)) fatRecovery *= 1.2;
 	if (flags[kFLAGS.AYANE_FOLLOWER] >= 2) fatRecovery *= 3;
-	if (player.findPerk(PerkLib.RecuperationSleep) >= 0) multiplier += 1;
-	if (player.findPerk(PerkLib.RejuvenationSleep) >= 0) multiplier += 2;
+	if (player.hasPerk(PerkLib.RecuperationSleep)) multiplier += 1;
+	if (player.hasPerk(PerkLib.RejuvenationSleep)) multiplier += 2;
 	if (flags[kFLAGS.HUNGER_ENABLED] > 0)
 	{
 		if (player.hunger < 25)
@@ -2713,7 +2713,7 @@ private function buildCampWall():void {
 	fatigueAmount -= player.str / 5;
 	fatigueAmount -= player.tou / 10;
 	fatigueAmount -= player.spe / 10;
-	if (player.findPerk(PerkLib.IronMan) >= 0) fatigueAmount -= 20;
+	if (player.hasPerk(PerkLib.IronMan)) fatigueAmount -= 20;
 	fatigueAmount /= (helpers + 1);
 	if (fatigueAmount < 15) fatigueAmount = 15;
 	fatigue(fatigueAmount);
@@ -2795,7 +2795,7 @@ private function buildCampGate():void {
 	fatigueAmount -= player.str / 5;
 	fatigueAmount -= player.tou / 10;
 	fatigueAmount -= player.spe / 10;
-	if (player.findPerk(PerkLib.IronMan) >= 0) fatigueAmount -= 20;
+	if (player.hasPerk(PerkLib.IronMan)) fatigueAmount -= 20;
 	fatigueAmount /= (helpers + 1);
 	if (fatigueAmount < 15) fatigueAmount = 15;
 	fatigue(fatigueAmount);
@@ -2918,7 +2918,7 @@ private function ascendForReal():void {
 	if (flags[kFLAGS.MARBLE_PURIFIED] > 0) performancePoints += 2;
 	if (flags[kFLAGS.MINERVA_PURIFICATION_PROGRESS] >= 10) performancePoints += 2;
 	if (flags[kFLAGS.URTA_QUEST_STATUS] > 0) performancePoints += 2;
-	if (player.findPerk(PerkLib.Enlightened) >= 0) performancePoints += 1;
+	if (player.hasPerk(PerkLib.Enlightened)) performancePoints += 1;
 	if (flags[kFLAGS.CORRUPTED_MARAE_KILLED] > 0 || flags[kFLAGS.PURE_MARAE_ENDGAME] >= 2) performancePoints += 1;
 	//Camp structures
 	if (flags[kFLAGS.CAMP_BUILT_CABIN] > 0) performancePoints += 10;
@@ -2978,22 +2978,22 @@ public function setLevelButton(allowAutoLevelTransition:Boolean):Boolean {
 			var soulforce:int = 0;
 			var wrath:int = 0;
 			var lust:int = 0;
-			if (player.findPerk(PerkLib.AscensionUnlockedPotential) >= 0) {
+			if (player.hasPerk(PerkLib.AscensionUnlockedPotential)) {
 				hp += 20;
 				fatigue += 6;
 				mana += 12;
 			}
-			if (player.findPerk(PerkLib.AscensionUnlockedPotential2ndStage) >= 0) {
+			if (player.hasPerk(PerkLib.AscensionUnlockedPotential2ndStage)) {
 				lust += 2;
 				wrath += 2;
 				soulforce += 6;
 			}
-			if (player.findPerk(PerkLib.UnlockBody) >= 0) hp += 15;
-			if (player.findPerk(PerkLib.UnlockMind) >= 0) mana += 10;
-			if (player.findPerk(PerkLib.UnlockId) >= 0) lust += 1;
-			if (player.findPerk(PerkLib.UnlockBody2ndStage) >= 0) fatigue += 5;
-			if (player.findPerk(PerkLib.UnlockMind2ndStage) >= 0) soulforce += 5;
-			if (player.findPerk(PerkLib.UnlockId2ndStage) >= 0) wrath += 1;
+			if (player.hasPerk(PerkLib.UnlockBody)) hp += 15;
+			if (player.hasPerk(PerkLib.UnlockMind)) mana += 10;
+			if (player.hasPerk(PerkLib.UnlockId)) lust += 1;
+			if (player.hasPerk(PerkLib.UnlockBody2ndStage)) fatigue += 5;
+			if (player.hasPerk(PerkLib.UnlockMind2ndStage)) soulforce += 5;
+			if (player.hasPerk(PerkLib.UnlockId2ndStage)) wrath += 1;
 			mainView.levelButton.toolTipText = "Level up to increase your maximum HP by " + hp + ", maximum Fatigue by " + fatigue + ", maximum Mana by " + mana + ", maximum Soulforce by " + soulforce + ", maximum Wrath by " + wrath + " and maximum Lust by " + lust + "; gain 5 attribute points and 1 perk points.";
 			if (flags[kFLAGS.AUTO_LEVEL] > 0 && allowAutoLevelTransition) {
                 CoC.instance.playerInfo.levelUpGo();
@@ -3207,7 +3207,7 @@ private function promptSaveUpdate():void {
 	}
 	if (saveVersion() == 10) {
 		saveVersion(11);
-		if (player.findPerk(PerkLib.JobMonk) >= 0) {
+		if (player.hasPerk(PerkLib.JobMonk)) {
 			player.removePerk(PerkLib.JobMonk);
 			player.createPerk(PerkLib.JobBrawler, 0, 0, 0, 0);
 		}
@@ -3227,14 +3227,14 @@ private function promptSaveUpdate():void {
 	if (saveVersion() == 12) {
 		saveVersion(13);
 		outputText("And we do it again since game got more shiny then before so we would fast give additional polishing to your save. No worry it will be now +20% more shiny ;)");
-		if (player.findPerk(PerkLib.JobSoulCultivator) < 0) player.perkPoints += 1;
+		if (!player.hasPerk(PerkLib.JobSoulCultivator)) player.perkPoints += 1;
 		var refund:int = 0;
 		if (player.perkv1(PerkLib.AscensionTolerance) > 10) {
 			refund += player.perkv1(PerkLib.AscensionTolerance) - 10;
 			player.setPerkValue(PerkLib.AscensionTolerance,1,10);
 			player.ascensionPerkPoints += refund;
 		}
-		if (player.findPerk(PerkLib.JobArcher) >= 0) {
+		if (player.hasPerk(PerkLib.JobArcher)) {
 			player.removePerk(PerkLib.JobArcher);
 			player.createPerk(PerkLib.JobRanger, 0, 0, 0, 0);
 		}
@@ -3244,7 +3244,7 @@ private function promptSaveUpdate():void {
 	if (saveVersion() == 13) {
 		saveVersion(14);
 		outputText("Attention! All Munchkins Kindly leave thou gate sixty and nine. As replacements there will be whole legion of All-Rounders commin in five, four, ...........aaaand their here ^^");
-		if (player.findPerk(PerkLib.DeityJobMunchkin) >= 0) {
+		if (player.hasPerk(PerkLib.DeityJobMunchkin)) {
 			player.removePerk(PerkLib.DeityJobMunchkin);
 			player.createPerk(PerkLib.JobAllRounder, 0, 0, 0, 0);
 		}
@@ -3266,27 +3266,27 @@ private function promptSaveUpdate():void {
 			statScreenRefresh();
 			player.setWeaponRange(weaponsrange.BOWKELT);
 		}
-		if (player.findPerk(PerkLib.ImprovedEndurance) >= 0) {
+		if (player.hasPerk(PerkLib.ImprovedEndurance)) {
 			player.removePerk(PerkLib.ImprovedEndurance);
 			player.createPerk(PerkLib.BasicEndurance, 0, 0, 0, 0);
 		}
-		if (player.findPerk(PerkLib.AdvancedEndurance) >= 0) {
+		if (player.hasPerk(PerkLib.AdvancedEndurance)) {
 			player.removePerk(PerkLib.AdvancedEndurance);
 			player.createPerk(PerkLib.HalfStepToImprovedEndurance, 0, 0, 0, 0);
 		}
-		if (player.findPerk(PerkLib.SuperiorEndurance) >= 0) {
+		if (player.hasPerk(PerkLib.SuperiorEndurance)) {
 			player.removePerk(PerkLib.SuperiorEndurance);
 			player.createPerk(PerkLib.ImprovedEndurance, 0, 0, 0, 0);
 		}
-		if (player.findPerk(PerkLib.ImprovedSelfControl) >= 0) {
+		if (player.hasPerk(PerkLib.ImprovedSelfControl)) {
 			player.removePerk(PerkLib.ImprovedSelfControl);
 			player.createPerk(PerkLib.BasicSelfControl, 0, 0, 0, 0);
 		}
-		if (player.findPerk(PerkLib.AdvancedSelfControl) >= 0) {
+		if (player.hasPerk(PerkLib.AdvancedSelfControl)) {
 			player.removePerk(PerkLib.AdvancedSelfControl);
 			player.createPerk(PerkLib.HalfStepToImprovedSelfControl, 0, 0, 0, 0);
 		}
-		if (player.findPerk(PerkLib.SuperiorSelfControl) >= 0) {
+		if (player.hasPerk(PerkLib.SuperiorSelfControl)) {
 			player.removePerk(PerkLib.SuperiorSelfControl);
 			player.createPerk(PerkLib.ImprovedSelfControl, 0, 0, 0, 0);
 		}
@@ -3296,9 +3296,9 @@ private function promptSaveUpdate():void {
 	if (saveVersion() == 15) {
 		saveVersion(16);
 		outputText("Time for...save upgrade ^^");
-		if (player.findPerk(PerkLib.EnlightenedNinetails) >= 0) player.createPerk(PerkLib.EnlightenedKitsune, 0, 0, 0, 0);
-		if (player.findPerk(PerkLib.CorruptedNinetails) >= 0) player.createPerk(PerkLib.CorruptedKitsune, 0, 0, 0, 0);
-		if (player.findPerk(PerkLib.Manyshot) >= 0 && player.findPerk(PerkLib.TripleStrike) < 0) {
+		if (player.hasPerk(PerkLib.EnlightenedNinetails)) player.createPerk(PerkLib.EnlightenedKitsune, 0, 0, 0, 0);
+		if (player.hasPerk(PerkLib.CorruptedNinetails)) player.createPerk(PerkLib.CorruptedKitsune, 0, 0, 0, 0);
+		if (player.hasPerk(PerkLib.Manyshot) && !player.hasPerk(PerkLib.TripleStrike)) {
 			player.removePerk(PerkLib.Manyshot);
 			player.createPerk(PerkLib.TripleStrike, 0, 0, 0, 0);
 		}
@@ -3316,7 +3316,7 @@ private function promptSaveUpdate():void {
 			player.removeKeyItem("Divine Bark Plates");
 			flags[kFLAGS.PURE_MARAE_ENDGAME] = 1;
 		}
-		if (player.findPerk(PerkLib.JobSoulArcher) >= 0) {
+		if (player.hasPerk(PerkLib.JobSoulArcher)) {
 			player.removePerk(PerkLib.JobSoulArcher);
 			player.perkPoints = player.perkPoints + 1;
 		}
@@ -3343,15 +3343,15 @@ private function promptSaveUpdate():void {
 		if (player.faceType == Face.SNAKE_FANGS) {
 			if (player.tailRecharge < 5) player.tailRecharge = 5;
 		}
-		if (player.findPerk(PerkLib.Cupid) >= 0) {
+		if (player.hasPerk(PerkLib.Cupid)) {
 			player.removePerk(PerkLib.Cupid);
 			player.perkPoints = player.perkPoints + 1;
 		}
-		if (player.findPerk(PerkLib.ElementalArrows) >= 0) {
+		if (player.hasPerk(PerkLib.ElementalArrows)) {
 			player.removePerk(PerkLib.ElementalArrows);
 			player.perkPoints = player.perkPoints + 1;
 		}
-		if (player.findPerk(PerkLib.JobArcaneArcher) >= 0) {
+		if (player.hasPerk(PerkLib.JobArcaneArcher)) {
 			player.removePerk(PerkLib.JobArcaneArcher);
 			player.createPerk(PerkLib.JobHunter, 0, 0, 0, 0);
 		}
@@ -3361,11 +3361,11 @@ private function promptSaveUpdate():void {
 	if (saveVersion() == 18) {
 		saveVersion(19);
 		outputText("Small reorganizing of the house interiors...err I mean mod interiors so not mind it if you not have Soul Cultivator PC. I heard you all likes colors, colors on EVERYTHING ever your belowed lil PC's eyes. So go ahead and pick them. Not much change from addition to appearance screen this small detail. But in future if scene will allow there will be addition of parser for using eyes color too.");
-		if (player.findPerk(PerkLib.SoulExalt) >= 0) {
+		if (player.hasPerk(PerkLib.SoulExalt)) {
 			player.removePerk(PerkLib.SoulExalt);
 			player.createPerk(PerkLib.SoulScholar, 0, 0, 0, 0);
 		}
-		if (player.findPerk(PerkLib.SoulOverlord) >= 0) {
+		if (player.hasPerk(PerkLib.SoulOverlord)) {
 			player.removePerk(PerkLib.SoulOverlord);
 			player.createPerk(PerkLib.SoulElder, 0, 0, 0, 0);
 		}
@@ -3376,7 +3376,7 @@ private function promptSaveUpdate():void {
 	}
 	if (saveVersion() == 19) {
 		saveVersion(20);
-		if (player.findPerk(PerkLib.JobBarbarian) >= 0) {
+		if (player.hasPerk(PerkLib.JobBarbarian)) {
 			player.removePerk(PerkLib.JobBarbarian);
 			player.createPerk(PerkLib.JobSwordsman, 0, 0, 0, 0);
 		}

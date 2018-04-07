@@ -50,117 +50,117 @@ use namespace CoC;
 		
 		public function accessSoulforceMenu():void {
 			clearOutput();
-			if (player.level >= 1 && player.findPerk(PerkLib.JobSoulCultivator) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 0) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 2 && player.findPerk(PerkLib.JobSoulCultivator) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 1) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 4 && player.findPerk(PerkLib.JobSoulCultivator) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 2) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 6 && player.findPerk(PerkLib.SoulApprentice) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 3) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 8 && player.findPerk(PerkLib.SoulApprentice) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 4) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 10 && player.findPerk(PerkLib.SoulApprentice) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 5) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 12 && player.findPerk(PerkLib.SoulPersonage) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 6) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 14 && player.findPerk(PerkLib.SoulPersonage) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 7) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 16 && player.findPerk(PerkLib.SoulPersonage) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 8) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 18 && player.findPerk(PerkLib.SoulWarrior) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 9) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 20 && player.findPerk(PerkLib.SoulWarrior) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 10) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 22 && player.findPerk(PerkLib.SoulWarrior) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 11) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 24 && player.findPerk(PerkLib.SoulSprite) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 12) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 26 && player.findPerk(PerkLib.SoulSprite) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 13) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 28 && player.findPerk(PerkLib.SoulSprite) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 14) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 30 && player.findPerk(PerkLib.SoulScholar) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 15) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 32 && player.findPerk(PerkLib.SoulScholar) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 16) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 34 && player.findPerk(PerkLib.SoulScholar) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 17) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 36 && player.findPerk(PerkLib.SoulElder) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 18) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 38 && player.findPerk(PerkLib.SoulElder) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 19) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 40 && player.findPerk(PerkLib.SoulElder) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 20) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 42 && player.findPerk(PerkLib.SoulExalt) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 21) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 44 && player.findPerk(PerkLib.SoulExalt) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 22) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 46 && player.findPerk(PerkLib.SoulExalt) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 23) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 48 && player.findPerk(PerkLib.SoulOverlord) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 24) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 50 && player.findPerk(PerkLib.SoulOverlord) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 25) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 52 && player.findPerk(PerkLib.SoulOverlord) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 26) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 54 && player.findPerk(PerkLib.SoulTyrant) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 27) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 56 && player.findPerk(PerkLib.SoulTyrant) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 28) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 58 && player.findPerk(PerkLib.SoulTyrant) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 29) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 60 && player.findPerk(PerkLib.SoulKing) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 30) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 62 && player.findPerk(PerkLib.SoulKing) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 31) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 64 && player.findPerk(PerkLib.SoulKing) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 32) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 66 && player.findPerk(PerkLib.SoulEmperor) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 33) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 68 && player.findPerk(PerkLib.SoulEmperor) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 34) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 70 && player.findPerk(PerkLib.SoulEmperor) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 35) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 72 && player.findPerk(PerkLib.SoulAncestor) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 36) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 74 && player.findPerk(PerkLib.SoulAncestor) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 37) flags[kFLAGS.SOUL_CULTIVATION] += 1;
-			if (player.level >= 76 && player.findPerk(PerkLib.SoulAncestor) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 38) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 1 && player.hasPerk(PerkLib.JobSoulCultivator) && flags[kFLAGS.SOUL_CULTIVATION] == 0) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 2 && player.hasPerk(PerkLib.JobSoulCultivator) && flags[kFLAGS.SOUL_CULTIVATION] == 1) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 4 && player.hasPerk(PerkLib.JobSoulCultivator) && flags[kFLAGS.SOUL_CULTIVATION] == 2) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 6 && player.hasPerk(PerkLib.SoulApprentice) && flags[kFLAGS.SOUL_CULTIVATION] == 3) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 8 && player.hasPerk(PerkLib.SoulApprentice) && flags[kFLAGS.SOUL_CULTIVATION] == 4) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 10 && player.hasPerk(PerkLib.SoulApprentice) && flags[kFLAGS.SOUL_CULTIVATION] == 5) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 12 && player.hasPerk(PerkLib.SoulPersonage) && flags[kFLAGS.SOUL_CULTIVATION] == 6) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 14 && player.hasPerk(PerkLib.SoulPersonage) && flags[kFLAGS.SOUL_CULTIVATION] == 7) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 16 && player.hasPerk(PerkLib.SoulPersonage) && flags[kFLAGS.SOUL_CULTIVATION] == 8) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 18 && player.hasPerk(PerkLib.SoulWarrior) && flags[kFLAGS.SOUL_CULTIVATION] == 9) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 20 && player.hasPerk(PerkLib.SoulWarrior) && flags[kFLAGS.SOUL_CULTIVATION] == 10) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 22 && player.hasPerk(PerkLib.SoulWarrior) && flags[kFLAGS.SOUL_CULTIVATION] == 11) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 24 && player.hasPerk(PerkLib.SoulSprite) && flags[kFLAGS.SOUL_CULTIVATION] == 12) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 26 && player.hasPerk(PerkLib.SoulSprite) && flags[kFLAGS.SOUL_CULTIVATION] == 13) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 28 && player.hasPerk(PerkLib.SoulSprite) && flags[kFLAGS.SOUL_CULTIVATION] == 14) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 30 && player.hasPerk(PerkLib.SoulScholar) && flags[kFLAGS.SOUL_CULTIVATION] == 15) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 32 && player.hasPerk(PerkLib.SoulScholar) && flags[kFLAGS.SOUL_CULTIVATION] == 16) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 34 && player.hasPerk(PerkLib.SoulScholar) && flags[kFLAGS.SOUL_CULTIVATION] == 17) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 36 && player.hasPerk(PerkLib.SoulElder) && flags[kFLAGS.SOUL_CULTIVATION] == 18) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 38 && player.hasPerk(PerkLib.SoulElder) && flags[kFLAGS.SOUL_CULTIVATION] == 19) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 40 && player.hasPerk(PerkLib.SoulElder) && flags[kFLAGS.SOUL_CULTIVATION] == 20) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 42 && player.hasPerk(PerkLib.SoulExalt) && flags[kFLAGS.SOUL_CULTIVATION] == 21) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 44 && player.hasPerk(PerkLib.SoulExalt) && flags[kFLAGS.SOUL_CULTIVATION] == 22) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 46 && player.hasPerk(PerkLib.SoulExalt) && flags[kFLAGS.SOUL_CULTIVATION] == 23) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 48 && player.hasPerk(PerkLib.SoulOverlord) && flags[kFLAGS.SOUL_CULTIVATION] == 24) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 50 && player.hasPerk(PerkLib.SoulOverlord) && flags[kFLAGS.SOUL_CULTIVATION] == 25) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 52 && player.hasPerk(PerkLib.SoulOverlord) && flags[kFLAGS.SOUL_CULTIVATION] == 26) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 54 && player.hasPerk(PerkLib.SoulTyrant) && flags[kFLAGS.SOUL_CULTIVATION] == 27) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 56 && player.hasPerk(PerkLib.SoulTyrant) && flags[kFLAGS.SOUL_CULTIVATION] == 28) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 58 && player.hasPerk(PerkLib.SoulTyrant) && flags[kFLAGS.SOUL_CULTIVATION] == 29) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 60 && player.hasPerk(PerkLib.SoulKing) && flags[kFLAGS.SOUL_CULTIVATION] == 30) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 62 && player.hasPerk(PerkLib.SoulKing) && flags[kFLAGS.SOUL_CULTIVATION] == 31) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 64 && player.hasPerk(PerkLib.SoulKing) && flags[kFLAGS.SOUL_CULTIVATION] == 32) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 66 && player.hasPerk(PerkLib.SoulEmperor) && flags[kFLAGS.SOUL_CULTIVATION] == 33) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 68 && player.hasPerk(PerkLib.SoulEmperor) && flags[kFLAGS.SOUL_CULTIVATION] == 34) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 70 && player.hasPerk(PerkLib.SoulEmperor) && flags[kFLAGS.SOUL_CULTIVATION] == 35) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 72 && player.hasPerk(PerkLib.SoulAncestor) && flags[kFLAGS.SOUL_CULTIVATION] == 36) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 74 && player.hasPerk(PerkLib.SoulAncestor) && flags[kFLAGS.SOUL_CULTIVATION] == 37) flags[kFLAGS.SOUL_CULTIVATION] += 1;
+			if (player.level >= 76 && player.hasPerk(PerkLib.SoulAncestor) && flags[kFLAGS.SOUL_CULTIVATION] == 38) flags[kFLAGS.SOUL_CULTIVATION] += 1;
 			outputText("<b>Cultivation stage:</b> ");
-			if (player.findPerk(PerkLib.SoulAncestor) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 39)
+			if (player.hasPerk(PerkLib.SoulAncestor) && flags[kFLAGS.SOUL_CULTIVATION] == 39)
 				outputText("Late Soul Ancestor\n");
-			else if (player.findPerk(PerkLib.SoulAncestor) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 38)
+			else if (player.hasPerk(PerkLib.SoulAncestor) && flags[kFLAGS.SOUL_CULTIVATION] == 38)
 				outputText("Middle Soul Ancestor\n");
-			else if (player.findPerk(PerkLib.SoulAncestor) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 37)
+			else if (player.hasPerk(PerkLib.SoulAncestor) && flags[kFLAGS.SOUL_CULTIVATION] == 37)
 				outputText("Early Soul Ancestor\n");
-			else if (player.findPerk(PerkLib.SoulEmperor) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 36)
+			else if (player.hasPerk(PerkLib.SoulEmperor) && flags[kFLAGS.SOUL_CULTIVATION] == 36)
 				outputText("Late Soul Emperor\n");
-			else if (player.findPerk(PerkLib.SoulEmperor) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 35)
+			else if (player.hasPerk(PerkLib.SoulEmperor) && flags[kFLAGS.SOUL_CULTIVATION] == 35)
 				outputText("Middle Soul Emperor\n");
-			else if (player.findPerk(PerkLib.SoulEmperor) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 34)
+			else if (player.hasPerk(PerkLib.SoulEmperor) && flags[kFLAGS.SOUL_CULTIVATION] == 34)
 				outputText("Early Soul Emperor\n");
-			else if (player.findPerk(PerkLib.SoulKing) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 33)
+			else if (player.hasPerk(PerkLib.SoulKing) && flags[kFLAGS.SOUL_CULTIVATION] == 33)
 				outputText("Late Soul King\n");
-			else if (player.findPerk(PerkLib.SoulKing) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 32)
+			else if (player.hasPerk(PerkLib.SoulKing) && flags[kFLAGS.SOUL_CULTIVATION] == 32)
 				outputText("Middle Soul King\n");
-			else if (player.findPerk(PerkLib.SoulKing) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 31)
+			else if (player.hasPerk(PerkLib.SoulKing) && flags[kFLAGS.SOUL_CULTIVATION] == 31)
 				outputText("Early Soul King\n");
-			else if (player.findPerk(PerkLib.SoulTyrant) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 30)
+			else if (player.hasPerk(PerkLib.SoulTyrant) && flags[kFLAGS.SOUL_CULTIVATION] == 30)
 				outputText("Late Soul Tyrant\n");
-			else if (player.findPerk(PerkLib.SoulTyrant) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 29)
+			else if (player.hasPerk(PerkLib.SoulTyrant) && flags[kFLAGS.SOUL_CULTIVATION] == 29)
 				outputText("Middle Soul Tyrant\n");
-			else if (player.findPerk(PerkLib.SoulTyrant) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 28)
+			else if (player.hasPerk(PerkLib.SoulTyrant) && flags[kFLAGS.SOUL_CULTIVATION] == 28)
 				outputText("Early Soul Tyrant\n");
-			else if (player.findPerk(PerkLib.SoulOverlord) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 27)
+			else if (player.hasPerk(PerkLib.SoulOverlord) && flags[kFLAGS.SOUL_CULTIVATION] == 27)
 				outputText("Late Soul Overlord\n");
-			else if (player.findPerk(PerkLib.SoulOverlord) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 26)
+			else if (player.hasPerk(PerkLib.SoulOverlord) && flags[kFLAGS.SOUL_CULTIVATION] == 26)
 				outputText("Middle Soul Overlord\n");
-			else if (player.findPerk(PerkLib.SoulOverlord) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 25)
+			else if (player.hasPerk(PerkLib.SoulOverlord) && flags[kFLAGS.SOUL_CULTIVATION] == 25)
 				outputText("Early Soul Overlord\n");
-			else if (player.findPerk(PerkLib.SoulExalt) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 24)
+			else if (player.hasPerk(PerkLib.SoulExalt) && flags[kFLAGS.SOUL_CULTIVATION] == 24)
 				outputText("Late Soul Exalt\n");
-			else if (player.findPerk(PerkLib.SoulExalt) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 23)
+			else if (player.hasPerk(PerkLib.SoulExalt) && flags[kFLAGS.SOUL_CULTIVATION] == 23)
 				outputText("Middle Soul Exalt\n");
-			else if (player.findPerk(PerkLib.SoulExalt) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 22)
+			else if (player.hasPerk(PerkLib.SoulExalt) && flags[kFLAGS.SOUL_CULTIVATION] == 22)
 				outputText("Early Soul Exalt\n");
-			else if (player.findPerk(PerkLib.SoulElder) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 21)
+			else if (player.hasPerk(PerkLib.SoulElder) && flags[kFLAGS.SOUL_CULTIVATION] == 21)
 				outputText("Late Soul Elder\n");
-			else if (player.findPerk(PerkLib.SoulElder) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 20)
+			else if (player.hasPerk(PerkLib.SoulElder) && flags[kFLAGS.SOUL_CULTIVATION] == 20)
 				outputText("Middle Soul Elder\n");
-			else if (player.findPerk(PerkLib.SoulElder) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 19)
+			else if (player.hasPerk(PerkLib.SoulElder) && flags[kFLAGS.SOUL_CULTIVATION] == 19)
 				outputText("Early Soul Elder\n");
-			else if (player.findPerk(PerkLib.SoulScholar) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 18)
+			else if (player.hasPerk(PerkLib.SoulScholar) && flags[kFLAGS.SOUL_CULTIVATION] == 18)
 				outputText("Late Soul Scholar\n");
-			else if (player.findPerk(PerkLib.SoulScholar) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 17)
+			else if (player.hasPerk(PerkLib.SoulScholar) && flags[kFLAGS.SOUL_CULTIVATION] == 17)
 				outputText("Middle Soul Scholar\n");
-			else if (player.findPerk(PerkLib.SoulScholar) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 16)
+			else if (player.hasPerk(PerkLib.SoulScholar) && flags[kFLAGS.SOUL_CULTIVATION] == 16)
 				outputText("Early Soul Scholar\n");
-			else if (player.findPerk(PerkLib.SoulSprite) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 15)
+			else if (player.hasPerk(PerkLib.SoulSprite) && flags[kFLAGS.SOUL_CULTIVATION] == 15)
 				outputText("Late Soul Sprite\n");
-			else if (player.findPerk(PerkLib.SoulSprite) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 14)
+			else if (player.hasPerk(PerkLib.SoulSprite) && flags[kFLAGS.SOUL_CULTIVATION] == 14)
 				outputText("Middle Soul Sprite\n");
-			else if (player.findPerk(PerkLib.SoulSprite) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 13)
+			else if (player.hasPerk(PerkLib.SoulSprite) && flags[kFLAGS.SOUL_CULTIVATION] == 13)
 				outputText("Early Soul Sprite\n");
-			else if (player.findPerk(PerkLib.SoulWarrior) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 12)
+			else if (player.hasPerk(PerkLib.SoulWarrior) && flags[kFLAGS.SOUL_CULTIVATION] == 12)
 				outputText("Late Soul Warrior\n");
-			else if (player.findPerk(PerkLib.SoulWarrior) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 11)
+			else if (player.hasPerk(PerkLib.SoulWarrior) && flags[kFLAGS.SOUL_CULTIVATION] == 11)
 				outputText("Middle Soul Warrior\n");
-			else if (player.findPerk(PerkLib.SoulWarrior) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 10)
+			else if (player.hasPerk(PerkLib.SoulWarrior) && flags[kFLAGS.SOUL_CULTIVATION] == 10)
 				outputText("Early Soul Warrior\n");
-			else if (player.findPerk(PerkLib.SoulPersonage) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 9)
+			else if (player.hasPerk(PerkLib.SoulPersonage) && flags[kFLAGS.SOUL_CULTIVATION] == 9)
 				outputText("Late Soul Personage\n");
-			else if (player.findPerk(PerkLib.SoulPersonage) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 8)
+			else if (player.hasPerk(PerkLib.SoulPersonage) && flags[kFLAGS.SOUL_CULTIVATION] == 8)
 				outputText("Middle Soul Personage\n");
-			else if (player.findPerk(PerkLib.SoulPersonage) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 7)
+			else if (player.hasPerk(PerkLib.SoulPersonage) && flags[kFLAGS.SOUL_CULTIVATION] == 7)
 				outputText("Early Soul Personage\n");
-			else if (player.findPerk(PerkLib.SoulApprentice) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 6)
+			else if (player.hasPerk(PerkLib.SoulApprentice) && flags[kFLAGS.SOUL_CULTIVATION] == 6)
 				outputText("Late Soul Apprentice\n");
-			else if (player.findPerk(PerkLib.SoulApprentice) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 5)
+			else if (player.hasPerk(PerkLib.SoulApprentice) && flags[kFLAGS.SOUL_CULTIVATION] == 5)
 				outputText("Middle Soul Apprentice\n");
-			else if (player.findPerk(PerkLib.SoulApprentice) >= 0 && flags[kFLAGS.SOUL_CULTIVATION] == 4)
+			else if (player.hasPerk(PerkLib.SoulApprentice) && flags[kFLAGS.SOUL_CULTIVATION] == 4)
 				outputText("Early Soul Apprentice\n");
 			else
 				outputText("Mortal\n");
@@ -174,20 +174,20 @@ use namespace CoC;
 			else
 				outputText(flags[kFLAGS.SOULFORCE_USED_FOR_BREAKTHROUGH] + " / wartość liczbowa\n");
 		*/	var dailySoulforceUsesLimit:Number = 0;
-			if (player.findPerk(PerkLib.JobSoulCultivator) >= 0) dailySoulforceUsesLimit++;
-			if (player.findPerk(PerkLib.SoulWarrior) >= 0) dailySoulforceUsesLimit++;
-			if (player.findPerk(PerkLib.SoulElder) >= 0) dailySoulforceUsesLimit++;
-			if (player.findPerk(PerkLib.SoulTyrant) >= 0) dailySoulforceUsesLimit++;
-			if (player.findPerk(PerkLib.SoulAncestor) >= 0) dailySoulforceUsesLimit++;//dodawać kolejne co 3 level-e
+			if (player.hasPerk(PerkLib.JobSoulCultivator)) dailySoulforceUsesLimit++;
+			if (player.hasPerk(PerkLib.SoulWarrior)) dailySoulforceUsesLimit++;
+			if (player.hasPerk(PerkLib.SoulElder)) dailySoulforceUsesLimit++;
+			if (player.hasPerk(PerkLib.SoulTyrant)) dailySoulforceUsesLimit++;
+			if (player.hasPerk(PerkLib.SoulAncestor)) dailySoulforceUsesLimit++;//dodawać kolejne co 3 level-e
 			menu();
 			addButton(0, "Cultivate", SoulforceRegeneration).hint("Spend some time on restoring some of the used soulforce.");
 			if (flags[kFLAGS.DAILY_SOULFORCE_USE_LIMIT] < dailySoulforceUsesLimit) addButton(1, "Self-sustain", SelfSustain).hint("Spend some soulforce on suppresing hunger for a while."); //zamiana soulforce na satiety w stosunku 1:5
 			if (flags[kFLAGS.DAILY_SOULFORCE_USE_LIMIT] < dailySoulforceUsesLimit) addButton(2, "Repres. Lust", RepresLust).hint("Spend some soulforce on calming your sexual urges."); //używanie soulforce do zmniejszania lust w stosunku 1:2
 			if (flags[kFLAGS.DAILY_SOULFORCE_USE_LIMIT] < dailySoulforceUsesLimit) addButton(4, "Adj. Corr.", CorruptionAndSoulforce).hint("Spend some soulforce on affecting your current corruption."); //używanie soulforce do zmniejszania corruption w stosunku 1:100 a zdobywanie corruption w stosunku 1:50
-			if (flags[kFLAGS.DAILY_SOULFORCE_USE_LIMIT] < dailySoulforceUsesLimit && player.findPerk(PerkLib.SoulApprentice) >= 0) addButton(3, "Mana", ManaAndSoulforce).hint("Convert some soulforce into mana or vice versa."); //używanie soulforce do zmniejszania fatigue w stosunku 1:1 a fatigue do soulforce 1:2, używalne nawet w walce też ale z wiekszym kosztem przeliczania czyli 1:2 i 1:4
+			if (flags[kFLAGS.DAILY_SOULFORCE_USE_LIMIT] < dailySoulforceUsesLimit && player.hasPerk(PerkLib.SoulApprentice)) addButton(3, "Mana", ManaAndSoulforce).hint("Convert some soulforce into mana or vice versa."); //używanie soulforce do zmniejszania fatigue w stosunku 1:1 a fatigue do soulforce 1:2, używalne nawet w walce też ale z wiekszym kosztem przeliczania czyli 1:2 i 1:4
 			//addButton(5, "Upgrade", UpgradeItems).hint("."); //ulepszanie itemów
-			if (player.findPerk(PerkLib.Metamorph) >= 0) addButton(6, "Metamorf", SceneLib.metamorph.accessMetamorphMenu).hint("Use your soulforce to mold freely your body.");//używanie metamorfowania z użyciem soulforce
-			if (player.findPerk(PerkLib.SoulSense) >= 0) addButton(7, "Soul Sense", SoulSense).hint("Use your soul sense to trigger specific encounter."); //używanie divine sense aby znaleść określone event encounters: Tamani (lvl 6+), Tamani daugthers (lvl 6+), Kitsune mansion (lvl 12+), Izumi (lvl 18/24+), itp.
+			if (player.hasPerk(PerkLib.Metamorph)) addButton(6, "Metamorf", SceneLib.metamorph.accessMetamorphMenu).hint("Use your soulforce to mold freely your body.");//używanie metamorfowania z użyciem soulforce
+			if (player.hasPerk(PerkLib.SoulSense)) addButton(7, "Soul Sense", SoulSense).hint("Use your soul sense to trigger specific encounter."); //używanie divine sense aby znaleść określone event encounters: Tamani (lvl 6+), Tamani daugthers (lvl 6+), Kitsune mansion (lvl 12+), Izumi (lvl 18/24+), itp.
 			addButton(10, "Cheats", SoulforceCheats).hint("Well as title saying those are cheats ^^");//block this option at each public version
 			addButton(14, "Back", playerMenu);
 		}//w lini 28 w oOnLoadVariables zmian wprowadzić i w lini conditionalConverters w folderze parser zmian dot. wraith wprowadzić, zablokować perki soul tyrant i dual wield w momencie robienia release version
@@ -335,8 +335,8 @@ public function FightNightmare():void {
 			addButton(6, "Add EXP 2", AddEXP2).hint("Add 1000 EXP.");
 			addButton(7, "Add EXP 3", AddEXP3).hint("Add 10000 EXP.");
 			addButton(8, "Add EXP 4", AddEXP4).hint("Add 100000 EXP.");
-			if (player.findPerk(PerkLib.HclassHeavenTribulationSurvivor) < 0) addButton(9, "Trib Perks", TribulationPerks).hint("Add 2 Tribulation perks.");
-			if (player.findPerk(PerkLib.SoulAncestor) < 0) addButton(11, "10-12 St.", Stage10to12SoulPerks).hint("Add all soul cultivator related perks for stages 10-12 of cultivation.");
+			if (!player.hasPerk(PerkLib.HclassHeavenTribulationSurvivor)) addButton(9, "Trib Perks", TribulationPerks).hint("Add 2 Tribulation perks.");
+			if (!player.hasPerk(PerkLib.SoulAncestor)) addButton(11, "10-12 St.", Stage10to12SoulPerks).hint("Add all soul cultivator related perks for stages 10-12 of cultivation.");
 			if (player.level < 150) addButton(12, "Add 1 LvL", AddLvL1).hint("Add 1 Level (with stat and perk points).");
 			if (player.level < 140) addButton(13, "Add 10 LvL's", AddLvL2).hint("Add 10 Levels (with stat and perk points).");
 			addButton(14, "Back", SoulforceCheats);
@@ -636,34 +636,34 @@ public function FightNightmare():void {
 			doNext(FasterOrInstantCampNPCRecruitment);
 		}
 		public function TribulationPerks():void {
-			if (player.findPerk(PerkLib.HclassHeavenTribulationSurvivor) < 0) {
+			if (!player.hasPerk(PerkLib.HclassHeavenTribulationSurvivor)) {
 				player.createPerk(PerkLib.HclassHeavenTribulationSurvivor, 0, 0, 0, 0);
 				outputText("\n\n<b>(Gained Perk: H class Heaven Tribulation Survivor!)</b>");
 			}
-			if (player.findPerk(PerkLib.GclassHeavenTribulationSurvivor) < 0) {
+			if (!player.hasPerk(PerkLib.GclassHeavenTribulationSurvivor)) {
 				player.createPerk(PerkLib.GclassHeavenTribulationSurvivor, 0, 0, 0, 0);
 				outputText("\n\n<b>(Gained Perk: G class Heaven Tribulation Survivor!)</b>");
 			}
 			doNext(SoulforceCheats);
 		}
 		public function Stage10to12SoulPerks():void {
-			if (player.findPerk(PerkLib.FleshBodyOverlordStage) < 0) {
+			if (!player.hasPerk(PerkLib.FleshBodyOverlordStage)) {
 				player.createPerk(PerkLib.FleshBodyOverlordStage, 0, 0, 0, 0);
 				outputText("\n\n<b>(Gained Perk: Flesh Body Overlord Stage!)</b>");
 			}
-			if (player.findPerk(PerkLib.DaoistOverlordStage) < 0) {
+			if (!player.hasPerk(PerkLib.DaoistOverlordStage)) {
 				player.createPerk(PerkLib.DaoistOverlordStage, 0, 0, 0, 0);
 				outputText("\n\n<b>(Gained Perk: Daoist Overlord Stage!)</b>");
 			}
-			if (player.findPerk(PerkLib.SoulKing) < 0) {
+			if (!player.hasPerk(PerkLib.SoulKing)) {
 				player.createPerk(PerkLib.SoulKing, 0, 0, 0, 0);
 				outputText("\n\n<b>(Gained Perk: Soul King!)</b>");
 			}
-			if (player.findPerk(PerkLib.SoulEmperor) < 0) {
+			if (!player.hasPerk(PerkLib.SoulEmperor)) {
 				player.createPerk(PerkLib.SoulEmperor, 0, 0, 0, 0);
 				outputText("\n\n<b>(Gained Perk: Soul Emperor!)</b>");
 			}
-			if (player.findPerk(PerkLib.SoulAncestor) < 0) {
+			if (!player.hasPerk(PerkLib.SoulAncestor)) {
 				player.createPerk(PerkLib.SoulAncestor, 0, 0, 0, 0);
 				outputText("\n\n<b>(Gained Perk: Soul Ancestor!)</b>");
 			}
@@ -705,7 +705,7 @@ public function FightNightmare():void {
 			addButton(10, "White B.", AddWhiteBook).hint("Add 1 White Book.");
 			addButton(11, "Black B.", AddBlackBook).hint("Add 1 Black Book.");
 			addButton(12, "Grey B.", AddGreyBook).hint("Add 1 Grey Book.");
-			if (player.findPerk(PerkLib.ElementalConjurerMindAndBodySacrifice) < 0) addButton(13, "E.Pearls", AddThePearls).hint("Add all three Elemental Pearls.");
+			if (!player.hasPerk(PerkLib.ElementalConjurerMindAndBodySacrifice)) addButton(13, "E.Pearls", AddThePearls).hint("Add all three Elemental Pearls.");
 			addButton(14, "Back", SoulforceCheats);
 		}
 		public function MaterialMenu():void {
@@ -1435,24 +1435,24 @@ public function FightNightmare():void {
 			if (player.kitsuneScore() >= 6) soulforceamountrestored += 20;
 			if (player.kitsuneScore() >= 12 && player.tailType == 13 && player.tailCount == 9) soulforceamountrestored += 80;
 			if (player.unicornScore() >= 5) soulforceamountrestored += 10;
-			if (player.findPerk(PerkLib.DaoistCultivator) >= 0) soulforceamountrestored += 16;
-			if (player.findPerk(PerkLib.DaoistApprenticeStage) >= 0) soulforceamountrestored += 20;
-			if (player.findPerk(PerkLib.DaoistWarriorStage) >= 0) soulforceamountrestored += 20;
-			if (player.findPerk(PerkLib.DaoistElderStage) >= 0) soulforceamountrestored += 20;
-			if (player.findPerk(PerkLib.DaoistOverlordStage) >= 0) soulforceamountrestored += 20;
-			if (player.findPerk(PerkLib.DaoistKingStage) >= 0) soulforceamountrestored += 20;
-			if (player.findPerk(PerkLib.SoulApprentice) >= 0) soulforceamountrestored += 16;
-			if (player.findPerk(PerkLib.SoulPersonage) >= 0) soulforceamountrestored += 16;
-			if (player.findPerk(PerkLib.SoulWarrior) >= 0) soulforceamountrestored += 16;
-			if (player.findPerk(PerkLib.SoulSprite) >= 0) soulforceamountrestored += 16;
-			if (player.findPerk(PerkLib.SoulScholar) >= 0) soulforceamountrestored += 16;
-			if (player.findPerk(PerkLib.SoulElder) >= 0) soulforceamountrestored += 16;
-			if (player.findPerk(PerkLib.SoulExalt) >= 0) soulforceamountrestored += 16;
-			if (player.findPerk(PerkLib.SoulOverlord) >= 0) soulforceamountrestored += 16;
-			if (player.findPerk(PerkLib.SoulTyrant) >= 0) soulforceamountrestored += 16;
-			if (player.findPerk(PerkLib.SoulKing) >= 0) soulforceamountrestored += 16;
-			if (player.findPerk(PerkLib.SoulEmperor) >= 0) soulforceamountrestored += 16;
-			if (player.findPerk(PerkLib.SoulAncestor) >= 0) soulforceamountrestored += 16;
+			if (player.hasPerk(PerkLib.DaoistCultivator)) soulforceamountrestored += 16;
+			if (player.hasPerk(PerkLib.DaoistApprenticeStage)) soulforceamountrestored += 20;
+			if (player.hasPerk(PerkLib.DaoistWarriorStage)) soulforceamountrestored += 20;
+			if (player.hasPerk(PerkLib.DaoistElderStage)) soulforceamountrestored += 20;
+			if (player.hasPerk(PerkLib.DaoistOverlordStage)) soulforceamountrestored += 20;
+			if (player.hasPerk(PerkLib.DaoistKingStage)) soulforceamountrestored += 20;
+			if (player.hasPerk(PerkLib.SoulApprentice)) soulforceamountrestored += 16;
+			if (player.hasPerk(PerkLib.SoulPersonage)) soulforceamountrestored += 16;
+			if (player.hasPerk(PerkLib.SoulWarrior)) soulforceamountrestored += 16;
+			if (player.hasPerk(PerkLib.SoulSprite)) soulforceamountrestored += 16;
+			if (player.hasPerk(PerkLib.SoulScholar)) soulforceamountrestored += 16;
+			if (player.hasPerk(PerkLib.SoulElder)) soulforceamountrestored += 16;
+			if (player.hasPerk(PerkLib.SoulExalt)) soulforceamountrestored += 16;
+			if (player.hasPerk(PerkLib.SoulOverlord)) soulforceamountrestored += 16;
+			if (player.hasPerk(PerkLib.SoulTyrant)) soulforceamountrestored += 16;
+			if (player.hasPerk(PerkLib.SoulKing)) soulforceamountrestored += 16;
+			if (player.hasPerk(PerkLib.SoulEmperor)) soulforceamountrestored += 16;
+			if (player.hasPerk(PerkLib.SoulAncestor)) soulforceamountrestored += 16;
 			player.soulforce += soulforceamountrestored;
 			if (player.weaponName == "training soul axe" || player.weaponRangeName == "training soul crossbow" || player.shieldName == "training soul buckler" || player.armorName == "training soul armor") {
 				var bonussoulforce:Number = 0;
@@ -1482,24 +1482,24 @@ public function FightNightmare():void {
 			if (player.kitsuneScore() >= 6) soulforceamountrestored += 60;
 			if (player.kitsuneScore() >= 12 && player.tailType == 13 && player.tailCount == 9) soulforceamountrestored += 240;
 			if (player.unicornScore() >= 5) soulforceamountrestored += 30;
-			if (player.findPerk(PerkLib.DaoistCultivator) >= 0) soulforceamountrestored += 52;
-			if (player.findPerk(PerkLib.DaoistApprenticeStage) >= 0) soulforceamountrestored += 60;
-			if (player.findPerk(PerkLib.DaoistWarriorStage) >= 0) soulforceamountrestored += 60;
-			if (player.findPerk(PerkLib.DaoistElderStage) >= 0) soulforceamountrestored += 60;
-			if (player.findPerk(PerkLib.DaoistOverlordStage) >= 0) soulforceamountrestored += 60;
-			if (player.findPerk(PerkLib.DaoistKingStage) >= 0) soulforceamountrestored += 60;
-			if (player.findPerk(PerkLib.SoulApprentice) >= 0) soulforceamountrestored += 52;
-			if (player.findPerk(PerkLib.SoulPersonage) >= 0) soulforceamountrestored += 52;
-			if (player.findPerk(PerkLib.SoulWarrior) >= 0) soulforceamountrestored += 52;
-			if (player.findPerk(PerkLib.SoulSprite) >= 0) soulforceamountrestored += 52;
-			if (player.findPerk(PerkLib.SoulScholar) >= 0) soulforceamountrestored += 52;
-			if (player.findPerk(PerkLib.SoulElder) >= 0) soulforceamountrestored += 52;
-			if (player.findPerk(PerkLib.SoulExalt) >= 0) soulforceamountrestored += 52;
-			if (player.findPerk(PerkLib.SoulOverlord) >= 0) soulforceamountrestored += 52;
-			if (player.findPerk(PerkLib.SoulTyrant) >= 0) soulforceamountrestored += 52;
-			if (player.findPerk(PerkLib.SoulKing) >= 0) soulforceamountrestored += 52;
-			if (player.findPerk(PerkLib.SoulEmperor) >= 0) soulforceamountrestored += 52;
-			if (player.findPerk(PerkLib.SoulAncestor) >= 0) soulforceamountrestored += 52;
+			if (player.hasPerk(PerkLib.DaoistCultivator)) soulforceamountrestored += 52;
+			if (player.hasPerk(PerkLib.DaoistApprenticeStage)) soulforceamountrestored += 60;
+			if (player.hasPerk(PerkLib.DaoistWarriorStage)) soulforceamountrestored += 60;
+			if (player.hasPerk(PerkLib.DaoistElderStage)) soulforceamountrestored += 60;
+			if (player.hasPerk(PerkLib.DaoistOverlordStage)) soulforceamountrestored += 60;
+			if (player.hasPerk(PerkLib.DaoistKingStage)) soulforceamountrestored += 60;
+			if (player.hasPerk(PerkLib.SoulApprentice)) soulforceamountrestored += 52;
+			if (player.hasPerk(PerkLib.SoulPersonage)) soulforceamountrestored += 52;
+			if (player.hasPerk(PerkLib.SoulWarrior)) soulforceamountrestored += 52;
+			if (player.hasPerk(PerkLib.SoulSprite)) soulforceamountrestored += 52;
+			if (player.hasPerk(PerkLib.SoulScholar)) soulforceamountrestored += 52;
+			if (player.hasPerk(PerkLib.SoulElder)) soulforceamountrestored += 52;
+			if (player.hasPerk(PerkLib.SoulExalt)) soulforceamountrestored += 52;
+			if (player.hasPerk(PerkLib.SoulOverlord)) soulforceamountrestored += 52;
+			if (player.hasPerk(PerkLib.SoulTyrant)) soulforceamountrestored += 52;
+			if (player.hasPerk(PerkLib.SoulKing)) soulforceamountrestored += 52;
+			if (player.hasPerk(PerkLib.SoulEmperor)) soulforceamountrestored += 52;
+			if (player.hasPerk(PerkLib.SoulAncestor)) soulforceamountrestored += 52;
 			player.soulforce += soulforceamountrestored;
 			if (player.weaponName == "training soul axe" || player.weaponRangeName == "training soul crossbow" || player.shieldName == "training soul buckler" || player.armorName == "training soul armor") {
 				var bonussoulforce:Number = 0;
@@ -1530,24 +1530,24 @@ public function FightNightmare():void {
 			if (player.kitsuneScore() >= 6) soulforceamountrestored += 140;
 			if (player.kitsuneScore() >= 12 && player.tailType == 13 && player.tailCount == 9) soulforceamountrestored += 560;
 			if (player.unicornScore() >= 5) soulforceamountrestored += 70;
-			if (player.findPerk(PerkLib.DaoistCultivator) >= 0) soulforceamountrestored += 124;
-			if (player.findPerk(PerkLib.DaoistApprenticeStage) >= 0) soulforceamountrestored += 140;
-			if (player.findPerk(PerkLib.DaoistWarriorStage) >= 0) soulforceamountrestored += 140;
-			if (player.findPerk(PerkLib.DaoistElderStage) >= 0) soulforceamountrestored += 140;
-			if (player.findPerk(PerkLib.DaoistOverlordStage) >= 0) soulforceamountrestored += 140;
-			if (player.findPerk(PerkLib.DaoistKingStage) >= 0) soulforceamountrestored += 140;
-			if (player.findPerk(PerkLib.SoulApprentice) >= 0) soulforceamountrestored += 124;
-			if (player.findPerk(PerkLib.SoulPersonage) >= 0) soulforceamountrestored += 124;
-			if (player.findPerk(PerkLib.SoulWarrior) >= 0) soulforceamountrestored += 124;
-			if (player.findPerk(PerkLib.SoulSprite) >= 0) soulforceamountrestored += 124;
-			if (player.findPerk(PerkLib.SoulScholar) >= 0) soulforceamountrestored += 124;
-			if (player.findPerk(PerkLib.SoulElder) >= 0) soulforceamountrestored += 124;
-			if (player.findPerk(PerkLib.SoulExalt) >= 0) soulforceamountrestored += 124;
-			if (player.findPerk(PerkLib.SoulOverlord) >= 0) soulforceamountrestored += 124;
-			if (player.findPerk(PerkLib.SoulTyrant) >= 0) soulforceamountrestored += 124;
-			if (player.findPerk(PerkLib.SoulKing) >= 0) soulforceamountrestored += 124;
-			if (player.findPerk(PerkLib.SoulEmperor) >= 0) soulforceamountrestored += 124;
-			if (player.findPerk(PerkLib.SoulAncestor) >= 0) soulforceamountrestored += 124;
+			if (player.hasPerk(PerkLib.DaoistCultivator)) soulforceamountrestored += 124;
+			if (player.hasPerk(PerkLib.DaoistApprenticeStage)) soulforceamountrestored += 140;
+			if (player.hasPerk(PerkLib.DaoistWarriorStage)) soulforceamountrestored += 140;
+			if (player.hasPerk(PerkLib.DaoistElderStage)) soulforceamountrestored += 140;
+			if (player.hasPerk(PerkLib.DaoistOverlordStage)) soulforceamountrestored += 140;
+			if (player.hasPerk(PerkLib.DaoistKingStage)) soulforceamountrestored += 140;
+			if (player.hasPerk(PerkLib.SoulApprentice)) soulforceamountrestored += 124;
+			if (player.hasPerk(PerkLib.SoulPersonage)) soulforceamountrestored += 124;
+			if (player.hasPerk(PerkLib.SoulWarrior)) soulforceamountrestored += 124;
+			if (player.hasPerk(PerkLib.SoulSprite)) soulforceamountrestored += 124;
+			if (player.hasPerk(PerkLib.SoulScholar)) soulforceamountrestored += 124;
+			if (player.hasPerk(PerkLib.SoulElder)) soulforceamountrestored += 124;
+			if (player.hasPerk(PerkLib.SoulExalt)) soulforceamountrestored += 124;
+			if (player.hasPerk(PerkLib.SoulOverlord)) soulforceamountrestored += 124;
+			if (player.hasPerk(PerkLib.SoulTyrant)) soulforceamountrestored += 124;
+			if (player.hasPerk(PerkLib.SoulKing)) soulforceamountrestored += 124;
+			if (player.hasPerk(PerkLib.SoulEmperor)) soulforceamountrestored += 124;
+			if (player.hasPerk(PerkLib.SoulAncestor)) soulforceamountrestored += 124;
 			player.soulforce += soulforceamountrestored;
 			if (player.weaponName == "training soul axe" || player.weaponRangeName == "training soul crossbow" || player.shieldName == "training soul buckler" || player.armorName == "training soul armor") {
 				var bonussoulforce:Number = 0;
@@ -1578,24 +1578,24 @@ public function FightNightmare():void {
 			if (player.kitsuneScore() >= 6) soulforceamountrestored += 220;
 			if (player.kitsuneScore() >= 12 && player.tailType == 13 && player.tailCount == 9) soulforceamountrestored += 880;
 			if (player.unicornScore() >= 5) soulforceamountrestored += 110;
-			if (player.findPerk(PerkLib.DaoistCultivator) >= 0) soulforceamountrestored += 196;
-			if (player.findPerk(PerkLib.DaoistApprenticeStage) >= 0) soulforceamountrestored += 220;
-			if (player.findPerk(PerkLib.DaoistWarriorStage) >= 0) soulforceamountrestored += 220;
-			if (player.findPerk(PerkLib.DaoistElderStage) >= 0) soulforceamountrestored += 220;
-			if (player.findPerk(PerkLib.DaoistOverlordStage) >= 0) soulforceamountrestored += 220;
-			if (player.findPerk(PerkLib.DaoistKingStage) >= 0) soulforceamountrestored += 220;
-			if (player.findPerk(PerkLib.SoulApprentice) >= 0) soulforceamountrestored += 196;
-			if (player.findPerk(PerkLib.SoulPersonage) >= 0) soulforceamountrestored += 196;
-			if (player.findPerk(PerkLib.SoulWarrior) >= 0) soulforceamountrestored += 196;
-			if (player.findPerk(PerkLib.SoulSprite) >= 0) soulforceamountrestored += 196;
-			if (player.findPerk(PerkLib.SoulScholar) >= 0) soulforceamountrestored += 196;
-			if (player.findPerk(PerkLib.SoulElder) >= 0) soulforceamountrestored += 196;
-			if (player.findPerk(PerkLib.SoulExalt) >= 0) soulforceamountrestored += 196;
-			if (player.findPerk(PerkLib.SoulOverlord) >= 0) soulforceamountrestored += 196;
-			if (player.findPerk(PerkLib.SoulTyrant) >= 0) soulforceamountrestored += 196;
-			if (player.findPerk(PerkLib.SoulKing) >= 0) soulforceamountrestored += 196;
-			if (player.findPerk(PerkLib.SoulEmperor) >= 0) soulforceamountrestored += 196;
-			if (player.findPerk(PerkLib.SoulAncestor) >= 0) soulforceamountrestored += 196;
+			if (player.hasPerk(PerkLib.DaoistCultivator)) soulforceamountrestored += 196;
+			if (player.hasPerk(PerkLib.DaoistApprenticeStage)) soulforceamountrestored += 220;
+			if (player.hasPerk(PerkLib.DaoistWarriorStage)) soulforceamountrestored += 220;
+			if (player.hasPerk(PerkLib.DaoistElderStage)) soulforceamountrestored += 220;
+			if (player.hasPerk(PerkLib.DaoistOverlordStage)) soulforceamountrestored += 220;
+			if (player.hasPerk(PerkLib.DaoistKingStage)) soulforceamountrestored += 220;
+			if (player.hasPerk(PerkLib.SoulApprentice)) soulforceamountrestored += 196;
+			if (player.hasPerk(PerkLib.SoulPersonage)) soulforceamountrestored += 196;
+			if (player.hasPerk(PerkLib.SoulWarrior)) soulforceamountrestored += 196;
+			if (player.hasPerk(PerkLib.SoulSprite)) soulforceamountrestored += 196;
+			if (player.hasPerk(PerkLib.SoulScholar)) soulforceamountrestored += 196;
+			if (player.hasPerk(PerkLib.SoulElder)) soulforceamountrestored += 196;
+			if (player.hasPerk(PerkLib.SoulExalt)) soulforceamountrestored += 196;
+			if (player.hasPerk(PerkLib.SoulOverlord)) soulforceamountrestored += 196;
+			if (player.hasPerk(PerkLib.SoulTyrant)) soulforceamountrestored += 196;
+			if (player.hasPerk(PerkLib.SoulKing)) soulforceamountrestored += 196;
+			if (player.hasPerk(PerkLib.SoulEmperor)) soulforceamountrestored += 196;
+			if (player.hasPerk(PerkLib.SoulAncestor)) soulforceamountrestored += 196;
 			player.soulforce += soulforceamountrestored;
 			if (player.weaponName == "training soul axe" || player.weaponRangeName == "training soul crossbow" || player.shieldName == "training soul buckler" || player.armorName == "training soul armor") {
 				var bonussoulforce:Number = 0;
@@ -1626,24 +1626,24 @@ public function FightNightmare():void {
 			if (player.kitsuneScore() >= 6) soulforceamountrestored += 300;
 			if (player.kitsuneScore() >= 12 && player.tailType == 13 && player.tailCount == 9) soulforceamountrestored += 1200;
 			if (player.unicornScore() >= 5) soulforceamountrestored += 150;
-			if (player.findPerk(PerkLib.DaoistCultivator) >= 0) soulforceamountrestored += 268;
-			if (player.findPerk(PerkLib.DaoistApprenticeStage) >= 0) soulforceamountrestored += 300;
-			if (player.findPerk(PerkLib.DaoistWarriorStage) >= 0) soulforceamountrestored += 300;
-			if (player.findPerk(PerkLib.DaoistElderStage) >= 0) soulforceamountrestored += 300;
-			if (player.findPerk(PerkLib.DaoistOverlordStage) >= 0) soulforceamountrestored += 300;
-			if (player.findPerk(PerkLib.DaoistKingStage) >= 0) soulforceamountrestored += 300;
-			if (player.findPerk(PerkLib.SoulApprentice) >= 0) soulforceamountrestored += 268;
-			if (player.findPerk(PerkLib.SoulPersonage) >= 0) soulforceamountrestored += 268;
-			if (player.findPerk(PerkLib.SoulWarrior) >= 0) soulforceamountrestored += 268;
-			if (player.findPerk(PerkLib.SoulSprite) >= 0) soulforceamountrestored += 268;
-			if (player.findPerk(PerkLib.SoulScholar) >= 0) soulforceamountrestored += 268;
-			if (player.findPerk(PerkLib.SoulElder) >= 0) soulforceamountrestored += 268;
-			if (player.findPerk(PerkLib.SoulExalt) >= 0) soulforceamountrestored += 268;
-			if (player.findPerk(PerkLib.SoulOverlord) >= 0) soulforceamountrestored += 268;
-			if (player.findPerk(PerkLib.SoulTyrant) >= 0) soulforceamountrestored += 268;
-			if (player.findPerk(PerkLib.SoulKing) >= 0) soulforceamountrestored += 268;
-			if (player.findPerk(PerkLib.SoulEmperor) >= 0) soulforceamountrestored += 268;
-			if (player.findPerk(PerkLib.SoulAncestor) >= 0) soulforceamountrestored += 268;
+			if (player.hasPerk(PerkLib.DaoistCultivator)) soulforceamountrestored += 268;
+			if (player.hasPerk(PerkLib.DaoistApprenticeStage)) soulforceamountrestored += 300;
+			if (player.hasPerk(PerkLib.DaoistWarriorStage)) soulforceamountrestored += 300;
+			if (player.hasPerk(PerkLib.DaoistElderStage)) soulforceamountrestored += 300;
+			if (player.hasPerk(PerkLib.DaoistOverlordStage)) soulforceamountrestored += 300;
+			if (player.hasPerk(PerkLib.DaoistKingStage)) soulforceamountrestored += 300;
+			if (player.hasPerk(PerkLib.SoulApprentice)) soulforceamountrestored += 268;
+			if (player.hasPerk(PerkLib.SoulPersonage)) soulforceamountrestored += 268;
+			if (player.hasPerk(PerkLib.SoulWarrior)) soulforceamountrestored += 268;
+			if (player.hasPerk(PerkLib.SoulSprite)) soulforceamountrestored += 268;
+			if (player.hasPerk(PerkLib.SoulScholar)) soulforceamountrestored += 268;
+			if (player.hasPerk(PerkLib.SoulElder)) soulforceamountrestored += 268;
+			if (player.hasPerk(PerkLib.SoulExalt)) soulforceamountrestored += 268;
+			if (player.hasPerk(PerkLib.SoulOverlord)) soulforceamountrestored += 268;
+			if (player.hasPerk(PerkLib.SoulTyrant)) soulforceamountrestored += 268;
+			if (player.hasPerk(PerkLib.SoulKing)) soulforceamountrestored += 268;
+			if (player.hasPerk(PerkLib.SoulEmperor)) soulforceamountrestored += 268;
+			if (player.hasPerk(PerkLib.SoulAncestor)) soulforceamountrestored += 268;
 			player.soulforce += soulforceamountrestored;
 			if (player.weaponName == "training soul axe" || player.weaponRangeName == "training soul crossbow" || player.shieldName == "training soul buckler" || player.armorName == "training soul armor") {
 				var bonussoulforce:Number = 0;
@@ -1684,24 +1684,24 @@ public function FightNightmare():void {
 			if (player.kitsuneScore() >= 6) costPercent += 100;
 			if (player.kitsuneScore() >= 12 && player.tailType == 13 && player.tailCount == 9) costPercent += 400;
 			if (player.unicornScore() >= 5) costPercent += 50;
-			if (player.findPerk(PerkLib.DaoistCultivator) >= 0) costPercent += 100;
-			if (player.findPerk(PerkLib.DaoistApprenticeStage) >= 0) costPercent += 100;
-			if (player.findPerk(PerkLib.DaoistWarriorStage) >= 0) costPercent += 100;
-			if (player.findPerk(PerkLib.DaoistElderStage) >= 0) costPercent += 100;
-			if (player.findPerk(PerkLib.DaoistOverlordStage) >= 0) costPercent += 100;
-			if (player.findPerk(PerkLib.DaoistKingStage) >= 0) costPercent += 100;
-			if (player.findPerk(PerkLib.SoulApprentice) >= 0) costPercent += 100;
-			if (player.findPerk(PerkLib.SoulPersonage) >= 0) costPercent += 100;
-			if (player.findPerk(PerkLib.SoulWarrior) >= 0) costPercent += 100;
-			if (player.findPerk(PerkLib.SoulSprite) >= 0) costPercent += 100;
-			if (player.findPerk(PerkLib.SoulScholar) >= 0) costPercent += 100;
-			if (player.findPerk(PerkLib.SoulElder) >= 0) costPercent += 100;
-			if (player.findPerk(PerkLib.SoulExalt) >= 0) costPercent += 100;
-			if (player.findPerk(PerkLib.SoulOverlord) >= 0) costPercent += 100;
-			if (player.findPerk(PerkLib.SoulTyrant) >= 0) costPercent += 100;
-			if (player.findPerk(PerkLib.SoulKing) >= 0) costPercent += 100;
-			if (player.findPerk(PerkLib.SoulEmperor) >= 0) costPercent += 100;
-			if (player.findPerk(PerkLib.SoulAncestor) >= 0) costPercent += 100;
+			if (player.hasPerk(PerkLib.DaoistCultivator)) costPercent += 100;
+			if (player.hasPerk(PerkLib.DaoistApprenticeStage)) costPercent += 100;
+			if (player.hasPerk(PerkLib.DaoistWarriorStage)) costPercent += 100;
+			if (player.hasPerk(PerkLib.DaoistElderStage)) costPercent += 100;
+			if (player.hasPerk(PerkLib.DaoistOverlordStage)) costPercent += 100;
+			if (player.hasPerk(PerkLib.DaoistKingStage)) costPercent += 100;
+			if (player.hasPerk(PerkLib.SoulApprentice)) costPercent += 100;
+			if (player.hasPerk(PerkLib.SoulPersonage)) costPercent += 100;
+			if (player.hasPerk(PerkLib.SoulWarrior)) costPercent += 100;
+			if (player.hasPerk(PerkLib.SoulSprite)) costPercent += 100;
+			if (player.hasPerk(PerkLib.SoulScholar)) costPercent += 100;
+			if (player.hasPerk(PerkLib.SoulElder)) costPercent += 100;
+			if (player.hasPerk(PerkLib.SoulExalt)) costPercent += 100;
+			if (player.hasPerk(PerkLib.SoulOverlord)) costPercent += 100;
+			if (player.hasPerk(PerkLib.SoulTyrant)) costPercent += 100;
+			if (player.hasPerk(PerkLib.SoulKing)) costPercent += 100;
+			if (player.hasPerk(PerkLib.SoulEmperor)) costPercent += 100;
+			if (player.hasPerk(PerkLib.SoulAncestor)) costPercent += 100;
 			mod *= costPercent/100;
 			return mod;
 		}
@@ -1711,10 +1711,10 @@ public function FightNightmare():void {
 			outputText("So what amount of your soulforce do you want to use?");
 			menu();
 			addButton(0, "V. Low", SelfSustain1).hint("Spend 50 soulforce for 10 hunger.");
-			if (player.findPerk(PerkLib.SoulApprentice) >= 0) addButton(1, "Low", SelfSustain2).hint("Spend 100 soulforce for 20 hunger.");
-			if (player.findPerk(PerkLib.SoulPersonage) >= 0) addButton(2, "Medium", SelfSustain3).hint("Spend 200 soulforce for 40 hunger.");
-			if (player.findPerk(PerkLib.SoulWarrior) >= 0) addButton(3, "High", SelfSustain4).hint("Spend 400 soulforce for 80 hunger.");
-			if (player.findPerk(PerkLib.SoulSprite) >= 0) addButton(4, "V. High", SelfSustain5).hint("Spend 800 soulforce for 160 hunger.");
+			if (player.hasPerk(PerkLib.SoulApprentice)) addButton(1, "Low", SelfSustain2).hint("Spend 100 soulforce for 20 hunger.");
+			if (player.hasPerk(PerkLib.SoulPersonage)) addButton(2, "Medium", SelfSustain3).hint("Spend 200 soulforce for 40 hunger.");
+			if (player.hasPerk(PerkLib.SoulWarrior)) addButton(3, "High", SelfSustain4).hint("Spend 400 soulforce for 80 hunger.");
+			if (player.hasPerk(PerkLib.SoulSprite)) addButton(4, "V. High", SelfSustain5).hint("Spend 800 soulforce for 160 hunger.");
 			addButton(14, "Back", accessSoulforceMenu);
 		}
 		public function SelfSustain1():void {
@@ -1798,10 +1798,10 @@ public function FightNightmare():void {
 			outputText("So what amount of your soulforce do you want to use?");
 			menu();
 			addButton(0, "V. Low", RepresLust1).hint("Spend 40 soulforce for 20 lust.");
-			if (player.findPerk(PerkLib.SoulApprentice) >= 0) addButton(1, "Low", RepresLust2).hint("Spend 80 soulforce for 40 lust.");
-			if (player.findPerk(PerkLib.SoulPersonage) >= 0) addButton(2, "Medium", RepresLust3).hint("Spend 200 soulforce for 100 lust.");
-			if (player.findPerk(PerkLib.SoulWarrior) >= 0) addButton(3, "High", RepresLust4).hint("Spend 400 soulforce for 200 lust.");
-			if (player.findPerk(PerkLib.SoulSprite) >= 0) addButton(4, "V. High", RepresLust5).hint("Spend 800 soulforce for 400 lust.");
+			if (player.hasPerk(PerkLib.SoulApprentice)) addButton(1, "Low", RepresLust2).hint("Spend 80 soulforce for 40 lust.");
+			if (player.hasPerk(PerkLib.SoulPersonage)) addButton(2, "Medium", RepresLust3).hint("Spend 200 soulforce for 100 lust.");
+			if (player.hasPerk(PerkLib.SoulWarrior)) addButton(3, "High", RepresLust4).hint("Spend 400 soulforce for 200 lust.");
+			if (player.hasPerk(PerkLib.SoulSprite)) addButton(4, "V. High", RepresLust5).hint("Spend 800 soulforce for 400 lust.");
 			addButton(14, "Back", accessSoulforceMenu);
 		}
 		public function RepresLust1():void {
@@ -1894,15 +1894,15 @@ public function FightNightmare():void {
 		//	}You sit down and focus your spiritual power to recover some of your physical stamina, within moments, you feel rested and refreshed. - może do wykorzystania potem gdzieś?
 		//	else {
 				addButton(0, "100", Covert100Soulforce).hint("Convert 100 soulforce to 100 mana.");
-				if (player.findPerk(PerkLib.SoulPersonage) >= 0) addButton(1, "200", Covert200Soulforce).hint("Convert 200 soulforce to 200 mana.");
-				if (player.findPerk(PerkLib.SoulWarrior) >= 0) addButton(2, "500", Covert500Soulforce).hint("Convert 500 soulforce to 500 mana.");
-				if (player.findPerk(PerkLib.SoulSprite) >= 0) addButton(3, "1000", Covert1000Soulforce).hint("Convert 1000 soulforce to 1000 mana.");
-				if (player.findPerk(PerkLib.SoulExalt) >= 0) addButton(4, "2000", Covert2000Soulforce).hint("Convert 2000 soulforce to 2000 mana.");
+				if (player.hasPerk(PerkLib.SoulPersonage)) addButton(1, "200", Covert200Soulforce).hint("Convert 200 soulforce to 200 mana.");
+				if (player.hasPerk(PerkLib.SoulWarrior)) addButton(2, "500", Covert500Soulforce).hint("Convert 500 soulforce to 500 mana.");
+				if (player.hasPerk(PerkLib.SoulSprite)) addButton(3, "1000", Covert1000Soulforce).hint("Convert 1000 soulforce to 1000 mana.");
+				if (player.hasPerk(PerkLib.SoulExalt)) addButton(4, "2000", Covert2000Soulforce).hint("Convert 2000 soulforce to 2000 mana.");
 				addButton(5, "100", Covert100Mana).hint("Convert 100 mana to 50 soulforce.");
-				if (player.findPerk(PerkLib.SoulPersonage) >= 0) addButton(6, "200", Covert200Mana).hint("Convert 200 mana to 100 soulforce.");
-				if (player.findPerk(PerkLib.SoulWarrior) >= 0) addButton(7, "500", Covert500Mana).hint("Convert 500 mana to 250 soulforce.");
-				if (player.findPerk(PerkLib.SoulSprite) >= 0) addButton(8, "1000", Covert1000Mana).hint("Convert 1000 mana to 500 soulforce.");
-				if (player.findPerk(PerkLib.SoulExalt) >= 0) addButton(9, "2000", Covert2000Mana).hint("Convert 2000 mana to 1000 soulforce.");
+				if (player.hasPerk(PerkLib.SoulPersonage)) addButton(6, "200", Covert200Mana).hint("Convert 200 mana to 100 soulforce.");
+				if (player.hasPerk(PerkLib.SoulWarrior)) addButton(7, "500", Covert500Mana).hint("Convert 500 mana to 250 soulforce.");
+				if (player.hasPerk(PerkLib.SoulSprite)) addButton(8, "1000", Covert1000Mana).hint("Convert 1000 mana to 500 soulforce.");
+				if (player.hasPerk(PerkLib.SoulExalt)) addButton(9, "2000", Covert2000Mana).hint("Convert 2000 mana to 1000 soulforce.");
 				addButton(14, "Back", accessSoulforceMenu);
 		//	}
 		}
@@ -2072,15 +2072,15 @@ public function FightNightmare():void {
 			outputText("So what amount of your soulforce do you want to use?");
 			menu();
 			addButton(0, "V. Low", CorrDrop1).hint("Spend 100 soulforce for lowering corruption by 1.");
-			if (player.findPerk(PerkLib.SoulApprentice) >= 0) addButton(1, "Low", CorrDrop2).hint("Spend 200 soulforce for lowering corruption by 2.");
-			if (player.findPerk(PerkLib.SoulPersonage) >= 0) addButton(2, "Medium", CorrDrop3).hint("Spend 500 soulforce for lowering corruption by 5.");
-			if (player.findPerk(PerkLib.SoulWarrior) >= 0) addButton(3, "High", CorrDrop4).hint("Spend 1000 soulforce for lowering corruption by 10.");
-			if (player.findPerk(PerkLib.SoulSprite) >= 0) addButton(4, "V. High", CorrDrop5).hint("Spend 2000 soulforce for lowering corruption by 20.");
+			if (player.hasPerk(PerkLib.SoulApprentice)) addButton(1, "Low", CorrDrop2).hint("Spend 200 soulforce for lowering corruption by 2.");
+			if (player.hasPerk(PerkLib.SoulPersonage)) addButton(2, "Medium", CorrDrop3).hint("Spend 500 soulforce for lowering corruption by 5.");
+			if (player.hasPerk(PerkLib.SoulWarrior)) addButton(3, "High", CorrDrop4).hint("Spend 1000 soulforce for lowering corruption by 10.");
+			if (player.hasPerk(PerkLib.SoulSprite)) addButton(4, "V. High", CorrDrop5).hint("Spend 2000 soulforce for lowering corruption by 20.");
 			addButton(5, "V. Low", CorrRise1).hint("Spend 50 soulforce for rising corruption by 1.");
-			if (player.findPerk(PerkLib.SoulApprentice) >= 0) addButton(6, "Low", CorrRise2).hint("Spend 100 soulforce for rising corruption by 2.");
-			if (player.findPerk(PerkLib.SoulPersonage) >= 0) addButton(7, "Medium", CorrRise3).hint("Spend 250 soulforce for rising corruption by 5.");
-			if (player.findPerk(PerkLib.SoulWarrior) >= 0) addButton(8, "High", CorrRise4).hint("Spend 500 soulforce for rising corruption by 10.");
-			if (player.findPerk(PerkLib.SoulSprite) >= 0) addButton(9, "V. High", CorrRise5).hint("Spend 1000 soulforce for rising corruption by 20.");
+			if (player.hasPerk(PerkLib.SoulApprentice)) addButton(6, "Low", CorrRise2).hint("Spend 100 soulforce for rising corruption by 2.");
+			if (player.hasPerk(PerkLib.SoulPersonage)) addButton(7, "Medium", CorrRise3).hint("Spend 250 soulforce for rising corruption by 5.");
+			if (player.hasPerk(PerkLib.SoulWarrior)) addButton(8, "High", CorrRise4).hint("Spend 500 soulforce for rising corruption by 10.");
+			if (player.hasPerk(PerkLib.SoulSprite)) addButton(9, "V. High", CorrRise5).hint("Spend 1000 soulforce for rising corruption by 20.");
 			addButton(14, "Back", accessSoulforceMenu);
 		}
 		public function CorrDrop1():void {

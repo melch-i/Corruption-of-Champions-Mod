@@ -17,7 +17,7 @@ public class IgnisArenaSeer extends Monster
 		
 		public function IgnisCastsNuke():void {
 			outputText("Ignis raises his palm, a orb of fire appearing above it.  Then without warning, the fire radiates out with the force of an explosion! You are buffeted by wave after wave of flames, burning hotter than you could have ever imagined. ");
-			if (player.findPerk(PerkLib.SoulSprite) > 0 || player.findPerk(PerkLib.Archmage) > 0) outputText("You try and cast makeshift defenses around yourself, with limited success. ");
+			if (player.hasPerk(PerkLib.SoulSprite) || player.hasPerk(PerkLib.Archmage)) outputText("You try and cast makeshift defenses around yourself, with limited success. ");
 			outputText("You try and huddle down and take shelter from the infernal storm, but the fire is everywhere. Then, as suddenly as the flame came, they are gone.\n\n");
 			this.createStatusEffect(StatusEffects.IgnisCastedNuke, 0, 0, 0, 0);
 			var damage:Number = 5000;
@@ -26,11 +26,11 @@ public class IgnisArenaSeer extends Monster
 				player.removeStatusEffect(StatusEffects.Blizzard);
 				damage *= 0.5;
 			}
-			if (player.findPerk(PerkLib.FromTheFrozenWaste) >= 0 || player.findPerk(PerkLib.ColdAffinity) >= 0) damage *= 3;
-			if (player.findPerk(PerkLib.FireAffinity) >= 0) damage *= 0.3;
+			if (player.hasPerk(PerkLib.FromTheFrozenWaste) || player.hasPerk(PerkLib.ColdAffinity)) damage *= 3;
+			if (player.hasPerk(PerkLib.FireAffinity)) damage *= 0.3;
 			damage = Math.round(damage);
-			if (player.findPerk(PerkLib.SoulSprite) > 0) player.takeMagicDamage(damage, true);
-			if (player.findPerk(PerkLib.Archmage) > 0) player.takeMagicDamage(damage, true);
+			if (player.hasPerk(PerkLib.SoulSprite)) player.takeMagicDamage(damage, true);
+			if (player.hasPerk(PerkLib.Archmage)) player.takeMagicDamage(damage, true);
 			player.takeMagicDamage(damage, true);
 		}
 		
@@ -48,8 +48,8 @@ public class IgnisArenaSeer extends Monster
 			if (inte >= 301 && inte < 351) damage += ((inte * 2.25) + rand(inte * 2.75));
 			if (inte >= 351 && inte < 401) damage += ((inte * 2.5) + rand(inte * 3));
 			if (inte >= 401) damage += ((inte * 2.75) + rand(inte * 3.25));
-			if (player.findPerk(PerkLib.FromTheFrozenWaste) >= 0 || player.findPerk(PerkLib.ColdAffinity) >= 0) damage *= 3;
-			if (player.findPerk(PerkLib.FireAffinity) >= 0) damage *= 0.3;
+			if (player.hasPerk(PerkLib.FromTheFrozenWaste) || player.hasPerk(PerkLib.ColdAffinity)) damage *= 3;
+			if (player.hasPerk(PerkLib.FireAffinity)) damage *= 0.3;
 			damage = Math.round(damage);
 			player.takeMagicDamage(damage, true);
 			outputText(" ");
@@ -75,8 +75,8 @@ public class IgnisArenaSeer extends Monster
 			if (inte >= 301 && inte < 351) damage += ((inte * 2.25) + rand(inte * 2.75));
 			if (inte >= 351 && inte < 401) damage += ((inte * 2.5) + rand(inte * 3));
 			if (inte >= 401) damage += ((inte * 2.75) + rand(inte * 3.25));
-			if (player.findPerk(PerkLib.FromTheFrozenWaste) >= 0 || player.findPerk(PerkLib.ColdAffinity) >= 0) damage *= 3;
-			if (player.findPerk(PerkLib.FireAffinity) >= 0) damage *= 0.3;
+			if (player.hasPerk(PerkLib.FromTheFrozenWaste) || player.hasPerk(PerkLib.ColdAffinity)) damage *= 3;
+			if (player.hasPerk(PerkLib.FireAffinity)) damage *= 0.3;
 			if (player.armorPerk != "Heavy" || player.armorPerk != "Ayo") damage *= 2;
 			damage = Math.round(damage);
 			player.takeMagicDamage(damage, true);

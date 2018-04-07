@@ -23,20 +23,20 @@ public class HellHound extends Monster
 				enemyAI();
 				return;
 			}*/
-			if(player.findPerk(PerkLib.Evade) >= 0 && player.spe >= 35 && rand(3) != 0) {
+			if(player.hasPerk(PerkLib.Evade) && player.spe >= 35 && rand(3) != 0) {
 				outputText("Both the hellhound's heads breathe in deeply before blasting a wave of dark fire at you.  You easily avoid the wave, diving to the side and making the most of your talents at evasion.");
 			}
-			else if(player.findPerk(PerkLib.Misdirection) >= 0 && rand(100) < 20 && player.armorName == "red, high-society bodysuit") {
+			else if(player.hasPerk(PerkLib.Misdirection) && rand(100) < 20 && player.armorName == "red, high-society bodysuit") {
 				outputText("Using Raphael's teachings and the movement afforded by your bodysuit, you anticipate and sidestep " + a + short + "'s fire.\n");
 			}
-			else if(player.findPerk(PerkLib.Flexibility) >= 0 && player.spe > 30 && rand(10) != 0) {
+			else if(player.hasPerk(PerkLib.Flexibility) && player.spe > 30 && rand(10) != 0) {
 				outputText("Both the hellhound's heads breathe in deeply before blasting a wave of dark fire at you.  You twist and drop with incredible flexibility, watching the fire blow harmlessly overhead.");
 			}
 			else {
 				//Determine the damage to be taken
 				var temp:Number = 15 + rand(10);
-				if (player.findPerk(PerkLib.FromTheFrozenWaste) >= 0 || player.findPerk(PerkLib.ColdAffinity) >= 0) temp *= 3;
-				if (player.findPerk(PerkLib.FireAffinity) >= 0) temp *= 0.3;
+				if (player.hasPerk(PerkLib.FromTheFrozenWaste) || player.hasPerk(PerkLib.ColdAffinity)) temp *= 3;
+				if (player.hasPerk(PerkLib.FireAffinity)) temp *= 0.3;
 				temp = Math.round(temp);
 				if (player.hasStatusEffect(StatusEffects.Blizzard)) {
 				player.addStatusValue(StatusEffects.Blizzard,1,-1);

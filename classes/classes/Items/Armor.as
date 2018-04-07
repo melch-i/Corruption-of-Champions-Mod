@@ -92,7 +92,7 @@ package classes.Items
 		}
 		
 		public function playerRemove():Armor { //This item is being removed by the player. Remove any perks, etc. - This function should only handle mechanics, not text output
-			while (game.player.findPerk(PerkLib.BulgeArmor) >= 0) game.player.removePerk(PerkLib.BulgeArmor); //TODO remove this Exgartuan hack
+			while (game.player.hasPerk(PerkLib.BulgeArmor)) game.player.removePerk(PerkLib.BulgeArmor); //TODO remove this Exgartuan hack
 			if (game.player.modArmorName.length > 0) game.player.modArmorName = "";
 			return this;
 		}
@@ -114,7 +114,7 @@ package classes.Items
 
 		override public function unequip(player:Player, returnToInventory:Boolean, output:Boolean = false):void
 		{
-			while(player.findPerk(PerkLib.BulgeArmor) >= 0) player.removePerk(PerkLib.BulgeArmor);// TODO remove this Exgartuan hack
+			while(player.hasPerk(PerkLib.BulgeArmor)) player.removePerk(PerkLib.BulgeArmor);// TODO remove this Exgartuan hack
 			if (returnToInventory) {
 				var itype:ItemType = unequipReturnItem(player, output);
 				if (itype != null) {

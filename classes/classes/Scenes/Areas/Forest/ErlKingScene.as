@@ -58,12 +58,12 @@ public class ErlKingScene extends BaseContent
 					-10 for Centaur Half
 			*/
 
-			if (player.findPerk(PerkLib.Evade) >= 0)
+			if (player.hasPerk(PerkLib.Evade))
 			{
 				baseVal += 20;
 				trace("+20 for Evade");
 			}
-			if (player.findPerk(PerkLib.Runner) >= 0)
+			if (player.hasPerk(PerkLib.Runner))
 			{
 				baseVal += 20;
 				trace("+20 for Runner");
@@ -73,35 +73,35 @@ public class ErlKingScene extends BaseContent
 				baseVal += 20;
 				trace("+20 for Drider");
 			}
-			if (player.findPerk(PerkLib.CorruptedNinetails) >= 0)
+			if (player.hasPerk(PerkLib.CorruptedNinetails))
 			{
 				baseVal += 30;
 				trace("+30 For Ninetails");
 			}
-			if (player.findPerk(PerkLib.EnlightenedNinetails) >= 0)
+			if (player.hasPerk(PerkLib.EnlightenedNinetails))
 			{
 				baseVal += 30;
 				trace("+30 for Ninetails");
 			}
 
 			// Akbal Blessings
-			if (player.findPerk(PerkLib.FireLord) >= 0)
+			if (player.hasPerk(PerkLib.FireLord))
 			{
 				baseVal += 10;
 				trace("+10 for Firelord");
 			}
-			if (player.findPerk(PerkLib.Whispered) >= 0)
+			if (player.hasPerk(PerkLib.Whispered))
 			{
 				baseVal += 10;
 				trace("+10 for Whispered");
 			}
 
-			if (player.findPerk(PerkLib.Fast) >= 0)
+			if (player.hasPerk(PerkLib.Fast))
 			{
 				baseVal += 10;
 				trace("+10 for Fast");
 			}
-			if (player.findPerk(PerkLib.Incorporeality) >= 0)
+			if (player.hasPerk(PerkLib.Incorporeality))
 			{
 				baseVal += 10;
 				trace("+10 for Incorporeal");
@@ -977,9 +977,9 @@ public class ErlKingScene extends BaseContent
 			var x:int = 0;
 			if (rand(2) == 0) changeLimit++;
 			if (rand(3) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			if (player.hasPerk(PerkLib.TransformationImmunity)) changeLimit = 0;
 			// Main TFs
 			//------------

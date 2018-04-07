@@ -20,20 +20,20 @@ package classes.Items.Weapons
 			var boost:int = 0;
 			var base:int = 0;
 			base += 5;
-			if (game.player.findPerk(PerkLib.ArcaneLash) >= 0) boost += 2;
+			if (game.player.hasPerk(PerkLib.ArcaneLash)) boost += 2;
 			if ((game.player.str + game.player.spe) >= 120) {
 				base += 9;
-				if (game.player.findPerk(PerkLib.ArcaneLash) >= 0) boost += 4;
+				if (game.player.hasPerk(PerkLib.ArcaneLash)) boost += 4;
 			}
 			if ((game.player.str + game.player.spe) >= 60) {
 				base += 4;
-				if (game.player.findPerk(PerkLib.ArcaneLash) >= 0) boost += 2;
+				if (game.player.hasPerk(PerkLib.ArcaneLash)) boost += 2;
 			}
 			return (base + boost); 
 		}
 		
 		override public function canUse():Boolean {
-			if (game.player.findPerk(PerkLib.TitanGrip) >= 0) return true;
+			if (game.player.hasPerk(PerkLib.TitanGrip)) return true;
 			outputText("You aren't skilled in handling large weapons with one hand yet to effectively use this whip. Unless you want to hurt yourself instead enemies when trying to use it...  ");
 			return false;
 		}

@@ -95,7 +95,7 @@ public class KitsuneScene extends BaseContent
 				doNext(createCallBackFunction(followTheWillOWisp, true));
 			}//PC did NOT see through glamour
 			//With Religious BG:
-			else if (player.findPerk(PerkLib.HistoryReligious) >= 0 || player.findPerk(PerkLib.PastLifeReligious) >= 0) {
+			else if (player.hasPerk(PerkLib.HistoryReligious) || player.hasPerk(PerkLib.PastLifeReligious)) {
 				outputText("The instant she touches you, she recoils with a yelp, a brilliant flash temporarily blinding you both.\n\n");
 				outputText("\"<i>Ow, ow, ow!</i>\"\n\n");
 				outputText("When the spots clear from your eyes, the kitsune's glamour has been dispelled, revealing her for what she truly is.  A pair of large triangular fox ears poke up from her ");
@@ -666,7 +666,7 @@ public class KitsuneScene extends BaseContent
 					}
 					outputText("production has been enhanced.</b>");
 				}
-				if (player.findPerk(PerkLib.SoulSense) >= 0 && flags[kFLAGS.SOUL_SENSE_KITSUNE_MANSION] < 2) flags[kFLAGS.SOUL_SENSE_KITSUNE_MANSION]++;
+				if (player.hasPerk(PerkLib.SoulSense) && flags[kFLAGS.SOUL_SENSE_KITSUNE_MANSION] < 2) flags[kFLAGS.SOUL_SENSE_KITSUNE_MANSION]++;
 				if (flags[kFLAGS.SOUL_SENSE_KITSUNE_MANSION] == 2) {
 					flags[kFLAGS.SOUL_SENSE_KITSUNE_MANSION]++;
 					outputText("\n\n<b>You have been in mansion enough times to be able to find it in the future when using soul sense. (Removes Kitsunes from deepwoods explore encounters pool!)</b>");
@@ -954,7 +954,7 @@ public class KitsuneScene extends BaseContent
 			player.orgasm();
 			dynStats("lib", 1, "sen", 1);
 			player.boostLactation(1.5);
-			if (player.findPerk(PerkLib.Feeder) >= 0) {
+			if (player.hasPerk(PerkLib.Feeder)) {
 				player.addStatusValue(StatusEffects.Feeder, 1, 1);
 				player.changeStatusValue(StatusEffects.Feeder, 2, 0);
 			}
@@ -1148,7 +1148,7 @@ public class KitsuneScene extends BaseContent
 					button = kitsuneButton(button, "B.Titfuck", (player.armor as LustyMaidensArmor).lustyMaidenPaizuri);
 			}
 			//[Feeder]
-			if (player.findPerk(PerkLib.Feeder) >= 0)
+			if (player.hasPerk(PerkLib.Feeder))
 				button = kitsuneButton(button, "Breastfeed", feederTheKitsunes);
 			//Remove buttons in SFW mode. No rapes!
 			if (flags[kFLAGS.SFW_MODE] > 0) {
@@ -2301,12 +2301,12 @@ public class KitsuneScene extends BaseContent
 			addButton(0, "Read Books", readKitsuneBooks);
 			if (flags[kFLAGS.TOOK_KITSUNE_STATUE] == 0) addButton(1, "Meditate", meditateLikeAKitsuneEhQuestionMark);
 			if ((player.hasItem(useables.GLDSTAT) || flags[kFLAGS.TOOK_KITSUNE_STATUE] == 0) && flags[kFLAGS.KITSUNE_SHRINE_UNLOCKED] < 1) addButton(2, "Statue", stealAStatue);
-			if (player.findPerk(PerkLib.StarSphereMastery) > 0 && player.perkv1(PerkLib.StarSphereMastery) < 10 && player.gems >= 1000) addButton(3, "Offering", offeringToTaoth);
+			if (player.hasPerk(PerkLib.StarSphereMastery) && player.perkv1(PerkLib.StarSphereMastery) < 10 && player.gems >= 1000) addButton(3, "Offering", offeringToTaoth);
             if (flags[kFLAGS.KITSUNE_SHRINE_UNLOCKED] > 0 && flags[kFLAGS.AYANE_FOLLOWER] < 2) addButton(5, "Ayane", SceneLib.ayaneFollower.ayaneShop);
             if (flags[kFLAGS.AYANE_FOLLOWER] == 1) {
 				addButton(6, "Servant", AyaneServant);
 			}
-			if (player.findPerk(PerkLib.CorruptedNinetails) >= 0 && player.inte >= 100 && player.cor >= 50 && flags[kFLAGS.AYANE_FOLLOWER] < 2) addButton(7, "Slave", AyaneSlave);
+			if (player.hasPerk(PerkLib.CorruptedNinetails) && player.inte >= 100 && player.cor >= 50 && flags[kFLAGS.AYANE_FOLLOWER] < 2) addButton(7, "Slave", AyaneSlave);
 			addButton(14, "Leave", camp.returnToCampUseOneHour);
 		}
 		
@@ -2358,9 +2358,9 @@ public class KitsuneScene extends BaseContent
 			clearOutput();
 			outputText("You sit down carefully on a small mat in front of the shrine and clear your mind.  Closing your eyes, you meditate on the things you've learned in your journey thus far, and resolve to continue fighting against the forces of corruption that permeate the land.\n\n");
 			if (player.hasItem(consumables.FOXJEWL) && player.ears.type == Ears.FOX && player.tailType == Tail.FOX) {
-				var notANineTail:Boolean = player.findPerk(PerkLib.CorruptedNinetails) < 0
+				var notANineTail:Boolean = !player.hasPerk(PerkLib.CorruptedNinetails)
 										   || player.perkv4(PerkLib.CorruptedNinetails) > 0;
-				if (flags[kFLAGS.KITSUNE_SHRINE_UNLOCKED] > 0 && player.tailCount >= 2 && player.findPerk(PerkLib.StarSphereMastery) < 0) {
+				if (flags[kFLAGS.KITSUNE_SHRINE_UNLOCKED] > 0 && player.tailCount >= 2 && !player.hasPerk(PerkLib.StarSphereMastery)) {
 					outputText("Nearing the end of your meditation, you are inexplicably compelled to reach into your bag and pull out the small teardrop-shaped jewel you were carrying.  As you stare past the translucent surface of the bead and into the dancing fire within, the jewel begins to dissolve in your hand, the pale flames within spilling out and spreading over your body.\n\n");
 					outputText("You look down and notice a weird ball filled with light sitting on the ground next to you. Somehow you can feel this item is connected to you and also very important. Ayane, noticing what happened, approaches and congratulates you.\n\n");
 					outputText("\"<i>It seems you are a true kitsune now. You formed your own star sphere. Hold on to it dearly, for your true essence resides in your star sphere, and should it be stolen, the thief could control you entirely, forcing you to do whatever it wishes.</i>\"\n\n");
@@ -2373,7 +2373,7 @@ public class KitsuneScene extends BaseContent
 				} else if (player.tailCount == 8 && player.level >= 42 && player.inte >= 120 && player.wis >= 120 && notANineTail) {
 					outputText("Nearing the end of your meditation, you are inexplicably compelled to reach into your bag and pull out the small teardrop-shaped jewel you were carrying.  As you stare past the translucent surface of the bead and into the dancing fire within, the jewel begins to dissolve in your hand, the pale flames within spilling out and spreading over your body.\n\n");
 					//Apply Nine-Tails perk if applicable.
-					if (player.findPerk(PerkLib.EnlightenedNinetails) < 0) {
+					if (!player.hasPerk(PerkLib.EnlightenedNinetails)) {
 						outputText("As the mystical flames wash over you, your mind is assaulted by a maelstrom of otherworldly knowledge and power.  For a moment it feels as though your mind will be torn asunder, but you are ready.  Your travels and meditations have prepared you well, and you open your mind to accept enlightenment.\n\n");
 						outputText("Your bushy tails begin to glow with an eerie, ghostly light, and with a crackle of electrical energy, split into nine tails.  <b>You are now a nine-tails!  Untold cosmic power radiates from your very being!  Use it wisely...</b>");
 						outputText("\n\nYou pause for a moment to reflect on your newfound wisdom, and with a vastly renewed vigor for your quest, you stand and set off for camp.");
@@ -2412,7 +2412,7 @@ public class KitsuneScene extends BaseContent
 					}
 					player.tailCount = 9;
 					player.consumeItem(consumables.FOXJEWL);
-				} else if (player.tailCount == 7 && player.level >= 36 && player.inte >= 105 && player.wis >= 105 && notANineTail && (player.findPerk(PerkLib.CorruptedKitsune) < 0 || player.perkv4(PerkLib.CorruptedKitsune) > 0)) {
+				} else if (player.tailCount == 7 && player.level >= 36 && player.inte >= 105 && player.wis >= 105 && notANineTail && (!player.hasPerk(PerkLib.CorruptedKitsune) || player.perkv4(PerkLib.CorruptedKitsune) > 0)) {
 					outputText("Nearing the end of your meditation, you are inexplicably compelled to reach into your bag and pull out the small teardrop-shaped jewel you were carrying.  As you stare past the translucent surface of the bead and into the dancing fire within, the jewel begins to dissolve in your hand, the pale flames within spilling out and spreading over your body.\n\n");
 					outputText("As the mystical flames wash over you, your mind is assaulted by an otherworldly knowledge and power.\n\n");
 					outputText("Sitting in a silent reverie, you allow the flames to wash over you, and begin to feel a bit more...  enlightened.  Your bushy tails begins to glow with an eerie, ghostly light, and with a crackle of electrical energy, splits into " + (player.tailCount + 1) + "!");
@@ -2421,10 +2421,10 @@ public class KitsuneScene extends BaseContent
 					player.consumeItem(consumables.FOXJEWL);
 					doNext(camp.returnToCampUseOneHour);
 					player.tailCount++;
-				} else if (player.tailCount == 6 && player.level >= 30 && player.inte >= 90 &&  player.inte >= 90 && notANineTail && (player.findPerk(PerkLib.CorruptedKitsune) < 0 || player.perkv4(PerkLib.CorruptedKitsune) > 0)) {
+				} else if (player.tailCount == 6 && player.level >= 30 && player.inte >= 90 &&  player.inte >= 90 && notANineTail && (!player.hasPerk(PerkLib.CorruptedKitsune) || player.perkv4(PerkLib.CorruptedKitsune) > 0)) {
 					outputText("Nearing the end of your meditation, you are inexplicably compelled to reach into your bag and pull out the small teardrop-shaped jewel you were carrying.  As you stare past the translucent surface of the bead and into the dancing fire within, the jewel begins to dissolve in your hand, the pale flames within spilling out and spreading over your body.\n\n");
 					//Apply Kitsune perk if applicable.
-					if (player.findPerk(PerkLib.EnlightenedKitsune) < 0) {
+					if (!player.hasPerk(PerkLib.EnlightenedKitsune)) {
 						outputText("As the mystical flames wash over you, your mind is assaulted by an otherworldly knowledge and power.\n\n");
 						outputText("Your bushy tails begin to glow with an eerie, ghostly light, and with a crackle of electrical energy, split into seven tails.  <b>You are now a seven-tails!  Weak cosmic power radiates from you!  Cultivate it wisely...</b>");
 						outputText("\n\nYou pause for a moment to reflect on your new wisdom, and with a renewed vigor for your quest, you stand and set off for camp.");

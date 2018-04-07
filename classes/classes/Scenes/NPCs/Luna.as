@@ -30,7 +30,7 @@ package classes.Scenes.NPCs
 		public function usingPounce():void {
 			outputText("Luna pounces on you, pinning you to the ground as she gets in position, claws at the ready.");
 			player.createStatusEffect(StatusEffects.WolfHold,0,0,0,0); 
-			if (player.findPerk(PerkLib.Juggernaut) < 0 && armorPerk != "Heavy") {
+			if (!player.hasPerk(PerkLib.Juggernaut) && armorPerk != "Heavy") {
 				player.takePhysDamage(8+rand(10));
 			}
 		}

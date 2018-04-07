@@ -85,7 +85,7 @@ public class IngnamFarm extends BaseContent
 				}
 				fatigue(10);
 			}
-			if (player.findPerk(PerkLib.HistorySlacker) >= 0 || player.findPerk(PerkLib.PastLifeSlacker) >= 0) fatigue(-5);
+			if (player.hasPerk(PerkLib.HistorySlacker) || player.hasPerk(PerkLib.PastLifeSlacker)) fatigue(-5);
 			outputText("\n\nYou walk back to Ingnam.");
 			player.gems += 5;
 			statScreenRefresh();

@@ -177,7 +177,7 @@ public function MeetingChiChiInHeXinDao():void {
 	else {
 		outputText("\"<i>I knew you would be coming. You're here to learn martial arts and it's my duty as a sensei to teach a prospective student.</i>\"\n\n");
 		outputText("She sizes you up for a moment.\n\n");
-		if (flags[kFLAGS.TIMES_TRAINED_WITH_JOJO] < 16 && player.findPerk(PerkLib.Enlightened) < 0) {
+		if (flags[kFLAGS.TIMES_TRAINED_WITH_JOJO] < 16 && !player.hasPerk(PerkLib.Enlightened)) {
 			outputText("\"<i>Sadly, you barely have an understanding of the discipline to begin with. You will need to train with a less experienced master first. I heard a mouse fancying himself a monk wanders the woods, I suggest you seek him out and learn what you can from him first. Once you are done, come back to me.</i>\"\n\n");
 			doNext(camp.returnToCampUseOneHour);
 		}
@@ -240,7 +240,7 @@ public function TrainingSoulArtsWithChiChi():void {
 			}
 			player.HP -= player.maxHP() * 0.5;
 			if (player.tou >= 100) {
-				if (player.findPerk(PerkLib.MightyFist) < 0) {
+				if (!player.hasPerk(PerkLib.MightyFist)) {
 					player.createPerk(PerkLib.MightyFist, 0, 0, 0, 0);
 					outputText(" <b>You've gained the Mighty Fist perk.</b>");
 				}
@@ -263,7 +263,7 @@ public function TrainingSoulArtsWithChiChi():void {
 			}
 			flags[kFLAGS.CHI_CHI_SAM_TRAINING] = 1;
 			if (player.str >= 100 && player.spe >= 100) {
-				if (player.findPerk(PerkLib.MightyFist) < 0) {
+				if (!player.hasPerk(PerkLib.MightyFist)) {
 					outputText(" Chi Chi, noticing that you’re training hard, hands you a scroll.\n\n");
 					outputText("\"<i>This is a scroll containing the technique Overlimit. Use it with caution, because if abused, this technique can and WILL kill you.</i>\"\n\n");
 					outputText("<b>You learned the martial power Overlimit.</b>\n\n");
