@@ -109,8 +109,8 @@ public class GameSettings extends BaseContent {
 				["New", curry(toggleSetting, kFLAGS.SHOW_SPRITES_FLAG, 2), "You like to look at pretty pictures. New, 16-bit sprites will be shown.", flags[kFLAGS.SHOW_SPRITES_FLAG] == 2]
 			]);
 			pane.addOrUpdateToggleSettings("Image Pack", [
-				["ON", curry(toggleSetting, kFLAGS.IMAGEPACK_OFF, false), "Image pack is currently enabled.", flags[kFLAGS.IMAGEPACK_OFF] == true],
-				["OFF", curry(toggleSetting, kFLAGS.IMAGEPACK_OFF, true), "Images from image pack won't be shown.", flags[kFLAGS.IMAGEPACK_OFF] == false]
+				["ON", curry(toggleSetting, kFLAGS.IMAGEPACK_OFF, false), "Image pack is currently enabled.", flags[kFLAGS.IMAGEPACK_OFF] == false],
+				["OFF", curry(toggleSetting, kFLAGS.IMAGEPACK_OFF, true), "Images from image pack won't be shown.", flags[kFLAGS.IMAGEPACK_OFF] == true]
 			]);
 			pane.addOrUpdateToggleSettings("CharView",[
 				["ON",toggleCharViewer,"Player visualiser is enabled",flags[kFLAGS.CHARVIEWER_ENABLED] == 1],
