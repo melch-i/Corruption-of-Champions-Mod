@@ -28,12 +28,12 @@ package classes.Items.Armors
 		}
 		override public function useText():void{ //Produces any text seen when equipping the armor normally
 			switch (player.gender) {
-				case 2:   
+				case Gender.GENDER_FEMALE:   
 					outputText("You comfortably slide into the forest gown.   You spin around several times and giggle happily."
 					          +" Where did that come from?\n");
 					break;
 
-				case  1:
+				case  Gender.GENDER_MALE:
 					outputText("You slide forest gown over your head and down to your toes. It obviously would fit someone more female."
 					          +" You feel sad and wish you had the svelte body that would look amazing in this gown."
 					          +" Wait, did you always think that way?\n");
@@ -80,9 +80,9 @@ package classes.Items.Armors
 			clearOutput();
 			outputText("\n\n"+dryadDreams[rand(dryadDreams.length)]+"\n\n");
 			//build a list of non ideal parts 
-			if (player.hips.type != 5 )
+			if (player.hips.type != Hips.RATING_FERTILE)
 				 tfChoice.push("hips");
-			if (player.butt.type != 5 )
+			if (player.butt.type != Butt.RATING_NOTICEABLE)
 				tfChoice.push("butt");
 			if (player.hasCock() != false )
 				tfChoice.push("cock");
@@ -96,15 +96,15 @@ package classes.Items.Armors
 				case "hips":
 						outputText("You wiggle around in your gown, pleasant feeling of flower petals rubbing against your skin washes over you.  The feeling settles on your [hips].\n");
 
-						if (player.hips.type < 5) {
+						if (player.hips.type < Hips.RATING_FERTILE) {
 							verb = "enlarge";
 							player.hips.type++;
 						}
-						if (player.hips.type > 5) {
+						if (player.hips.type > Hips.RATING_FERTILE) {
 							verb = "shrink";
 							player.hips.type--;
 						} 
-						if (player.hips.type== 5)
+						if (player.hips.type== Hips.RATING_FERTILE)
 							break;
 						outputText("You feel them slowly " + verb + ".<b>  You now have [hips].</b>\n"); 
 
@@ -113,17 +113,17 @@ package classes.Items.Armors
 				case "butt":
 					outputText("You wiggle around in your gown, the pleasant feeling of flower petals rubbing against your skin washes over you.  The feeling settles on your [butt].\n");
 				
-					if (player.butt.type < 5) {
+					if (player.butt.type < Butt.RATING_NOTICEABLE) {
 						verb = "enlarge";
 						player.butt.type++;
 					
 					}
-					if (player.butt.type > 5) {
+					if (player.butt.type > Butt.RATING_NOTICEABLE) {
 						verb = "shrink";	
 						player.butt.type--;
 						
 					} 
-					if (player.butt.type == 5)
+					if (player.butt.type == Butt.RATING_NOTICEABLE)
 						break;
 
 					outputText("You feel them slowly " + verb + ". <b>You now have a [butt].</b>"); 
