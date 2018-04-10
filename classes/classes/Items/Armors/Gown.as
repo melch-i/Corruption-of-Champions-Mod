@@ -86,7 +86,7 @@ package classes.Items.Armors
 				tfChoice.push("butt");
 			if (player.hasCock() != false )
 				tfChoice.push("cock");
-			if (player.breastRows[0].breastRating != 4)
+			if (player.breastRows[0].breastRating != BreastCup.D)
 				tfChoice.push("breasts");
 			if (player.femininity < 70)
 				tfChoice.push("girlyness");
