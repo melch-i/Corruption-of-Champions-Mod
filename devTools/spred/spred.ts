@@ -1122,6 +1122,17 @@ namespace spred {
 			]);
 			addCompositeView([
 				'ears_bg/human',
+				'eyes/human',
+				'hair/slime', 'hair_bg/slime2',
+				'head/goo', 'face/goo',
+				'neck/goocore',
+				'breasts/Dgoo',
+				'arms/goo', 'arms_bg/goo',
+				'legs/gooblob',
+				'torso/goo'
+			]);
+			addCompositeView([
+				'ears_bg/human',
 				'eyes/devil',
 				'horns/devil', 'horns_bg/devil',
 				'hair/0', 'hair_bg/0',
