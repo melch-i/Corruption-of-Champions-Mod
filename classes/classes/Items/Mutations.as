@@ -2006,9 +2006,9 @@ public final class Mutations extends MutationsHelper
 		}
 
 //Femminess
-		public function pinkEgg(large:Boolean,player:Player):void
+		public function pinkEgg(large:Boolean,player:Player,doClearOutput:Boolean = true):void
 		{
-			clearOutput();
+			if(doClearOutput)clearOutput();
 			outputText("You devour the egg, momentarily sating your hunger.\n\n");
 			if (!large) {
 				//Remove a dick
