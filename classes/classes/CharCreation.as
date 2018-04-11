@@ -16,7 +16,6 @@ import classes.BodyParts.Tail;
 import classes.BodyParts.Tongue;
 import classes.BodyParts.Wings;
 import classes.GlobalFlags.kACHIEVEMENTS;
-import classes.GlobalFlags.kCOUNTERS;
 import classes.GlobalFlags.kFLAGS;
 import classes.Items.*;
 	import classes.Scenes.Areas.Desert.SandWitchScene;
@@ -24,8 +23,6 @@ import classes.Items.*;
 import classes.Scenes.NPCs.JojoScene;
 import classes.Scenes.NPCs.XXCNPC;
 import classes.Scenes.SceneLib;
-import classes.internals.CountersStorage;
-import classes.internals.RootCounters;
 import classes.lists.BreastCup;
 import classes.lists.Gender;
 
@@ -376,9 +373,6 @@ import coc.view.MainView;
 			}
 			//Clear plot storage array!
 			CoC.instance.flags = new DefaultDict();
-			var countersStorage:CountersStorage = kCOUNTERS.create();
-			kCOUNTERS.initialize(countersStorage);
-			CoC.instance.counters = new RootCounters(countersStorage);
 			CoC.instance.saves.loadPermObject();
 			//Carry over data if new game plus.
 			if (newGamePlusLevel > 0) {
