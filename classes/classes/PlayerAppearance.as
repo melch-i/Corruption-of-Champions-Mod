@@ -2016,6 +2016,7 @@ public class PlayerAppearance extends BaseContent {
 		//</mod>
 	}
 public function RacialScores():void {
+	var racialScores:* = Race.AllScoresFor(player);
 	clearOutput();
 	outputText("<b>Current racial scores (and bonuses to stats if applicable):</b>\n");
 	if (player.alicornScore() >= 11) {
@@ -2212,11 +2213,11 @@ public function RacialScores():void {
 	else if (player.horseScore() >= 4 && player.horseScore() < 7) outputText("\n<font color=\"#0000a0\">Half Horse-morph: " + player.horseScore() + " (+" + (20 * (1 + player.newGamePlusMod())) + " max Tou, +" + (40 * (1 + player.newGamePlusMod())) + " max Spe, +" + (35 * (1 + player.newGamePlusMod())) + " max HP)</font>");
 	else if (player.horseScore() >= 1 && player.horseScore() < 4) outputText("\n<font color=\"#008000\">Half Horse-morph: " + player.horseScore() + "</font>");
 	else if (player.horseScore() < 1) outputText("\n<font color=\"#ff0000\">Half Horse-morph: 0</font>");
-	if (player.humanScore() == 30) outputText("\n<font color=\"#0000a0\">HUMANITY: 30 (+" + (40 * (1 + player.newGamePlusMod())) + " max Str / Tou / Spe / Int / Wis / Lib / Sen)</font>");
-	else if (player.humanScore() == 29) outputText("\n<font color=\"#0000a0\">HUMANITY: 29 (+" + (30 * (1 + player.newGamePlusMod())) + " max Str / Tou / Spe / Int / Wis / Lib / Sen)</font>");
-	else if (player.humanScore() == 28) outputText("\n<font color=\"#0000a0\">HUMANITY: 28 (+" + (20 * (1 + player.newGamePlusMod())) + " max Str / Tou / Spe / Int / Wis / Lib / Sen)</font>");
-	else if (player.humanScore() == 27) outputText("\n<font color=\"#0000a0\">HUMANITY: 27 (+" + (10 * (1 + player.newGamePlusMod())) + " max Str / Tou / Spe / Int / Wis / Lib / Sen)</font>");
-	else if (player.humanScore() < 27) outputText("\n<font color=\"#008000\">HUMANITY: " + player.humanScore() + "</font>");
+	if (racialScores[Race.HUMAN.name] == 30) outputText("\n<font color=\"#0000a0\">HUMANITY: 30 (+" + (40 * (1 + player.newGamePlusMod())) + " max Str / Tou / Spe / Int / Wis / Lib / Sen)</font>");
+	else if (racialScores[Race.HUMAN.name] == 29) outputText("\n<font color=\"#0000a0\">HUMANITY: 29 (+" + (30 * (1 + player.newGamePlusMod())) + " max Str / Tou / Spe / Int / Wis / Lib / Sen)</font>");
+	else if (racialScores[Race.HUMAN.name] == 28) outputText("\n<font color=\"#0000a0\">HUMANITY: 28 (+" + (20 * (1 + player.newGamePlusMod())) + " max Str / Tou / Spe / Int / Wis / Lib / Sen)</font>");
+	else if (racialScores[Race.HUMAN.name] == 27) outputText("\n<font color=\"#0000a0\">HUMANITY: 27 (+" + (10 * (1 + player.newGamePlusMod())) + " max Str / Tou / Spe / Int / Wis / Lib / Sen)</font>");
+	else if (racialScores[Race.HUMAN.name] < 27) outputText("\n<font color=\"#008000\">HUMANITY: " + player.humanScore() + "</font>");
 	if (player.internalChimeraScore() >= 1) {
 		outputText("\n<font color=\"#0000a0\">INTERNAL CHIMERICAL DISPOSITION: " + player.internalChimeraScore() + " (+" + (5 * player.internalChimeraScore() * (1 + player.newGamePlusMod())) + " max Str / Tou / Spe / Int / Wis / Lib)</font>");
 	}
