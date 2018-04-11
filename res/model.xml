@@ -310,6 +310,7 @@
         <cell rect="251,390,49,59" name="legs/pscales" dx="69" dy="115"/>
         <cell rect="301,390,49,59" name="legs/scales" dx="69" dy="115"/>
         <cell rect="351,390,49,59" name="legs/devil" dx="69" dy="115"/>
+        <cell rect="401,390,49,59" name="legs/goo" dx="69" dy="115"/>
         <cell rect="51,450,49,59" name="feet/fur" dx="68" dy="115"/>
         <cell rect="101,450,49,59" name="feet/scales" dx="69" dy="115"/>
         <cell rect="151,450,49,59" name="feet/fire" dx="69" dy="115"/>
@@ -391,8 +392,8 @@
         <cell rect="61,223,59,32" name="ears/elfin" dx="65" dy="37"/>
         <cell rect="121,190,59,32" name="ears_bg/goat" dx="65" dy="37"/>
         <cell rect="121,223,59,32" name="ears/goat" dx="65" dy="37"/>
-        <cell rect="121,256,29,32" name="ears_bg/dragon" dx="80" dy="37"/>
-        <cell rect="151,256,29,32" name="ears/dragon" dx="80" dy="37"/>
+        <cell rect="121,256,59,32" name="ears_bg/dragon" dx="65" dy="37"/>
+        <cell rect="121,289,59,32" name="ears/dragon" dx="65" dy="37"/>
         <cell rect="181,190,29,65" name="ears_bg/fox" dx="80" dy="4"/>
         <cell rect="181,256,29,65" name="ears/fox" dx="80" dy="4"/>
         <cell rect="211,190,29,65" name="ears_bg/wolf" dx="80" dy="4"/>
@@ -417,9 +418,10 @@
         <cell rect="121,396,59,65" name="horns/cow" dx="65" dy="4"/>
         <cell rect="181,330,29,65" name="horns/2small" dx="80" dy="4"/>
         <cell rect="211,330,29,65" name="horns/2large" dx="80" dy="4"/>
-        <cell rect="181,396,29,65" name="horns_bg/dragon" dx="80" dy="4"/>
         <cell rect="241,330,59,65" name="horns_bg/kraken" dx="65" dy="4"/>
         <cell rect="301,330,59,65" name="horns_bg/demon" dx="65" dy="4"/>
+        <cell rect="361,330,59,65" name="horns_bg/dragon" dx="65" dy="4"/>
+        <cell rect="361,396,59,65" name="horns/dragon" dx="65" dy="4"/>
         <cell rect="1,470,59,65" name="antennae/bee" dx="65" dy="4"/>
     </spritemap>
     <spritemap file="lewd.png">
@@ -471,6 +473,8 @@
         <cell rect="1,210,84,139" name="wings_bg/scales" dx="10" dy="20"/>
         <cell rect="86,210,83,139" name="wings/scales" dx="95" dy="20"/>
         <cell rect="170,210,168,139" name="wings/bee" dx="10" dy="20"/>
+        <cell rect="1,350,84,139" name="wings_bg/demon" dx="10" dy="20"/>
+        <cell rect="86,350,83,139" name="wings/demon" dx="95" dy="20"/>
     </spritemap>
 
     <layers>
@@ -1210,12 +1214,12 @@
                 <show part="wings/feather_large"/>
                 <show part="wings_bg/feather_large"/>
             </case>
-            <case values="Wings.IMP,Wings.BAT_LIKE_TINY,Wings.BAT_LIKE_LARGE,Wings.BAT_LIKE_LARGE_2"><!--TODO -->
-                <show part="wings/mantibig"/>
-                <show part="wings_bg/mantibig"/>
+            <case values="Wings.IMP,Wings.BAT_LIKE_TINY,Wings.BAT_LIKE_LARGE,Wings.BAT_LIKE_LARGE_2"><!--TODO sizes -->
+                <show part="wings/demon"/>
+                <show part="wings_bg/demon"/>
             </case>
             <!--TODO Wings.SHARK_FIN-->
-            <case values="Wings.DRACONIC_SMALL,Wings.DRACONIC_LARGE,Wings.DRACONIC_HUGE"><!--TODO -->
+            <case values="Wings.DRACONIC_SMALL,Wings.DRACONIC_LARGE,Wings.DRACONIC_HUGE"><!--TODO sizes -->
                 <show part="wings_bg/scales"/>
                 <show part="wings/scales"/>
             </case>

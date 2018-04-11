@@ -209,6 +209,7 @@ namespace spred {
 		
 		private _parts: Dict<boolean>          = {};
 		private _cache: Dict<ImageBitmap>      = {};
+		private _version = 0;
 		public readonly canvas: HTMLCanvasElement;
 		public readonly colormap: Dict<string> = {};
 		
@@ -231,6 +232,7 @@ namespace spred {
 					  y: number = 0,
 					  w: number = this.model.width,
 					  h: number = this.model.height) {
+			let version = ++this._version;
 			let ctx2d                   = this.canvas.getContext('2d');
 			ctx2d.imageSmoothingEnabled = false;
 			let z                       = this.zoom;
@@ -257,6 +259,7 @@ namespace spred {
 				let part = a[i];
 				if (this._parts[part.name]) {
 					p0 = p0.then(ctx2d => {
+						if (version != this._version) return ctx2d;
 						let sprite = this.model.sprite(part.name);
 						if (part.name in this._cache) {
 							drawImage(this._cache[part.name], x, y, w, h,
@@ -272,6 +275,7 @@ namespace spred {
 								if (x == 0 && y == 0 && w == this.model.width && h == this.model.height) {
 									this._cache[part.name] = bmp;
 								}
+								if (version != this._version) return ctx2d;
 								drawImage(bmp, x, y, w, h,
 									ctx2d,
 									part.dx + sprite.dx - this.model.originX,
@@ -348,6 +352,7 @@ namespace spred {
 			this.canvas.width  = width;
 			this.canvas.height = height;
 			this.ctx2d         = this.canvas.getContext('2d');
+			this.ctx2d.imageSmoothingEnabled = false;
 			this.ctx2d.drawImage(src, srcX, srcY, width, height, 0, 0, width, height);
 		}
 	}
