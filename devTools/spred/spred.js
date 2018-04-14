@@ -41,9 +41,13 @@ function colormap(src, map) {
     let darr = new Uint32Array(dst.data.buffer);
     for (let i = 0, n = darr.length; i < n; i++) {
         darr[i] = sarr[i];
+        let sa = (sarr[i] & 0xff000000) >>> 0;
+        let srgb = (sarr[i] | 0xff000000) >>> 0;
+        if (sa === 0 || srgb === 0)
+            continue;
         for (let j = 0, m = map.length; j < m; j++) {
-            if (sarr[i] === map[j][0]) {
-                darr[i] = map[j][1];
+            if (srgb === map[j][0]) {
+                darr[i] = ((map[j][1] & 0x00ffffff) | sa) >>> 0;
                 break;
             }
         }
@@ -274,6 +278,7 @@ var spred;
             this.model = model;
             this._parts = {};
             this._cache = {};
+            this._version = 0;
             this.colormap = {};
             this.canvas = newCanvas(model.width * zoom, model.height * zoom);
             this.canvas.setAttribute('focusable', 'true');
@@ -293,6 +298,7 @@ var spred;
             this._cache = {};
         }
         redraw(x = 0, y = 0, w = this.model.width, h = this.model.height) {
+            let version = ++this._version;
             let ctx2d = this.canvas.getContext('2d');
             ctx2d.imageSmoothingEnabled = false;
             let z = this.zoom;
@@ -321,6 +327,8 @@ var spred;
                 let part = a[i];
                 if (this._parts[part.name]) {
                     p0 = p0.then(ctx2d => {
+                        if (version != this._version)
+                            return ctx2d;
                         let sprite = this.model.sprite(part.name);
                         if (part.name in this._cache) {
                             drawImage(this._cache[part.name], x, y, w, h, ctx2d, part.dx + sprite.dx - this.model.originX, part.dy + sprite.dy - this.model.originY, this.model.width, this.model.height, z);
@@ -333,6 +341,8 @@ var spred;
                                 if (x == 0 && y == 0 && w == this.model.width && h == this.model.height) {
                                     this._cache[part.name] = bmp;
                                 }
+                                if (version != this._version)
+                                    return ctx2d;
                                 drawImage(bmp, x, y, w, h, ctx2d, part.dx + sprite.dx - this.model.originX, part.dy + sprite.dy - this.model.originY, this.model.width, this.model.height, z);
                                 return ctx2d;
                             });
@@ -379,6 +389,7 @@ var spred;
             this.canvas.width = width;
             this.canvas.height = height;
             this.ctx2d = this.canvas.getContext('2d');
+            this.ctx2d.imageSmoothingEnabled = false;
             this.ctx2d.drawImage(src, srcX, srcY, width, height, 0, 0, width, height);
         }
         updateUI() {
@@ -1009,6 +1020,17 @@ var spred;
                 'torso/human',
                 'wings/scales', 'wings_bg/scales',
                 'horns_bg/demon', 'tail/demon'
+            ]);
+            addCompositeView([
+                'ears_bg/human',
+                'eyes/human',
+                'hair/slime', 'hair_bg/slime2',
+                'head/goo', 'face/goo',
+                'neck/goocore',
+                'breasts/Dgoo',
+                'arms/goo', 'arms_bg/goo',
+                'legs/gooblob',
+                'torso/goo'
             ]);
             addCompositeView([
                 'ears_bg/human',

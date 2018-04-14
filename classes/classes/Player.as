@@ -1283,6 +1283,7 @@ use namespace CoC;
 
 		public function race():String
 		{
+			var racialScores:* = Race.AllScoresFor(this);
 			//Determine race type:
 			var race:String = "human";
 			if (catScore() >= 4)
@@ -1518,7 +1519,7 @@ use namespace CoC;
 			}
 			if (goblinScore() >= 4)
 				race = "goblin";
-			if (humanScore() >= 5 && race == "corrupted mutant")
+			if (racialScores['human'] >= 5 && race == "corrupted mutant")
 				race = "somewhat human mutant";
 			if (demonScore() >= 5)
 			{
@@ -1910,70 +1911,7 @@ use namespace CoC;
 		//Determine Human Rating
 		public function humanScore():Number {
 			Begin("Player","racialScore","human");
-			var humanCounter:Number = 0;
-			if (hasPlainSkinOnly() && skinTone != "slippery")
-				humanCounter++;
-			if (faceType == Face.HUMAN)
-				humanCounter++;
-			if (eyes.type == Eyes.HUMAN)
-				humanCounter++;
-			if (ears.type == Ears.HUMAN)
-				humanCounter++;
-			if (ears.type == Ears.ELVEN)
-				humanCounter -= 7;
-			if (tongue.type == 0)
-				humanCounter++;
-			if (gills.type == 0)
-				humanCounter++;
-			if (antennae.type == 0)
-				humanCounter++;
-			if (horns.count == 0)
-				humanCounter++;
-			if (wings.type == Wings.NONE)
-				humanCounter++;
-			if (tailType == 0)
-				humanCounter++;
-			if (arms.type == Arms.HUMAN)
-				humanCounter++;
-			if (lowerBody == LowerBody.HUMAN)
-				humanCounter++;
-			if (normalCocks() >= 1 || (hasVagina() && vaginaType() == 0))
-				humanCounter++;
-			if (breastRows.length == 1 && hasPlainSkinOnly() && skinTone != "slippery")
-				humanCounter++;
-			if (!hasPerk(PerkLib.BlackHeart))
-				humanCounter++;
-			if (!hasPerk(PerkLib.CatlikeNimbleness))
-				humanCounter++;
-			if (!hasPerk(PerkLib.CatlikeNimblenessEvolved))
-				humanCounter++;
-			if (!hasPerk(PerkLib.DraconicLungs))
-				humanCounter++;
-			if (!hasPerk(PerkLib.DraconicLungsEvolved))
-				humanCounter++;
-			if (!hasPerk(PerkLib.GorgonsEyes))
-				humanCounter++;
-			if (!hasPerk(PerkLib.KitsuneThyroidGland))
-				humanCounter++;
-			if (!hasPerk(PerkLib.KitsuneThyroidGlandEvolved))
-				humanCounter++;
-			if (!hasPerk(PerkLib.LizanMarrow))
-				humanCounter++;
-			if (!hasPerk(PerkLib.LizanMarrowEvolved))
-				humanCounter++;
-			if (!hasPerk(PerkLib.ManticoreMetabolism))
-				humanCounter++;
-			if (!hasPerk(PerkLib.MantislikeAgility))
-				humanCounter++;
-			if (!hasPerk(PerkLib.SalamanderAdrenalGlands))
-				humanCounter++;
-			if (!hasPerk(PerkLib.SalamanderAdrenalGlandsEvolved))
-				humanCounter++;
-			if (!hasPerk(PerkLib.ScyllaInkGlands))
-				humanCounter++;
-			if (!hasPerk(PerkLib.TrachealSystem))
-				humanCounter++;
-			
+			var humanCounter:Number = Race.HUMAN.scoreFor(this,Race.MetricsFor(this));
 			End("Player","racialScore");
 			return humanCounter;
 		}
@@ -2339,7 +2277,7 @@ use namespace CoC;
 				demonCounter += 4;
 			if (tongue.type == Tongue.DEMONIC)
 				demonCounter++;
-			if (cor >= 50 && hasPlainSkinOnly() && skinTone != "slippery")
+			if (cor >= 50 && hasPlainSkinOnly() && skinAdj != "slippery")
 				demonCounter++;
 			if (cor >= 50 && faceType == Face.HUMAN)
 				demonCounter++;
@@ -3271,7 +3209,7 @@ use namespace CoC;
 			if (balls > 2 && bunnyCounter > 0)
 				bunnyCounter--;
 			//Human skin on bunmorph adds
-			if (hasPlainSkin() && bunnyCounter > 1 && skinTone != "slippery")
+			if (hasPlainSkin() && bunnyCounter > 1 && skinAdj != "slippery")
 				bunnyCounter++;
 			//No wings and antennae.type a plus
 			if (bunnyCounter > 0 && antennae.type == 0)
@@ -5156,6 +5094,7 @@ use namespace CoC;
 			var maxSen:int = 100;
 			var maxCor:int = 100;
 			var newGamePlusMod:int = this.newGamePlusMod()+1;
+			var racialScores:* = Race.AllScoresFor(this);
 			
 			//Alter max speed if you have oversized parts. (Realistic mode)
 			if (flags[kFLAGS.HUNGER_ENABLED] >= 1)
@@ -5869,7 +5808,7 @@ use namespace CoC;
 				maxWis -= (15 * newGamePlusMod);
 				}
 			}
-			if (humanScore() == 30) {
+			if (racialScores[Race.HUMAN.name] == 30) {
 				maxStr += (40 * newGamePlusMod);
 				maxTou += (40 * newGamePlusMod);
 				maxSpe += (40 * newGamePlusMod);
@@ -5878,7 +5817,7 @@ use namespace CoC;
 				maxLib += (40 * newGamePlusMod);
 				maxSen += (40 * newGamePlusMod);
 			}
-			if (humanScore() == 29) {
+			if (racialScores[Race.HUMAN.name] == 29) {
 				maxStr += (30 * newGamePlusMod);
 				maxTou += (30 * newGamePlusMod);
 				maxSpe += (30 * newGamePlusMod);
@@ -5887,7 +5826,7 @@ use namespace CoC;
 				maxLib += (30 * newGamePlusMod);
 				maxSen += (30 * newGamePlusMod);
 			}
-			if (humanScore() == 28) {
+			if (racialScores[Race.HUMAN.name] == 28) {
 				maxStr += (20 * newGamePlusMod);
 				maxTou += (20 * newGamePlusMod);
 				maxSpe += (20 * newGamePlusMod);
@@ -5896,7 +5835,7 @@ use namespace CoC;
 				maxLib += (20 * newGamePlusMod);
 				maxSen += (20 * newGamePlusMod);
 			}
-			if (humanScore() == 27) {
+			if (racialScores[Race.HUMAN.name] == 27) {
 				maxStr += (10 * newGamePlusMod);
 				maxTou += (10 * newGamePlusMod);
 				maxSpe += (10 * newGamePlusMod);

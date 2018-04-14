@@ -11,7 +11,6 @@ import classes.Scenes.Inventory;
 import classes.Scenes.Places.Ingnam;
 import classes.Scenes.Places.Prison;
 import classes.Scenes.SceneLib;
-import classes.internals.RootCounters;
 import classes.internals.Utils;
 
 import coc.model.GameModel;
@@ -870,10 +869,6 @@ import coc.xxc.StoryContext;
 		protected function get flags():DefaultDict
 		{
 			return CoC.instance.flags;
-		}
-
-		protected function get counters():RootCounters {
-			return CoC.instance.counters;
 		}
 
 		protected function set flags(val:DefaultDict):void

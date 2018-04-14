@@ -23,7 +23,6 @@ import classes.Scenes.NPCs.ChiChi;
 import classes.Scenes.Quests.UrtaQuest.MilkySuccubus;
 import classes.Scenes.SceneLib;
 import classes.internals.ChainedDrop;
-import classes.internals.MonsterCounters;
 import classes.internals.RandomDrop;
 import classes.internals.Utils;
 import classes.internals.WeightedDrop;
@@ -100,7 +99,6 @@ import flash.utils.getQualifiedClassName;
 		public var bonusSoulforce:Number = 0;
 		public var bonusWrath:Number = 0;
 		public var bonusMana:Number = 0;
-		public var monsterCounters:MonsterCounters = null;
 		public var bonusStr:Number = 0;
 		public var bonusTou:Number = 0;
 		public var bonusSpe:Number = 0;
@@ -1595,11 +1593,6 @@ import flash.utils.getQualifiedClassName;
 		 */
 		public final function defeated_(hpVictory:Boolean):void
 		{
-			if (monsterCounters!=null) {
-				monsterCounters.lost_total++;
-				if (hpVictory) monsterCounters.lost_hp++;
-				else monsterCounters.lost_lust++;
-			}
 			if (onDefeated != null) onDefeated(hpVictory);
 			else defeated(hpVictory);
 		}
@@ -1609,11 +1602,6 @@ import flash.utils.getQualifiedClassName;
 		 */
 		public final function won_(hpVictory:Boolean,pcCameWorms:Boolean):void
 		{
-			if (monsterCounters!=null) {
-				monsterCounters.won_total++;
-				if (hpVictory) monsterCounters.won_hp++;
-				else monsterCounters.won_lust++;
-			}
 			if (onWon != null) onWon(hpVictory,pcCameWorms);
 			else won(hpVictory,pcCameWorms);
 		}

@@ -10,7 +10,6 @@ import classes.BodyParts.RearBody;
 import classes.BodyParts.Tail;
 import classes.BodyParts.Tongue;
 import classes.GlobalFlags.kACHIEVEMENTS;
-import classes.GlobalFlags.kCOUNTERS;
 import classes.GlobalFlags.kFLAGS;
 import classes.Items.*;
 	import classes.Scenes.Areas.Desert.SandWitchScene;
@@ -18,8 +17,6 @@ import classes.Items.*;
 import classes.Scenes.NPCs.JojoScene;
 import classes.Scenes.NPCs.XXCNPC;
 import classes.Scenes.SceneLib;
-import classes.internals.CountersStorage;
-import classes.internals.RootCounters;
 import classes.lists.BreastCup;
 
 import flash.events.Event;
@@ -795,17 +792,6 @@ public function saveGameObject(slot:String, isFile:Boolean):void
 				saveFile.data.flags[i] = flags[i];
 			}
 		}
-		saveFile.data.counters = [];
-		var cstorage:CountersStorage = counters._storage;
-		for(i=0; i<cstorage.length; i++) {
-			const ele:* = cstorage[i];
-			const a:Array = [];
-			a.length=ele.length;
-			for (var j:int=0; j<ele.length; j++){
-				a[j]=ele[j];
-			}
-			saveFile.data.counters[i] = a;
-		}
 
 		//CLOTHING/ARMOR
 		saveFile.data.armorId = player.armor.id;
@@ -1480,9 +1466,6 @@ public function loadGameObject(saveData:Object, slot:String = "VOID"):void
 		//KILL ALL COCKS;
 		player = new Player();
 		game.flags = new DefaultDict();
-		var countersStorage:CountersStorage = kCOUNTERS.create();
-		kCOUNTERS.initialize(countersStorage);
-		game.counters = new RootCounters(countersStorage);
 		model.player = player;
 		
 		//trace("Type of saveFile.data = ", getClass(saveFile.data));
@@ -1499,12 +1482,6 @@ public function loadGameObject(saveData:Object, slot:String = "VOID"):void
 		{
 			if (saveFile.data.flags[i] != undefined)
 				flags[i] = saveFile.data.flags[i];
-		}
-		//counters
-		if (saveFile.data.counters != undefined) {
-			for (i = 0; i < saveFile.data.counters.length; i++) {
-				if (saveFile.data.counters[i] != undefined) counters._storage[i] = saveFile.data.counters[i];
-			}
 		}
 		if (saveFile.data.versionID != undefined) {
 			game.versionID = saveFile.data.versionID;
@@ -2604,10 +2581,6 @@ public function unFuckSave():void
 		flags[kFLAGS.D3_MIRRORS_SHATTERED] = 1;
 	}
 	flags[kFLAGS.SHIFT_KEY_DOWN] = 0;
-	if (!kCOUNTERS.isInitialized(counters._storage)) {
-		kCOUNTERS.initialize(counters._storage);
-		// TODO init counters from flags
-	}
 }
 
     private function saveAllAwareClasses(game:CoC):void {
