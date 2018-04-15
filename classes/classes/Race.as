@@ -428,8 +428,6 @@ public class Race {
 							score++;
 						if (ch.horseCocks() > 0)
 							score++;
-						if (ch.hasVagina() && ch.vaginaType() == VaginaClass.EQUINE) // TODO
-							score++;
 						if (ch.wings.type != Wings.NONE)
 							score -= 3;
 						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
@@ -978,12 +976,10 @@ public class Race {
 					function (ch:Creature, metrics:*, score:int):int {
 						if (ch.horseCocks() > 0)
 							score++;
-						if (ch.hasVagina() && ch.vaginaType() == VaginaClass.EQUINE)
-							score++; // TODO vagina types almost never used - keep?
 						if (ch.isTaur())
 							score -= 5;
 //						if (ch.racialScores[Race.UNICORN.name] > 8 || ch.racialScores[Race.ALICORN.name] > 10) TODO conflicting races
-							score -= 5;
+//							score -= 5;
 						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
 							score += 10;
 						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 3)
@@ -1363,7 +1359,7 @@ public class Race {
 				'skin.coat'    : Skin.SCALES
 			}).withFinalizerScript(
 					function (ch:Creature, metrics:*, score:int):int {
-						// TODO if (racialScores[Race.GORGON.name] > 10 || racialScores[Race.VOUIVRE.name] > 10 || racialScores[Race.COUATL.name] > 10) score -= 8;
+						// TODO conflicting races if (racialScores[Race.GORGON.name] > 10 || racialScores[Race.VOUIVRE.name] > 10 || racialScores[Race.COUATL.name] > 10) score -= 8;
 						return score;
 					}
 			);
@@ -1534,7 +1530,7 @@ public class Race {
 							score++;
 						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 3)
 							score += 1;
-						// TODO
+						// TODO conflicting races
 //						if (racialScores[Race.ALRAUNE.name] >= 10)
 //							score -= 7;
 //						if (racialScores[Race.YGGDRASIL.name] >= 10)
