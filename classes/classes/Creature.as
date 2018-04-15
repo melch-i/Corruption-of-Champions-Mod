@@ -849,6 +849,16 @@ public class Creature extends Utils
 			return error;
 		}
 		
+		public function racialScore(race:Race):int {
+			Begin("Creature","racialScore",race.name);
+			var score:int = race.scoreFor(this,Race.MetricsFor(this));
+			End("Creature","racialScore");
+			return score;
+		}
+		public function racialScores():* {
+			return Race.AllScoresFor(this);
+		}
+		
 		/*
 		
 		[        P E R K S          ]

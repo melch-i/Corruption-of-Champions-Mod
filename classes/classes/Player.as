@@ -1283,7 +1283,7 @@ use namespace CoC;
 
 		public function race():String
 		{
-			var racialScores:* = Race.AllScoresFor(this);
+			var racialScores:* = this.racialScores();
 			//Determine race type:
 			var race:String = "human";
 			if (catScore() >= 4)
@@ -1519,28 +1519,21 @@ use namespace CoC;
 			}
 			if (goblinScore() >= 4)
 				race = "goblin";
-			if (racialScores['human'] >= 5 && race == "corrupted mutant")
+			if (racialScores[Race.HUMAN.name] >= 5 && race == "corrupted mutant")
 				race = "somewhat human mutant";
-			if (demonScore() >= 5)
-			{
-				if (demonScore() >= 11) {
+			if (racialScores[Race.DEMON.name] >= 5) {
+				var incub:String = mf("incub","succub");
+				if (racialScores[Race.DEMON.name] >= 11) {
 					if (isTaur()) {
-						race = "";
-						race += mf("incubi-kintaur", "succubi-kintaur");
+						race = incub+"i-kintaur";
+					} else {
+						race = incub+"i-kin";
 					}
-					else {
-						race = "";
-						race += mf("incubi-kin", "succubi-kin");
-					}
-				}
-				else {
+				} else {
 					if (isTaur()) {
-						race = "half ";
-						race += mf("incubus-taur", "succubus-taur");
-					}
-					else {
-						race = "half ";
-						race += mf("incubus", "succubus");
+						race = "half "+incub+"us-taur";
+					} else {
+						race = "half "+incub+"us";
 					}
 				}
 			}
@@ -1910,16 +1903,14 @@ use namespace CoC;
 
 		//Determine Human Rating
 		public function humanScore():Number {
-			Begin("Player","racialScore","human");
-			var humanCounter:Number = Race.HUMAN.scoreFor(this,Race.MetricsFor(this));
-			End("Player","racialScore");
-			return humanCounter;
+			return racialScore(Race.HUMAN);
 		}
 		
 		//Determine Chimera Race Rating
 		public function chimeraScore():Number {
 			Begin("Player","racialScore","chimera");
 			var chimeraCounter:Number = 0;
+			var racialScores:* = this.racialScores();
 			if (catScore() >= 4)
 				chimeraCounter++;
 			if (lizardScore() >= 4)
@@ -1950,7 +1941,7 @@ use namespace CoC;
 				chimeraCounter++;
 			if (goblinScore() >= 4)
 				chimeraCounter++;
-			if (demonScore() >= 5)
+			if (racialScores[Race.DEMON.name] >= 5)
 				chimeraCounter++;
 			if (devilkinScore() >= 7)
 				chimeraCounter++;
@@ -2027,6 +2018,7 @@ use namespace CoC;
 		public function grandchimeraScore():Number {
 			Begin("Player","racialScore","grandchimera");
 			var grandchimeraCounter:Number = 0;
+			var racialScores:* = this.racialScores();
 			if (catScore() >= 8)
 				grandchimeraCounter++;
 			if (nekomataScore() >= 11)
@@ -2067,7 +2059,7 @@ use namespace CoC;
 				grandchimeraCounter++;
 //			if (goblinScore() >= 4)
 //				grandchimeraCounter++;
-			if (demonScore() >= 11)
+			if (racialScores[Race.DEMON.name] >= 11)
 				grandchimeraCounter++;
 			if (devilkinScore() >= 10)
 				grandchimeraCounter++;
@@ -2261,46 +2253,7 @@ use namespace CoC;
 
 		//determine demon rating
 		public function demonScore():Number {
-			Begin("Player","racialScore","demon");
-			var demonCounter:Number = 0;
-			if (horns.type == Horns.DEMON && horns.count > 0)
-				demonCounter++;
-			if (cor >= 50 && horns.type == Horns.DEMON && horns.count > 4)
-				demonCounter++;
-			if (tailType == Tail.DEMONIC)
-				demonCounter++;
-			if (wings.type == Wings.BAT_LIKE_TINY)
-				demonCounter++;
-			if (wings.type == Wings.BAT_LIKE_LARGE)
-				demonCounter += 2;
-			if (wings.type == Wings.BAT_LIKE_LARGE_2)
-				demonCounter += 4;
-			if (tongue.type == Tongue.DEMONIC)
-				demonCounter++;
-			if (cor >= 50 && hasPlainSkinOnly() && skinAdj != "slippery")
-				demonCounter++;
-			if (cor >= 50 && faceType == Face.HUMAN)
-				demonCounter++;
-			if (cor >= 50 && arms.type == Arms.HUMAN)
-				demonCounter++;
-			if (lowerBody == LowerBody.DEMONIC_HIGH_HEELS || lowerBody == LowerBody.DEMONIC_CLAWS)
-				demonCounter++;
-			if (demonCocks() > 0)
-				demonCounter++;
-			if (hasPerk(PerkLib.BlackHeart))
-				demonCounter++;
-			if (hasPerk(PerkLib.AscensionHybridTheory) && demonCounter >= 5)
-				demonCounter += 1;
-			if (hasPerk(PerkLib.BlackHeart) && hasPerk(PerkLib.ChimericalBodyAdvancedStage))
-				demonCounter++;
-			if (horns.type == Horns.GOAT)
-				demonCounter -= 10;
-			if (hasPerk(PerkLib.ChimericalBodyPerfectStage))
-				demonCounter += 10;
-			if (hasPerk(PerkLib.DemonicLethicite))
-				demonCounter+=1;
-			End("Player","racialScore");
-			return demonCounter;
+			return racialScore(Race.DEMON);
 		}
 
 		//determine devil/infernal goat rating
@@ -5523,8 +5476,8 @@ use namespace CoC;
 					maxSen += (25 * newGamePlusMod);
 				}
 			}//+10/10-20
-			if (demonScore() >= 5) {
-				if (demonScore() >= 11) {
+			if (racialScores[Race.DEMON.name] >= 5) {
+				if (racialScores[Race.DEMON.name] >= 11) {
 					maxSpe += (30 * newGamePlusMod);
 					maxInt += (35 * newGamePlusMod);
 					maxLib += (100 * newGamePlusMod);
@@ -6874,10 +6827,11 @@ use namespace CoC;
 		}
 		protected override function maxLust_base():Number {
 			var max:Number = super.maxLust_base();
+			var racialScores:* = this.racialScores();
 			if (cowScore() >= 4) max += (25 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
 			if (cowScore() >= 9) max += (25 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (demonScore() >= 5) max += (50 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (demonScore() >= 11) max += (50 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
+			if (racialScores[Race.DEMON.name] >= 5) max += (50 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
+			if (racialScores[Race.DEMON.name] >= 11) max += (50 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
 			if (devilkinScore() >= 7) max += (75 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
 			if (devilkinScore() >= 10) max += (75 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
 			if (dragonScore() >= 20) max += (25 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
