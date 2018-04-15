@@ -2506,20 +2506,31 @@ public function RacialScores():void {
 			 * simple = object{
 			 *     total:int,
 			 *     items:list[
-			 *         tuple[
-			 *             metricName,
-			 *             metricValue,
-			 *             bonus
-			 *         ]
+			 *         item:object{
+			 *             metric:string,
+			 *             actual:*,
+			 *             bonus:int,
+			 *             checks:list[ pair[expected,bonus] ]
+			 *         }
 			 *     ]
 			 * }
 			 */
 			for each (var item:* in simple.items) {
 				outputText("<li>");
 				var metric:String = item.metric;
-				var metricValue:* = item.value;
-				var bonus:String = (item.bonus>0?"+":"")+(item.bonus);
-				outputText(bonus+" for "+Race.ExplainMetricValue(metric,metricValue)+" "+metric);
+				var actual:* = item.actual;
+				if (item.bonus == 0) outputText("<font color='#777777'>");
+				outputText(metric+": ");
+				if (item.bonus == 0) outputText("</font>");
+				for (var i:int=0;i<item.checks.length;i++) {
+					if (i!=0) outputText(", ");
+					var check:* = item.checks[i];
+					if (check[0] != actual) outputText("<font color='#777777'>");
+					var bonus:String = (check[1]>0?"+":"")+check[1];
+					outputText(bonus+" for "+Race.ExplainMetricValue(metric,check[0]));
+					if (check[0] != actual) outputText("</font>");
+				}
+				
 				outputText("</li>")
 			}
 			var complex:* = race.explainComplexScore(metrics);
@@ -2548,8 +2559,8 @@ public function RacialScores():void {
 				bonus = (item.bonus>0?"+":"")+item.bonus;
 				outputText(bonus+" for ");
 				if (!item.passed) outputText("</font>");
-				for (var i:int = 0; i < item.checks.length; i++) {
-					var check:* = item.checks[i];
+				for (i = 0; i < item.checks.length; i++) {
+					check = item.checks[i];
 					if (i!=0) outputText(", ");
 					if (check.passed) {
 						outputText(Race.ExplainMetricValue(check.metric, check.actual) + " " + check.metric);

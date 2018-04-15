@@ -2192,10 +2192,11 @@ public class Race {
 	 * @return object{
 	 *     total:int,
 	 *     items:list[
-	 *         object{
+	 *         item:object{
 	 *             metric:string,
-	 *             value:*,
-	 *             bonus:int
+	 *             actual:*,
+	 *             bonus:int,
+	 *             checks:list[ pair[expected,bonus] ]
 	 *         }
 	 *     ]
 	 * }
@@ -2204,11 +2205,16 @@ public class Race {
 		var rslt:* = {total: 0, items: []};
 		for (var metricName:String in metrics) {
 			var value:* = metrics[metricName];
+			var checks:* = simpleMetrics[metricName];
 			var bonus:* = simpleMetrics[metricName][value];
+			var item:* = {metric:metricName,actual:value,bonus:bonus||0,checks:[]};
 			if (typeof bonus != 'undefined') {
 				rslt.total += bonus;
-				rslt.items.push({metric:metricName, value:value, bonus:bonus});
 			}
+			for (var expectedValue:String in checks) {
+				item.checks.push([expectedValue,checks[expectedValue]]);
+			}
+			if (item.checks.length>0) rslt.items.push(item);
 		}
 		return rslt;
 	}
