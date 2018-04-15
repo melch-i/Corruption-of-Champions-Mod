@@ -4,6 +4,8 @@
 package classes {
 import classes.BodyParts.*;
 import classes.internals.Utils;
+import classes.lists.BreastCup;
+import classes.lists.Gender;
 
 /**
  * Racial score calculation is performed in 3 phases: simple, complex, and finalizer.
@@ -25,13 +27,20 @@ public class Race {
 	public var name:String;
 	
 	public static var RegisteredRaces:/*Race*/Array = [];
+	// TODO fur, scales, plain
 	public static var MetricNames:/*String*/Array   = [
 		'skin',
 		'skin.coverage',
 		'skin.tone',
 		'skin.adj',
+		'skin.base.pattern',
+		'skin.coat',
+		'skin.coat.color',
+		'hair',
+		'hair.color',
 		'face',
 		'eyes',
+		'eyes.color',
 		'ears',
 		'tongue',
 		'gills',
@@ -43,36 +52,89 @@ public class Race {
 		'tail.count',
 		'arms',
 		'legs',
-		'gender',
-		'cocks',
-		'cocks/human',
-		'breastRows'
+		'legs.count',
+		'rear',
+		'gender'
 	];
 	public static function MetricsFor(ch:Creature):* /* object{metricName:metricValue} */ {
 		return {
-			'skin'         : ch.skinType,
-			'skin.coverage': ch.skin.coverage,
-			'skin.tone'    : ch.skinTone,
-			'skin.adj'     : ch.skinAdj,
-			'face'         : ch.facePart.type,
-			'eyes'         : ch.eyes.type,
-			'ears'         : ch.ears.type,
-			'tongue'       : ch.tongue.type,
-			'gills'        : ch.gills.type,
-			'antennae'     : ch.antennae.type,
-			'horns'        : ch.horns.type,
-			'horns.count'  : ch.horns.count,
-			'wings'        : ch.wings.type,
-			'tail'         : ch.tail.type,
-			'tail.count'   : ch.tail.count,
-			'arms'         : ch.arms.type,
-			'legs'         : ch.lowerBody,
-			'gender'       : ch.gender,
-			'cocks'        : ch.cocks.length,
-			'cocks/human'  : ch.countCocksOfType(CockTypesEnum.HUMAN),
-			'breastRows'   : ch.breastRows.length
+			'skin'           : ch.skinType,
+			'skin.coverage'  : ch.skin.coverage,
+			'skin.tone'      : ch.skinTone,
+			'skin.adj'       : ch.skinAdj,
+			'skin.coat'      : ch.skin.coat.type,
+			'skin.coat.color': ch.skin.coat.color,
+			'hair'           : ch.hairType,
+			'hair.color'     : ch.hairColor,
+			'face'           : ch.facePart.type,
+			'eyes'           : ch.eyes.type,
+			'eyes.color'     : ch.eyes.colour,
+			'ears'           : ch.ears.type,
+			'tongue'         : ch.tongue.type,
+			'gills'          : ch.gills.type,
+			'antennae'       : ch.antennae.type,
+			'horns'          : ch.horns.type,
+			'horns.count'    : ch.horns.count,
+			'wings'          : ch.wings.type,
+			'tail'           : ch.tail.type,
+			'tail.count'     : ch.tail.count,
+			'arms'           : ch.arms.type,
+			'legs'           : ch.lowerBody,
+			'legs.count'     : ch.legCount,
+			'rear'           : ch.rearBody.type,
+			'gender'         : ch.gender
 		}
 	}
+	
+	public static function ExplainMetricValue(metric:String, value:*):String {
+		switch (metric) {
+			case 'skin'           :
+				return Appearance.DEFAULT_SKIN_NAMES[value].toLowerCase();
+			case 'skin.coverage'  :
+				return ["none", "low", "medium", "high", "complete"][value];
+			case 'skin.coat'      :
+				return Appearance.DEFAULT_SKIN_DESCS[value];
+			case 'hair'           :
+				return Appearance.DEFAULT_HAIR_NAMES[value];
+			case 'face'           :
+				return Appearance.DEFAULT_FACE_NAMES[value];
+			case 'eyes'           :
+				return Appearance.DEFAULT_EYES_NAMES[value];
+			case 'ears'           :
+				return Appearance.DEFAULT_EARS_NAMES[value];
+			case 'tongue'         :
+				return Appearance.DEFAULT_TONGUE_NAMES[value];
+			case 'gills'          :
+				return Appearance.DEFAULT_GILL_NAMES[value];
+			case 'antennae'       :
+				return Appearance.DEFAULT_ANTENNAE_NAMES[value];
+			case 'horns'          :
+				return Appearance.DEFAULT_HORNS_NAMES[value];
+			case 'arms'           :
+				return Appearance.DEFAULT_ARM_NAMES[value];
+			case 'legs'           :
+				return Appearance.DEFAULT_LOWER_BODY_NAMES[value];
+			case 'wings'          :
+				return Appearance.DEFAULT_WING_NAMES[value];
+			case 'tail'           :
+				return Appearance.DEFAULT_TAIL_NAMES[value];
+			case 'rear'           :
+				return Appearance.DEFAULT_REAR_BODY_NAMES[value];
+			case 'gender'         :
+				return Appearance.DEFAULT_GENDER_NAMES[value];
+			case 'skin.tone'      :
+			case 'skin.adj'       :
+			case 'skin.coat.color':
+			case 'hair.color'     :
+			case 'eyes.color'     :
+			case 'horns.count'    :
+			case 'tail.count'     :
+			case 'legs.count'     :
+			default:
+				return value;
+		}
+	}
+	
 	/**
 	 * @param metrics object{metricName:metricValue}
 	 * @return object{raceName:raceScore}
@@ -134,27 +196,350 @@ public class Race {
 						return score;
 					}
 			);
+	
+	// ^^^^^ SPECIAL RACES
+	// vvvvv NOT-SO-SPECIAL RACES
+	
+	public static var ALICORN:Race = new Race("alicorn")
+			.simpleScores({
+				'face'      : [
+					Face.HORSE, +2,
+					Face.HUMAN, +1
+				],
+				'ears'      : [Ears.HORSE, +1],
+				'eyes.color': [
+					"red", +1,
+					"blue", +1
+				],
+				'hair.color': ['white', +1],
+				'tail'      : [Tail.HORSE, +1],
+				'legs'      : [LowerBody.HOOFED, +1],
+				'legs.count': [4, +1],
+				'wings'     : [Wings.FEATHERED_ALICORN, +2]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.horns.type == Horns.UNICORN && ch.horns.count < 6)
+							score++;
+						if (ch.horns.type == Horns.UNICORN && ch.horns.count >= 6)
+							score += 2;
+						if (ch.hasFur() || ch.hasPlainSkinOnly())
+							score++;
+						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
+							score += 10;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 3)
+							score += 1;
+						return score;
+					}
+			);
+	
+	public static var ALRAUNE:Race = new Race("alraune")
+			.simpleScores({
+				'face' : [Face.HUMAN, +1],
+				'eyes' : [Eyes.HUMAN, +1],
+				'ears' : [Ears.ELFIN, +1],
+				'arms' : [Arms.PLANT, +1],
+				'wings': [Wings.NONE, +1],
+				'legs' : [LowerBody.PLANT_FLOWER, +2]
+			}).complexScore(+1, {
+				'hair'      : [Hair.LEAF, Hair.GRASS],
+				'hair.color': 'green'
+			}).complexScore(+1, {
+				'skin'     : Skin.PLAIN,
+				'skin.tone': ["leaf green", "lime green", "turquoise"]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.stamenCocks() > 0) score++;
+						return score;
+					}
+			);
+	
+	public static var AVIAN:Race = new Race("avian")
+			.simpleScores({
+				'hair'     : [Hair.FEATHER, +1],
+				'face'     : [Face.AVIAN, +1],
+				'ears'     : [Ears.AVIAN, +1],
+				'tail'     : [Tail.AVIAN, +1],
+				'arms'     : [Arms.AVIAN, +1],
+				'legs'     : [LowerBody.AVIAN, +1],
+				'wings'    : [Wings.FEATHERED_AVIAN, +2],
+				'skin.coat': [Skin.FEATHER, +1]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.avianCocks() > 0)
+							score++;
+						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
+							score += 10;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 3)
+							score += 1;
+						return score;
+					}
+			);
+	
+	public static var BAT:Race = new Race("bat")
+			.simpleScores({
+				'ears' : [
+					Ears.BAT, +1,
+					Ears.ELFIN, -10
+				],
+				'wings': [Wings.BAT_ARM, +5],
+				'legs' : [LowerBody.HUMAN, +1],
+				'face' : [Face.VAMPIRE, +2],
+				'eyes' : [Eyes.VAMPIRE, +1],
+				'rear' : [RearBody.BAT_COLLAR, +1]
+			});
+	
+	public static var BEE:Race = new Race("bee")
+			.simpleScores({
+				'hair.color': [
+					'shiny black', +1,
+					'black and yellow', +2 // TODO color/color2
+				],
+				'antennae'  : [Antennae.BEE, +1],
+				'arms'      : [Arms.BEE, +1],
+				'legs'      : [LowerBody.BEE, +1],
+				'tail'      : [Tail.BEE_ABDOMEN, +1],
+				'wings'     : [
+					Wings.BEE_LIKE_SMALL, +1,
+					Wings.BEE_LIKE_LARGE, +2
+				]
+			}).complexScore(+1, {
+				'antennae': Antennae.BEE,
+				'face'    : Face.HUMAN
+			}).complexScore(+1, {
+				'legs'  : LowerBody.BEE,
+				'gender': [Gender.GENDER_FEMALE, Gender.GENDER_HERM]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (score > 0 && ch.hasPerk(PerkLib.TrachealSystem))
+							score++;
+						if (score > 4 && ch.hasPerk(PerkLib.TrachealSystemEvolved))
+							score++;
+						if (score > 8 && ch.hasPerk(PerkLib.TrachealSystemFinalForm))
+							score++;
+						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
+							score += 10;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 3)
+							score += 1;
+						return score;
+					}
+			);
+	
+	public static var BUNNY:Race = new Race("bunny")
+			.simpleScores({
+				'face': [Face.BUNNY, +1],
+				'tail': [Tail.RABBIT, +1],
+				'ears': [Ears.BUNNY, +1],
+				'legs': [LowerBody.BUNNY, +1]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						//More than 2 balls reduces bunny score
+						if (ch.balls > 2 && score > 0)
+							score--;
+						//Human skin on bunmorph adds
+						if (ch.hasPlainSkin() && score > 1 && ch.skinAdj != "slippery")
+							score++;
+						//No wings and antennae.type a plus
+						if (score > 0 && ch.antennae.type == 0)
+							score++;
+						if (score > 0 && ch.wings.type == Wings.NONE)
+							score++;
+						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
+							score += 10;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 3)
+							score += 1;
+						return score;
+					}
+			);
+	
+	public static var CAT:Race = new Race("cat")
+			.simpleScores({
+				'face'     : [
+					Face.CAT, +1,
+					Face.CAT_CANINES, +1,
+					Face.CHESHIRE, -7,
+					Face.CHESHIRE_SMILE, -7
+				],
+				'eyes'     : [
+					Eyes.CAT_SLITS, +1,
+					Eyes.FERAL, -11,
+				],
+				'ears'     : [Ears.CAT, +1],
+				'tongue'   : [Tongue.CAT, +1],
+				'tail'     : [Tail.CAT, +1],
+				'arms'     : [Arms.CAT, +1],
+				'legs'     : [LowerBody.CAT, +1],
+				'horns'    : [
+					Horns.DEMON, -2,
+					Horns.DRACONIC_X2, -2,
+					Horns.DRACONIC_X4_12_INCH_LONG, -2
+				],
+				'wings'    : [
+					Wings.BAT_LIKE_TINY, -2,
+					Wings.DRACONIC_SMALL, -2,
+					Wings.BAT_LIKE_LARGE, -2,
+					Wings.DRACONIC_LARGE, -2,
+					Wings.BAT_LIKE_LARGE_2, -2,
+					Wings.DRACONIC_HUGE, -2
+				],
+				'skin.coat': [Skin.FUR, +1]
+			}).complexScore(-7, {
+				'hair.color'     : "lilac and white striped", // TODO separate into color/color2
+				'skin.coat.color': "lilac and white striped" // TODO separate into color/color2/pattern
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, catCounter:int):int {
+						if (ch.catCocks() > 0)
+							catCounter++;
+						if (ch.breastRows.length > 1 && catCounter > 0)
+							catCounter++;
+						if (ch.breastRows.length == 3 && catCounter > 0)
+							catCounter++;
+						if (ch.breastRows.length > 3)
+							catCounter -= 2;
+						if (ch.hasPerk(PerkLib.Flexibility))
+							catCounter++;
+						if (ch.hasPerk(PerkLib.CatlikeNimbleness))
+							catCounter++;
+						if (ch.hasPerk(PerkLib.CatlikeNimblenessEvolved))
+							catCounter++;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && catCounter >= 3)
+							catCounter += 1;
+						if (ch.hasPerk(PerkLib.CatlikeNimbleness) && ch.hasPerk(PerkLib.ChimericalBodyAdvancedStage))
+							catCounter++;
+						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
+							catCounter += 10;
+						return catCounter;
+					}
+			);
+	
+	public static var CENTAUR:Race = new Race("centaur")
+			.simpleScores({
+				'tail'      : [Tail.HORSE, +1],
+				'arms'      : [Arms.HUMAN, +1],
+				'face'      : [Face.HUMAN, +1],
+				'legs'      : [
+					LowerBody.HOOFED, +1,
+					LowerBody.CLOVEN_HOOFED, +1
+				],
+				'legs.count': [4, +2],
+				'ears'      : [Ears.HUMAN, +1]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.hasPlainSkinOnly())
+							score++;
+						if (ch.horseCocks() > 0)
+							score++;
+						if (ch.hasVagina() && ch.vaginaType() == VaginaClass.EQUINE) // TODO
+							score++;
+						if (ch.wings.type != Wings.NONE)
+							score -= 3;
+						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
+							score += 10;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 3)
+							score += 1;
+						if (ch.horns.type == Horns.UNICORN)
+							return 0;
+						return score;
+					}
+			);
+	
+	public static var CHESHIRE:Race = new Race("cheshire")
+			.simpleScores({
+				'eyes'     : [Eyes.CAT_SLITS, +1],
+				'ears'     : [Ears.CAT, +1],
+				'tongue'   : [Tongue.CAT, +1],
+				'tail'     : [Tail.CAT, +1],
+				'arms'     : [Arms.CAT, +1],
+				'legs'     : [LowerBody.CAT, +1],
+				'face'     : [
+					Face.CHESHIRE, +2,
+					Face.CHESHIRE_SMILE, +2
+				],
+				'skin.coat': [Skin.FUR, +1]
+			}).complexScore(+2, {
+				'hair.color'     : "lilac and white striped",
+				'skin.coat.color': "lilac and white striped"
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.hasPerk(PerkLib.Flexibility)) score++;
+						if (ch.hasPerk(PerkLib.CatlikeNimbleness)) score++;
+						if (ch.hasPerk(PerkLib.CatlikeNimblenessEvolved)) score++;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 7)
+							score += 1;
+						return score;
+					}
+			);
+	
+	public static var COUATL:Race = new Race("couatl")
+			.simpleScores({
+				'tongue'   : [Tongue.SNAKE, +1],
+				'face'     : [Face.SNAKE_FANGS, +1],
+				'arms'     : [Arms.HARPY, +1],
+				'ears'     : [Ears.SNAKE, +1],
+				'eyes'     : [Eyes.SNAKE, +1],
+				'hair'     : [Hair.FEATHER, +1],
+				'wings'    : [Wings.FEATHERED_LARGE, +2],
+				'legs'     : [LowerBody.NAGA, +2],
+				'skin.coat': [Skin.SCALES, +1]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 7)
+							score += 1;
+						return score;
+					}
+			);
+	
+	public static var COW:Race = new Race("cow")
+			.simpleScores({
+				'face'  : [
+					Face.HUMAN, +1,
+					Face.COW_MINOTAUR, +1
+				],
+				'ears'  : [Ears.COW, +1],
+				'tail'  : [Tail.COW, +1],
+				'legs'  : [LowerBody.HOOFED, +1],
+				'horns' : [Horns.COW_MINOTAUR, +1],
+				'gender': [
+					Gender.GENDER_HERM, -8,
+					Gender.GENDER_MALE, -8
+				]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (score >= 4) {
+							if (ch.biggestTitSize > 4) score++;
+							if (ch.hasFur()) score++;
+							if (ch.tallness >= 73) score++;
+							if (ch.cor >= 20) score++;
+							if (ch.hasVagina()) score++;
+						}
+						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
+							score += 10;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 4)
+							score += 1;
+						return score;
+					}
+			);
+	
 	public static var DEMON:Race = new Race("demon")
 			.simpleScores({
-				'horns': [
+				'horns' : [
 					Horns.DEMON, +1,
 					Horns.GOAT, -10
 				],
-				'tail':[Tail.DEMONIC,+1],
-				'wings':[
-						Wings.BAT_LIKE_TINY,+1,
-						Wings.BAT_LIKE_LARGE,+2,
-						Wings.BAT_LIKE_LARGE_2,+4
+				'tail'  : [Tail.DEMONIC, +1],
+				'wings' : [
+					Wings.BAT_LIKE_TINY, +1,
+					Wings.BAT_LIKE_LARGE, +2,
+					Wings.BAT_LIKE_LARGE_2, +4
 				],
-				'tongue':[
-						Tongue.DEMONIC,+1
+				'tongue': [
+					Tongue.DEMONIC, +1
 				],
-				'legs':[
-						LowerBody.DEMONIC_HIGH_HEELS,+1,
-						LowerBody.DEMONIC_CLAWS,+1
+				'legs'  : [
+					LowerBody.DEMONIC_HIGH_HEELS, +1,
+					LowerBody.DEMONIC_CLAWS, +1
 				]
 			}).withFinalizerScript(
-					function(ch:Creature,metrics:*,score:int):int {
+					function (ch:Creature, metrics:*, score:int):int {
 						if (ch.cor >= 50 && ch.horns.type == Horns.DEMON && ch.horns.count > 4)
 							score++;
 						if (ch.cor >= 50 && ch.hasPlainSkinOnly() && ch.skinAdj != "slippery")
@@ -174,11 +559,1534 @@ public class Race {
 						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
 							score += 10;
 						if (ch.hasPerk(PerkLib.DemonicLethicite))
-							score+=1;
+							score += 1;
 						return score;
 					}
 			);
+	
+	public static var DOG:Race = new Race("dog")
+			.simpleScores({
+				'face': [Face.DOG, +1],
+				'ears': [Ears.DOG, +1],
+				'tail': [Tail.DOG, +1],
+				'legs': [LowerBody.DOG, +1]
+			}).withFinalizerScript(function (ch:Creature, metrics:*, score:int):int {
+				if (ch.dogCocks() > 0)
+					score++;
+				if (ch.breastRows.length > 1)
+					score++;
+				if (ch.breastRows.length == 3)
+					score++;
+				if (ch.breastRows.length > 3)
+					score--;
+				//Fur only counts if some canine features are present
+				if (ch.hasFur() && score > 0)
+					score++;
+				if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
+					score += 10;
+				if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 3)
+					score += 1;
+				return score;
+			});
+	
+	public static var DEER:Race = new Race("deer")
+			.simpleScores({
+				'ears': [Ears.DEER, +1],
+				'tail': [Tail.DEER, +1],
+				'face': [Face.DEER, +1],
+				'legs': [
+					LowerBody.CLOVEN_HOOFED, +1,
+					LowerBody.DEERTAUR, +1
+				]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.horns.type == Horns.ANTLERS && ch.horns.count >= 4)
+							score++;
+						if (score >= 2 && ch.skinType == Skin.FUR)
+							score++;
+						if (score >= 3 && ch.countCocksOfType(CockTypesEnum.HORSE) > 0)
+							score++;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 3)
+							score += 1;
+						return score;
+					}
+			);
+	
+	public static var DEVILKIN:Race = new Race("devilkin")
+			.simpleScores({
+				'legs' : [LowerBody.HOOFED, +1],
+				'tail' : [
+					Tail.GOAT, +1,
+					Tail.DEMONIC, +1
+				],
+				'wings': [
+					Wings.BAT_LIKE_TINY, +4,
+					Wings.BAT_LIKE_LARGE, +4
+				],
+				'arms' : [Arms.DEVIL, +1],
+				'horns': [Horns.GOAT, +1],
+				'ears' : [Ears.GOAT, +1],
+				'face' : [Face.DEVIL_FANGS, +1],
+				'eyes' : [Eyes.DEVIL, +1]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.tallness < 48) score++;
+						if (ch.cor >= 60) score++;
+						return score;
+					}
+			);
+	
+	public static var DRAGON:Race = new Race("dragon")
+			.simpleScores({
+				'eyes'     : [Eyes.DRAGON, +1],
+				'ears'     : [Ears.DRAGON, +1],
+				'tail'     : [Tail.DRACONIC, +1],
+				'tongue'   : [Tongue.DRACONIC, +1],
+				'face'     : [
+					Face.DRAGON, +1,
+					Face.DRAGON_FANGS, +1,
+					Face.JABBERWOCKY, -10,
+					Face.BUCKTOOTH, -10
+				],
+				'wings'    : [
+					Wings.DRACONIC_SMALL, +1,
+					Wings.DRACONIC_LARGE, +2,
+					Wings.DRACONIC_HUGE, +4,
+					Wings.FEY_DRAGON_WINGS, -10
+				],
+				'legs'     : [LowerBody.DRAGON, +1],
+				'arms'     : [Arms.DRAGON, +1],
+				'horns'    : [
+					Horns.DRACONIC_X4_12_INCH_LONG, +2,
+					Horns.DRACONIC_X2, +1
+				],
+				'skin.coat': [Skin.DRAGON_SCALES, +1]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.tallness > 120 && score >= 10)
+							score++;
+						//	if (dragonCocks() > 0)
+						//		dragonCounter++;
+						if (ch.hasPerk(PerkLib.DragonFireBreath) && score >= 4)
+							score++;
+						if (ch.hasPerk(PerkLib.DragonIceBreath) && score >= 4)
+							score++;
+						if (ch.hasPerk(PerkLib.DragonLightningBreath) && score >= 4)
+							score++;
+						if (ch.hasPerk(PerkLib.DragonDarknessBreath) && score >= 4)
+							score++;
+						if (ch.hasPerk(PerkLib.DraconicLungs))
+							score++;
+						if (ch.hasPerk(PerkLib.DraconicLungsEvolved))
+							score++;
+						//	if (hasPerk(PerkLib.ChimericalBodyPerfectStage))
+						//		dragonCounter += 10;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 4)
+							score += 1;
+						if (ch.hasPerk(PerkLib.DraconicLungs) && ch.hasPerk(PerkLib.ChimericalBodyAdvancedStage))
+							score++;
+						return score;
+					}
+			);
+	
+	public static var DRAGONNE:Race = new Race("dragonne")
+			.simpleScores({
+				'face'  : [Face.CAT, +1],
+				'ears'  : [Ears.CAT, +1],
+				'tail'  : [Tail.CAT, +1],
+				'tongue': [Tongue.DRACONIC, +1],
+				'wings' : [
+					Wings.DRACONIC_LARGE, +2,
+					Wings.DRACONIC_SMALL, +1
+				],
+				'legs'  : [LowerBody.CAT, +1]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.skinType == Skin.SCALES && score > 0)
+							score++;
+						return score;
+					}
+			);
+	
+	public static var ECHIDNA:Race = new Race("racename")
+			.simpleScores({
+				'ears'  : [Ears.ECHIDNA, +1],
+				'tail'  : [Tail.ECHIDNA, +1],
+				'face'  : [Face.ECHIDNA, +1],
+				'tongue': [Tongue.ECHIDNA, +1],
+				'legs'  : [LowerBody.ECHIDNA, +1]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (score >= 2 && ch.skinType == Skin.FUR)
+							score++;
+						if (score >= 2 && ch.countCocksOfType(CockTypesEnum.ECHIDNA) > 0)
+							score++;
+						return score;
+					}
+			);
+	
+	public static var ELF:Race = new Race("elf")
+			.simpleScores({
+				'ears'      : [Ears.ELVEN, +1],
+				'eyes'      : [Eyes.ELF, +1],
+				'tongue'    : [Tongue.ELF, +1],
+				'arms'      : [Arms.ELF, +1],
+				'legs'      : [LowerBody.ELF, +1],
+				'hair'      : [Hair.SILKEN, +1],
+				'hair.color': [
+					'black', +1,
+					'leaf green', +1,
+					'golden blonde', +1,
+					'silver', +1
+				],
+				'skin.tone' : [
+					'dark', +1,
+					'light', +1,
+					'tan', +1
+				]
+			}).complexScore(+2, {
+				'skin'    : Skin.PLAIN,
+				'skin.adj': 'flawless'
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.biggestCockLength() < 6)
+							score++;
+						if (ch.hasVagina() && ch.biggestTitSize() >= BreastCup.C)
+							score++;
+						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
+							score += 10;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 3)
+							score += 1;
+						return score;
+					}
+			);
+	
+	public static var FERRET:Race = new Race("ferret")
+			.simpleScores({
+				'face': [
+					Face.FERRET_MASK, +1,
+					Face.FERRET, +2
+				],
+				'ears': [Ears.FERRET, +1],
+				'tail': [Tail.FERRET, +1],
+				'legs': [LowerBody.FERRET, +1]
+			}).withFinalizerScript(function (ch:Creature, metrics:*, score:int):int {
+				if (ch.hasFur() && score > 0) score++;
+				return score;
+			});
+	
+	public static var FOX:Race = new Race("fox")
+			.simpleScores({
+				'face': [Face.FOX, +1],
+				'eyes': [Eyes.FOX, +1],
+				'ears': [Ears.FOX, +1],
+				'tail': [Tail.FOX, +1],
+				'arms': [Arms.FOX, +1],
+				'legs': [LowerBody.FOX, +1]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.tailType == Tail.FOX && ch.tailCount >= 2) score -= 7;
+						if (ch.foxCocks() > 0 && score > 0) score++;
+						if (ch.breastRows.length > 1 && score > 0) score++;
+						if (ch.breastRows.length == 3 && score > 0) score++;
+						if (ch.breastRows.length == 4 && score > 0) score++;
+						//Fur only counts if some canine features are present
+						if (ch.hasFur() && score > 0) score++;
+						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
+							score += 10;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 3)
+							score += 1;
+						return score;
+					}
+			);
+	
+	public static var GARGOYLE:Race = new Race("gargoyle")
+			.simpleScores({
+				'horns'     : [Horns.GARGOYLE, +1],
+				'eyes'      : [Eyes.GEMSTONES, +1],
+				'ears'      : [Ears.ELFIN, +1],
+				'face'      : [Face.DEVIL_FANGS, +1],
+				'tongue'    : [Tongue.DEMONIC, +1],
+				'hair.color': [
+					"light grey", +1,
+					"quartz white", +1
+				],
+				'arms'      : [
+					Arms.GARGOYLE, +1,
+					Arms.GARGOYLE_2, +1
+				],
+				'tail'      : [
+					Tail.GARGOYLE, +1,
+					Tail.GARGOYLE_2, +1
+				],
+				'legs'      : [
+					LowerBody.GARGOYLE, +1,
+					LowerBody.GARGOYLE_2, +1
+				],
+				'skin'      : [Skin.STONE, +1],
+				'skin.tone' : [
+					"light grey", +1,
+					"quartz white", +1
+				],
+				'hair'      : [Hair.NORMAL, +1],
+				'wings'     : [Wings.GARGOYLE_LIKE_LARGE, +4]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.hasPerk(PerkLib.GargoylePure) || ch.hasPerk(PerkLib.GargoyleCorrupted))
+							score++;
+						if (ch.hasPerk(PerkLib.TransformationImmunity))
+							score += 4;
+						return score;
+					}
+			);
+	
+	public static var GoblinSkinColors:/*String*/Array = ["pale yellow", "grayish-blue", "green", "dark green"];
+	public static var GOBLIN:Race                      = new Race("goblin")
+			.simpleScores({
+				'ears': [Ears.ELFIN, +1]
+			}).complexScore(+1, {
+				// Moved from simpleScores for readability
+				'skin.tone': GoblinSkinColors
+			}).complexScore(+1, {
+				'skin.tone': GoblinSkinColors,
+				'face'     : Face.HUMAN
+			}).complexScore(+1, {
+				'skin.tone': GoblinSkinColors,
+				'legs'     : LowerBody.HUMAN
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (GoblinSkinColors.indexOf(ch.skinTone) >= 0) {
+							if (ch.tallness < 48 && score > 0)
+								score++;
+							if (ch.hasVagina())
+								score++;
+						}
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 3)
+							score += 1;
+						return score;
+					}
+			);
+	
+	public static var GOO:Race = new Race("goo")
+			.simpleScores({
+				'hair' : [Hair.GOO, +1],
+				'wings': [Wings.NONE, +1],
+				'legs' : [LowerBody.GOO, +2]
+			}).complexScore(+1, {
+				'skin'    : Skin.GOO,
+				'skin.adj': 'slimy'
+			}).complexScore(+1, {
+				// TODO could optimize these by big - if not goo & slimy skin
+				'skin'    : Skin.GOO,
+				'skin.adj': 'slimy',
+				'face'    : Face.HUMAN
+			}).complexScore(+1, {
+				// TODO could optimize these by big - if not goo & slimy skin
+				'skin'    : Skin.GOO,
+				'skin.adj': 'slimy',
+				'arms'    : Arms.HUMAN
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.vaginalCapacity() > 9000)
+							score++;
+						if (ch.hasStatusEffect(StatusEffects.SlimeCraving))
+							score++;
+						if (ch.hasPerk(PerkLib.SlimeCore))
+							score++;
+						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
+							score += 10;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 4)
+							score += 1;
+						return score;
+					}
+			);
+	
+	public static var GORGON:Race = new Race("gorgon")
+			.simpleScores({
+				'tongue'   : [Tongue.SNAKE, +1],
+				'face'     : [Face.SNAKE_FANGS, +1],
+				'arms'     : [Arms.HUMAN, +1],
+				'ears'     : [Ears.SNAKE, +1],
+				'eyes'     : [
+					Eyes.SNAKE, +1,
+					Eyes.GORGON, +2
+				],
+				'legs'     : [LowerBody.NAGA, +2],
+				'skin.coat': [Skin.SCALES, +1],
+				'hair'     : [Hair.GORGON, +2]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.hasPerk(PerkLib.GorgonsEyes))
+							score++;
+						if (ch.antennae.type != Antennae.NONE)
+							score -= 3;
+						if (ch.wings.type != Wings.NONE)
+							score -= 3;
+						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
+							score += 10;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 7)
+							score += 1;
+						if (ch.hasPerk(PerkLib.GorgonsEyes) && ch.hasPerk(PerkLib.ChimericalBodyAdvancedStage))
+							score++;
+						return score;
+					}
+			);
+	
+	public static var HARPY:Race = new Race("harpy")
+			.simpleScores({
+				'arms' : [Arms.HARPY, +1],
+				'hair' : [Hair.FEATHER, +1],
+				'wings': [Wings.FEATHERED_LARGE, +2],
+				'tail' : [
+					Tail.HARPY, +1,
+					Tail.SHARK, -5,
+					Tail.SALAMANDER, -5
+				],
+				'legs' : [
+					LowerBody.HARPY, +1,
+					LowerBody.SALAMANDER, -1
+				],
+				'face' : [Face.SHARK_TEETH, -1]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (score >= 2 && ch.faceType == Face.HUMAN)
+							score++;
+						if (score >= 2 && (ch.ears.type == Ears.HUMAN || ch.ears.type == Ears.ELFIN))
+							score++;
+						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
+							score += 10;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 3)
+							score += 1;
+						return score;
+					}
+			);
+	
+	public static var HORSE:Race = new Race("horse")
+			.simpleScores({
+				'face'     : [Face.HORSE, +1],
+				'ears'     : [Ears.HORSE, +1],
+				'tail'     : [Tail.HORSE, +1],
+				'legs'     : [
+					LowerBody.HOOFED, +1,
+					LowerBody.CENTAUR, +1
+				],
+				'skin.coat': [Skin.FUR, +1]
+			}).complexScore(+1, {
+				'skin.coat': Skin.FUR,
+				'arms'     : Arms.HUMAN
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.horseCocks() > 0)
+							score++;
+						if (ch.hasVagina() && ch.vaginaType() == VaginaClass.EQUINE)
+							score++; // TODO vagina types almost never used - keep?
+						if (ch.isTaur())
+							score -= 5;
+//						if (ch.racialScores[Race.UNICORN.name] > 8 || ch.racialScores[Race.ALICORN.name] > 10) TODO conflicting races
+							score -= 5;
+						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
+							score += 10;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 3)
+							score += 1;
+						return score;
+					}
+			);
+	
+	public static var JABBERWOCKY:Race = new Race("jabberwocky")
+			.simpleScores({
+				'face'     : [
+					Face.JABBERWOCKY, +1,
+					Face.BUCKTOOTH, +1,
+					Face.DRAGON, -10,
+					Face.DRAGON_FANGS, -10
+				],
+				'eyes'     : [Eyes.DRAGON, +1],
+				'ears'     : [Ears.DRAGON, +1],
+				'tail'     : [Tail.DRACONIC, +1],
+				'tongue'   : [Tongue.DRACONIC, +1],
+				'wings'    : [
+					Wings.FEY_DRAGON_WINGS, +4,
+					Wings.DRACONIC_SMALL, -10,
+					Wings.DRACONIC_LARGE, -10,
+					Wings.DRACONIC_HUGE, -10
+				],
+				'legs'     : [LowerBody.DRAGON, +1],
+				'arms'     : [Arms.DRAGON, +1],
+				'horns'    : [
+					Horns.DRACONIC_X4_12_INCH_LONG, +2,
+					Horns.DRACONIC_X2, +1
+				],
+				'skin.coat': [Skin.DRAGON_SCALES, +1]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.tallness > 120 && score >= 10)
+							score++;
+						//	if (dragonCocks() > 0)
+						//		dragonCounter++;
+						if (ch.hasPerk(PerkLib.DragonFireBreath) && score >= 4)
+							score++;
+						if (ch.hasPerk(PerkLib.DragonIceBreath) && score >= 4)
+							score++;
+						if (ch.hasPerk(PerkLib.DragonLightningBreath) && score >= 4)
+							score++;
+						if (ch.hasPerk(PerkLib.DragonDarknessBreath) && score >= 4)
+							score++;
+						if (ch.hasPerk(PerkLib.DraconicLungs))
+							score++;
+						if (ch.hasPerk(PerkLib.DraconicLungsEvolved))
+							score++;
+						//	if (hasPerk(PerkLib.ChimericalBodyPerfectStage))
+						//		dragonCounter += 10;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 4)
+							score += 1;
+						if (ch.hasPerk(PerkLib.DraconicLungs) && ch.hasPerk(PerkLib.ChimericalBodyAdvancedStage))
+							score++;
+						return score;
+					}
+			);
+	
+	public static var KANGA:Race = new Race("kangaroo")
+			.simpleScores({
+				'ears': [Ears.KANGAROO, +1],
+				'tail': [Tail.KANGAROO, +1],
+				'legs': [LowerBody.KANGAROO, +1],
+				'face': [Face.KANGAROO, +1]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.kangaCocks() > 0)
+							score++;
+						if (score >= 2 && ch.hasFur())
+							score++;
+						return score;
+					}
+			);
+	
+	public static var KITSHOO:Race = new Race("kitshoo")
+			.simpleScores({
+				'ears'     : [Ears.FOX, +1],
+				'skin'     : [Skin.GOO, -3],
+				'skin.coat': [Skin.CHITIN, -2]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						//If the character has a fox tail, +1
+						//	if (tailType == FOX)
+						//		score++;
+						//If the character has two to eight fox tails, +2
+						//	if (tailType == FOX && tailCount >= 2 && tailCount < 9)
+						//		score += 2;
+						//If the character has nine fox tails, +3
+						//	if (tailType == FOX && tailCount == 9)
+						//		score += 3;
+						//If the character has tattooed skin, +1
+						//9999
+						//If the character has a 'vag of holding', +1
+						//	if (vaginalCapacity() >= 8000)
+						//		score++;
+						//If the character's kitshoo score is greater than 0 and:
+						//If the character has a normal face, +1
+						if (score > 0 && (ch.faceType == Face.HUMAN || ch.faceType == Face.FOX))
+							score++;
+						//If the character's kitshoo score is greater than 1 and:
+						//If the character has "blonde","black","red","white", or "silver" hair, +1
+						if (score > 0 && ch.hasFur() && (Utils.InCollection(ch.coatColor, KitsuneHairColors) || Utils.InCollection(ch.coatColor, KitsuneElderColors)))
+							score++;
+						//If the character's femininity is 40 or higher, +1
+						//	if (score > 0 && femininity >= 40)
+						//		score++;
+						//If the character has fur, chitin, or gooey skin, -1
+						//	if (skinType == FUR && !InCollection(furColor, KitsuneScene.basicKitsuneFur) && !InCollection(furColor, KitsuneScene.elderKitsuneColors))
+						//		score--;
+						//	if (skinType == SCALES)
+						//		score -= 2; - czy bedzie pozytywny do wyniku czy tez nie?
+						//If the character has abnormal legs, -1
+						//	if (lowerBody != HUMAN && lowerBody != FOX)
+						//		score--;
+						//If the character has a nonhuman face, -1
+						//	if (faceType != HUMAN && faceType != FOX)
+						//		score--;
+						//If the character has ears other than fox ears, -1
+						//	if (earType != FOX)
+						//		score--;
+						//If the character has tail(s) other than fox tails, -1
+						//	if (tailType != FOX)
+						//		score--;
+						//When character get one of 9-tail perk
+						//	if (score >= 3 && (hasPerk(PerkLib.EnlightenedNinetails) || hasPerk(PerkLib.CorruptedNinetails)))
+						//		score += 2;
+						//When character get Hoshi no tama
+						//	if (hasPerk(PerkLib.KitsuneThyroidGland))
+						//		score++;
+						//	if (hasPerk(PerkLib.ChimericalBodyPerfectStage))
+						//		score += 10;
+						return score;
+					}
+			);
+	
+	public static const KitsuneHairColors:/*String*/Array  = ["white", "black", "black", "black", "red", "red", "red"];
+	public static const KitsuneFurColors:/*String*/Array   = ["orange and white", "black", "black and white", "red", "red and white", "white"];
+	public static const KitsuneElderColors:/*String*/Array = ["metallic golden", "golden blonde", "metallic silver", "silver blonde", "snow white", "iridescent gray"];
+	public static var KITSUNE:Race                         = new Race("kitsune")
+			.simpleScores({
+				'eyes'             : [Eyes.FOX, +1],
+				'ears'             : [Ears.FOX, +1],
+				'arms'             : [
+					Arms.HUMAN, +1,
+					Arms.KITSUNE, +1
+				],
+				'legs'             : [
+					LowerBody.FOX, +1,
+					LowerBody.HUMAN, +1
+				],
+				'face'             : [
+					Face.HUMAN, +1,
+					Face.FOX, +1
+				],
+				// TODO wasn't +2 for tattoo and fur
+				'skin.base.pattern': [Skin.PATTERN_MAGICAL_TATTOO, +1],
+				'skin.coat'        : [Skin.FUR, +1]
+			}).complexScore(-7, {
+				'tail'      : Tail.FOX,
+				'tail.count': 1
+			}).complexScore(+1, {
+				'tail'      : Tail.FOX,
+				'tail.count': [2, 3]
+			}).complexScore(+2, {
+				'tail'      : Tail.FOX,
+				'tail.count': [4, 5]
+			}).complexScore(+3, {
+				'tail'      : Tail.FOX,
+				'tail.count': [6, 7, 8]
+			}).complexScore(+4, {
+				'tail'      : Tail.FOX,
+				'tail.count': 9
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						// TODO make global -1, and add +1 to Fox Ears?
+						if (ch.ears.type != Ears.FOX)
+							score--;
+						if (ch.tailType != Tail.FOX)
+							score -= 7;
+						//If the character has fur, scales, or gooey skin, -1
+						//	if (skinType == FUR && !InCollection(furColor, KitsuneScene.basicKitsuneFur) && !InCollection(furColor, KitsuneScene.elderKitsuneColors))
+						//		kitsuneCounter--;
+						if (ch.hasCoat() && !ch.hasCoatOfType(Skin.FUR))
+							score -= 2;
+						if (ch.skin.base.type != Skin.PLAIN)
+							score -= 3;
+						if (ch.lowerBody != LowerBody.HUMAN && ch.lowerBody != LowerBody.FOX)
+							score--;
+						//If the character has a 'vag of holding', +1
+						if (ch.vaginalCapacity() >= 8000)
+							score++;
+						if (ch.faceType != Face.HUMAN && ch.faceType != Face.FOX)
+							score--;
+						//If the character has "blonde","black","red","white", or "silver" hair, +1
+						//	if (kitsuneCounter > 0 && (InCollection(furColor, KitsuneScene.basicKitsuneHair) || InCollection(furColor, KitsuneScene.elderKitsuneColors)))
+						//		kitsuneCounter++;
+						if (ch.hasPerk(PerkLib.StarSphereMastery))
+							score++;
+						//When character get Hoshi no tama
+						if (ch.hasPerk(PerkLib.KitsuneThyroidGland))
+							score++;
+						if (ch.hasPerk(PerkLib.KitsuneThyroidGlandEvolved))
+							score++;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 5)
+							score += 1;
+						if (ch.hasPerk(PerkLib.KitsuneThyroidGland) && ch.hasPerk(PerkLib.ChimericalBodyAdvancedStage))
+							score++;
+						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
+							score += 10;
+						return score;
+					}
+			);
+	
+	public static var LIZARD:Race = new Race("lizard")
+			.simpleScores({
+				'face' : [Face.LIZARD, +1],
+				'ears' : [Ears.LIZARD, +1],
+				'eyes' : [Eyes.REPTILIAN, +1],
+				'tail' : [Tail.LIZARD, +1],
+				'arms' : [Arms.LIZARD, +1],
+				'legs' : [LowerBody.LIZARD, +1],
+				'horns': [
+					Horns.DRACONIC_X2, +1,
+					Horns.DRACONIC_X4_12_INCH_LONG, +1
+				]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.hasScales())
+							score++;
+						if (ch.lizardCocks() > 0)
+							score++;
+						if (score > 0 && ch.hasPerk(PerkLib.LizanRegeneration))
+							score++;
+						if (ch.hasPerk(PerkLib.LizanMarrow))
+							score++;
+						if (ch.hasPerk(PerkLib.LizanMarrowEvolved))
+							score++;
+						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
+							score += 10;
+						if (ch.hasPerk(PerkLib.LizanMarrow) && ch.hasPerk(PerkLib.ChimericalBodyAdvancedStage))
+							score++;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 4)
+							score += 1;
+						return score;
+					}
+			);
+	
+	public static var MANTICORE:Race = new Race("manticore")
+			.simpleScores({
+				'face'  : [Face.MANTICORE, +1],
+				'eyes'  : [Eyes.MANTICORE, +1],
+				'ears'  : [Ears.LION, +1],
+				'rear'  : [RearBody.LION_MANE, +1],
+				'arms'  : [Arms.LION, +1],
+				'legs'  : [LowerBody.LION, +1],
+				'tongue': [Tongue.CAT, +1],
+				'wings' : [
+					Wings.MANTICORE_LIKE_SMALL, +1,
+					Wings.MANTICORE_LIKE_LARGE, +2
+				],
+				'tail'  : [Tail.MANTICORE_PUSSYTAIL, +2]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (!ch.hasCock()) score++;
+						else score -= 3;
+						if (ch.hasPerk(PerkLib.ManticoreMetabolism))
+							score++;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 3)
+							score += 1;
+						if (ch.hasPerk(PerkLib.ChimericalBodyAdvancedStage) && ch.hasPerk(PerkLib.ManticoreMetabolism))
+							score++;
+						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage) && ch.hasPerk(PerkLib.ManticoreMetabolism) && score >= 6)
+							score += 1;
+						if (ch.hasPerk(PerkLib.ChimericalBodyUltimateStage) && ch.hasPerk(PerkLib.ManticoreMetabolism) && score >= 7)
+							score += 1;
+						return score;
+					}
+			);
+	
+	public static var MANTIS:Race = new Race("mantis")
+			.simpleScores({
+				'arms'     : [Arms.MANTIS, +1],
+				'legs'     : [LowerBody.MANTIS, +1],
+				'tail'     : [Tail.MANTIS_ABDOMEN, +1],
+				'wings'    : [
+					Wings.MANTIS_LIKE_SMALL, +1,
+					Wings.MANTIS_LIKE_LARGE, +2,
+					Wings.MANTIS_LIKE_LARGE_2, +4
+				],
+				'skin.coat': [Skin.CHITIN, +1],
+				'antennae' : [Antennae.MANTIS, +1]
+			}).complexScore(+1, {
+				'antennae': Antennae.MANTIS,
+				'face'    : Face.HUMAN
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (score > 0 && ch.hasPerk(PerkLib.TrachealSystem))
+							score++;
+						if (score > 4 && ch.hasPerk(PerkLib.TrachealSystemEvolved))
+							score++;
+						if (score > 8 && ch.hasPerk(PerkLib.TrachealSystemFinalForm))
+							score++;
+						if (ch.hasPerk(PerkLib.MantislikeAgility))
+							score++;
+						if (ch.hasPerk(PerkLib.MantislikeAgilityEvolved))
+							score++;
+						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
+							score += 10;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 3)
+							score += 1;
+						if (ch.hasPerk(PerkLib.MantislikeAgility) && ch.hasPerk(PerkLib.ChimericalBodyAdvancedStage))
+							score++;
+						return score;
+					}
+			);
+	
+	public static var MINOTAUR:Race = new Race("minotaur")
+			.simpleScores({
+				'face'  : [
+					Face.HUMAN, +1,
+					Face.COW_MINOTAUR, +1
+				],
+				'ears'  : [Ears.COW, +1],
+				'tail'  : [Tail.COW, +1],
+				'legs'  : [LowerBody.HOOFED, +1],
+				'horns' : [Horns.COW_MINOTAUR, +1],
+				'gender': [
+					Gender.GENDER_FEMALE, -8,
+					Gender.GENDER_HERM, -8
+				]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (score >= 4) {
+							if (ch.cumQ() > 500) score++;
+							if (ch.hasFur()) score++;
+							if (ch.tallness >= 81) score++;
+							if (ch.cor >= 20) score++;
+							if (ch.horseCocks() > 0) score++;
+						}
+						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage)) score += 10;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 4) score += 1;
+						return score;
+					}
+			);
+	
+	public static var MOUSE:Race = new Race("mouse")
+			.simpleScores({
+				'ears': [Ears.MOUSE, +1],
+				'tail': [Tail.MOUSE, +1],
+				'face': [
+					Face.BUCKTEETH, +1,
+					Face.MOUSE, +2
+				]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						//Fur only counts if some canine features are present
+						if (ch.hasFur() && score > 0) score++;
+						if (ch.tallness < 55 && score > 0) score++;
+						if (ch.tallness < 45 && score > 0) score++;
+						return score;
+					}
+			);
+	
+	public static var NAGA:Race = new Race("naga")
+			.simpleScores({
+				'tongue': [Tongue.SNAKE, +1],
+				'face'  : [Face.SNAKE_FANGS, +1],
+				'arms'  : [Arms.HUMAN, +1],
+				'eyes'  : [Eyes.SNAKE, +1],
+				'ears'  : [Ears.SNAKE, +1],
+				'legs'  : [LowerBody.NAGA, +2]
+			}).complexScore(+1, {
+				'skin.coverage': Skin.COVERAGE_LOW,
+				'skin.coat'    : Skin.SCALES
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						// TODO if (racialScores[Race.GORGON.name] > 10 || racialScores[Race.VOUIVRE.name] > 10 || racialScores[Race.COUATL.name] > 10) score -= 8;
+						return score;
+					}
+			);
+	
+	public static var NEKOMATA:Race = new Race("nekomata")
+			.simpleScores({
+				'face'  : [
+					Face.CAT, +1,
+					Face.CAT_CANINES, +1
+				],
+				'eyes'  : [Eyes.CAT_SLITS, +1],
+				'ears'  : [Ears.CAT, +1],
+				'tongue': [Tongue.CAT, +1],
+				'tail'  : [Tail.CAT, +1],
+				'arms'  : [Arms.CAT, +1],
+				'legs'  : [LowerBody.CAT, +1]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.hasFur()) score++;
+						if (ch.hasPerk(PerkLib.Flexibility)) score++;
+						if (ch.hasPerk(PerkLib.CatlikeNimbleness)) score++;
+						if (ch.hasPerk(PerkLib.CatlikeNimblenessEvolved)) score++;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 7)
+							score += 1;
+						return score;
+					}
+			);
+	
+	public static const OniEyeColors:/*String*/Array = ["red", "orange", "yellow"];
+	public static var ONI:Race                       = new Race("oni")
+			.simpleScores({
+				'ears'             : [Ears.ONI, +1],
+				'face'             : [Face.ONI_TEETH, +1],
+				'horns'            : [Horns.ONI, +1],
+				'arms'             : [Arms.ONI, +1],
+				'legs'             : [LowerBody.ONI, +1],
+				'tail'             : [Tail.NONE, +1],
+				'skin.base.pattern': [Skin.PATTERN_BATTLE_TATTOO, +1],
+				'skin.tone'        : [
+					'red', +1,
+					'reddish orange', +1,
+					'purple', +1,
+					'blue', +1
+				]
+			}).complexScore(+1, {
+				'eyes'      : Eyes.ONI,
+				'eyes.color': OniEyeColors
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch is Character && (ch as Character).tone >= 75)
+							score++;
+						if ((ch.hasVagina() && ch.biggestTitSize() >= BreastCup.H) || (ch.cocks.length > 18))
+							score++;
+						if (ch.tallness >= 120)
+							score++;
+						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
+							score += 10;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 3)
+							score += 1;
+						return score;
+					}
+			);
+	
+	public static var ORCA:Race = new Race("orca")
+			.simpleScores({
+				'ears'             : [Ears.ORCA, +1],
+				'tail'             : [Tail.ORCA, +1],
+				'face'             : [Face.ORCA, +1],
+				'legs'             : [LowerBody.ORCA, +1],
+				'arms'             : [Arms.ORCA, +1],
+				'rear'             : [RearBody.ORCA_BLOWHOLE, +1],
+				'wings'            : [Wings.NONE, +2],
+				'eyes'             : [Eyes.HUMAN, +1],
+				'skin.base.pattern': [Skin.PATTERN_ORCA_UNDERBODY, +1]
+			}).complexScore(+1, {
+				'skin'         : Skin.PLAIN,
+				'skin.coverage': Skin.COVERAGE_NONE,
+				'skin.adj'     : 'glossy'
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.tallness >= 84)
+							score++;
+						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
+							score += 10;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 3)
+							score += 1;
+						return score;
+					}
+			);
+	
+	public static var PHOENIX:Race = new Race("phoenix")
+			.simpleScores({
+				'eyes' : [Eyes.REPTILIAN, +1],
+				'wings': [Wings.FEATHERED_PHOENIX, +1],
+				'arms' : [Arms.PHOENIX, +1],
+				'legs' : [LowerBody.SALAMANDER, +1],
+				'tail' : [Tail.SALAMANDER, +1],
+				'hair' : [Hair.FEATHER, +1]
+			}).complexScore(+1, {
+				'hair': Hair.FEATHER,
+				'face': Face.HUMAN
+			}).complexScore(+1, {
+				'hair': Hair.FEATHER,
+				'ears': Ears.HUMAN
+			}).complexScore(+1, {
+				'skin.coat'    : Skin.SCALES,
+				'skin.coverage': Skin.COVERAGE_LOW
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.lizardCocks() > 0)
+							score++;
+						if (ch.hasPerk(PerkLib.PhoenixFireBreath))
+							score++;
+						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
+							score += 10;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 3)
+							score += 1;
+						return score;
+					}
+			);
+	
+	public static var PIG:Race = new Race("pig")
+			.simpleScores({
+				'ears': [Ears.PIG, +1],
+				'tail': [Tail.PIG, +1],
+				'legs': [LowerBody.CLOVEN_HOOFED, +2],
+				'face': [
+					Face.PIG, +1,
+					Face.BOAR, +1
+				]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.pigCocks() > 0) score++;
+						return score;
+					}
+			);
+	
+	public static var PLANT:Race = new Race("plant")
+			.simpleScores({
+				'face' : [
+					Face.HUMAN, +1,
+					Face.PLANT_DRAGON, -1
+				],
+				'ears' : [
+					Ears.ELFIN, +1,
+					Ears.LIZARD, -1
+				],
+				'arms' : [Arms.PLANT, +1],
+				'horns': [
+					Horns.OAK, +1,
+					Horns.ORCHID, +1
+				],
+				'legs' : [
+					LowerBody.PLANT_HIGH_HEELS, +1,
+					LowerBody.PLANT_ROOT_CLAWS, +1
+				],
+				'wings': [Wings.PLANT, +1]
+			}).complexScore(+1, {
+				'hair.color': 'green',
+				'hair'      : [Hair.LEAF, Hair.GRASS]
+			}).complexScore(+1, {
+				'skin'         : Skin.PLAIN,
+				'skin.coverage': Skin.COVERAGE_NONE,
+				'skin.tone'    : ["leaf green", "lime green", "turquoise"]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if ((ch.lowerBody == LowerBody.PLANT_HIGH_HEELS || ch.lowerBody == LowerBody.PLANT_ROOT_CLAWS) && ch.tentacleCocks() > 0)
+							score++;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 3)
+							score += 1;
+						// TODO
+//						if (racialScores[Race.ALRAUNE.name] >= 10)
+//							score -= 7;
+//						if (racialScores[Race.YGGDRASIL.name] >= 10)
+//							score -= 4;
+						return score;
+					}
+			);
+	
+	public static var RACCOON:Race = new Race("raccoon")
+			.simpleScores({
+				'face': [
+					Face.RACCOON_MASK, +1,
+					Face.RACCOON, +2
+				],
+				'ears': [Ears.RACCOON, +1],
+				'tail': [Tail.RACCOON, +1],
+				'legs': [LowerBody.RACCOON, +1]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.balls > 0 && score > 0) score++;
+						//Fur only counts if some canine features are present
+						if (ch.hasFur() && score > 0) score++;
+						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
+							score += 10;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 3)
+							score += 1;
+						return score;
+					}
+			);
+	
+	public static var RAIJU:Race = new Race("raiju")
+			.simpleScores({
+				'ears'             : [Ears.WEASEL, +1],
+				'eyes'             : [Eyes.RAIJU, +1],
+				'face'             : [Face.RAIJU_FANGS, +1],
+				'arms'             : [Arms.RAIJU, +1],
+				'legs'             : [LowerBody.RAIJU, +1],
+				'tail'             : [Tail.RAIJU, +1],
+				'rear'             : [RearBody.RAIJU_MANE, +1],
+				'hair'             : [Hair.STORM, +1],
+				'hair.color'       : [
+					"purple", +1,
+					"light blue", +1,
+					"yellow", +1,
+					"white", +1
+				],
+				'skin.base.pattern': [Skin.PATTERN_LIGHTNING_SHAPED_TATTOO, +1]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
+							score += 10;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 3)
+							score += 1;
+						return score;
+					}
+			);
+	
+	public static var REDPANDA:Race = new Race("red panda")
+			.simpleScores({
+				'face': [Face.RED_PANDA, +2],
+				'ears': [Ears.RED_PANDA, +1],
+				'tail': [Tail.RED_PANDA, +1],
+				'arms': [Arms.RED_PANDA, +1],
+				'legs': [LowerBody.RED_PANDA, +1]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 3)
+							score += 1;
+						if (score >= 2 && ch.skin.base.pattern == Skin.PATTERN_RED_PANDA_UNDERBODY)
+							score++;
+						if (score >= 2 && ch.skinType == Skin.FUR)
+							score++;
+						return score;
+					}
+			);
+	
+	public static var RHINO:Race = new Race("rhino")
+			.simpleScores({
+				'ears' : [Ears.RHINO, +1],
+				'tail' : [Tail.RHINO, +1],
+				'face' : [Face.RHINO, +1],
+				'horns': [Horns.RHINO, +1]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (score >= 2 && ch.skinTone == "gray")
+							score++;
+						if (score >= 2 && ch.hasCock() && ch.countCocksOfType(CockTypesEnum.RHINO) > 0)
+							score++;
+						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
+							score += 10;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 3)
+							score += 1;
+						return score;
+					}
+			);
+	
+	public static var SALAMANDER:Race = new Race("salamander")
+			.simpleScores({
+				'eyes': [Eyes.REPTILIAN, +1],
+				'arms': [Arms.SALAMANDER, +1],
+				'legs': [LowerBody.SALAMANDER, +1],
+				'tail': [Tail.SALAMANDER, +1],
+				'face': [Face.SALAMANDER_FANGS, +1]
+			}).complexScore(+1, {
+				'skin.coat'    : Skin.SCALES,
+				'skin.coverage': Skin.COVERAGE_LOW
+			}).complexScore(+1, {
+				'ears': Ears.HUMAN,
+				'face': Face.SALAMANDER_FANGS
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.lizardCocks() > 0)
+							score++;
+						if (ch.hasPerk(PerkLib.Lustzerker))
+							score++;
+						if (ch.hasPerk(PerkLib.SalamanderAdrenalGlands))
+							score++;
+						if (ch.hasPerk(PerkLib.SalamanderAdrenalGlandsEvolved))
+							score++;
+						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
+							score += 10;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 4)
+							score += 1;
+						if (ch.hasPerk(PerkLib.SalamanderAdrenalGlands) && ch.hasPerk(PerkLib.ChimericalBodyAdvancedStage))
+							score++;
+						return score;
+					}
+			);
+	
+	public static var SANDTRAP:Race = new Race("sandtrap")
+			.simpleScores({
+				'eyes' : [Eyes.BLACK_EYES_SAND_TRAP, +1],
+				'wings': [Wings.GIANT_DRAGONFLY, +1]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.hasStatusEffect(StatusEffects.BlackNipples))
+							score++;
+						if (ch.hasStatusEffect(StatusEffects.Uniball))
+							score++;
+						if (ch.hasVagina() && ch.vaginaType() == VaginaClass.BLACK_SAND_TRAP)
+							score++; // TODO ?
+						if (ch.hasStatusEffect(StatusEffects.Uniball))
+							score++;
+						return score;
+					}
+			);
+	
+	public static var SATYR:Race = new Race("satyr")
+			.simpleScores({
+				'legs': [LowerBody.HOOFED, +1],
+				'tail': [Tail.GOAT, +1]
+			}).complexScore(+1, {
+				'legs': LowerBody.HOOFED,
+				'tail': Tail.GOAT,
+				'ears': Ears.ELFIN
+			}).complexScore(+1, {
+				'legs': LowerBody.HOOFED,
+				'tail': Tail.GOAT,
+				'face': Face.HUMAN
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (score >= 2) {
+							if (ch.countCocksOfType(CockTypesEnum.HUMAN) > 0)
+								score++;
+							if (ch.balls > 0 && ch.ballSize >= 3)
+								score++;
+						}
+						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
+							score += 10;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 3)
+							score += 1;
+						return score;
+					}
+			);
+	
+	public static var SCORPION:Race = new Race("scorpion")
+			.simpleScores({
+				'tail'     : [Tail.SCORPION, +1],
+				'skin.coat': [Skin.CHITIN, +1]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (score > 0 && ch.hasPerk(PerkLib.TrachealSystem))
+							score++;
+						if (score > 4 && ch.hasPerk(PerkLib.TrachealSystemEvolved))
+							score++;
+						if (score > 8 && ch.hasPerk(PerkLib.TrachealSystemFinalForm))
+							score++;
+						return score;
+					}
+			);
+	
+	public static var SCYLLA:Race = new Race("scylla")
+			.simpleScores({
+				'face': [Face.HUMAN, +1],
+				'ears': [Ears.ELFIN, +1],
+				'legs': [LowerBody.SCYLLA, +2]
+			}).complexScore(+1, {
+				'skin'         : Skin.PLAIN,
+				'skin.coverage': Skin.COVERAGE_NONE,
+				'skin.adj'     : 'slippery' // TODO commented +2 for 'rubberlike slippery'
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.faceType != 0)
+							score--;
+						if (ch.tallness > 96)
+							score++;
+						if (ch.hasPerk(PerkLib.InkSpray))
+							score++;
+						if (ch.hasPerk(PerkLib.ScyllaInkGlands))
+							score++;
+						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
+							score += 10;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 4)
+							score += 1;
+						if (ch.hasPerk(PerkLib.ScyllaInkGlands) && ch.hasPerk(PerkLib.ChimericalBodyAdvancedStage))
+							score++;
+						return score;
+					}
+			);
+	
+	public static var SHARK:Race = new Race("shark")
+			.simpleScores({
+				'face' : [Face.SHARK_TEETH, +1],
+				'gills': [Gills.FISH, +1],
+				'rear' : [RearBody.SHARK_FIN, +1],
+				'arms' : [Arms.SHARK, +1],
+				'legs' : [LowerBody.SHARK, +1],
+				'tail' : [Tail.SHARK, +1],
+				'wings': [Wings.SHARK_FIN, -7]
+			}).complexScore(+1, {
+				'hair'      : Hair.NORMAL,
+				'hair.color': 'silver'
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.hasScales() && Utils.InCollection(ch.skin.coat.color, "rough gray", "orange and black"))
+							score++;
+						if (ch.eyes.type == Eyes.HUMAN && ch.hairType == Hair.NORMAL && ch.hairColor == "silver" && ch.hasScales() && Utils.InCollection(ch.skin.coat.color, "rough gray", "orange and black"))
+							score++;
+						if (ch.vaginas.length > 0 && ch.cocks.length > 0)
+							score++;
+						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
+							score += 10;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 3)
+							score += 1;
+						return score;
+					}
+			);
+	
+	public static var SIREN:Race = new Race("siren")
+			.simpleScores({
+				'face'      : [Face.SHARK_TEETH, +1],
+				'hair'      : [Hair.FEATHER, +1],
+				'tail'      : [Tail.SHARK, +1],
+				'wings'     : [Wings.FEATHERED_LARGE, +2],
+				'arms'      : [Arms.HARPY, +1],
+				'legs'      : [LowerBody.SHARK, +1],
+				'gills'     : [Gills.FISH, +1],
+				'eyes'      : [Eyes.HUMAN, +1],
+				'hair.color': ['silver', +1]
+			}).complexScore(+1, {
+				'skin'     : Skin.SCALES,
+				'skin.tone': ['rough gray', 'orange and black']
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
+							score += 10;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 3)
+							score += 1;
+						return score;
+					}
+			);
+	
+	public static var SPHINX:Race = new Race("sphinx")
+			.simpleScores({
+				'eyes'  : [Eyes.CAT_SLITS, +1],
+				'ears'  : [Ears.LION, +1],
+				'tongue': [Tongue.CAT, +1],
+				'tail'  : [
+					Tail.CAT, +1,
+					Tail.LION, +1
+				],
+				'legs'  : [LowerBody.CAT, +1],
+				'face'  : [Face.CAT_CANINES, +1],
+				'wings' : [Wings.FEATHERED_SPHINX, +2]
+			}).complexScore(+2, {
+				'legs.count': 4,
+				'legs'      : LowerBody.CAT
+			}).complexScore(+1, {
+				'legs.count': 4,
+				'legs'      : LowerBody.CAT,
+				'tail'      : Tail.CAT
+			}).complexScore(+1, {
+				'legs.count'   : 4,
+				'legs'         : LowerBody.CAT,
+				'skin'         : Skin.PLAIN,
+				'skin.coverage': Skin.COVERAGE_NONE
+			}).complexScore(+1, {
+				'legs.count': 4,
+				'legs'      : LowerBody.CAT,
+				'arms'      : Arms.SPHINX
+			}).complexScore(+1, {
+				'legs.count': 4,
+				'legs'      : LowerBody.CAT,
+				'ears'      : Ears.LION
+			}).complexScore(+1, {
+				'legs.count': 4,
+				'legs'      : LowerBody.CAT,
+				'face'      : Face.CAT_CANINES
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
+							score += 10;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 3)
+							score += 1;
+						if (ch.hasPerk(PerkLib.Flexibility))
+							score++;
+						if (ch.hasPerk(PerkLib.CatlikeNimbleness))
+							score += 1;
+						return score;
+					}
+			);
+	
+	public static var SPIDER:Race = new Race("spider")
+			.simpleScores({
+				'eyes'     : [Eyes.FOUR_SPIDER_EYES, +1],
+				'face'     : [Face.SPIDER_FANGS, +1],
+				'arms'     : [Arms.SPIDER, +1],
+				'legs'     : [
+					LowerBody.CHITINOUS_SPIDER_LEGS, +1,
+					LowerBody.DRIDER, +2
+				],
+				'tail'     : [Tail.SPIDER_ADBOMEN, +1],
+				'skin.coat': [Skin.CHITIN, +1]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (!ch.hasCoatOfType(Skin.CHITIN) && score > 0)
+							score--;
+						if (score > 0 && ch.hasPerk(PerkLib.TrachealSystem))
+							score++;
+						if (score > 4 && ch.hasPerk(PerkLib.TrachealSystemEvolved))
+							score++;
+						if (score > 8 && ch.hasPerk(PerkLib.TrachealSystemFinalForm))
+							score++;
+						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
+							score += 10;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 3)
+							score += 1;
+						return score;
+					}
+			);
+	
+	public static var UNICORN:Race = new Race("unicorn")
+			.simpleScores({
+				'face'      : [
+					Face.HORSE, +2,
+					Face.HUMAN, +1
+				],
+				'ears'      : [Ears.HORSE, +1],
+				'tail'      : [Tail.HORSE, +1],
+				'legs'      : [LowerBody.HOOFED, +1],
+				'legs.count': [4, +1],
+				'eyes.color': [
+					"red", +1,
+					"blue", +1
+				],
+				'horns'     : [Horns.UNICORN, +1],
+				'hair.color': ['white', +1]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.horns.type != Horns.UNICORN) return 0;
+						if (ch.wings.type == Wings.FEATHERED_ALICORN) return 0;
+						if (ch.horns.count >= 6) score++;
+						if (ch.hasFur() || ch.hasPlainSkinOnly())
+							score++;
+						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
+							score += 10;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 3)
+							score += 1;
+						return score;
+					}
+			);
+	
+	public static var VAMPIRE:Race = new Race("vampire")
+			.simpleScores({
+				'ears' : [
+					Ears.BAT, -10,
+					Ears.ELFIN, +1
+				],
+				'wings': [Wings.VAMPIRE, +4],
+				'legs' : [LowerBody.HUMAN, +1],
+				'face' : [Face.VAMPIRE, +2],
+				'eyes' : [Eyes.VAMPIRE, +1],
+				'arms' : [Arms.HUMAN, +1]
+			});
+	
+	public static var VOUIVRE:Race = new Race("vouivre")
+			.simpleScores({
+				'tongue'   : [Tongue.SNAKE, +1],
+				'face'     : [Face.SNAKE_FANGS, +1],
+				'arms'     : [Arms.DRAGON, +1],
+				'eyes'     : [Eyes.SNAKE, +1],
+				'ears'     : [Ears.DRAGON, +1],
+				'legs'     : [LowerBody.NAGA, +2],
+				'skin.coat': [Skin.DRAGON_SCALES, +1],
+				'horns'    : [
+					Horns.DRACONIC_X2, +1,
+					Horns.DRACONIC_X4_12_INCH_LONG, +1
+				],
+				'wings'    : [
+					Wings.DRACONIC_SMALL, +2,
+					Wings.DRACONIC_LARGE, +2,
+					Wings.DRACONIC_HUGE, +2
+				]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.hasPerk(PerkLib.DragonFireBreath) && score >= 11)
+							score++;
+						if (ch.hasPerk(PerkLib.DragonIceBreath) && score >= 11)
+							score++;
+						if (ch.hasPerk(PerkLib.DragonLightningBreath) && score >= 11)
+							score++;
+						if (ch.hasPerk(PerkLib.DragonDarknessBreath) && score >= 11)
+							score++;
+						if (ch.hasPerk(PerkLib.DraconicLungs))
+							score++;
+						if (ch.hasPerk(PerkLib.DraconicLungsEvolved))
+							score++;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 7)
+							score += 1;
+						return score;
+					}
+			);
+	
+	public static var WEREWOLF:Race = new Race("werewolf")
+			.simpleScores({
+				'face'  : [Face.WOLF_FANGS, +1],
+				'eyes'  : [
+					Eyes.FERAL, +1,
+					Eyes.FENRIR, -7
+				],
+				'ears'  : [Ears.WOLF, +1],
+				'tongue': [Tongue.DOG, +1],
+				'arms'  : [Arms.WOLF, +1],
+				'legs'  : [LowerBody.WOLF, +1],
+				'tail'  : [Tail.WOLF, +1],
+				'rear'  : [
+					RearBody.WOLF_COLLAR, +1,
+					RearBody.FENRIR_ICE_SPIKES, -7
+				]
+			}).complexScore(+1, {
+				'skin.coat'    : Skin.FUR,
+				'skin.coverage': Skin.COVERAGE_LOW
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.wolfCocks() > 0 && score > 0)
+							score++;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 3)
+							score++;
+						if (ch.cor >= 20)
+							score += 2;
+						if (ch.hasPerk(PerkLib.Lycanthropy))
+							score++;
+						if (ch.hasPerk(PerkLib.LycanthropyDormant))
+							score -= 11;
+						return score;
+					}
+			);
+	
+	public static var WOLF:Race = new Race("wolf")
+			.simpleScores({
+				'face'     : [Face.WOLF, +1],
+				'eyes'     : [
+					Eyes.FENRIR, +1,
+					Eyes.FERAL, -11
+				],
+				'skin.coat': [Skin.FUR, +1],
+				'ears'     : [Ears.WOLF, +1],
+				'arms'     : [Arms.WOLF, +1],
+				'legs'     : [LowerBody.WOLF, +1],
+				'tail'     : [Tail.WOLF, +1],
+				'rear'     : [RearBody.FENRIR_ICE_SPIKES, +1]
+			}).complexScore(+1, {
+				'hair.color'     : 'glacial white',
+				'skin.coat'      : Skin.FUR,
+				'skin.coat.color': 'glacial white'
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.wolfCocks() > 0 && score > 0) score++;
+						if (ch.hasPerk(PerkLib.FreezingBreath)) score++;
+						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && ch.eyes.type == Eyes.FENRIR)
+							score += 1;
+						return score;
+					}
+			);
+	
+	public static var YETI:Race = new Race("yeti")
+			.simpleScores({
+				'skin.tone' : ['dark', +1],
+				'eyes'      : [Eyes.HUMAN, +1],
+				'legs'      : [LowerBody.YETI, +1],
+				'arms'      : [Arms.YETI, +1],
+				'ears'      : [Ears.YETI, +1],
+				'face'      : [Face.YETI_FANGS, +1],
+				'hair'      : [Hair.FLUFFY, +1],
+				'hair.color': ['white', +1]
+			}).complexScore(+1, {
+				'skin.coat'    : Skin.FUR,
+				'skin.coverage': Skin.COVERAGE_LOW
+			}).complexScore(+1, {
+				'skin.coat'      : Skin.FUR,
+				'skin.coat.color': 'white'
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.tallness >= 78)
+							score++;
+						if (ch.butt.type >= Butt.RATING_JIGGLY)
+							score++;
+						return score;
+					}
+			);
+	
+	public static var YGGDRASIL:Race = new Race("yggdrasil")
+			.simpleScores({
+				'face' : [Face.PLANT_DRAGON, +2],
+				'arms' : [
+					//untill claws tf added arms tf will count for both arms and claws
+					Arms.PLANT, +2,
+					Arms.PLANT2, +2
+				],
+				'ears' : [
+					Ears.LIZARD, +1,
+					Ears.ELFIN, -2
+				],
+				'wings': [Wings.PLANT, +1],
+				'skin' : [Skin.SCALES, +1],
+				'legs' : [LowerBody.YGG_ROOT_CLAWS, +1],
+				'tail' : [Tail.YGGDRASIL, +1]
+			}).complexScore(+1, {
+				'hair.color': "green",
+				'hair'      : [Hair.ANEMONE, Hair.LEAF, Hair.GRASS]
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						if (ch.tentacleCocks() > 0 || ch.stamenCocks() > 0)
+							score++;
+						return score;
+					}
+			);
+	
 	/*
+	//////////////
+	// TEMPLATE //
+	//////////////
 	public static var RACENAME:Race = new Race("racename")
 			.simpleScores({
 				'metric1': [
@@ -224,11 +2132,11 @@ public class Race {
 	private function simpleScores(metrics:*):Race {
 		for (var metricName:String in metrics) {
 			if (MetricNames.indexOf(metricName) == -1) {
-				throw "Not a simple metric name '" + metricName + "' in race " + name;
+				error("Not a simple metric name '" + metricName + "' in race " + name);
 			}
 			var src:Array = metrics[metricName];
 			if (src.length % 2 != 0) {
-				throw "Odd number of simple metric descriptors in race " + name;
+				error("Odd number of simple metric '" + metricName + "' descriptors in race " + name);
 			}
 			var values:* = {};
 			for (var i:int = 0; i < src.length; i += 2) {
@@ -244,8 +2152,12 @@ public class Race {
 	 * @return this
 	 */
 	private function complexScore(score:int, tests:*):Race {
-		// todo @aimozg add validation
-		complexMetrics.push([score,tests]);
+		for (var metric:String in tests) {
+			if (MetricNames.indexOf(metric) == -1) {
+				error("Not a simple metric name '" + metric + "' in race " + name);
+			}
+		}
+		complexMetrics.push([score, tests]);
 		return this;
 	}
 	/**
@@ -277,6 +2189,30 @@ public class Race {
 		return score;
 	}
 	/**
+	 * @return object{
+	 *     total:int,
+	 *     items:list[
+	 *         object{
+	 *             metric:string,
+	 *             value:*,
+	 *             bonus:int
+	 *         }
+	 *     ]
+	 * }
+	 */
+	public function explainSimpleScore(metrics:*):* {
+		var rslt:* = {total: 0, items: []};
+		for (var metricName:String in metrics) {
+			var value:* = metrics[metricName];
+			var bonus:* = simpleMetrics[metricName][value];
+			if (typeof bonus != 'undefined') {
+				rslt.total += bonus;
+				rslt.items.push({metric:metricName, value:value, bonus:bonus});
+			}
+		}
+		return rslt;
+	}
+	/**
 	 * Computes only 'complex' part of total racial score
 	 */
 	public function calcComplexScore(metrics:*):int {
@@ -301,6 +2237,59 @@ public class Race {
 			if (pass) score += scoreTests[0];
 		}
 		return score;
+	}
+	/**
+	 * @return object{
+	 *     total:int,
+	 *     items:list[
+	 *         item:object{
+	 *             checks:list[
+	 *                 check:object{
+	 *                     metric:string,
+	 *                     actual:*,
+	 *                     expected:* | list[*],
+	 *                     passed:boolean
+	 *                 }
+	 *             ],
+	 *             passed:boolean,
+	 *             bonus:int
+	 *         ]
+	 *     ]
+	 * }
+	 */
+	public function explainComplexScore(metrics:*):* {
+		var rslt:* = {total: 0, items: []};
+		for each (var scoreTests:Array in complexMetrics) {
+			var tests:*      = scoreTests[1];
+			var pass:Boolean = true;
+			var item:* = {checks:[],passed:true,bonus:scoreTests[0]};
+			rslt.items.push(item);
+			for (var metric:String in tests) {
+				var actual:*   = metrics[metric];
+				var expected:* = tests[metric];
+				var check:* = {metric:metric,actual:actual,expected:expected,passed:true};
+				item.checks.push(check);
+				if (expected is Array) {
+					if (expected.indexOf(actual) == -1) {
+						pass = false;
+						check.passed = false;
+					}
+				} else if (expected != actual) {
+					pass = false;
+					check.passed = false;
+				}
+			}
+			item.passed = pass;
+			if (pass) rslt.total += scoreTests[0];
+		}
+		return rslt;
+	}
+	
+	private static function error(msg:String):* {
+		trace("[RACE CONFIG ERROR]", msg);
+		if (CoC_Settings.haltOnErrors) {
+			throw msg;
+		}
 	}
 }
 }

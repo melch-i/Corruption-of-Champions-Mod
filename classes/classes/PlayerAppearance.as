@@ -2494,7 +2494,88 @@ public function RacialScores():void {
 	else if (player.yggdrasilScore() < 1) outputText("\n<font color=\"#ff0000\">Yggdrasil: 0</font>");
 	menu();
 	addButton(0, "Next", playerMenu);
+	addButton(4,"Details",RacialScoresEx);
 }
+	public function RacialScoresEx():void {
+		clearOutput();
+		var metrics:* = Race.MetricsFor(player);
+		for each (var race:Race in Race.RegisteredRaces) {
+			outputText("<b>" +race.name+"</b>:\n<ul>");
+			var simple:* = race.explainSimpleScore(metrics);
+			/*
+			 * simple = object{
+			 *     total:int,
+			 *     items:list[
+			 *         tuple[
+			 *             metricName,
+			 *             metricValue,
+			 *             bonus
+			 *         ]
+			 *     ]
+			 * }
+			 */
+			for each (var item:* in simple.items) {
+				outputText("<li>");
+				var metric:String = item.metric;
+				var metricValue:* = item.value;
+				var bonus:String = (item.bonus>0?"+":"")+(item.bonus);
+				outputText(bonus+" for "+Race.ExplainMetricValue(metric,metricValue)+" "+metric);
+				outputText("</li>")
+			}
+			var complex:* = race.explainComplexScore(metrics);
+			/*
+			 * complex = object{
+			 *     total:int,
+			 *     items:list[
+			 *         item:object{
+			 *             checks:list[
+			 *                 check:object{
+			 *                     metric:string,
+			 *                     actual:*,
+			 *                     expected:* | list[*],
+			 *                     passed:boolean
+			 *                 }
+			 *             ],
+			 *             passed:boolean,
+			 *             bonus:int
+			 *         ]
+			 *     ]
+			 * }
+			 */
+			for each(item in complex.items) {
+				outputText("<li>");
+				if (!item.passed) outputText("<font color='#777777'>");
+				bonus = (item.bonus>0?"+":"")+item.bonus;
+				outputText(bonus+" for ");
+				if (!item.passed) outputText("</font>");
+				for (var i:int = 0; i < item.checks.length; i++) {
+					var check:* = item.checks[i];
+					if (i!=0) outputText(", ");
+					if (check.passed) {
+						outputText(Race.ExplainMetricValue(check.metric, check.actual) + " " + check.metric);
+					} else {
+						outputText("<font color='#777777'>");
+						if (check.expected is Array) {
+							outputText(check.expected.map(function(el:*,i:int,a:Array):String {
+								return Race.ExplainMetricValue(check.metric, el);
+							}).join("/"));
+						} else {
+							outputText(Race.ExplainMetricValue(check.metric,check.expected));
+						}
+						outputText(" "+check.metric);
+						outputText("</font>");
+					}
+				}
+				outputText("</li>")
+			}
+			var total:int = race.scoreFor(player,metrics);
+			if (total != simple.total + complex.total) {
+				outputText("<li>+ some magic calculations</li>");
+			}
+			outputText("</ul>Total: "+total+"\n\n");
+		}
+		doNext(playerMenu);
+	}
 
 public function GenderForcedSetting():void {
 	clearOutput();

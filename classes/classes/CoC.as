@@ -182,6 +182,9 @@ public class CoC extends MovieClip
 
     public function CoC()
     {
+    
+        // Used for stopping chaos monkey on syntax errors. Separate flag so we can make stopping optional
+        // CoC_Settings.haltOnErrors = false;
         // Cheatmode.
         _instance = this;
         context = new StoryContext(this);
@@ -196,9 +199,6 @@ public class CoC extends MovieClip
         // This is a flag used to prevent the game from exiting when running under the automated tester
         // (the chaos monkey)
         testingBlockExiting = false;
-
-        // Used for stopping chaos monkey on syntax errors. Separate flag so we can make stopping optional
-        CoC_Settings.haltOnErrors = false;
 
         this.model = new GameModel();
         this.mainView = new MainView(/*this.model*/);

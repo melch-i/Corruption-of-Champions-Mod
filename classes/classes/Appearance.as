@@ -2559,6 +2559,14 @@ public class Appearance extends Utils
 					[Antennae.MANTIS, "mantis"]
 				]
 		);
+		public static const DEFAULT_GILL_NAMES:Object = createMapFromPairs(
+				[
+						[Gills.NONE,"non-existant"],
+						[Gills.FISH,"fish"],
+						[Gills.ANEMONE,"anemone"],
+						[Gills.GILLS_IN_TENTACLE_LEGS,"in tentacle legs"]
+				]
+		);
 		public static const DEFAULT_ARM_NAMES:Object = createMapFromPairs(
 				[
 					[Arms.HUMAN, "human"],

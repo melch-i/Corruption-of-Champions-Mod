@@ -94,7 +94,7 @@ public class Dreams {
             choices[choices.length] = 15;
         }
         //Sand trap
-        if(player.sandTrapScore() >= 2) {
+        if(player.sandtrapScore() >= 2) {
             choices[choices.length] = 16;
             choices[choices.length] = 16;
             choices[choices.length] = 16;
