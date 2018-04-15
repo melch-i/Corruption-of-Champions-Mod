@@ -78,8 +78,8 @@ public class DebugMenu extends BaseContent
 				if (player.isPregnant()) addButton(4, "Abort Preg", abortPregnancy);
 				addButton(5, "DumpEffects", dumpEffectsMenu).hint("Display your status effects");
 				addButton(7, "HACK STUFFZ", styleHackMenu).hint("H4X0RZ");
-	            addButton(8, "Test Scene", testScene);
-				addButton(9, "Echo", echo);
+	            addButton(8, "Test Scene", testScene).hint("Select a scene.  Don't use unless you are trying to test something.");
+				addButton(9, "Echo", echo).hint("Paste text into box to have it echo back.");
 				addButton(14, "Exit", playerMenu);
 			}
             if (CoC.instance.inCombat) {

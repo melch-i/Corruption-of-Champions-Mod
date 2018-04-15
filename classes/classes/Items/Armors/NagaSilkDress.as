@@ -3,9 +3,14 @@ package classes.Items.Armors {
 import classes.Items.Armor;
 import classes.TimeAwareInterface;
 import classes.EventParser;
+import classes.Player;
+import classes.CoC;
 
 public class NagaSilkDress extends Armor implements TimeAwareInterface {
     private var _name:String;
+	private function get player():Player{ //need the instance of player
+			return CoC.instance.player;
+	}
     public function NagaSilkDress() {
         super("NagaDress","Naga Dress","","a desert naga silk dress",0,0,
                 "",
