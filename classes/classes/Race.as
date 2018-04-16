@@ -135,6 +135,31 @@ public class Race {
 		}
 	}
 	
+	public static const BonusName_maxstr:String    = 'maxstr';
+	public static const BonusName_maxtou:String    = 'maxtou';
+	public static const BonusName_maxspe:String    = 'maxspe';
+	public static const BonusName_maxint:String    = 'maxint';
+	public static const BonusName_maxwis:String    = 'maxwis';
+	public static const BonusName_maxlib:String    = 'maxlib';
+	public static const BonusName_minsen:String    = 'minsen';
+	public static const BonusName_maxsen:String    = 'maxsen';
+	public static const BonusName_maxlust:String   = 'maxlust';
+	public static const BonusName_maxhp:String     = 'maxhp';
+	public static const BonusName_defense:String   = 'defense';
+	public static const BonusNames:/*String*/Array = [
+		BonusName_maxstr,
+		BonusName_maxtou,
+		BonusName_maxspe,
+		BonusName_maxint,
+		BonusName_maxwis,
+		BonusName_maxlib,
+		BonusName_minsen,
+		BonusName_maxsen,
+		BonusName_maxlust,
+		BonusName_maxhp,
+		BonusName_defense
+	];
+	
 	/**
 	 * @param metrics object{metricName:metricValue}
 	 * @return object{raceName:raceScore}
@@ -147,6 +172,21 @@ public class Race {
 			result[race.name] = race.scoreFor(ch, metrics);
 		}
 		Utils.End("Race", "AllScoresFor");
+		return result;
+	}
+	public static function AllBonusesFor(ch:Creature, scores:* = null):* {
+		Utils.Begin("Race", "AllBonusesFor");
+		if (scores == null) scores = ch.racialScores();
+		var result:* = {};
+		for each(var race:Race in RegisteredRaces) {
+			var bonuses:* = race.bonusesForScore(scores[race.name]);
+			for (var bonus:String in bonuses) {
+				var value:int = result[bonus];
+				value += bonuses[bonus];
+				result[bonus] = value;
+			}
+		}
+		Utils.End("Race", "AllBonusesFor");
 		return result;
 	}
 	
@@ -195,7 +235,39 @@ public class Race {
 						}
 						return score;
 					}
-			);
+			).withBonusTier(30,{
+				'maxstr': +40,
+				'maxtou': +40,
+				'maxspe': +40,
+				'maxint': +40,
+				'maxwis': +40,
+				'maxlib': +40,
+				'maxsen': +40
+			}).withBonusTier(29,{
+				'maxstr': +30,
+				'maxtou': +30,
+				'maxspe': +30,
+				'maxint': +30,
+				'maxwis': +30,
+				'maxlib': +30,
+				'maxsen': +30
+			}).withBonusTier(28,{
+				'maxstr': +20,
+				'maxtou': +20,
+				'maxspe': +20,
+				'maxint': +20,
+				'maxwis': +20,
+				'maxlib': +20,
+				'maxsen': +20
+			}).withBonusTier(27,{
+				'maxstr': +10,
+				'maxtou': +10,
+				'maxspe': +10,
+				'maxint': +10,
+				'maxwis': +10,
+				'maxlib': +10,
+				'maxsen': +10
+			});
 	
 	// ^^^^^ SPECIAL RACES
 	// vvvvv NOT-SO-SPECIAL RACES
@@ -230,7 +302,11 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			);
+			).withBonusTier(11,{
+				'maxtou': +25,
+				'maxspe': +50,
+				'maxint': +90
+			});
 	
 	public static var ALRAUNE:Race = new Race("alraune")
 			.simpleScores({
@@ -251,7 +327,11 @@ public class Race {
 						if (ch.stamenCocks() > 0) score++;
 						return score;
 					}
-			);
+			).withBonusTier(10,{
+				'maxtou': +100,
+				'maxspe': -50,
+				'maxlib': +100
+			});
 	
 	public static var AVIAN:Race = new Race("avian")
 			.simpleScores({
@@ -273,7 +353,15 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			);
+			).withBonusTier(4,{
+				'maxstr': +15,
+				'maxspe': +30,
+				'maxint': +15
+			}).withBonusTier(9,{
+				'maxstr': +30,
+				'maxspe': +75,
+				'maxint': +30
+			});
 	
 	public static var BAT:Race = new Race("bat")
 			.simpleScores({
@@ -286,6 +374,16 @@ public class Race {
 				'face' : [Face.VAMPIRE, +2],
 				'eyes' : [Eyes.VAMPIRE, +1],
 				'rear' : [RearBody.BAT_COLLAR, +1]
+			}).withBonusTier(6,{
+				'maxstr': +20,
+				'maxspe': +20,
+				'maxint': +20,
+				'maxlib': +30
+			}).withBonusTier(10,{
+				'maxstr': +35,
+				'maxspe': +35,
+				'maxint': +35,
+				'maxlib': +45
 			});
 	
 	public static var BEE:Race = new Race("bee")
@@ -322,7 +420,15 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			);
+			).withBonusTier(5,{
+				'maxtou': +30,
+				'maxspe': +30,
+				'maxint': +15
+			}).withBonusTier(9,{
+				'maxtou': +50,
+				'maxspe': +50,
+				'maxint': +35
+			});
 	
 	public static var BUNNY:Race = new Race("bunny")
 			.simpleScores({
@@ -349,7 +455,9 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			);
+			).withBonusTier(4,{
+				'maxspe': +10
+			});
 	
 	public static var CAT:Race = new Race("cat")
 			.simpleScores({
@@ -409,7 +517,13 @@ public class Race {
 							catCounter += 10;
 						return catCounter;
 					}
-			);
+			).withBonusTier(4,{
+				'maxspe': +40,
+				'maxlib': +20
+			}).withBonusTier(8,{
+				'maxspe': +60,
+				'maxlib': +60
+			});
 	
 	public static var CENTAUR:Race = new Race("centaur")
 			.simpleScores({
@@ -438,7 +552,10 @@ public class Race {
 							return 0;
 						return score;
 					}
-			);
+			).withBonusTier(8,{
+				'maxtou': +80,
+				'maxspe': +40
+			});
 	
 	public static var CHESHIRE:Race = new Race("cheshire")
 			.simpleScores({
@@ -465,7 +582,11 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			);
+			).withBonusTier(11,{
+				'maxspe': +60,
+				'maxint': +80,
+				'maxsen': +25
+			});
 	
 	public static var COUATL:Race = new Race("couatl")
 			.simpleScores({
@@ -484,7 +605,11 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			);
+			).withBonusTier(11,{
+				'maxstr': +40,
+				'maxtou': +25,
+				'maxspe': +100
+			});
 	
 	public static var COW:Race = new Race("cow")
 			.simpleScores({
@@ -515,7 +640,19 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			);
+			).withBonusTier(4, {
+				'maxstr': +60,
+				'maxtou': +10,
+				'maxspe': -20,
+				'maxint': -10,
+				'maxlib': +20
+			}).withBonusTier(10, {
+				'maxstr': +120,
+				'maxtou': +45,
+				'maxspe': -40,
+				'maxint': -20,
+				'maxlib': +45
+			});
 	
 	public static var DEMON:Race = new Race("demon")
 			.simpleScores({
@@ -560,7 +697,15 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			);
+			).withBonusTier(5,{
+				'maxspe': +15,
+				'maxint': +15,
+				'maxlib': +45
+			}).withBonusTier(11,{
+				'maxspe': +30,
+				'maxint': +35,
+				'maxlib': +100
+			});
 	
 	public static var DOG:Race = new Race("dog")
 			.simpleScores({
@@ -585,6 +730,9 @@ public class Race {
 				if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 3)
 					score += 1;
 				return score;
+			}).withBonusTier(4,{
+				'maxspe': +15,
+				'maxint': -5
 			});
 	
 	public static var DEER:Race = new Race("deer")
@@ -608,7 +756,9 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			);
+			).withBonusTier(4,{
+				'maxspe': +20
+			});
 	
 	public static var DEVILKIN:Race = new Race("devilkin")
 			.simpleScores({
@@ -632,7 +782,26 @@ public class Race {
 						if (ch.cor >= 60) score++;
 						return score;
 					}
-			);
+			).withBonusTier(7, {
+				'minsen': 10,
+				'maxstr': +35,
+				'maxspe': -10,
+				'maxint': +40,
+				'maxlib': +50,
+				'maxsen': +10
+			}).withBonusTier(10, {
+				'minsen': 25,
+				'maxstr': +50,
+				'maxspe': -20,
+				'maxint': +60,
+				'maxlib': +75,
+				'maxsen': +15
+			}).withBonusTier(14, {
+				'minsen': 55,
+				'maxspe': +30,
+				'maxint': +35,
+				'maxlib': +100
+			});
 	
 	public static var DRAGON:Race = new Race("dragon")
 			.simpleScores({
@@ -685,7 +854,36 @@ public class Race {
 							score++;
 						return score;
 					}
-			);
+			).withBonusTier(4, {
+				'maxstr':+15,
+				'maxtou':+15,
+				'maxint':+15,
+				'maxwis':+15
+			}).withBonusTier(10, {
+				'defense': 1,
+				'maxstr': +50,
+				'maxtou': +40,
+				'maxspe': +10,
+				'maxint': +20,
+				'maxwis': +20,
+				'maxlib': +10
+			}).withBonusTier(20, {
+				'defense': 4,
+				'maxstr': +95,
+				'maxtou': +95,
+				'maxspe': +20,
+				'maxint': +40,
+				'maxwis': +40,
+				'maxlib': +10
+			}).withBonusTier(28, {
+				'defense': 10,
+				'maxstr': +100,
+				'maxtou': +100,
+				'maxspe': +40,
+				'maxint': +50,
+				'maxwis': +50,
+				'maxlib': +20
+			});
 	
 	public static var DRAGONNE:Race = new Race("dragonne")
 			.simpleScores({
@@ -757,7 +955,23 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			);
+			).withBonusTier(5, {
+				'minsen': 15,
+				'maxstr': -10,
+				'maxtou': -10,
+				'maxspe': +40,
+				'maxint': +40,
+				'maxwis': +30,
+				'maxsen': +15
+			}).withBonusTier(11, {
+				'minsen': 30,
+				'maxstr': -10,
+				'maxtou': -15,
+				'maxspe': +80,
+				'maxint': +80,
+				'maxwis': +60,
+				'maxsen': +30
+			});
 	
 	public static var FERRET:Race = new Race("ferret")
 			.simpleScores({
@@ -796,7 +1010,15 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			);
+			).withBonusTier(4,{
+				'maxstr': -5,
+				'maxspe': +40,
+				'maxint': +25
+			}).withBonusTier(7,{
+				'maxstr': -30,
+				'maxspe': +80,
+				'maxint': +55
+			});
 	
 	public static var GARGOYLE:Race = new Race("gargoyle")
 			.simpleScores({
@@ -836,7 +1058,11 @@ public class Race {
 							score += 4;
 						return score;
 					}
-			);
+			).withBonusTier(21,{
+				'maxstr':+70,
+				'maxtou':+100,
+				'maxint':+70
+			});
 	
 	public static var GoblinSkinColors:/*String*/Array = ["pale yellow", "grayish-blue", "green", "dark green"];
 	public static var GOBLIN:Race                      = new Race("goblin")
@@ -863,7 +1089,9 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			);
+			).withBonusTier(4,{
+				'maxint': +20
+			});
 	
 	public static var GOO:Race = new Race("goo")
 			.simpleScores({
@@ -897,7 +1125,15 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			);
+			).withBonusTier(4,{
+				'maxtou': +40,
+				'maxspe': -20,
+				'maxlib': +40
+			}).withBonusTier(8,{
+				'maxtou': +80,
+				'maxspe': -40,
+				'maxlib': +80
+			});
 	
 	public static var GORGON:Race = new Race("gorgon")
 			.simpleScores({
@@ -928,7 +1164,11 @@ public class Race {
 							score++;
 						return score;
 					}
-			);
+			).withBonusTier(11,{
+				'maxstr': +50,
+				'maxtou': +45,
+				'maxspe': +70
+			});
 	
 	public static var HARPY:Race = new Race("harpy")
 			.simpleScores({
@@ -957,7 +1197,15 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			);
+			).withBonusTier(4,{
+				'maxtou': -10,
+				'maxspe': +40,
+				'maxlib': +30
+			}).withBonusTier(8,{
+				'maxtou': -20,
+				'maxspe': +80,
+				'maxlib': +60
+			});
 	
 	public static var HORSE:Race = new Race("horse")
 			.simpleScores({
@@ -986,7 +1234,13 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			);
+			).withBonusTier(4,{
+				'maxspe': +40,
+				'maxtou': +20
+			}).withBonusTier(7,{
+				'maxspe': +70,
+				'maxtou': +35
+			});
 	
 	public static var JABBERWOCKY:Race = new Race("jabberwocky")
 			.simpleScores({
@@ -1039,7 +1293,27 @@ public class Race {
 							score++;
 						return score;
 					}
-			);
+			).withBonusTier(4,{
+				'maxstr': +15,
+				'maxtou': +15,
+				'maxspe': +30,
+				'maxint': +15,
+				'maxwis': -15
+			}).withBonusTier(10,{
+				'maxstr': +50,
+				'maxtou': +40,
+				'maxspe': +50,
+				'maxint': +20,
+				'maxwis': -20,
+				'maxlib': +10
+			}).withBonusTier(20,{
+				'maxstr': +95,
+				'maxtou': +95,
+				'maxspe': +100,
+				'maxint': +40,
+				'maxwis': -50,
+				'maxlib': +20
+			});
 	
 	public static var KANGA:Race = new Race("kangaroo")
 			.simpleScores({
@@ -1055,7 +1329,10 @@ public class Race {
 							score++;
 						return score;
 					}
-			);
+			).withBonusTier(4,{
+				'maxtou': +5,
+				'maxspe': +15
+			});
 	
 	public static var KITSHOO:Race = new Race("kitshoo")
 			.simpleScores({
@@ -1194,7 +1471,19 @@ public class Race {
 							score += 10;
 						return score;
 					}
-			);
+			).withBonusTier(5,{
+				'maxstr': -35,
+				'maxspe': +20,
+				'maxint': +30,
+				'maxwis': +40,
+				'maxlib': +20
+			}).withBonusTier(12,{
+				'maxstr': -50,
+				'maxspe': +40,
+				'maxint': +70,
+				'maxwis': +100,
+				'maxlib': +20
+			});
 	
 	public static var LIZARD:Race = new Race("lizard")
 			.simpleScores({
@@ -1228,7 +1517,13 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			);
+			).withBonusTier(4, {
+				'maxtou': +40,
+				'maxint': +20
+			}).withBonusTier(8, {
+				'maxint': +70,
+				'maxlib': +50
+			});
 	
 	public static var MANTICORE:Race = new Race("manticore")
 			.simpleScores({
@@ -1260,7 +1555,17 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			);
+			).withBonusTier(6, {
+				'minsen': 30,
+				'maxspe': +50,
+				'maxint': +25,
+				'maxlib': +30
+			}).withBonusTier(12, {
+				'minsen': 45,
+				'maxspe': +100,
+				'maxint': +50,
+				'maxlib': +60
+			});
 	
 	public static var MANTIS:Race = new Race("mantis")
 			.simpleScores({
@@ -1297,7 +1602,17 @@ public class Race {
 							score++;
 						return score;
 					}
-			);
+			).withBonusTier(6,{
+				'maxstr': -20,
+				'maxtou': +30,
+				'maxspe': +70,
+				'maxint': +10
+			}).withBonusTier(12,{
+				'maxstr': -40,
+				'maxtou': +60,
+				'maxspe': +140,
+				'maxint': +20
+			});
 	
 	public static var MINOTAUR:Race = new Race("minotaur")
 			.simpleScores({
@@ -1326,7 +1641,19 @@ public class Race {
 						if (ch.hasPerk(PerkLib.AscensionHybridTheory) && score >= 4) score += 1;
 						return score;
 					}
-			);
+			).withBonusTier(4, {
+				'maxstr': +60,
+				'maxtou': +10,
+				'maxspe': -10,
+				'maxint': -20,
+				'maxlib': +20
+			}).withBonusTier(10, {
+				'maxstr': +120,
+				'maxtou': +45,
+				'maxspe': -20,
+				'maxint': -40,
+				'maxlib': +45
+			});
 	
 	public static var MOUSE:Race = new Race("mouse")
 			.simpleScores({
@@ -1362,7 +1689,14 @@ public class Race {
 						// TODO conflicting races if (racialScores[Race.GORGON.name] > 10 || racialScores[Race.VOUIVRE.name] > 10 || racialScores[Race.COUATL.name] > 10) score -= 8;
 						return score;
 					}
-			);
+			).withBonusTier(4,{
+				'maxstr': +20,
+				'maxspe': +40
+			}).withBonusTier(8,{
+				'maxstr': +40,
+				'maxtou': +20,
+				'maxspe': +60
+			});
 	
 	public static var NEKOMATA:Race = new Race("nekomata")
 			.simpleScores({
@@ -1386,7 +1720,11 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			);
+			).withBonusTier(11,{
+				'maxspe': +40,
+				'maxint': +40,
+				'maxwis': +85
+			});
 	
 	public static const OniEyeColors:/*String*/Array = ["red", "orange", "yellow"];
 	public static var ONI:Race                       = new Race("oni")
@@ -1421,7 +1759,17 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			);
+			).withBonusTier(6,{
+				'maxstr': +50,
+				'maxtou': +30,
+				'maxint': -10,
+				'maxwis': +20
+			}).withBonusTier(12,{
+				'maxstr': +100,
+				'maxtou': +60,
+				'maxint': -20,
+				'maxwis': +40
+			});
 	
 	public static var ORCA:Race = new Race("orca")
 			.simpleScores({
@@ -1448,7 +1796,15 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			);
+			).withBonusTier(6,{
+				'maxstr': +35,
+				'maxtou': +20,
+				'maxspe': +35
+			}).withBonusTier(12,{
+				'maxstr': +70,
+				'maxtou': +40,
+				'maxspe': +70
+			});
 	
 	public static var PHOENIX:Race = new Race("phoenix")
 			.simpleScores({
@@ -1479,7 +1835,12 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			);
+			).withBonusTier(10,{
+				'maxstr': +20,
+				'maxtou': +20,
+				'maxspe': +70,
+				'maxlib': +40
+			});
 	
 	public static var PIG:Race = new Race("pig")
 			.simpleScores({
@@ -1537,7 +1898,26 @@ public class Race {
 //							score -= 4;
 						return score;
 					}
-			);
+			).withBonusTier(4, {
+				'defense': 2,
+				'maxtou': +30,
+				'maxspe': -10
+			}).withBonusTier(5, {
+				'defense': 4,
+				'maxstr': +10,
+				'maxtou': +50,
+				'maxspe': -20
+			}).withBonusTier(6, {
+				'defense': 8,
+				'maxstr': +20,
+				'maxtou': +80,
+				'maxspe': -40
+			}).withBonusTier(7, {
+				'defense': 10,
+				'maxstr': +25,
+				'maxtou': +100,
+				'maxspe': -50
+			});
 	
 	public static var RACCOON:Race = new Race("raccoon")
 			.simpleScores({
@@ -1559,7 +1939,9 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			);
+			).withBonusTier(4,{
+				'maxspe': +15
+			});
 	
 	public static var RAIJU:Race = new Race("raiju")
 			.simpleScores({
@@ -1586,7 +1968,19 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			);
+			).withBonusTier(5, {
+				'minsen': 25,
+				'maxspe': +35,
+				'maxint': +25,
+				'maxlib': +40,
+				'maxsen': +25
+			}).withBonusTier(10, {
+				'minsen': 50,
+				'maxspe': +70,
+				'maxint': +50,
+				'maxlib': +80,
+				'maxsen': +50
+			});
 	
 	public static var REDPANDA:Race = new Race("red panda")
 			.simpleScores({
@@ -1605,7 +1999,14 @@ public class Race {
 							score++;
 						return score;
 					}
-			);
+			).withBonusTier(4,{
+				'maxspe': +45,
+				'maxint': +15
+			}).withBonusTier(8,{
+				'maxstr': +15,
+				'maxspe': +75,
+				'maxint': +30
+			});
 	
 	public static var RHINO:Race = new Race("rhino")
 			.simpleScores({
@@ -1625,7 +2026,12 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			);
+			).withBonusTier(4,{
+				'maxstr': +15,
+				'maxtou': +15,
+				'maxspe': -10,
+				'maxint': -10
+			});
 	
 	public static var SALAMANDER:Race = new Race("salamander")
 			.simpleScores({
@@ -1658,7 +2064,15 @@ public class Race {
 							score++;
 						return score;
 					}
-			);
+			).withBonusTier(4,{
+				'maxstr': +15,
+				'maxtou': +15,
+				'maxlib': +30
+			}).withBonusTier(7,{
+				'maxstr': +25,
+				'maxtou': +25,
+				'maxlib': +40
+			});
 	
 	public static var SANDTRAP:Race = new Race("sandtrap")
 			.simpleScores({
@@ -1704,7 +2118,10 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			);
+			).withBonusTier(4,{
+				'maxstr': +5,
+				'maxspe': +5
+			});
 	
 	public static var SCORPION:Race = new Race("scorpion")
 			.simpleScores({
@@ -1749,7 +2166,16 @@ public class Race {
 							score++;
 						return score;
 					}
-			);
+			).withBonusTier(4,{
+				'maxstr': +40,
+				'maxint': +20
+			}).withBonusTier(7,{
+				'maxstr': +65,
+				'maxint': +40
+			}).withBonusTier(12,{
+				'maxstr': +120,
+				'maxint': +60
+			});
 	
 	public static var SHARK:Race = new Race("shark")
 			.simpleScores({
@@ -1777,7 +2203,18 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			);
+			).withBonusTier(4,{
+				'maxstr': +20,
+				'maxspe': +40
+			}).withBonusTier(8,{
+				'maxstr': +40,
+				'maxspe': +70,
+				'maxlib': +10
+			}).withBonusTier(9,{
+				'maxstr': +60,
+				'maxspe': +70,
+				'maxlib': +20
+			});
 	
 	public static var SIREN:Race = new Race("siren")
 			.simpleScores({
@@ -1801,7 +2238,11 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			);
+			).withBonusTier(10,{
+				'maxstr': +40,
+				'maxspe': +70,
+				'maxint': +40
+			});
 	
 	public static var SPHINX:Race = new Race("sphinx")
 			.simpleScores({
@@ -1851,7 +2292,13 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			);
+			).withBonusTier(14,{
+				'maxspe': +40,
+				'maxstr': +50,
+				'maxtou': -20,
+				'maxint': +100,
+				'maxwis': +40
+			});
 	
 	public static var SPIDER:Race = new Race("spider")
 			.simpleScores({
@@ -1880,7 +2327,15 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			);
+			).withBonusTier(4,{
+				'maxstr': -10,
+				'maxtou': +30,
+				'maxint': +40
+			}).withBonusTier(7,{
+				'maxstr': -20,
+				'maxtou': +50,
+				'maxint': +75
+			});
 	
 	public static var UNICORN:Race = new Race("unicorn")
 			.simpleScores({
@@ -1911,7 +2366,11 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			);
+			).withBonusTier(9,{
+				'maxtou': +20,
+				'maxspe': +40,
+				'maxint': +75
+			});
 	
 	public static var VAMPIRE:Race = new Race("vampire")
 			.simpleScores({
@@ -1924,6 +2383,16 @@ public class Race {
 				'face' : [Face.VAMPIRE, +2],
 				'eyes' : [Eyes.VAMPIRE, +1],
 				'arms' : [Arms.HUMAN, +1]
+			}).withBonusTier(6,{
+				'maxstr': +20,
+				'maxspe': +20,
+				'maxint': +20,
+				'maxlib': +30
+			}).withBonusTier(10,{
+				'maxstr': +35,
+				'maxspe': +35,
+				'maxint': +35,
+				'maxlib': +45
 			});
 	
 	public static var VOUIVRE:Race = new Race("vouivre")
@@ -1962,7 +2431,13 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			);
+			).withBonusTier(11,{
+				'maxstr': +10,
+				'maxtou': -10,
+				'maxspe': +35,
+				'maxint': +10,
+				'maxwis': -20
+			});
 	
 	public static var WEREWOLF:Race = new Race("werewolf")
 			.simpleScores({
@@ -1997,7 +2472,17 @@ public class Race {
 							score -= 11;
 						return score;
 					}
-			);
+			).withBonusTier(6,{
+				'maxstr': +50,
+				'maxtou': +20,
+				'maxspe': +30,
+				'maxint': -10
+			}).withBonusTier(12,{
+				'maxstr': +100,
+				'maxtou': +40,
+				'maxspe': +60,
+				'maxint': -20
+			});
 	
 	public static var WOLF:Race = new Race("wolf")
 			.simpleScores({
@@ -2024,7 +2509,26 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			);
+			).withBonusTier(4,{
+				'maxstr': +15,
+				'maxspe': +10,
+				'maxint': -10
+			}).withBonusTier(6,{
+				'maxstr': +30,
+				'maxtou': +10,
+				'maxspe': +30,
+				'maxint': -10
+			}).withBonusTier(7,{
+				'maxstr': +30,
+				'maxtou': +20,
+				'maxspe': +30,
+				'maxint': -10
+			}).withBonusTier(10,{
+				'maxstr': +60,
+				'maxtou': +30,
+				'maxspe': +60,
+				'maxint': -10
+			});
 	
 	public static var YETI:Race = new Race("yeti")
 			.simpleScores({
@@ -2050,7 +2554,19 @@ public class Race {
 							score++;
 						return score;
 					}
-			);
+			).withBonusTier(6,{
+				'maxstr': +30,
+				'maxtou': +40,
+				'maxspe': +25,
+				'maxint': -30,
+				'maxlib': +25
+			}).withBonusTier(12,{
+				'maxstr': +60,
+				'maxtou': +80,
+				'maxspe': +50,
+				'maxint': -60,
+				'maxlib': +50
+			});
 	
 	public static var YGGDRASIL:Race = new Race("yggdrasil")
 			.simpleScores({
@@ -2077,7 +2593,15 @@ public class Race {
 							score++;
 						return score;
 					}
-			);
+			).withBonusTier(10, {
+				'defense': 10,
+				'maxstr': +50,
+				'maxtou': +70,
+				'maxspe': -50,
+				'maxint': +50,
+				'maxwis': +80,
+				'maxlib': -50
+			});
 	
 	/*
 	//////////////
@@ -2096,7 +2620,9 @@ public class Race {
 					function(ch:Creature,metrics:*,score:int):int {
 						return score;
 					}
-			);
+			).withBonusTier(4,{
+				'maxstr':10
+			});
 	*/
 	
 	/**
@@ -2111,6 +2637,10 @@ public class Race {
 	 * (ch:Creature, metrics:{name:value}, score:int)=>int
 	 */
 	private var finalizerScript:Function      = null;
+	/**
+	 * array[minScore,{bonusName:bonusValue}]
+	 */
+	public const bonusTiers:/*Array*/Array     = [];
 	
 	public function Race(name:String) {
 		this.name          = name;
@@ -2164,12 +2694,37 @@ public class Race {
 		this.finalizerScript = fn;
 		return this;
 	}
+	/**
+	 * @param minScore Minimal score to grant these bonuses
+	 * @param bonuses object{ bonusName:bonusValue }
+	 * @return this
+	 */
+	private function withBonusTier(minScore:int, bonuses:*):Race {
+		for (var key:String in bonuses) {
+			if (BonusNames.indexOf(key) == -1) error("Invalid bonus name '" + key + "' for race " + name);
+		}
+		for each (var tier:Array in this.bonusTiers) {
+			if (tier[0] == minScore) error("Duplicate bonus tier value "+minScore+" for race "+name);
+		}
+		this.bonusTiers.push([minScore, bonuses]);
+		this.bonusTiers.sortOn(['0'], [Array.NUMERIC]);
+		return this;
+	}
+	/**
+	 * @return object{ bonusName:bonusValue }
+	 */
+	public function bonusesForScore(score:int):* {
+		for (var i:int = bonusTiers.length - 1; i >= 0; i--) {
+			if (score >= bonusTiers[i][0]) return Utils.shallowCopy(bonusTiers[i][1]);
+		}
+		return {};
+	}
 	public function scoreFor(ch:Creature, metrics:*):int {
 		Utils.Begin("Race", "scoreFor");
 		var score:int = 0;
 		score += calcSimpleScore(metrics);
 		score += calcComplexScore(metrics);
-		if (finalizerScript) score = finalizerScript(ch, metrics, score);
+		if (finalizerScript != null) score = finalizerScript(ch, metrics, score);
 		Utils.End("Race", "scoreFor");
 		return score;
 	}
@@ -2200,17 +2755,17 @@ public class Race {
 	public function explainSimpleScore(metrics:*):* {
 		var rslt:* = {total: 0, items: []};
 		for (var metricName:String in metrics) {
-			var value:* = metrics[metricName];
+			var value:*  = metrics[metricName];
 			var checks:* = simpleMetrics[metricName];
-			var bonus:* = simpleMetrics[metricName][value];
-			var item:* = {metric:metricName,actual:value,bonus:bonus||0,checks:[]};
+			var bonus:*  = simpleMetrics[metricName][value];
+			var item:*   = {metric: metricName, actual: value, bonus: bonus || 0, checks: []};
 			if (typeof bonus != 'undefined') {
 				rslt.total += bonus;
 			}
 			for (var expectedValue:String in checks) {
-				item.checks.push([expectedValue,checks[expectedValue]]);
+				item.checks.push([expectedValue, checks[expectedValue]]);
 			}
-			if (item.checks.length>0) rslt.items.push(item);
+			if (item.checks.length > 0) rslt.items.push(item);
 		}
 		return rslt;
 	}
@@ -2264,20 +2819,20 @@ public class Race {
 		for each (var scoreTests:Array in complexMetrics) {
 			var tests:*      = scoreTests[1];
 			var pass:Boolean = true;
-			var item:* = {checks:[],passed:true,bonus:scoreTests[0]};
+			var item:*       = {checks: [], passed: true, bonus: scoreTests[0]};
 			rslt.items.push(item);
 			for (var metric:String in tests) {
 				var actual:*   = metrics[metric];
 				var expected:* = tests[metric];
-				var check:* = {metric:metric,actual:actual,expected:expected,passed:true};
+				var check:*    = {metric: metric, actual: actual, expected: expected, passed: true};
 				item.checks.push(check);
 				if (expected is Array) {
 					if (expected.indexOf(actual) == -1) {
-						pass = false;
+						pass         = false;
 						check.passed = false;
 					}
 				} else if (expected != actual) {
-					pass = false;
+					pass         = false;
 					check.passed = false;
 				}
 			}

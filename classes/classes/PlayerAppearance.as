@@ -2583,7 +2583,22 @@ public function RacialScores():void {
 			if (total != simple.total + complex.total) {
 				outputText("<li>+ some magic calculations</li>");
 			}
-			outputText("</ul>Total: "+total+"\n\n");
+			outputText("</ul>Total: "+total+"\n");
+			var tierused:int = -1;
+			for each(var tier:Array in race.bonusTiers) {
+				if (total>=tier[0] && tier[0]>tierused) tierused = tier[0];
+			}
+			for each(tier in race.bonusTiers) {
+				if (tier[0] != tierused) outputText("<font color='#777777'>");
+				outputText("At "+tier[0]+": ");
+				for (bonus in tier[1]) {
+					item = tier[1][bonus];
+					outputText((item>0?"+":"")+item+" "+bonus+" ");
+				}
+				if (tier[0] != tierused) outputText("</font>");
+				outputText("\n");
+			}
+			outputText("\n\n");
 		}
 		doNext(playerMenu);
 	}

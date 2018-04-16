@@ -858,6 +858,9 @@ public class Creature extends Utils
 		public function racialScores():* {
 			return Race.AllScoresFor(this);
 		}
+		public function racialBonuses():* {
+			return Race.AllBonusesFor(this);
+		}
 		
 		/*
 		
