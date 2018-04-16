@@ -135,18 +135,20 @@ public class Race {
 		}
 	}
 	
-	public static const BonusName_maxstr:String    = 'maxstr';
-	public static const BonusName_maxtou:String    = 'maxtou';
-	public static const BonusName_maxspe:String    = 'maxspe';
-	public static const BonusName_maxint:String    = 'maxint';
-	public static const BonusName_maxwis:String    = 'maxwis';
-	public static const BonusName_maxlib:String    = 'maxlib';
-	public static const BonusName_minsen:String    = 'minsen';
-	public static const BonusName_maxsen:String    = 'maxsen';
-	public static const BonusName_maxlust:String   = 'maxlust';
-	public static const BonusName_maxhp:String     = 'maxhp';
-	public static const BonusName_defense:String   = 'defense';
-	public static const BonusNames:/*String*/Array = [
+	public static const BonusName_maxstr:String       = 'maxstr';
+	public static const BonusName_maxtou:String       = 'maxtou';
+	public static const BonusName_maxspe:String       = 'maxspe';
+	public static const BonusName_maxint:String       = 'maxint';
+	public static const BonusName_maxwis:String       = 'maxwis';
+	public static const BonusName_maxlib:String       = 'maxlib';
+	public static const BonusName_minsen:String       = 'minsen';
+	public static const BonusName_maxsen:String       = 'maxsen';
+	public static const BonusName_maxlust:String      = 'maxlust';
+	public static const BonusName_maxhp:String        = 'maxhp';
+	public static const BonusName_maxfatigue:String   = 'maxfatigue';
+	public static const BonusName_maxsoulforce:String = 'maxsoulforce';
+	public static const BonusName_defense:String      = 'defense';
+	public static const BonusNames:/*String*/Array    = [
 		BonusName_maxstr,
 		BonusName_maxtou,
 		BonusName_maxspe,
@@ -157,6 +159,8 @@ public class Race {
 		BonusName_maxsen,
 		BonusName_maxlust,
 		BonusName_maxhp,
+		BonusName_maxfatigue,
+		BonusName_maxsoulforce,
 		BonusName_defense
 	];
 	
@@ -268,6 +272,39 @@ public class Race {
 				'maxlib': +10,
 				'maxsen': +10
 			});
+	public static var MUTANT:Race = new Race("mutant")
+			.simpleScores({
+				'gender': [Gender.GENDER_HERM, +1],
+				'face'  : [Face.HUMAN, -1],
+				'tail'  : [Tail.NONE, -1]
+			}).complexScore(-1, {
+				'skin'         : Skin.PLAIN,
+				'skin.coverage': Skin.COVERAGE_NONE
+			}).complexScore(-1, {
+				'face'     : Face.HORSE,
+				'skin.coat': Skin.FUR
+			}).complexScore(-1, {
+				'face': Face.HORSE,
+				'tail': Tail.HORSE
+			}).complexScore(-1, {
+				'face'     : Face.DOG,
+				'skin.coat': Skin.FUR
+			}).complexScore(-1, {
+				'face': Face.DOG,
+				'tail': Tail.DOG
+			}).withFinalizerScript(
+					function (ch:Creature, metrics:*, score:int):int {
+						// Compensate so "-1 for human face" becomes "+1 for non-human face"
+						score += 3;
+						if (ch.cockTotal() > 1)
+							score++;
+						if (ch.hasFuckableNipples())
+							score++;
+						if (ch.breastRows.length > 1)
+							score++;
+						return score;
+					}
+			);
 	
 	// ^^^^^ SPECIAL RACES
 	// vvvvv NOT-SO-SPECIAL RACES
@@ -302,10 +339,16 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			).withBonusTier(11,{
-				'maxtou': +25,
-				'maxspe': +50,
-				'maxint': +90
+			).withBonusTier(6, {
+				'maxfatigue'  : +50,
+				'maxsoulforce': +150
+			}).withBonusTier(11, {
+				'maxfatigue'  : 50,
+				'maxsoulforce': +150,
+				'maxhp'       : +150,
+				'maxtou'      : +25,
+				'maxspe'      : +50,
+				'maxint'      : +90
 			});
 	
 	public static var ALRAUNE:Race = new Race("alraune")
@@ -552,9 +595,10 @@ public class Race {
 							return 0;
 						return score;
 					}
-			).withBonusTier(8,{
+			).withBonusTier(8, {
 				'maxtou': +80,
-				'maxspe': +40
+				'maxspe': +40,
+				'maxhp' : +100
 			});
 	
 	public static var CHESHIRE:Race = new Race("cheshire")
@@ -641,17 +685,19 @@ public class Race {
 						return score;
 					}
 			).withBonusTier(4, {
-				'maxstr': +60,
-				'maxtou': +10,
-				'maxspe': -20,
-				'maxint': -10,
-				'maxlib': +20
+				'maxstr' : +60,
+				'maxtou' : +10,
+				'maxspe' : -20,
+				'maxint' : -10,
+				'maxlib' : +20,
+				'maxlust': +25
 			}).withBonusTier(10, {
-				'maxstr': +120,
-				'maxtou': +45,
-				'maxspe': -40,
-				'maxint': -20,
-				'maxlib': +45
+				'maxstr' : +120,
+				'maxtou' : +45,
+				'maxspe' : -40,
+				'maxint' : -20,
+				'maxlib' : +45,
+				'maxlust': +50
 			});
 	
 	public static var DEMON:Race = new Race("demon")
@@ -697,14 +743,16 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			).withBonusTier(5,{
-				'maxspe': +15,
-				'maxint': +15,
-				'maxlib': +45
-			}).withBonusTier(11,{
-				'maxspe': +30,
-				'maxint': +35,
-				'maxlib': +100
+			).withBonusTier(5, {
+				'maxspe' : +15,
+				'maxint' : +15,
+				'maxlib' : +45,
+				'maxlust': +50
+			}).withBonusTier(11, {
+				'maxspe' : +30,
+				'maxint' : +35,
+				'maxlib' : +100,
+				'maxlust': +50
 			});
 	
 	public static var DOG:Race = new Race("dog")
@@ -783,24 +831,27 @@ public class Race {
 						return score;
 					}
 			).withBonusTier(7, {
-				'minsen': 10,
-				'maxstr': +35,
-				'maxspe': -10,
-				'maxint': +40,
-				'maxlib': +50,
-				'maxsen': +10
+				'minsen' : +10,
+				'maxstr' : +35,
+				'maxspe' : -10,
+				'maxint' : +40,
+				'maxlib' : +50,
+				'maxsen' : +10,
+				'maxlust': +75
 			}).withBonusTier(10, {
-				'minsen': 25,
-				'maxstr': +50,
-				'maxspe': -20,
-				'maxint': +60,
-				'maxlib': +75,
-				'maxsen': +15
+				'minsen' : +25,
+				'maxstr' : +50,
+				'maxspe' : -20,
+				'maxint' : +60,
+				'maxlib' : +75,
+				'maxsen' : +15,
+				'maxlust': +150
 			}).withBonusTier(14, {
-				'minsen': 55,
-				'maxspe': +30,
-				'maxint': +35,
-				'maxlib': +100
+				'minsen' : +55,
+				'maxspe' : +30,
+				'maxint' : +35,
+				'maxlib' : +100,
+				'maxlust': +150
 			});
 	
 	public static var DRAGON:Race = new Race("dragon")
@@ -855,34 +906,42 @@ public class Race {
 						return score;
 					}
 			).withBonusTier(4, {
-				'maxstr':+15,
-				'maxtou':+15,
-				'maxint':+15,
-				'maxwis':+15
+				'maxstr': +15,
+				'maxtou': +15,
+				'maxint': +15,
+				'maxwis': +15,
+				'maxhp' : +100
 			}).withBonusTier(10, {
 				'defense': 1,
-				'maxstr': +50,
-				'maxtou': +40,
-				'maxspe': +10,
-				'maxint': +20,
-				'maxwis': +20,
-				'maxlib': +10
+				'maxstr' : +50,
+				'maxtou' : +40,
+				'maxspe' : +10,
+				'maxint' : +20,
+				'maxwis' : +20,
+				'maxlib' : +10,
+				'maxhp'  : +200
 			}).withBonusTier(20, {
-				'defense': 4,
-				'maxstr': +95,
-				'maxtou': +95,
-				'maxspe': +20,
-				'maxint': +40,
-				'maxwis': +40,
-				'maxlib': +10
+				'defense'   : 4,
+				'maxstr'    : +95,
+				'maxtou'    : +95,
+				'maxspe'    : +20,
+				'maxint'    : +40,
+				'maxwis'    : +40,
+				'maxlib'    : +10,
+				'maxfatigue': +100,
+				'maxhp'     : +300,
+				'maxlust'   : +25
 			}).withBonusTier(28, {
-				'defense': 10,
-				'maxstr': +100,
-				'maxtou': +100,
-				'maxspe': +40,
-				'maxint': +50,
-				'maxwis': +50,
-				'maxlib': +20
+				'defense'   : 10,
+				'maxstr'    : +100,
+				'maxtou'    : +100,
+				'maxspe'    : +40,
+				'maxint'    : +50,
+				'maxwis'    : +50,
+				'maxlib'    : +20,
+				'maxfatigue': +200,
+				'maxhp'     : +400,
+				'maxlust'   : +50
 			});
 	
 	public static var DRAGONNE:Race = new Race("dragonne")
@@ -1017,7 +1076,8 @@ public class Race {
 			}).withBonusTier(7,{
 				'maxstr': -30,
 				'maxspe': +80,
-				'maxint': +55
+				'maxint': +55,
+				'maxfatigue': +20
 			});
 	
 	public static var GARGOYLE:Race = new Race("gargoyle")
@@ -1167,7 +1227,8 @@ public class Race {
 			).withBonusTier(11,{
 				'maxstr': +50,
 				'maxtou': +45,
-				'maxspe': +70
+				'maxspe': +70,
+				'maxhp' : +50
 			});
 	
 	public static var HARPY:Race = new Race("harpy")
@@ -1236,10 +1297,12 @@ public class Race {
 					}
 			).withBonusTier(4,{
 				'maxspe': +40,
-				'maxtou': +20
+				'maxtou': +20,
+				'maxhp' : +35
 			}).withBonusTier(7,{
 				'maxspe': +70,
-				'maxtou': +35
+				'maxtou': +35,
+				'maxhp' : +70
 			});
 	
 	public static var JABBERWOCKY:Race = new Race("jabberwocky")
@@ -1471,18 +1534,20 @@ public class Race {
 							score += 10;
 						return score;
 					}
-			).withBonusTier(5,{
-				'maxstr': -35,
-				'maxspe': +20,
-				'maxint': +30,
-				'maxwis': +40,
-				'maxlib': +20
-			}).withBonusTier(12,{
-				'maxstr': -50,
-				'maxspe': +40,
-				'maxint': +70,
-				'maxwis': +100,
-				'maxlib': +20
+			).withBonusTier(5, {
+				'maxstr'    : -35,
+				'maxspe'    : +20,
+				'maxint'    : +30,
+				'maxwis'    : +40,
+				'maxlib'    : +20,
+				'maxfatigue': +100
+			}).withBonusTier(12, {
+				'maxstr'    : -50,
+				'maxspe'    : +40,
+				'maxint'    : +70,
+				'maxwis'    : +100,
+				'maxlib'    : +20,
+				'maxfatigue': +300
 			});
 	
 	public static var LIZARD:Race = new Race("lizard")
@@ -1518,11 +1583,13 @@ public class Race {
 						return score;
 					}
 			).withBonusTier(4, {
-				'maxtou': +40,
-				'maxint': +20
+				'maxtou'    : +40,
+				'maxint'    : +20,
+				'maxfatigue': +30
 			}).withBonusTier(8, {
-				'maxint': +70,
-				'maxlib': +50
+				'maxint'    : +70,
+				'maxlib'    : +50,
+				'maxfatigue': +30
 			});
 	
 	public static var MANTICORE:Race = new Race("manticore")
@@ -1559,12 +1626,14 @@ public class Race {
 				'minsen': 30,
 				'maxspe': +50,
 				'maxint': +25,
-				'maxlib': +30
+				'maxlib': +30,
+				'maxhp' : +50
 			}).withBonusTier(12, {
 				'minsen': 45,
 				'maxspe': +100,
 				'maxint': +50,
-				'maxlib': +60
+				'maxlib': +60,
+				'maxhp' : +50
 			});
 	
 	public static var MANTIS:Race = new Race("mantis")
@@ -1642,17 +1711,19 @@ public class Race {
 						return score;
 					}
 			).withBonusTier(4, {
-				'maxstr': +60,
-				'maxtou': +10,
-				'maxspe': -10,
-				'maxint': -20,
-				'maxlib': +20
+				'maxstr' : +60,
+				'maxtou' : +10,
+				'maxspe' : -10,
+				'maxint' : -20,
+				'maxlib' : +20,
+				'maxlust': +25
 			}).withBonusTier(10, {
-				'maxstr': +120,
-				'maxtou': +45,
-				'maxspe': -20,
-				'maxint': -40,
-				'maxlib': +45
+				'maxstr' : +120,
+				'maxtou' : +45,
+				'maxspe' : -20,
+				'maxint' : -40,
+				'maxlib' : +45,
+				'maxlust': +50
 			});
 	
 	public static var MOUSE:Race = new Race("mouse")
@@ -1835,11 +1906,14 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			).withBonusTier(10,{
-				'maxstr': +20,
-				'maxtou': +20,
-				'maxspe': +70,
-				'maxlib': +40
+			).withBonusTier(5, {
+				'maxlust': +25
+			}).withBonusTier(10, {
+				'maxstr' : +20,
+				'maxtou' : +20,
+				'maxspe' : +70,
+				'maxlib' : +40,
+				'maxlust': +25
 			});
 	
 	public static var PIG:Race = new Race("pig")
@@ -2030,7 +2104,8 @@ public class Race {
 				'maxstr': +15,
 				'maxtou': +15,
 				'maxspe': -10,
-				'maxint': -10
+				'maxint': -10,
+				'maxhp' : +100
 			});
 	
 	public static var SALAMANDER:Race = new Race("salamander")
@@ -2064,14 +2139,16 @@ public class Race {
 							score++;
 						return score;
 					}
-			).withBonusTier(4,{
-				'maxstr': +15,
-				'maxtou': +15,
-				'maxlib': +30
-			}).withBonusTier(7,{
-				'maxstr': +25,
-				'maxtou': +25,
-				'maxlib': +40
+			).withBonusTier(4, {
+				'maxstr' : +15,
+				'maxtou' : +15,
+				'maxlib' : +30,
+				'maxlust': +25
+			}).withBonusTier(7, {
+				'maxstr' : +25,
+				'maxtou' : +25,
+				'maxlib' : +40,
+				'maxlust': +25
 			});
 	
 	public static var SANDTRAP:Race = new Race("sandtrap")
@@ -2168,13 +2245,16 @@ public class Race {
 					}
 			).withBonusTier(4,{
 				'maxstr': +40,
-				'maxint': +20
+				'maxint': +20,
+				'maxhp' : +25
 			}).withBonusTier(7,{
 				'maxstr': +65,
-				'maxint': +40
+				'maxint': +40,
+				'maxhp' : +50
 			}).withBonusTier(12,{
 				'maxstr': +120,
-				'maxint': +60
+				'maxint': +60,
+				'maxhp' : +150
 			});
 	
 	public static var SHARK:Race = new Race("shark")
@@ -2210,10 +2290,11 @@ public class Race {
 				'maxstr': +40,
 				'maxspe': +70,
 				'maxlib': +10
-			}).withBonusTier(9,{
-				'maxstr': +60,
-				'maxspe': +70,
-				'maxlib': +20
+			}).withBonusTier(9, {
+				'maxstr' : +60,
+				'maxspe' : +70,
+				'maxlib' : +20,
+				'maxlust': +50
 			});
 	
 	public static var SIREN:Race = new Race("siren")
@@ -2366,10 +2447,16 @@ public class Race {
 							score += 1;
 						return score;
 					}
-			).withBonusTier(9,{
-				'maxtou': +20,
-				'maxspe': +40,
-				'maxint': +75
+			).withBonusTier(5, {
+				'maxfatigue'  : +20,
+				'maxsoulforce': +50
+			}).withBonusTier(9, {
+				'maxtou'      : +20,
+				'maxspe'      : +40,
+				'maxint'      : +75,
+				'maxfatigue'  : +20,
+				'maxsoulforce': +50,
+				'maxhp'       : +120
 			});
 	
 	public static var VAMPIRE:Race = new Race("vampire")

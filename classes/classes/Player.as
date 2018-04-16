@@ -1481,7 +1481,7 @@ use namespace CoC;
 			}
 			if (racialScores[Race.CENTAUR.name] >= 8)
 				race = "centaur";
-			if (mutantScore() >= 5 && race == "human")
+			if (racialScores[Race.MUTANT.name] >= 5 && race == "human")
 				race = "corrupted mutant";
 			if (racialScores[Race.MINOTAUR.name] >= 4)
 				if (racialScores[Race.MINOTAUR.name] >= 9) race = "minotaur";
@@ -2272,6 +2272,7 @@ use namespace CoC;
 		public function mantisScore():int { return racialScore(Race.MANTIS); }
 		public function minotaurScore():int { return racialScore(Race.MINOTAUR); }
 		public function mouseScore():int { return racialScore(Race.MOUSE); }
+		public function mutantScore():int { return racialScore(Race.MUTANT); }
 		public function nagaScore():int { return racialScore(Race.NAGA); }
 		public function nekomataScore():int { return racialScore(Race.NEKOMATA); }
 		public function oniScore():int { return racialScore(Race.ONI); }
@@ -2300,42 +2301,7 @@ use namespace CoC;
 		public function yetiScore():int { return racialScore(Race.YETI); }
 		public function yggdrasilScore():int { return racialScore(Race.YGGDRASIL); }
 
-		//Determine Mutant Rating
-		public function mutantScore():Number{
-			Begin("Player","racialScore","mutant");
-			var mutantCounter:Number = 0;
-			if (faceType != Face.HUMAN)
-				mutantCounter++;
-			if (!hasPlainSkinOnly())
-				mutantCounter++;
-			if (tailType != Tail.NONE)
-				mutantCounter++;
-			if (cockTotal() > 1)
-				mutantCounter++;
-			if (hasCock() && hasVagina())
-				mutantCounter++;
-			if (hasFuckableNipples())
-				mutantCounter++;
-			if (breastRows.length > 1)
-				mutantCounter++;
-			if (faceType == Face.HORSE)
-			{
-				if (hasFur())
-					mutantCounter--;
-				if (tailType == Tail.HORSE)
-					mutantCounter--;
-			}
-			if (faceType == Face.DOG)
-			{
-				if (hasFur())
-					mutantCounter--;
-				if (tailType == Tail.DOG)
-					mutantCounter--;
-			}
-			End("Player","racialScore");
-			return mutantCounter;
-		}
-		//TODO: (logosK) elderSlime, succubus pussy/demonic eyes, arachne, wasp, lactabovine/slut, sleipnir, hellhound, ryu, quetzalcoatl, eredar, anihilan, 
+		//TODO: (logosK) elderSlime, succubus pussy/demonic eyes, arachne, wasp, lactabovine/slut, sleipnir, hellhound, ryu, quetzalcoatl, eredar, anihilan,
 
 		
 		public function maxPrestigeJobs():Number
@@ -4086,42 +4052,12 @@ use namespace CoC;
 		
 		protected override function maxHP_base():Number {
 			var max:Number = super.maxHP_base();
-			var racialScores:* = this.racialScores();
-			if (racialScores[Race.ALICORN.name] >= 11) max += (150 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (racialScores[Race.CENTAUR.name] >= 8) max += (100 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (racialScores[Race.DRAGON.name] >= 4) max += (100 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (racialScores[Race.DRAGON.name] >= 10) max += (100 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (racialScores[Race.DRAGON.name] >= 20) max += (100 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (racialScores[Race.DRAGON.name] >= 28) max += (100 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (racialScores[Race.GORGON.name] >= 11) max += (50 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (racialScores[Race.HORSE.name] >= 4) max += (35 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (racialScores[Race.HORSE.name] >= 7) max += (35 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (racialScores[Race.MANTICORE.name] >= 6) max += (50 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (racialScores[Race.RHINO.name] >= 4) max += (100 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (racialScores[Race.SCYLLA.name] >= 4) max += (25 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (racialScores[Race.SCYLLA.name] >= 7) max += (25 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (racialScores[Race.SCYLLA.name] >= 12) max += (100 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (racialScores[Race.UNICORN.name] >= 9) max += (120 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			
+			max += racialBonuses()[Race.BonusName_maxhp]*(1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]);
 			return max;
 		}
 		protected override function maxLust_base():Number {
 			var max:Number = super.maxLust_base();
-			var racialScores:* = this.racialScores();
-			if (racialScores[Race.COW.name] >= 4) max += (25 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (racialScores[Race.COW.name] >= 9) max += (25 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (racialScores[Race.DEMON.name] >= 5) max += (50 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (racialScores[Race.DEMON.name] >= 11) max += (50 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (racialScores[Race.DEVILKIN.name] >= 7) max += (75 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (racialScores[Race.DEVILKIN.name] >= 10) max += (75 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (racialScores[Race.DRAGON.name] >= 20) max += (25 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (racialScores[Race.DRAGON.name] >= 28) max += (25 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (racialScores[Race.MINOTAUR.name] >= 4) max += (25 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (racialScores[Race.MINOTAUR.name] >= 9) max += (25 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (racialScores[Race.PHOENIX.name] >= 5) max += (25 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (racialScores[Race.SALAMANDER.name] >= 4) max += (25 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (racialScores[Race.SHARK.name] >= 9 && vaginas.length > 0 && cocks.length > 0) max += (50 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			
+			max += racialBonuses()[Race.BonusName_maxlust]*(1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]);
 			return max;
 		}
 		
