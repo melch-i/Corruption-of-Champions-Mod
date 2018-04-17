@@ -1343,6 +1343,13 @@ public class DebugMenu extends BaseContent
 			[LowerBody.YETI, "36 YETI"],
 			[LowerBody.ORCA, "37 ORCA"],
 			[LowerBody.YGG_ROOT_CLAWS, "38 YGG_ROOT_CLAWS"],
+			[LowerBody.ONI, "39 ONI"],
+			[LowerBody.ELF, "40 ELF"],
+			[LowerBody.RAIJU, "41 RAIJU"],
+			[LowerBody.RED_PANDA, "42 RED_PANDA"],
+			[LowerBody.GARGOYLE_2, "43 GARGOYLE_2"],
+			[LowerBody.AVIAN, "44 AVIAN"],
+			[LowerBody.GRYPHON, "45 GRYPHON"]
 		];
 		private static const LEG_COUNT_CONSTANTS:Array = [
 			1,2,4,6,8,
@@ -1357,6 +1364,9 @@ public class DebugMenu extends BaseContent
 			[RearBody.BEHEMOTH, "5 BEHEMOTH"],
 			[RearBody.SHARK_FIN, "6 SHARK_FIN"],
 			[RearBody.ORCA_BLOWHOLE, "7 ORCA_BLOWHOLE"],
+			[RearBody.RAIJU_MANE, "8 RAIJU_MANE"],
+			[RearBody.BAT_COLLAR, "9 BAT_COLLAR"],
+			[RearBody.WOLF_COLLAR, "10 WOLF_COLLAR"]
 		];
 		private function changeArmType(page:int=0,setIdx:int=-1):void {
 			if (setIdx>=0) player.arms.type = setIdx;

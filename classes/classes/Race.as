@@ -8,6 +8,8 @@ import classes.lists.BreastCup;
 import classes.lists.Gender;
 
 /**
+ * I. Racial scores
+ *
  * Racial score calculation is performed in 3 phases: simple, complex, and finalizer.
  * Simple and complex components are defined as data, while finalizer is a function.
  * The more stuff is moved from finalizer to complex and from complex to simple, the better.
@@ -22,6 +24,24 @@ import classes.lists.Gender;
  * Complex Racial Test is passed if EVERY metric has ANY of expected values
  *
  * Finalizer is a simply function that calculates everything that doesn't fit Simple/Complex test model.
+ *
+ *
+ * II. Racial bonuses
+ *
+ * Racial bonuses are set of named values achievable on certain racial score thresholds.
+ * Bonus values are not added on tiers within race (maxstr +15 at score 6 and +30 at 10 will give +30 at score 10),
+ * but are added across different races.
+ *
+ * There is a AllBonusesFor function that iterates over all races and sums the bonuses.
+ *
+ * III. Racial perks
+ *
+ * Racial perks are perks automatically added/removed (in PlayerEvents every hour) if player achieves certain score
+ * or drops below it.
+ *
+ * If a perk belongs to several races, it is awarded for completing any requirement, and removed for failing all.
+ *
+ * There is a AllPerksToAddOrRemoveFor function to get list of perks that should be added and removed.
  */
 public class Race {
 	public var name:String;
@@ -195,6 +215,53 @@ public class Race {
 		}
 		Utils.End("Race", "AllBonusesFor");
 		return result;
+	}
+	/**
+	 * Returns list of perks that not present but should be added because enouch score,
+	 * and those present but should be removed because too low score.
+	 * @param score racial score
+	 * @return array[object{
+	 *     add:Boolean,
+	 *     race:name,
+	 *     perk:PerkType,
+	 *     text:String
+	 *  }]
+	 */
+	public static function AllPerksToAddOrRemoveFor(ch:Creature, scores:* = null):Array {
+		// Lists of perks to add and perks to remove
+		var add:Array = [],rem:Array = [];
+		// List of perks NOT TO REMOVE.
+		// We'll keep all unlocked racial perks here
+		// and remove them from `rem`
+		var dontrem:/*PerkType*/Array = [];
+		for each (var race:Race in RegisteredRaces) {
+			var score:int = scores[race.name]||0;
+			for each (var rp:* in race.racialPerks) {
+				if (score < rp.minScore && ch.hasPerk(rp.perk)) {
+					rem.push({
+						add:false,
+						race:race.name,
+						perk:rp.perk,
+						text:rp.loseText
+					});
+				}
+				if (score >= rp.minScore) {
+					dontrem.push(rp.perk);
+					if (!ch.hasPerk(rp.perk)) {
+						add.push({
+							add:true,
+							race:race.name,
+							perk:rp.perk,
+							text:rp.gainText
+						});
+					}
+				}
+			}
+		}
+		for each (rp in rem) {
+			if (dontrem.indexOf(rp.perk) < 0) add.push(rp);
+		}
+		return add;
 	}
 	
 	public static var HUMAN:Race = new Race("human")
@@ -966,7 +1033,7 @@ public class Race {
 					}
 			);
 	
-	public static var ECHIDNA:Race = new Race("racename")
+	public static var ECHIDNA:Race = new Race("echidna")
 			.simpleScores({
 				'ears'  : [Ears.ECHIDNA, +1],
 				'tail'  : [Tail.ECHIDNA, +1],
@@ -1917,7 +1984,10 @@ public class Race {
 				'maxspe' : +70,
 				'maxlib' : +40,
 				'maxlust': +25
-			});
+			}).withRacialPerk(10,PerkLib.FireAffinity,
+					"You suddenly feels your body temperature rising to ridiculus level. You pant for several minutes until your finaly at ease with your bodily heat. You doubt any more heat is gunna make you more incomfortable then this as you quietly soak in the soothing warmth your body naturaly produce. Its like your body is made out of living fire.\n\n(<b>Gained Perk: Fire Affinity</b>)",
+					"You suddenly feel chilly as your bodily temperature drop down to human level. You lost your natural warmth reverting to that of a standard human.\n\n<b>(Lost Perk: Fire Affinity)</b>"
+			);
 	
 	public static var PIG:Race = new Race("pig")
 			.simpleScores({
@@ -2057,7 +2127,10 @@ public class Race {
 				'maxint': +50,
 				'maxlib': +80,
 				'maxsen': +50
-			});
+			}).withRacialPerk(7,PerkLib.LightningAffinity,
+					"You suddenly feel a rush of electricity run across your skin as your arousal builds up and begin to masturbate in order to get rid of your creeping desire. However even after achieving orgasm not only are you still aroused but you are even hornier than before! You realise deep down that the only way for you to be freed from this jolting pleasure is to have sex with a partner!\n\n(<b>Gained the lightning affinity perk, electrified desire perk and Orgasmic lightning strike ability!</b>)",
+					"Your natural electricity production start dropping at a dramatic rate until finally there is no more. You realise you likely aren’t raiju enough to build electricity anymore which, considering you can reach satisfaction again, might not be a bad thing.\n\n<b>(Lost the lightning affinity perk, electrified desire perk and Orgasmic lightning strike ability!)</b>"
+			).withRacialPerk(7,PerkLib.ElectrifiedDesire,"","");
 	
 	public static var REDPANDA:Race = new Race("red panda")
 			.simpleScores({
@@ -2083,7 +2156,10 @@ public class Race {
 				'maxstr': +15,
 				'maxspe': +75,
 				'maxint': +30
-			});
+			}).withRacialPerk(6,PerkLib.JunglesWanderer,
+					"",
+					""
+			);
 	
 	public static var RHINO:Race = new Race("rhino")
 			.simpleScores({
@@ -2152,7 +2228,10 @@ public class Race {
 				'maxtou' : +25,
 				'maxlib' : +40,
 				'maxlust': +25
-			});
+			}).withRacialPerk(4,PerkLib.FireAffinity,
+				"You suddenly feels your body temperature rising to ridiculus level. You pant for several minutes until your finaly at ease with your bodily heat. You doubt any more heat is gunna make you more incomfortable then this as you quietly soak in the soothing warmth your body naturaly produce. Its like your body is made out of living fire.\n\n(<b>Gained Perk: Fire Affinity</b>)",
+				"You suddenly feel chilly as your bodily temperature drop down to human level. You lost your natural warmth reverting to that of a standard human.\n\n<b>(Lost Perk: Fire Affinity)</b>"
+			);
 	
 	public static var SANDTRAP:Race = new Race("sandtrap")
 			.simpleScores({
@@ -2656,7 +2735,13 @@ public class Race {
 				'maxspe': +50,
 				'maxint': -60,
 				'maxlib': +50
-			});
+			}).withRacialPerk(6, PerkLib.ColdAffinity,
+					"You suddenly no longer feel the cold so you guess you finally got acclimated to the icy winds of the glacial rift. You feel at one with the cold. So well that you actually developed icy power of your own.\n\n(<b>Gained Perks: Cold Affinity and Freezing Breath Yeti</b>)",
+					"You suddenly feel a chill in the air. You guess you somehow no longer resist the cold.\n\n<b>(Lost Perks: Cold Affinity and Freezing Breath Yeti)</b>"
+			).withRacialPerk(6, PerkLib.FreezingBreathYeti,
+					"",
+					""
+			);
 	
 	public static var YGGDRASIL:Race = new Race("yggdrasil")
 			.simpleScores({
@@ -2731,6 +2816,10 @@ public class Race {
 	 * array[minScore,{bonusName:bonusValue}]
 	 */
 	public const bonusTiers:/*Array*/Array     = [];
+	/**
+	 * array[object{minScore:int,perk:PerkType,gainText:String,loseText:String}]
+	 */
+	public const racialPerks:Array             = [];
 	
 	public function Race(name:String) {
 		this.name          = name;
@@ -2799,6 +2888,42 @@ public class Race {
 		this.bonusTiers.push([minScore, bonuses]);
 		this.bonusTiers.sortOn(['0'], [Array.NUMERIC]);
 		return this;
+	}
+	private function withRacialPerk(minScore:int,perk:PerkType,gainText:String,loseText:String):Race {
+		this.racialPerks.push({minScore:minScore,perk:perk,gainText:gainText,loseText:loseText});
+		return this;
+	}
+	/**
+	 * Returns list of perks that not present but should be added because enouch score,
+	 * and those present but should be removed because too low score
+	 * @param score racial score
+	 * @return array[object{
+	 *     add:Boolean,
+	 *     race:name,
+	 *     perk:PerkType,
+	 *     text:String
+	 *  }]
+	 */
+	public function perksToAddRemove(score:int,ch:Creature):Array {
+		var rslt:Array = [];
+		for each (var rp:* in racialPerks) {
+			if (score < rp.minScore && ch.hasPerk(rp.perk)) {
+				rslt.push({
+					add : false,
+					race: this.name,
+					perk: rp.perk,
+					text: rp.loseText
+				});
+			} else if (score >= rp.minScore && !ch.hasPerk(rp.perk)) {
+				rslt.push({
+					add : true,
+					race: this.name,
+					perk: rp.perk,
+					text: rp.gainText
+				});
+			}
+		}
+		return rslt;
 	}
 	/**
 	 * @return object{ bonusName:bonusValue }
