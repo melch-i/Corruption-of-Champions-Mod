@@ -182,9 +182,12 @@ public class Race {
 		Utils.Begin("Race", "AllBonusesFor");
 		if (scores == null) scores = ch.racialScores();
 		var result:* = {};
+		for each (var bonus:String in BonusNames) {
+			result[bonus] = 0;
+		}
 		for each(var race:Race in RegisteredRaces) {
 			var bonuses:* = race.bonusesForScore(scores[race.name]);
-			for (var bonus:String in bonuses) {
+			for (bonus in bonuses) {
 				var value:int = result[bonus];
 				value += bonuses[bonus];
 				result[bonus] = value;
