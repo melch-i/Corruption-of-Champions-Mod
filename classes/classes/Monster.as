@@ -1,6 +1,7 @@
 ﻿package classes
 {
 import classes.BodyParts.Antennae;
+import classes.BodyParts.Face;
 import classes.BodyParts.Horns;
 import classes.BodyParts.Tail;
 import classes.BodyParts.Wings;
@@ -1699,7 +1700,7 @@ import flash.utils.getQualifiedClassName;
 				result += "no beard.\n";
 			}
 			result += Hehas
-			          + (Appearance.DEFAULT_FACE_NAMES[faceType]||("faceType#"+faceType)) + " face, "
+			          + (Face.Values[faceType].name) + " face, "
 			          + (Appearance.DEFAULT_EARS_NAMES[ears.type] || ("earType#" + ears.type)) + " ears, "
 			          + (Appearance.DEFAULT_TONGUE_NAMES[tongue.type] || ("tongue.type#" + tongue.type)) + " tongue and "
 			          + (Appearance.DEFAULT_EYES_NAMES[eyes.type] || ("eyes.type#" + eyes.type)) + " eyes.\n";

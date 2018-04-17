@@ -2420,51 +2420,6 @@ public class Appearance extends Utils
 					[Beard.MOUNTAINMAN, "mountain-man"]
 				]
 		);
-		public static const DEFAULT_FACE_NAMES:Object = createMapFromPairs(
-				[
-					[Face.HUMAN, "human"],
-					[Face.HORSE, "horse"],
-					[Face.DOG, "dog"],
-					[Face.COW_MINOTAUR, "cow"],
-					[Face.SHARK_TEETH, "shark"],
-					[Face.SNAKE_FANGS, "snake"],
-					[Face.CAT, "cat"],
-					[Face.LIZARD, "lizard"],
-					[Face.BUNNY, "bunny"],
-					[Face.KANGAROO, "kangaroo"],
-					[Face.SPIDER_FANGS, "spider"],
-					[Face.FOX, "fox"],
-					[Face.DRAGON, "dragon"],
-					[Face.RACCOON_MASK, "raccoon mask"],
-					[Face.RACCOON, "racoon"],
-					[Face.BUCKTEETH, "buckteeth"],
-					[Face.MOUSE, "mouse"],
-					[Face.FERRET_MASK, "ferret mask"],
-					[Face.FERRET, "ferret"],
-					[Face.PIG, "pig"],
-					[Face.BOAR, "boar"],
-					[Face.RHINO, "rhino"],
-					[Face.ECHIDNA, "echidna"],
-					[Face.DEER, "deer"],
-					[Face.WOLF, "wolf"],
-					[Face.WOLF_FANGS, "wolf fangs"],
-					[Face.MANTICORE, "manticore"],
-					[Face.SALAMANDER_FANGS, "salamander"],
-					[Face.YETI_FANGS, "yeti"],
-					[Face.ORCA, "orca"],
-					[Face.PLANT_DRAGON, "plant dragon"],
-					[Face.DRAGON_FANGS, "dragon fangs"],
-					[Face.DEVIL_FANGS, "devil fangs"],
-					[Face.RAIJU_FANGS, "raiju"],
-					[Face.BUCKTOOTH, "jabberwocky buck tooths"],
-					[Face.JABBERWOCKY, "jabberwocky"],
-					[Face.RED_PANDA, "red-panda"],
-					[Face.CAT_CANINES, "cat canines"],
-					[Face.CHESHIRE, "cheshire"],
-					[Face.CHESHIRE_SMILE, "cheshire"],
-					[Face.AVIAN, "avian"]
-				]
-		);
 		public static const DEFAULT_TONGUE_NAMES:Object = createMapFromPairs(
 				[
 					[Tongue.HUMAN, "human"],

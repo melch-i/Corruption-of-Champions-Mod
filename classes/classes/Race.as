@@ -117,7 +117,7 @@ public class Race {
 			case 'hair'           :
 				return Appearance.DEFAULT_HAIR_NAMES[value];
 			case 'face'           :
-				return Appearance.DEFAULT_FACE_NAMES[value];
+				return Face.Values[value].name;
 			case 'eyes'           :
 				return Appearance.DEFAULT_EYES_NAMES[value];
 			case 'ears'           :

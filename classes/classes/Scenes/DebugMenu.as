@@ -23,6 +23,7 @@ import classes.Items.Consumable;
 import classes.Items.ConsumableLib;
 import classes.Parser.Parser;
 import classes.Scenes.NPCs.JojoScene;
+import classes.internals.EnumValue;
 
 import coc.view.Color;
 
@@ -974,43 +975,9 @@ public class DebugMenu extends BaseContent
 			addButton(10,"BeardLength",changeBeardLength);
 			addButton(14, "Back", bodyPartEditorRoot);
 		}
-		private static const FACE_TYPE_CONSTANTS:Array = [
-			[Face.HUMAN, "0 HUMAN"],
-			[Face.HORSE, "1 HORSE"],
-			[Face.DOG, "2 DOG"],
-			[Face.COW_MINOTAUR, "3 COW_MINOTAUR"],
-			[Face.SHARK_TEETH, "4 SHARK_TEETH"],
-			[Face.SNAKE_FANGS, "5 SNAKE_FANGS"],
-			[Face.CAT, "6 CAT"],
-			[Face.LIZARD, "7 LIZARD"],
-			[Face.BUNNY, "8 BUNNY"],
-			[Face.KANGAROO, "9 KANGAROO"],
-			[Face.SPIDER_FANGS, "10 SPIDER_FANGS"],
-			[Face.FOX, "11 FOX"],
-			[Face.DRAGON, "12 DRAGON"],
-			[Face.RACCOON_MASK, "13 RACCOON_MASK"],
-			[Face.RACCOON, "14 RACCOON"],
-			[Face.BUCKTEETH, "15 BUCKTEETH"],
-			[Face.MOUSE, "16 MOUSE"],
-			[Face.FERRET_MASK, "17 FERRET_MASK"],
-			[Face.FERRET, "18 FERRET"],
-			[Face.PIG, "19 PIG"],
-			[Face.BOAR, "20 BOAR"],
-			[Face.RHINO, "21 RHINO"],
-			[Face.ECHIDNA, "22 ECHIDNA"],
-			[Face.DEER, "23 DEER"],
-			[Face.WOLF, "24 WOLF"],
-			[Face.MANTICORE, "25 MANTICORE"],
-			[Face.SALAMANDER_FANGS, "26 SALAMANDER_FANGS"],
-			[Face.YETI_FANGS, "27 YETI_FANGS"],
-			[Face.ORCA, "28 ORCA"],
-			[Face.PLANT_DRAGON, "29 PLANT_DRAGON"],
-			[Face.DRAGON_FANGS, "30 DRAGON_FANGS"],
-			[Face.DEVIL_FANGS, "31 DEVIL_FANGS"],
-			[Face.ONI_TEETH, "32 ONI_TEETH"],
-			[Face.RAIJU_FANGS, "33 RAIJU_FANGS"],
-			[Face.VAMPIRE, "34 VAMPIRE"],
-		];
+		private static const FACE_TYPE_CONSTANTS:Array = Face.Values.map(function(el:EnumValue,idx:int,arr:Array):Array{
+			return [el.value,""+el.value+" "+el.id];
+		});
 		private static const TONGUE_TYPE_CONSTANTS:Array = [
 			[Tongue.HUMAN, "0 HUMAN"],
 			[Tongue.SNAKE, "1 SNAKE"],
