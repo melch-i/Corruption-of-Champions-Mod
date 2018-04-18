@@ -6,6 +6,8 @@ import classes.BodyParts.*;
 import classes.BodyParts.Ears;
 import classes.BodyParts.Eyes;
 import classes.BodyParts.Hair;
+import classes.BodyParts.LowerBody;
+import classes.BodyParts.RearBody;
 import classes.BodyParts.Skin;
 import classes.BodyParts.Tongue;
 import classes.internals.Utils;
@@ -131,21 +133,21 @@ public class Race {
 			case 'tongue'         :
 				return Tongue.Types[value].name+" tongue";
 			case 'gills'          :
-				return Appearance.DEFAULT_GILL_NAMES[value];
+				return Gills.Types[value].name;
 			case 'antennae'       :
-				return Appearance.DEFAULT_ANTENNAE_NAMES[value];
+				return Antennae.Types[value].name+" antennae";
 			case 'horns'          :
-				return Appearance.DEFAULT_HORNS_NAMES[value];
+				return Horns.Types[value].name+" horns";
 			case 'arms'           :
-				return Appearance.DEFAULT_ARM_NAMES[value];
+				return Arms.Types[value].name + " arms";
 			case 'legs'           :
-				return Appearance.DEFAULT_LOWER_BODY_NAMES[value];
+				return LowerBody.Types[value].name + " legs";
 			case 'wings'          :
-				return Appearance.DEFAULT_WING_NAMES[value];
+				return Wings.Types[value].name + " desc";
 			case 'tail'           :
-				return Appearance.DEFAULT_TAIL_NAMES[value];
+				return Tail.Types[value].name+" tail";
 			case 'rear'           :
-				return Appearance.DEFAULT_REAR_BODY_NAMES[value];
+				return RearBody.Types[value].name;
 			case 'gender'         :
 				return Gender.Values[value].name;
 			case 'skin.tone'      :

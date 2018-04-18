@@ -3599,7 +3599,7 @@ public class Creature extends Utils
 		
 		public function hornDescript():String
 		{
-			return Appearance.DEFAULT_HORNS_NAMES[horns.type] + " _horns";
+			return Horns.Types[horns.type].name + " horns";
 		}
 		
 		public function tailDescript():String

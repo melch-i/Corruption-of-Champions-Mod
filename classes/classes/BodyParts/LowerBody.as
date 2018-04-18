@@ -3,54 +3,57 @@
  */
 package classes.BodyParts {
 import classes.Creature;
+import classes.internals.EnumValue;
 
 public class LowerBody extends SaveableBodyPart {
 	public var legCount:int = 2;
 	
-	public static const HUMAN:int                 = 0;
-	public static const HOOFED:int                = 1;
-	public static const DOG:int                   = 2;
-	public static const NAGA:int                  = 3;
-	public static const CENTAUR:int               = 4;//[Deprecated] use HOOFED and legCount = 4
-	public static const DEMONIC_HIGH_HEELS:int    = 5;
-	public static const DEMONIC_CLAWS:int         = 6;
-	public static const BEE:int                   = 7;
-	public static const GOO:int                   = 8;
-	public static const CAT:int                   = 9;
-	public static const LIZARD:int                = 10;
-	public static const PONY:int                  = 11;
-	public static const BUNNY:int                 = 12;
-	public static const HARPY:int                 = 13;
-	public static const KANGAROO:int              = 14;
-	public static const CHITINOUS_SPIDER_LEGS:int = 15;
-	public static const DRIDER:int                = 16;
-	public static const FOX:int                   = 17;
-	public static const DRAGON:int                = 18;
-	public static const RACCOON:int               = 19;
-	public static const FERRET:int                = 20;
-	public static const CLOVEN_HOOFED:int         = 21;
-	public static const ECHIDNA:int               = 23;
-	public static const DEERTAUR:int              = 24;//[Deprecated] use CLOVEN_HOOFED and legCount = 4
-	public static const SALAMANDER:int            = 25;
-	public static const SCYLLA:int                = 26;
-	public static const MANTIS:int                = 27;
-	public static const SHARK:int                 = 29;
-	public static const GARGOYLE:int              = 30;
-	public static const PLANT_HIGH_HEELS:int      = 31;
-	public static const PLANT_ROOT_CLAWS:int      = 32;
-	public static const WOLF:int                  = 33;
-	public static const PLANT_FLOWER:int          = 34;
-	public static const LION:int                  = 35;
-	public static const YETI:int                  = 36;
-	public static const ORCA:int                  = 37;
-	public static const YGG_ROOT_CLAWS:int        = 38;
-	public static const ONI:int                   = 39;
-	public static const ELF:int                   = 40;
-	public static const RAIJU:int                 = 41;
-	public static const RED_PANDA:int             = 42;
-	public static const GARGOYLE_2:int            = 43;
-	public static const AVIAN:int            	  = 44;
-	public static const GRYPHON:int            	  = 45;
+	public static const Types:/*EnumValue*/Array = [];
+	
+	public static const HUMAN:int                 = EnumValue.add(Types, 0, "HUMAN", {name:"human"});
+	public static const HOOFED:int                = EnumValue.add(Types, 1, "HOOFED", {name:"hoofed"});
+	public static const DOG:int                   = EnumValue.add(Types, 2, "DOG", {name:"dog"});
+	public static const NAGA:int                  = EnumValue.add(Types, 3, "NAGA", {name:"naga"});
+	public static const CENTAUR:int               = EnumValue.add(Types, 4, "CENTAUR", {name:"centaur"});//[Deprecated] use HOOFED and legCount = 4
+	public static const DEMONIC_HIGH_HEELS:int    = EnumValue.add(Types, 5, "DEMONIC_HIGH_HEELS", {name:"demonic high-heels"});
+	public static const DEMONIC_CLAWS:int         = EnumValue.add(Types, 6, "DEMONIC_CLAWS", {name:"demonic claws"});
+	public static const BEE:int                   = EnumValue.add(Types, 7, "BEE", {name:"bee"});
+	public static const GOO:int                   = EnumValue.add(Types, 8, "GOO", {name:"goo"});
+	public static const CAT:int                   = EnumValue.add(Types, 9, "CAT", {name:"cat"});
+	public static const LIZARD:int                = EnumValue.add(Types, 10, "LIZARD", {name:"lizard"});
+	public static const PONY:int                  = EnumValue.add(Types, 11, "PONY", {name:"pony"});
+	public static const BUNNY:int                 = EnumValue.add(Types, 12, "BUNNY", {name:"bunny"});
+	public static const HARPY:int                 = EnumValue.add(Types, 13, "HARPY", {name:"harpy"});
+	public static const KANGAROO:int              = EnumValue.add(Types, 14, "KANGAROO", {name:"kangaroo"});
+	public static const CHITINOUS_SPIDER_LEGS:int = EnumValue.add(Types, 15, "CHITINOUS_SPIDER_LEGS", {name:"chitinous spider legs"});
+	public static const DRIDER:int                = EnumValue.add(Types, 16, "DRIDER", {name:"drider"});
+	public static const FOX:int                   = EnumValue.add(Types, 17, "FOX", {name:"fox"});
+	public static const DRAGON:int                = EnumValue.add(Types, 18, "DRAGON", {name:"dragon"});
+	public static const RACCOON:int               = EnumValue.add(Types, 19, "RACCOON", {name:"raccoon"});
+	public static const FERRET:int                = EnumValue.add(Types, 20, "FERRET", {name:"ferret"});
+	public static const CLOVEN_HOOFED:int         = EnumValue.add(Types, 21, "CLOVEN_HOOFED", {name:"cloven-hoofed"});
+	public static const ECHIDNA:int               = EnumValue.add(Types, 23, "ECHIDNA", {name:"echidna"});
+	public static const DEERTAUR:int              = EnumValue.add(Types, 24, "DEERTAUR", {name:"deertaur"});//[Deprecated] use CLOVEN_HOOFED and legCount = 4
+	public static const SALAMANDER:int            = EnumValue.add(Types, 25, "SALAMANDER", {name:"salamander"});
+	public static const SCYLLA:int                = EnumValue.add(Types, 26, "SCYLLA", {name:"slippery octopus tentacles"});
+	public static const MANTIS:int                = EnumValue.add(Types, 27, "MANTIS", {name:"mantis"});
+	public static const SHARK:int                 = EnumValue.add(Types, 29, "SHARK", {name:"shark"});
+	public static const GARGOYLE:int              = EnumValue.add(Types, 30, "GARGOYLE", {name:"gargoyle"});
+	public static const PLANT_HIGH_HEELS:int      = EnumValue.add(Types, 31, "PLANT_HIGH_HEELS", {name:"vine-covered"});
+	public static const PLANT_ROOT_CLAWS:int      = EnumValue.add(Types, 32, "PLANT_ROOT_CLAWS", {name:"root feet"});
+	public static const WOLF:int                  = EnumValue.add(Types, 33, "WOLF", {name:"wolf"});
+	public static const PLANT_FLOWER:int          = EnumValue.add(Types, 34, "PLANT_FLOWER", {name:"plant flower"});
+	public static const LION:int                  = EnumValue.add(Types, 35, "LION", {name:"lion"});
+	public static const YETI:int                  = EnumValue.add(Types, 36, "YETI", {name:"yeti"});
+	public static const ORCA:int                  = EnumValue.add(Types, 37, "ORCA", {name:"orca"});
+	public static const YGG_ROOT_CLAWS:int        = EnumValue.add(Types, 38, "YGG_ROOT_CLAWS", {name:"root feet"});
+	public static const ONI:int                   = EnumValue.add(Types, 39, "ONI", {name:"oni"});
+	public static const ELF:int                   = EnumValue.add(Types, 40, "ELF", {name:"elf"});
+	public static const RAIJU:int                 = EnumValue.add(Types, 41, "RAIJU", {name:"raiju"});
+	public static const RED_PANDA:int             = EnumValue.add(Types, 42, "RED_PANDA", {name:"red-panda"});
+	public static const GARGOYLE_2:int            = EnumValue.add(Types, 43, "GARGOYLE_2", {name:"gargoyle"});
+	public static const AVIAN:int            	  = EnumValue.add(Types, 44, "AVIAN", {name:"avian"});
+	public static const GRYPHON:int            	  = EnumValue.add(Types, 45, "GRYPHON", {name:"gryphon"});
 	
 	override public function set type(value:int):void {
 		super.type = value;

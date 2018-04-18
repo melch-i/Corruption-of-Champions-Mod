@@ -2089,7 +2089,7 @@ public function RacialScores():void {
 					check = item.checks[i];
 					if (i!=0) outputText(", ");
 					if (check.passed) {
-						outputText(Race.ExplainMetricValue(check.metric, check.actual) + " " + check.metric);
+						outputText(Race.ExplainMetricValue(check.metric, check.actual));
 					} else {
 						outputText("<font color='#777777'>");
 						if (check.expected is Array) {

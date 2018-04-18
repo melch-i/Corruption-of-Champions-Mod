@@ -50,15 +50,16 @@ public class Skin extends SaveableBodyPart {
 	public static const TATTOED_ONI:int           = EnumValue.add(Types,20,"TATTOED_ONI",{name:"tattooed skin",adj:"",plural:false});//[Deprecated] Use pattern
 	public static const FEATHER:int 	          = EnumValue.add(Types,21,"FEATHER",{name:"feathers",adj:"",plural:true});
 	
-	public static const PATTERN_NONE:int = 0;
-	public static const PATTERN_MAGICAL_TATTOO:int = 1;
-	public static const PATTERN_ORCA_UNDERBODY:int = 2;
-	public static const PATTERN_BEE_STRIPES:int = 3;
-	public static const PATTERN_TIGER_STRIPES:int = 4;
-	public static const PATTERN_BATTLE_TATTOO:int = 5;
-	public static const PATTERN_SPOTTED:int = 6;
-	public static const PATTERN_LIGHTNING_SHAPED_TATTOO:int = 7;
-	public static const PATTERN_RED_PANDA_UNDERBODY:int = 8;
+	public static const Patterns:/*EnumValue*/Array = [];
+	public static const PATTERN_NONE:int = EnumValue.add(Patterns, 0, "PATTERN_NONE",{name:"none"});
+	public static const PATTERN_MAGICAL_TATTOO:int = EnumValue.add(Patterns, 1, "PATTERN_MAGICAL_TATTOO",{name:"magical tattoo"});
+	public static const PATTERN_ORCA_UNDERBODY:int = EnumValue.add(Patterns, 2, "PATTERN_ORCA_UNDERBODY",{name:"orca underbody"});
+	public static const PATTERN_BEE_STRIPES:int = EnumValue.add(Patterns, 3, "PATTERN_BEE_STRIPES",{name:"bee stripes"});
+	public static const PATTERN_TIGER_STRIPES:int = EnumValue.add(Patterns, 4, "PATTERN_TIGER_STRIPES",{name:"tiger stripes"});
+	public static const PATTERN_BATTLE_TATTOO:int = EnumValue.add(Patterns, 5, "PATTERN_BATTLE_TATTOO",{name:"battle tattoo"});
+	public static const PATTERN_SPOTTED:int = EnumValue.add(Patterns, 6, "PATTERN_SPOTTED",{name:"spotted"});
+	public static const PATTERN_LIGHTNING_SHAPED_TATTOO:int = EnumValue.add(Patterns, 7, "PATTERN_LIGHTNING_SHAPED_TATTOO",{name:"lightning shaped tattoo"});
+	public static const PATTERN_RED_PANDA_UNDERBODY:int = EnumValue.add(Patterns, 8, "PATTERN_RED_PANDA_UNDERBODY",{name:"red panda underbody"});
 	
 	public var base:SkinLayer;
 	public var coat:SkinLayer;

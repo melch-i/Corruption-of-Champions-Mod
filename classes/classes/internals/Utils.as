@@ -69,6 +69,16 @@ package classes.internals
 			return r;
 		}
 		/**
+		 * @return src.map(el => mapping.map(prop => el[prop]) )
+		 */
+		public static function mapToArrays(src:Array,mapping:Array):Array {
+			return src.map(function(el:*,i:int,arr:Array):* {
+				return mapping.map(function(prop:String,i2:int,arr2:Array):*{
+					return el[prop];
+				})
+			})
+		}
+		/**
 		 * Deleting obj[key] with default.
 		 *
 		 * If `key` in `obj`: return `obj[key]` and delete `obj[key]`

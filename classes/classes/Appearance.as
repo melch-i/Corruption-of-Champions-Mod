@@ -2195,7 +2195,7 @@ public class Appearance extends Utils
 		
 		public static function wingsDescript(i_creature:Creature):String
 		{
-			return DEFAULT_WING_NAMES[i_creature.wings.type] + " wings";
+			return Wings.Types[i_creature.wings.type].name + " wings";
 		}
 		public static function eyesDescript(i_creature:Creature):String
 		{
@@ -2365,149 +2365,6 @@ public class Appearance extends Utils
 
 		
 		
-		
-		public static const DEFAULT_HORNS_NAMES:Object = createMapFromPairs(
-				[
-					[Horns.NONE, "non-existant"],
-					[Horns.DEMON, "demon"],
-					[Horns.COW_MINOTAUR, "cow"],
-					[Horns.DRACONIC_X2, "2 draconic"],
-					[Horns.DRACONIC_X4_12_INCH_LONG, "four 12\" long draconic"],
-					[Horns.ANTLERS, "deer"],
-					[Horns.GOAT, "goat"],
-					[Horns.RHINO, "rhino"],
-					[Horns.UNICORN, "unicorn"],
-					[Horns.OAK, "oak"],
-					[Horns.GARGOYLE, "gargoyle"],
-					[Horns.ORCHID, "orchid"],
-					[Horns.ONI, "1 oni"],
-					[Horns.ONI_X2, "2 oni"],
-					[Horns.BICORN, "bicorn"]
-				]
-		);
-		public static const DEFAULT_ANTENNAE_NAMES:Object = createMapFromPairs(
-				[
-					[Antennae.NONE, "non-existant"],
-					[Antennae.BEE, "bee"],
-					[Antennae.MANTIS, "mantis"]
-				]
-		);
-		public static const DEFAULT_GILL_NAMES:Object = createMapFromPairs(
-				[
-						[Gills.NONE,"non-existant"],
-						[Gills.FISH,"fish"],
-						[Gills.ANEMONE,"anemone"],
-						[Gills.GILLS_IN_TENTACLE_LEGS,"in tentacle legs"]
-				]
-		);
-		public static const DEFAULT_ARM_NAMES:Object = createMapFromPairs(
-				[
-					[Arms.HUMAN, "human"],
-					[Arms.HARPY, "harpy"],
-					[Arms.SPIDER, "spider"],
-					[Arms.MANTIS, "mantis"],
-					[Arms.BEE, "bee"],
-					[Arms.SALAMANDER, "salamander"],
-					[Arms.PHOENIX, "phoenix"],
-					[Arms.PLANT, "vine-covered"],
-					[Arms.SHARK, "shark"],
-					[Arms.GARGOYLE, "gargoyle"],
-					[Arms.GARGOYLE_2, "gargoyle"],
-					[Arms.WOLF, "wolf"],
-					[Arms.LION, "lion"],
-					[Arms.SPHINX, "sphinx"],
-					[Arms.KITSUNE, "kitsune"],
-					[Arms.FOX, "fox"],
-					[Arms.LIZARD, "lizard"],
-					[Arms.DRAGON, "dragon"],
-					[Arms.YETI, "yeti"],
-					[Arms.ORCA, "orca"],
-					[Arms.PLANT2, "tentacle-covered"],
-					[Arms.DEVIL, "devil"],
-					[Arms.ONI, "oni"],
-					[Arms.ELF, "elf"],
-					[Arms.RAIJU, "raiju"],
-					[Arms.RED_PANDA, "red-panda"],
-					[Arms.CAT, "cat"],
-					[Arms.AVIAN, "avian"],
-					[Arms.GRYPHON, "gryphon"]
-				]
-		);
-		public static const DEFAULT_TAIL_NAMES:Object = createMapFromPairs(
-				[
-					[Tail.NONE, "non-existant"],
-					[Tail.HORSE, "horse"],
-					[Tail.DOG, "dog"],
-					[Tail.DEMONIC, "demonic"],
-					[Tail.COW, "cow"],
-					[Tail.SPIDER_ADBOMEN, "spider abdomen"],
-					[Tail.BEE_ABDOMEN, "bee abdomen"],
-					[Tail.SHARK, "shark"],
-					[Tail.CAT, "cat"],
-					[Tail.LIZARD, "lizard"],
-					[Tail.RABBIT, "rabbit"],
-					[Tail.HARPY, "harpy"],
-					[Tail.KANGAROO, "kangaroo"],
-					[Tail.FOX, "fox"],
-					[Tail.DRACONIC, "draconic"],
-					[Tail.RACCOON, "raccoon"],
-					[Tail.MOUSE, "mouse"],
-					[Tail.BEHEMOTH, "behemoth"],
-					[Tail.PIG, "pig"],
-					[Tail.SCORPION, "scorpion"],
-					[Tail.GOAT, "goat"],
-					[Tail.RHINO, "rhino"],
-					[Tail.ECHIDNA, "echidna"],
-					[Tail.DEER, "deer"],
-					[Tail.SALAMANDER, "salamander"],
-					[Tail.KITSHOO, "kitshoo"],
-					[Tail.MANTIS_ABDOMEN, "mantis abdomen"],
-					[Tail.WOLF, "wolf"],
-					[Tail.LION, "lion"],
-					[Tail.GARGOYLE, "mace-shaped gargoyle"],
-					[Tail.MANTICORE_PUSSYTAIL, "manticore pussytail"],
-					[Tail.ORCA, "orca"],
-					[Tail.YGGDRASIL, "yggdrasil"],
-					[Tail.RAIJU, "raiju"],
-					[Tail.RED_PANDA, "red-panda"],
-					[Tail.GARGOYLE_2, "axe-shaped gargoyle"],
-					[Tail.AVIAN, "avian"],
-					[Tail.GRIFFIN, "griffin"]
-				]
-		);
-		public static const DEFAULT_WING_NAMES:Object = createMapFromPairs(
-				[
-					[Wings.NONE, "non-existant"],
-					[Wings.BEE_LIKE_SMALL, "small bee-like"],
-					[Wings.BEE_LIKE_LARGE, "large bee-like"],
-					[Wings.HARPY, "harpy"],
-					[Wings.IMP, "imp"],
-					[Wings.BAT_LIKE_TINY, "tiny bat-like"],
-					[Wings.BAT_LIKE_LARGE, "large bat-like"],
-				//	[SHARK_FIN, "shark fin"],
-					[Wings.FEATHERED_LARGE, "large feathered"],
-					[Wings.DRACONIC_SMALL, "small draconic"],
-					[Wings.DRACONIC_LARGE, "large draconic"],
-					[Wings.GIANT_DRAGONFLY, "giant dragonfly"],
-					[Wings.BAT_LIKE_LARGE_2, "two large pairs of bat-like"],
-					[Wings.DRACONIC_HUGE, "large majestic draconic"],
-					[Wings.FEATHERED_PHOENIX, "phoenix"],
-					[Wings.FEATHERED_ALICORN, "alicorn"],
-					[Wings.FEATHERED_SPHINX, "sphinx"],
-					[Wings.MANTIS_LIKE_SMALL, "small mantis-like"],
-					[Wings.MANTIS_LIKE_LARGE, "large mantis-like"],
-					[Wings.MANTIS_LIKE_LARGE_2, "two large pairs of mantis-like"],
-					[Wings.GARGOYLE_LIKE_LARGE, "large stony"],
-					[Wings.PLANT, "three pairs of cockvines"],
-					[Wings.MANTICORE_LIKE_SMALL, "small manticore-like"],
-					[Wings.MANTICORE_LIKE_LARGE, "large manticore-like"],
-					[Wings.BAT_ARM, "large manticore-like"],
-					[Wings.VAMPIRE, "large manticore-like"],
-					[Wings.FEY_DRAGON_WINGS, "large majestic fey draconic"],
-					[Wings.FEATHERED_AVIAN, "avian"],
-					[Wings.NIGHTMARE, "leathery"]
-				]
-		);
 		public static const DEFAULT_WING_DESCS:Object = createMapFromPairs(
 				[
 					[Wings.NONE, "non-existant"],
@@ -2539,69 +2396,7 @@ public class Appearance extends Utils
 					[Wings.NIGHTMARE, "large leathery"]
 				]
 		);
-		public static const DEFAULT_LOWER_BODY_NAMES:Object = createMapFromPairs(
-				[
-					[LowerBody.HUMAN, "human"],
-					[LowerBody.HOOFED, "hoofed"],
-					[LowerBody.DOG, "dog"],
-					[LowerBody.NAGA, "naga"],
-					[LowerBody.CENTAUR, "centaur"],
-					[LowerBody.DEMONIC_HIGH_HEELS, "demonic high-heels"],
-					[LowerBody.DEMONIC_CLAWS, "demonic claws"],
-					[LowerBody.BEE, "bee"],
-					[LowerBody.GOO, "goo"],
-					[LowerBody.CAT, "cat"],
-					[LowerBody.LIZARD, "lizard"],
-					[LowerBody.PONY, "pony"],
-					[LowerBody.BUNNY, "bunny"],
-					[LowerBody.HARPY, "harpy"],
-					[LowerBody.KANGAROO, "kangaroo"],
-					[LowerBody.CHITINOUS_SPIDER_LEGS, "chitinous spider legs"],
-					[LowerBody.DRIDER, "drider"],
-					[LowerBody.FOX, "fox"],
-					[LowerBody.DRAGON, "dragon"],
-					[LowerBody.RACCOON, "raccoon"],
-					[LowerBody.FERRET, "ferret"],
-					[LowerBody.CLOVEN_HOOFED, "cloven-hoofed"],
-					[LowerBody.ECHIDNA, "echidna"],
-					[LowerBody.ECHIDNA, "deertaur"],
-					[LowerBody.SALAMANDER, "salamander"],
-					[LowerBody.SCYLLA, "slippery octopus tentacles"],
-					[LowerBody.MANTIS, "mantis"],
-					//[MANTIS, "mantis"],
-					[LowerBody.SHARK, "shark"],
-					[LowerBody.GARGOYLE, "gargoyle"],
-					[LowerBody.GARGOYLE_2, "gargoyle"],
-					[LowerBody.PLANT_HIGH_HEELS, "vine-covered"],
-					[LowerBody.PLANT_ROOT_CLAWS, "root feet"],
-					[LowerBody.WOLF, "wolf"],
-					[LowerBody.LION, "lion"],
-					[LowerBody.YETI, "yeti"],
-					[LowerBody.ORCA, "orca"],
-					[LowerBody.YGG_ROOT_CLAWS, "root feet"],
-					[LowerBody.ONI, "oni"],
-					[LowerBody.ELF, "elf"],
-					[LowerBody.RAIJU, "raiju"],
-					[LowerBody.RED_PANDA, "red-panda"],
-					[LowerBody.AVIAN, "avian"],
-					[LowerBody.GRYPHON, "gryphon"]
-				]
-		);
-		// <mod name="Dragon patch" author="Stadler76">
-		public static const DEFAULT_REAR_BODY_NAMES:Object = createMapFromPairs(
-				[
-					[RearBody.NONE, "none"],
-					[RearBody.DRACONIC_MANE, "draconic hairy mane"],
-					[RearBody.DRACONIC_SPIKES, "draconic spiky mane"],
-					[RearBody.FENRIR_ICE_SPIKES, "ice shards"],
-					[RearBody.BEHEMOTH, "behemoth spikes"],
-					[RearBody.LION_MANE, "lion mane"],
-					[RearBody.SHARK_FIN, "shark fin"],
-					[RearBody.ORCA_BLOWHOLE, "orca blowhole"],
-					[RearBody.RAIJU_MANE, "raiju mane"],
-					[RearBody.WOLF_COLLAR, "wolf mane"]
-				]
-		);
+		
 		public static const DEFAULT_PIERCING_NAMES:Object = createMapFromPairs(
 				[
 					[Piercing.NONE, "none"],
@@ -2784,7 +2579,7 @@ public class Appearance extends Utils
 			}
 			else
 			{
-				descript += DEFAULT_TAIL_NAMES[i_creature.tailType];
+				descript += Tail.Types[i_creature.tailType].name;
 				descript += " tail";
 			}
 			
@@ -2814,7 +2609,7 @@ public class Appearance extends Utils
 			}
 			else
 			{
-				descript += "your " + DEFAULT_TAIL_NAMES[i_creature.tailType] + " tail";
+				descript += "your " + Tail.Types[i_creature.tailType].name + " tail";
 			}
 			
 			return descript;
