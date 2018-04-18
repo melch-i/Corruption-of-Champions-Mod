@@ -2199,7 +2199,7 @@ public class Appearance extends Utils
 		}
 		public static function eyesDescript(i_creature:Creature):String
 		{
-			return i_creature.eyes.colour + " " + DEFAULT_EYES_NAMES[i_creature.eyes.type] + " eyes";
+			return i_creature.eyes.colour + " " + Eyes.Types[i_creature.eyes.type].name + " eyes";
 		}
 		public static function earsDescript(i_creature:Creature):String
 		{
@@ -2363,98 +2363,9 @@ public class Appearance extends Utils
 			return defaultValue;
 		}
 
-		public static const DEFAULT_HAIR_NAMES:Object = createMapFromPairs(
-				[
-					[Hair.NORMAL, "normal"],
-					[Hair.FEATHER, "feather"],
-					[Hair.GHOST, "transparent"],
-					[Hair.GOO, "goopy"],
-					[Hair.ANEMONE, "tentacle"],
-					[Hair.QUILL, "quill"],
-					[Hair.GORGON, "snake-like"],
-					[Hair.LEAF, "leaf"],
-					[Hair.FLUFFY, "fluffy"],
-					[Hair.GRASS, "grass"],
-					[Hair.SILKEN, "silk-like"],
-					[Hair.STORM, "glowing lightning shaped"]
-				]
-		);
-		public static const DEFAULT_BEARD_NAMES:Object = createMapFromPairs(
-				[
-					[Beard.NORMAL, "normal"],
-					[Beard.GOATEE, "goatee"],
-					[Beard.CLEANCUT, "clean-cut"],
-					[Beard.MOUNTAINMAN, "mountain-man"]
-				]
-		);
-		public static const DEFAULT_TONGUE_NAMES:Object = createMapFromPairs(
-				[
-					[Tongue.HUMAN, "human"],
-					[Tongue.SNAKE, "snake"],
-					[Tongue.DEMONIC, "demonic"],
-					[Tongue.DRACONIC, "draconic"],
-					[Tongue.ECHIDNA, "echidna"],
-					[Tongue.CAT, "cat"],
-					[Tongue.ELF, "elf"],
-					[Tongue.DOG, "dog"]
-				]
-		);
-		public static const DEFAULT_EYES_NAMES:Object = createMapFromPairs(
-				[
-					[Eyes.HUMAN, "human"],
-					[Eyes.FOUR_SPIDER_EYES, "4 spider"],
-					[Eyes.BLACK_EYES_SAND_TRAP, "sandtrap"],
-					[Eyes.CAT_SLITS, "cat"],
-					[Eyes.GORGON, "snake"],
-					[Eyes.FENRIR, "fenrir"],
-					[Eyes.MANTICORE, "manticore"],
-					[Eyes.FOX, "fox"],
-					[Eyes.REPTILIAN, "reptilian"],
-					[Eyes.SNAKE, "snake"],
-					[Eyes.DRAGON, "dragon"],
-					[Eyes.DEVIL, "devil"],
-					[Eyes.ONI, "oni"],
-					[Eyes.ELF, "elf"],
-					[Eyes.RAIJU, "raiju"],
-					[Eyes.GEMSTONES, "gemstones"],
-					[Eyes.FERAL, "feral"],
-					[Eyes.GRYPHON, "gryphon"]
-				]
-		);
-		public static const DEFAULT_EARS_NAMES:Object = createMapFromPairs(
-				[
-					[Ears.HUMAN, "human"],
-					[Ears.HORSE, "horse"],
-					[Ears.DOG, "dog"],
-					[Ears.COW, "cow"],
-					[Ears.ELFIN, "elfin"],
-					[Ears.CAT, "cat"],
-					[Ears.LIZARD, "lizard"],
-					[Ears.BUNNY, "bunny"],
-					[Ears.KANGAROO, "kangaroo"],
-					[Ears.FOX, "fox"],
-					[Ears.DRAGON, "dragon"],
-					[Ears.RACCOON, "raccoon"],
-					[Ears.MOUSE, "mouse"],
-					[Ears.FERRET, "ferret"],
-					[Ears.PIG, "pig"],
-					[Ears.RHINO, "rhino"],
-					[Ears.ECHIDNA, "echidna"],
-					[Ears.DEER, "deer"],
-					[Ears.WOLF, "wolf"],
-					[Ears.LION, "lion"],
-					[Ears.YETI, "yeti"],
-					[Ears.ORCA, "orca"],
-					[Ears.SNAKE, "snake"],
-					[Ears.GOAT, "goat"],
-					[Ears.ONI, "oni"],
-					[Ears.ELVEN, "elven"],
-					[Ears.WEASEL, "weasel"],
-					[Ears.RED_PANDA, "red-panda"],
-					[Ears.AVIAN, "avian"],
-					[Ears.GRYPHON, "gryphon"]
-				]
-		);
+		
+		
+		
 		public static const DEFAULT_HORNS_NAMES:Object = createMapFromPairs(
 				[
 					[Horns.NONE, "non-existant"],

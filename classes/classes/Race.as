@@ -3,7 +3,11 @@
  */
 package classes {
 import classes.BodyParts.*;
+import classes.BodyParts.Ears;
+import classes.BodyParts.Eyes;
+import classes.BodyParts.Hair;
 import classes.BodyParts.Skin;
+import classes.BodyParts.Tongue;
 import classes.internals.Utils;
 import classes.lists.BreastCup;
 import classes.lists.Gender;
@@ -113,19 +117,19 @@ public class Race {
 			case 'skin'           :
 				return Skin.Types[value].name;
 			case 'skin.coverage'  :
-				return ["none", "low", "medium", "high", "complete"][value];
+				return ["no", "partial", "medium", "high", "complete"]+" coat";
 			case 'skin.coat'      :
-				return Skin.Types[value].name;
+				return Skin.Types[value].name+" coat";
 			case 'hair'           :
-				return Appearance.DEFAULT_HAIR_NAMES[value];
+				return Hair.Types[value].name+" hair";
 			case 'face'           :
-				return Face.Values[value].name;
+				return Face.Types[value].name;
 			case 'eyes'           :
-				return Appearance.DEFAULT_EYES_NAMES[value];
+				return Eyes.Types[value].name+" eyes";
 			case 'ears'           :
-				return Appearance.DEFAULT_EARS_NAMES[value];
+				return Ears.Types[value].name+" ears";
 			case 'tongue'         :
-				return Appearance.DEFAULT_TONGUE_NAMES[value];
+				return Tongue.Types[value].name+" tongue";
 			case 'gills'          :
 				return Appearance.DEFAULT_GILL_NAMES[value];
 			case 'antennae'       :

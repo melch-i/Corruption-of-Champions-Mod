@@ -975,7 +975,7 @@ public class DebugMenu extends BaseContent
 			addButton(10,"BeardLength",changeBeardLength);
 			addButton(14, "Back", bodyPartEditorRoot);
 		}
-		private static const FACE_TYPE_CONSTANTS:Array = Face.Values.map(function(el:EnumValue,idx:int,arr:Array):Array{
+		private static const FACE_TYPE_CONSTANTS:Array = Face.Types.map(function(el:EnumValue, idx:int, arr:Array):Array{
 			return [el.value,""+el.value+" "+el.id];
 		});
 		private static const TONGUE_TYPE_CONSTANTS:Array = [
