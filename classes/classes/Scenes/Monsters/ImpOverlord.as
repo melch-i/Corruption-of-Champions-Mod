@@ -41,11 +41,11 @@ public class ImpOverlord extends Imp
 			//Blind
 			else if (spellChooser == 1 && fatigue <= (maxFatigue() - spellCostBlind)) {
 				outputText("The imp glares at you and points at you! A bright flash erupts before you!  ");
-				if (player.findPerk(PerkLib.GorgonsEyes) < 0 && rand(player.inte / 5) <= 4) {
+				if (!player.hasPerk(PerkLib.GorgonsEyes) && rand(player.inte / 5) <= 4) {
 					outputText("<b>You are blinded!</b>");
 					player.createStatusEffect(StatusEffects.Blind, 1 + rand(3), 0, 0, 0);
 				}
-				else if (player.findPerk(PerkLib.GorgonsEyes) >= 0) {
+				else if (player.hasPerk(PerkLib.GorgonsEyes)) {
 					outputText("Your mutated eyes not been affected at all by this flash!");
 				}
 				else {
@@ -56,8 +56,8 @@ public class ImpOverlord extends Imp
 			//Whitefire
 			else if (spellChooser == 2 && fatigue <= (maxFatigue() - spellCostWhitefire)) {
 				var damage:int = inte + rand(50);
-				if (player.findPerk(PerkLib.FromTheFrozenWaste) >= 0 || player.findPerk(PerkLib.ColdAffinity) >= 0) damage *= 3;
-				if (player.findPerk(PerkLib.FireAffinity) >= 0) damage *= 0.3;
+				if (player.hasPerk(PerkLib.FromTheFrozenWaste) || player.hasPerk(PerkLib.ColdAffinity)) damage *= 3;
+				if (player.hasPerk(PerkLib.FireAffinity)) damage *= 0.3;
 				if (player.hasStatusEffect(StatusEffects.Blizzard)) {
 				player.addStatusValue(StatusEffects.Blizzard, 1, -1);
 				outputText("The imp narrows his eyes and focuses his mind with deadly intent. He snaps his fingers and you are enveloped in a flash of white flames!  Thanks to surrounding you ice shards this attack isn't at it peak power!  ");
@@ -106,8 +106,8 @@ public class ImpOverlord extends Imp
 			outputText("The imp mutters something to himself. Before you have time to react the demonic creature's hand is filled with a bright red fire that he hurls at you.  The flames lick at your body leaving a painful burn on your torso, as well as an arousing heat in your groin. ");
 			//[-HP // +Lust(minor)]
 			var damage:int = 80 + rand(20);
-			if (player.findPerk(PerkLib.FromTheFrozenWaste) >= 0 || player.findPerk(PerkLib.ColdAffinity) >= 0) damage *= 3;
-			if (player.findPerk(PerkLib.FireAffinity) >= 0) damage *= 0.3;
+			if (player.hasPerk(PerkLib.FromTheFrozenWaste) || player.hasPerk(PerkLib.ColdAffinity)) damage *= 3;
+			if (player.hasPerk(PerkLib.FireAffinity)) damage *= 0.3;
 			damage = Math.round(damage);
 			player.takeMagicDamage(damage, true);
 			player.dynStats("lus", 20 + player.cor / 10);

@@ -13,187 +13,50 @@ internal class ControlBindings {
 
     }
     public function executeButtonClick(button:int = 0):void {
-        CoC.instance.mainView.clickButton( button );
+        mainView.clickButton( button );
+    }
+    private function get mainView():MainView {
+        return CoC.instance.mainView;
     }
     internal function run(inputManager:InputManager):void {
-        inputManager.AddBindableControl(
+		inputManager.AddBindableControl(
                 "Show Stats",
                 "Show the stats pane when available",
                 function ():void {
-                    if (CoC.instance.mainView.menuButtonIsVisible(MainView.MENU_STATS) && CoC.instance.player.str > 0) {
+                    if (mainView.menuButtonIsVisible(MainView.MENU_STATS) && CoC.instance.player.str > 0) {
                         CoC.instance.playerInfo.displayStats();
                     }
-                });
+                },
+                mainView.statsButton
+        );
 
         inputManager.AddBindableControl(
                 "Level Up",
                 "Show the level up page when available",
                 function ():void {
-                    if (CoC.instance.mainView.menuButtonIsVisible(MainView.MENU_LEVEL) && CoC.instance.player.str > 0) {
+                    if (mainView.menuButtonIsVisible(MainView.MENU_LEVEL) && CoC.instance.player.str > 0) {
                         CoC.instance.playerInfo.levelUpGo();
                     }
-                });
+                },
+                mainView.levelButton);
 
-            inputManager.AddBindableControl(
-                    "Quicksave 1",
-                    "Quicksave the current game to slot 1",
-                    function ():void {
-                        if (CoC.instance.mainView.menuButtonIsVisible(MainView.MENU_DATA) && CoC.instance.player.str > 0) {
-                            CoC.instance.mainView.nameBox.text = "";
-                            CoC.instance.saves.saveGame("CoC_1");
-                            EngineCore.clearOutput();
-                            EngineCore.outputText("Game saved to slot 1!");
-                            EngineCore.doNext(EventParser.playerMenu);
-                        }
-                    });
+	    inputManager.AddBindableControl("Quicksave 1", "Quicksave the current game to slot 1", function():void { Bindings.execQuickSave(1); });
+	    inputManager.AddBindableControl("Quicksave 2", "Quicksave the current game to slot 2", function():void { Bindings.execQuickSave(2); });
+	    inputManager.AddBindableControl("Quicksave 3", "Quicksave the current game to slot 3", function():void { Bindings.execQuickSave(3); });
+	    inputManager.AddBindableControl("Quicksave 4", "Quicksave the current game to slot 4", function():void { Bindings.execQuickSave(4); });
+	    inputManager.AddBindableControl("Quicksave 5", "Quicksave the current game to slot 5", function():void { Bindings.execQuickSave(5); });
 
-            inputManager.AddBindableControl(
-                    "Quicksave 2",
-                    "Quicksave the current game to slot 2",
-                    function ():void {
-                        if (CoC.instance.mainView.menuButtonIsVisible(MainView.MENU_DATA) && CoC.instance.player.str > 0) {
-                            CoC.instance.mainView.nameBox.text = "";
-                            CoC.instance.saves.saveGame("CoC_2");
-                            EngineCore.clearOutput();
-                            EngineCore.outputText("Game saved to slot 2!");
-                            EngineCore.doNext(EventParser.playerMenu);
-                        }
-                    });
-
-            inputManager.AddBindableControl(
-                    "Quicksave 3",
-                    "Quicksave the current game to slot 2",
-                    function ():void {
-                        if (CoC.instance.mainView.menuButtonIsVisible(MainView.MENU_DATA) && CoC.instance.player.str > 0) {
-                            CoC.instance.mainView.nameBox.text = "";
-                            CoC.instance.saves.saveGame("CoC_3");
-                            EngineCore.clearOutput();
-                            EngineCore.outputText("Game saved to slot 3!");
-                            EngineCore.doNext(EventParser.playerMenu);
-                        }
-                    });
-
-            inputManager.AddBindableControl(
-                    "Quicksave 4",
-                    "Quicksave the current game to slot 4",
-                    function ():void {
-                        if (CoC.instance.mainView.menuButtonIsVisible(MainView.MENU_DATA) && CoC.instance.player.str > 0) {
-                            CoC.instance.mainView.nameBox.text = "";
-                            CoC.instance.saves.saveGame("CoC_4");
-                            EngineCore.clearOutput();
-                            EngineCore.outputText("Game saved to slot 4!");
-                            EngineCore.doNext(EventParser.playerMenu);
-                        }
-                    });
-
-            inputManager.AddBindableControl(
-                    "Quicksave 5",
-                    "Quicksave the current game to slot 5",
-                    function ():void {
-                        if (CoC.instance.mainView.menuButtonIsVisible(MainView.MENU_DATA) && CoC.instance.player.str > 0) {
-                            CoC.instance.mainView.nameBox.text = "";
-                            CoC.instance.saves.saveGame("CoC_5");
-                            EngineCore.clearOutput();
-                            EngineCore.outputText("Game saved to slot 5!");
-                            EngineCore.doNext(EventParser.playerMenu);
-                        }
-                    });
-
-            inputManager.AddBindableControl(
-                    "Quickload 1",
-                    "Quickload the current game from slot 1",
-                    function ():void {
-                        if (CoC.instance.mainView.menuButtonIsVisible(MainView.MENU_DATA)) {
-                            var saveFile:* = SharedObject.getLocal("CoC_1", "/");
-                            if (saveFile.data.exists) {
-                                if (CoC.instance.saves.loadGame("CoC_1")) {
-                                    EngineCore.showStats();
-                                    EngineCore.statScreenRefresh();
-                                    EngineCore.clearOutput();
-                                    EngineCore.outputText("Slot 1 Loaded!");
-                                    EngineCore.doNext(EventParser.playerMenu);
-                                }
-                            }
-                        }
-                    });
-
-            inputManager.AddBindableControl(
-                    "Quickload 2",
-                    "Quickload the current game from slot 2",
-                    function ():void {
-                        if (CoC.instance.mainView.menuButtonIsVisible(MainView.MENU_DATA)) {
-                            var saveFile:* = SharedObject.getLocal("CoC_2", "/");
-                            if (saveFile.data.exists) {
-                                if (CoC.instance.saves.loadGame("CoC_2")) {
-                                    EngineCore.showStats();
-                                    EngineCore.statScreenRefresh();
-                                    EngineCore.clearOutput();
-                                    EngineCore.outputText("Slot 2 Loaded!");
-                                    EngineCore.doNext(EventParser.playerMenu);
-                                }
-                            }
-                        }
-                    });
-
-            inputManager.AddBindableControl(
-                    "Quickload 3",
-                    "Quickload the current game from slot 3",
-                    function ():void {
-                        if (CoC.instance.mainView.menuButtonIsVisible(MainView.MENU_DATA)) {
-                            var saveFile:* = SharedObject.getLocal("CoC_3", "/");
-                            if (saveFile.data.exists) {
-                                if (CoC.instance.saves.loadGame("CoC_3")) {
-                                    EngineCore.showStats();
-                                    EngineCore.statScreenRefresh();
-                                    EngineCore.clearOutput();
-                                    EngineCore.outputText("Slot 3 Loaded!");
-                                    EngineCore.doNext(EventParser.playerMenu);
-                                }
-                            }
-                        }
-                    });
-
-            inputManager.AddBindableControl(
-                    "Quickload 4",
-                    "Quickload the current game from slot 4",
-                    function ():void {
-                        if (CoC.instance.mainView.menuButtonIsVisible(MainView.MENU_DATA)) {
-                            var saveFile:* = SharedObject.getLocal("CoC_4", "/");
-                            if (saveFile.data.exists) {
-                                if (CoC.instance.saves.loadGame("CoC_4")) {
-                                    EngineCore.showStats();
-                                    EngineCore.statScreenRefresh();
-                                    EngineCore.clearOutput();
-                                    EngineCore.outputText("Slot 4 Loaded!");
-                                    EngineCore.doNext(EventParser.playerMenu);
-                                }
-                            }
-                        }
-                    });
-
-            inputManager.AddBindableControl(
-                    "Quickload 5",
-                    "Quickload the current game from slot 5",
-                    function ():void {
-                        if (CoC.instance.mainView.menuButtonIsVisible(MainView.MENU_DATA)) {
-                            var saveFile:* = SharedObject.getLocal("CoC_5", "/");
-                            if (saveFile.data.exists) {
-                                if (CoC.instance.saves.loadGame("CoC_5")) {
-                                    EngineCore.showStats();
-                                    EngineCore.statScreenRefresh();
-                                    EngineCore.clearOutput();
-                                    EngineCore.outputText("Slot 5 Loaded!");
-                                    EngineCore.doNext(EventParser.playerMenu);
-                                }
-                            }
-                        }
-                    });
+	    inputManager.AddBindableControl("Quickload 1", "Quickload the current game from slot 1", function():void { Bindings.execQuickLoad(1); });
+	    inputManager.AddBindableControl("Quickload 2", "Quickload the current game from slot 2", function():void { Bindings.execQuickLoad(2); });
+	    inputManager.AddBindableControl("Quickload 3", "Quickload the current game from slot 3", function():void { Bindings.execQuickLoad(3); });
+	    inputManager.AddBindableControl("Quickload 4", "Quickload the current game from slot 4", function():void { Bindings.execQuickLoad(4); });
+	    inputManager.AddBindableControl("Quickload 5", "Quickload the current game from slot 5", function():void { Bindings.execQuickLoad(5); });
 
             inputManager.AddBindableControl(
                     "Show Menu",
                     "Show the main menu",
                     function ():void {
-                        if (CoC.instance.mainView.menuButtonIsVisible(MainView.MENU_NEW_MAIN) && CoC.instance.mainView.menuButtonHasLabel(MainView.MENU_NEW_MAIN, "Main Menu")) {
+                        if (mainView.menuButtonIsVisible(MainView.MENU_NEW_MAIN) && mainView.menuButtonHasLabel(MainView.MENU_NEW_MAIN, "Main Menu")) {
                             CoC.instance.mainMenu.mainMenu();
                         }
                     });
@@ -202,25 +65,29 @@ internal class ControlBindings {
                     "Data Menu",
                     "Show the save/load menu",
                     function ():void {
-                        if (CoC.instance.mainView.menuButtonIsVisible(MainView.MENU_DATA)) {
+                        if (mainView.menuButtonIsVisible(MainView.MENU_DATA)) {
                             CoC.instance.saves.saveLoad(undefined);
                         }
-                    });
+                    },
+                    mainView.dataButton
+            );
 
             inputManager.AddBindableControl(
                     "Appearance Page",
                     "Show the appearance page",
                     function ():void {
-                        if (CoC.instance.mainView.menuButtonIsVisible(MainView.MENU_APPEARANCE)) {
+                        if (mainView.menuButtonIsVisible(MainView.MENU_APPEARANCE)) {
                             CoC.instance.playerAppearance.appearance();
                         }
-                    });
+                    },
+                    mainView.appearanceButton
+            );
 
             inputManager.AddBindableControl(
                     "No",
                     "Respond no to any available prompt",
                     function ():void {
-                        if (CoC.instance.mainView.getButtonText(1) == "No" && CoC.instance.mainView.buttonIsVisible(1)) {
+                        if (mainView.getButtonText(1) == "No" && mainView.buttonIsVisible(1)) {
                             executeButtonClick(1);
                         }
                     });
@@ -229,7 +96,7 @@ internal class ControlBindings {
                     "Yes",
                     "Respond yes to any available prompt",
                     function ():void {
-                        if (CoC.instance.mainView.getButtonText(0) == "Yes" && CoC.instance.mainView.buttonIsVisible(0)) {
+                        if (mainView.getButtonText(0) == "Yes" && mainView.buttonIsVisible(0)) {
                             executeButtonClick(0);
                         }
                     });
@@ -238,59 +105,61 @@ internal class ControlBindings {
                     "Show Perks",
                     "Show the perks page",
                     function ():void {
-                        if (CoC.instance.mainView.menuButtonIsVisible(MainView.MENU_PERKS)) {
+                        if (mainView.menuButtonIsVisible(MainView.MENU_PERKS)) {
                             CoC.instance.perkMenu.displayPerks(null);
                         }
-                    });
+                    },
+                    mainView.perksButton
+            );
 
             inputManager.AddBindableControl(
                     "Continue",
                     "Respond to continue",
                     function ():void {
                         // Button 9
-                        if (CoC.instance.mainView.buttonIsVisible(9) && CoC.instance.mainView.buttonTextIsOneOf(9, ["Nevermind", "Abandon", "Next", "Return", "Back", "Leave", "Resume"])) {
+                        if (mainView.buttonIsVisible(9) && mainView.buttonTextIsOneOf(9, ["Nevermind", "Abandon", "Next", "Return", "Back", "Leave", "Resume"])) {
                             //trace( "keyboard(): processing space bar for button 9",
-                            //	CoC.instance.mainView.buttonIsVisible( 9 ) ? "(visible)" : "(hidden)",
-                            //	CoC.instance.mainView.getButtonText( 9 ) );
-                            CoC.instance.mainView.toolTipView.hide();
+                            //	mainView.buttonIsVisible( 9 ) ? "(visible)" : "(hidden)",
+                            //	mainView.getButtonText( 9 ) );
+                            mainView.toolTipView.hide();
                             executeButtonClick(9);
                             return;
                         }
                         // Button 14
                         if (EngineCore.buttonIsVisible(14) && EngineCore.buttonTextIsOneOf(14, ["Nevermind", "Abandon", "Next", "Return", "Back", "Leave", "Resume"])) {
                             //trace( "keyboard(): processing space bar for button 9",
-                            //	CoC.instance.mainView.buttonIsVisible( 9 ) ? "(visible)" : "(hidden)",
-                            //	CoC.instance.mainView.getButtonText( 9 ) );
-                            CoC.instance.mainView.toolTipView.hide();
+                            //	mainView.buttonIsVisible( 9 ) ? "(visible)" : "(hidden)",
+                            //	mainView.getButtonText( 9 ) );
+                            mainView.toolTipView.hide();
                             executeButtonClick(14);
                             return;
                         }
                         // Button 0
-                        if (CoC.instance.mainView.buttonIsVisible(0) && CoC.instance.mainView.buttonTextIsOneOf(0, ["Next", "Return", "Back"])) {
+                        if (mainView.buttonIsVisible(0) && mainView.buttonTextIsOneOf(0, ["Next", "Return", "Back"])) {
                             //trace( "keyboard(): processing space bar for button 0",
-                            //	CoC.instance.mainView.buttonIsVisible( 0 ) ? "(visible)" : "(hidden)",
-                            //	CoC.instance.mainView.getButtonText( 0 ) );
-                            CoC.instance.mainView.toolTipView.hide();
+                            //	mainView.buttonIsVisible( 0 ) ? "(visible)" : "(hidden)",
+                            //	mainView.getButtonText( 0 ) );
+                            mainView.toolTipView.hide();
                             executeButtonClick(0);
                             return;
                         }
 
                         // Button 4
-                        if (CoC.instance.mainView.buttonIsVisible(4) && CoC.instance.mainView.buttonTextIsOneOf(4, ["Nevermind", "Next", "Return", "Back", "Leave"])) {
+                        if (mainView.buttonIsVisible(4) && mainView.buttonTextIsOneOf(4, ["Nevermind", "Next", "Return", "Back", "Leave"])) {
                             //trace( "keyboard(): processing space bar for button 4",
-                            //	CoC.instance.mainView.buttonIsVisible( 4 ) ? "(visible)" : "(hidden)",
-                            //	CoC.instance.mainView.getButtonText( 4 ) );
-                            CoC.instance.mainView.toolTipView.hide();
+                            //	mainView.buttonIsVisible( 4 ) ? "(visible)" : "(hidden)",
+                            //	mainView.getButtonText( 4 ) );
+                            mainView.toolTipView.hide();
                             executeButtonClick(4);
                             return;
                         }
 
                         // Button 5
-                        if (CoC.instance.mainView.buttonIsVisible(5) && CoC.instance.mainView.buttonTextIsOneOf(5, ["Next", "Return", "Back"])) {
+                        if (mainView.buttonIsVisible(5) && mainView.buttonTextIsOneOf(5, ["Next", "Return", "Back"])) {
                             //trace( "keyboard(): processing space bar for button 5",
-                            //	CoC.instance.mainView.buttonIsVisible( 5 ) ? "(visible)" : "(hidden)",
-                            //	CoC.instance.mainView.getButtonText( 5 ) );
-                            CoC.instance.mainView.toolTipView.hide();
+                            //	mainView.buttonIsVisible( 5 ) ? "(visible)" : "(hidden)",
+                            //	mainView.getButtonText( 5 ) );
+                            mainView.toolTipView.hide();
                             executeButtonClick(5);
                             //return;
                         }
@@ -300,165 +169,35 @@ internal class ControlBindings {
                     "Cycle Background",
                     "Cycle the background fill of the text display area",
                     function ():void {
-                        if (!CoC.instance.mainView.textBGWhite.visible) {
-                            CoC.instance.mainView.textBGWhite.visible = true;
+                        if (!mainView.textBGWhite.visible) {
+                            mainView.textBGWhite.visible = true;
                         }
-                        else if (!CoC.instance.mainView.textBGTan.visible) {
-                            CoC.instance.mainView.textBGTan.visible = true;
+                        else if (!mainView.textBGTan.visible) {
+                            mainView.textBGTan.visible = true;
                         }
                         else {
-                            CoC.instance.mainView.textBGWhite.visible = false;
-                            CoC.instance.mainView.textBGTan.visible = false;
+                            mainView.textBGWhite.visible = false;
+                            mainView.textBGTan.visible = false;
                         }
 
                     });
 
-            inputManager.AddBindableControl(
-                    "Button 1",
-                    "Activate button 1",
-                    function ():void {
-                        if (CoC.instance.mainView.buttonIsVisible(0)) {
-                            CoC.instance.mainView.toolTipView.hide();
-                            executeButtonClick(0);
-                        }
-                    });
-
-            inputManager.AddBindableControl(
-                    "Button 2",
-                    "Activate button 2",
-                    function ():void {
-                        if (CoC.instance.mainView.buttonIsVisible(1)) {
-                            CoC.instance.mainView.toolTipView.hide();
-                            executeButtonClick(1);
-                        }
-                    });
-
-            inputManager.AddBindableControl(
-                    "Button 3",
-                    "Activate button 3",
-                    function ():void {
-                        if (CoC.instance.mainView.buttonIsVisible(2)) {
-                            CoC.instance.mainView.toolTipView.hide();
-                            executeButtonClick(2);
-                        }
-                    });
-
-            inputManager.AddBindableControl(
-                    "Button 4",
-                    "Activate button 4",
-                    function ():void {
-                        if (CoC.instance.mainView.buttonIsVisible(3)) {
-                            CoC.instance.mainView.toolTipView.hide();
-                            executeButtonClick(3);
-                        }
-                    });
-
-            inputManager.AddBindableControl(
-                    "Button 5",
-                    "Activate button 5",
-                    function ():void {
-                        if (CoC.instance.mainView.buttonIsVisible(4)) {
-                            CoC.instance.mainView.toolTipView.hide();
-                            executeButtonClick(4);
-                        }
-                    });
-
-            inputManager.AddBindableControl(
-                    "Button 6",
-                    "Activate button 6",
-                    function ():void {
-                        if (CoC.instance.mainView.buttonIsVisible(5)) {
-                            CoC.instance.mainView.toolTipView.hide();
-                            executeButtonClick(5);
-                        }
-                    });
-
-            inputManager.AddBindableControl(
-                    "Button 7",
-                    "Activate button 7",
-                    function ():void {
-                        if (CoC.instance.mainView.buttonIsVisible(6)) {
-                            CoC.instance.mainView.toolTipView.hide();
-                            executeButtonClick(6);
-                        }
-                    });
-
-            inputManager.AddBindableControl(
-                    "Button 8",
-                    "Activate button 8",
-                    function ():void {
-                        if (CoC.instance.mainView.buttonIsVisible(7)) {
-                            CoC.instance.mainView.toolTipView.hide();
-                            executeButtonClick(7);
-                        }
-                    });
-
-            inputManager.AddBindableControl(
-                    "Button 9",
-                    "Activate button 9",
-                    function ():void {
-                        if (CoC.instance.mainView.buttonIsVisible(8)) {
-                            CoC.instance.mainView.toolTipView.hide();
-                            executeButtonClick(8);
-                        }
-                    });
-
-            inputManager.AddBindableControl(
-                    "Button 10",
-                    "Activate button 10",
-                    function ():void {
-                        if (CoC.instance.mainView.buttonIsVisible(9)) {
-                            CoC.instance.mainView.toolTipView.hide();
-                            executeButtonClick(9);
-                        }
-                    });
-
-//Extra buttons
-            inputManager.AddBindableControl(
-                    "Button 11",
-                    "Activate button 11",
-                    function ():void {
-                        if (EngineCore.buttonIsVisible(10)) {
-                            CoC.instance.mainView.toolTipView.hide();
-                            executeButtonClick(10);
-                        }
-                    });
-            inputManager.AddBindableControl(
-                    "Button 12",
-                    "Activate button 12",
-                    function ():void {
-                        if (EngineCore.buttonIsVisible(11)) {
-                            CoC.instance.mainView.toolTipView.hide();
-                            executeButtonClick(11);
-                        }
-                    });
-            inputManager.AddBindableControl(
-                    "Button 13",
-                    "Activate button 13",
-                    function ():void {
-                        if (EngineCore.buttonIsVisible(12)) {
-                            CoC.instance.mainView.toolTipView.hide();
-                            executeButtonClick(12);
-                        }
-                    });
-            inputManager.AddBindableControl(
-                    "Button 14",
-                    "Activate button 14",
-                    function ():void {
-                        if (EngineCore.buttonIsVisible(13)) {
-                            CoC.instance.mainView.toolTipView.hide();
-                            executeButtonClick(13);
-                        }
-                    });
-            inputManager.AddBindableControl(
-                    "Button 15",
-                    "Activate button 15",
-                    function ():void {
-                        if (EngineCore.buttonIsVisible(14)) {
-                            CoC.instance.mainView.toolTipView.hide();
-                            executeButtonClick(14);
-                        }
-                    });
+        for (var i:int=0; i< 15; i++) {
+            var callback:Function = (function(j:int):Function{
+                return function ():void {
+					if (mainView.buttonIsVisible(j)) {
+						mainView.toolTipView.hide();
+						executeButtonClick(j);
+					}
+				}
+            })(i);
+			inputManager.AddBindableControl(
+					"Button "+(i+1),
+					"Activate button "+(i+1),
+					callback,
+					mainView.bottomButtons[i]
+			);
+		}
             inputManager.AddBindableControl(
                     "History",
                     "Show text history",
@@ -497,7 +236,7 @@ internal class ControlBindings {
                         }
                         else if (CoC.instance.flags[kFLAGS.CHEAT_ENTERING_COUNTER] == 3) {
                             if (keyCode == 39) {
-                                if (CoC.instance.player.str > 0 && CoC.instance.mainView.getButtonText(0).indexOf("Game Over") == -1) {
+                                if (CoC.instance.player.str > 0 && mainView.getButtonText(0).indexOf("Game Over") == -1) {
                                     SceneLib.inventory.giveHumanizer();
                                 }
                             }
@@ -506,7 +245,7 @@ internal class ControlBindings {
                             }
                         }
                     },
-                    InputManager.CHEATCONTROL);
+                    null,InputManager.CHEATCONTROL);
 
             inputManager.AddBindableControl(
                     "Cheat! Access debug menu",
@@ -546,7 +285,7 @@ internal class ControlBindings {
                         }
                         else if (CoC.instance.flags[kFLAGS.CHEAT_ENTERING_COUNTER_2] == 4) {
                             if (keyCode == 71) {
-                                if (CoC.instance.player && CoC.instance.player.str > 0 && CoC.instance.mainView.getButtonText(0).indexOf("Game Over") == -1 && (CoC.instance.debug && CoC.instance.flags[kFLAGS.HARDCORE_MODE] <= 0 || CoC_Settings.debugBuild)) {
+                                if (CoC.instance.player && CoC.instance.player.str > 0 && mainView.getButtonText(0).indexOf("Game Over") == -1 && (CoC.instance.debug && CoC.instance.flags[kFLAGS.HARDCORE_MODE] <= 0 || CoC_Settings.debugBuild)) {
                                     SceneLib.debugMenu.accessDebugMenu();
                                 }
                             }
@@ -555,7 +294,7 @@ internal class ControlBindings {
                             }
                         }
                     },
-                    InputManager.CHEATCONTROL);
+                    null,InputManager.CHEATCONTROL);
 
 
 // Insert the default bindings

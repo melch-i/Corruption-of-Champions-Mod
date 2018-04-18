@@ -42,11 +42,11 @@ public class GoblinShaman extends Goblin
 			//Blind
 			else if (spellChooser == 1 && fatigue <= (100 - spellCostBlind)) {
 				outputText("The goblin glares at you and points at you! A bright flash erupts before you!  ");
-				if (player.findPerk(PerkLib.GorgonsEyes) < 0 && rand(player.inte / 5) <= 4) {
+				if (!player.hasPerk(PerkLib.GorgonsEyes) && rand(player.inte / 5) <= 4) {
 					outputText("<b>You are blinded!</b>");
 					player.createStatusEffect(StatusEffects.Blind, 1 + rand(3), 0, 0, 0);
 				}
-				else if (player.findPerk(PerkLib.GorgonsEyes) >= 0) {
+				else if (player.hasPerk(PerkLib.GorgonsEyes)) {
 					outputText("Your mutated eyes not been affected at all by this flash!");
 				}
 				else {
@@ -58,8 +58,8 @@ public class GoblinShaman extends Goblin
 			else if (spellChooser == 2 && fatigue <= (100 - spellCostWhitefire)) {
 				outputText("The goblin narrows her eyes and focuses her mind with deadly intent. She snaps her fingers and you are enveloped in a flash of white flames!  ");
 				var damage:int = inte + rand(50) * spellMultiplier();
-				if (player.findPerk(PerkLib.FromTheFrozenWaste) >= 0 || player.findPerk(PerkLib.ColdAffinity) >= 0) damage *= 3;
-				if (player.findPerk(PerkLib.FireAffinity) >= 0) damage *= 0.3;
+				if (player.hasPerk(PerkLib.FromTheFrozenWaste) || player.hasPerk(PerkLib.ColdAffinity)) damage *= 3;
+				if (player.hasPerk(PerkLib.FireAffinity)) damage *= 0.3;
 				if (player.hasStatusEffect(StatusEffects.Blizzard)) {
 				player.addStatusValue(StatusEffects.Blizzard, 1, -1);
 				outputText("Luckly protective ice maelstorm still surrounding you lessening amount of damage.  ");

@@ -203,7 +203,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 			// Whirlwind
 			if ((player.isWeaponForWhirlwind() && !player.hasPerk(PerkLib.PowerSweep)) || ((player.isWeaponForWhirlwind() || player.isOneHandedWeapons()) && player.hasPerk(PerkLib.PowerSweep))) buttons.add("Whirlwind", whirlwind).hint("Spin your weapon around to attack multiple enemies at once.  \n\n<b>AoE attack.</b>");
 			// Whirlwind (Beast Warrior)
-			if (player.findPerk(PerkLib.JobBeastWarrior) >= 0 && ((player.weaponName == "fists" && player.haveNaturalClaws()) || player.haveNaturalClawsTypeWeapon())) buttons.add("F. Whirlwind", whirlwindClaws).hint("Spin yourself around to slash multiple enemies with your claws at once.  \n\n<b>AoE attack.</b>");
+			if (player.hasPerk(PerkLib.JobBeastWarrior) && ((player.weaponName == "fists" && player.haveNaturalClaws()) || player.haveNaturalClawsTypeWeapon())) buttons.add("F. Whirlwind", whirlwindClaws).hint("Spin yourself around to slash multiple enemies with your claws at once.  \n\n<b>AoE attack.</b>");
 			// Barrage
 			if (player.weaponRangePerk == "Bow" && player.hasStatusEffect(StatusEffects.KnowsBarrage)) {
 				buttons.add("Barrage", archerBarrage).hint("Draw multiple arrow and shoot them all at the same time to hit several target.  \n\n<b>AoE attack.</b>");
@@ -587,16 +587,16 @@ public class PhysicalSpecials extends BaseCombatContent {
 			if (monster.hasPerk(PerkLib.FireNature)) powerfistspowervalue *= 5;
 		}
 			if (player.weapon == weapons.TCLAYMO && player.hasStatusEffect(StatusEffects.ChargeWeapon)) {
-			if (monster.findPerk(PerkLib.DarknessNature) >= 0) powerfistspowervalue *= 5;
-			if (monster.findPerk(PerkLib.LightningVulnerability) >= 0) powerfistspowervalue *= 2;
-			if (monster.findPerk(PerkLib.DarknessVulnerability) >= 0) powerfistspowervalue *= 0.5;
-			if (monster.findPerk(PerkLib.LightningNature) >= 0) powerfistspowervalue *= 0.2;
+			if (monster.hasPerk(PerkLib.DarknessNature)) powerfistspowervalue *= 5;
+			if (monster.hasPerk(PerkLib.LightningVulnerability)) powerfistspowervalue *= 2;
+			if (monster.hasPerk(PerkLib.DarknessVulnerability)) powerfistspowervalue *= 0.5;
+			if (monster.hasPerk(PerkLib.LightningNature)) powerfistspowervalue *= 0.2;
 		}
 		if (player.weapon == weapons.ACLAYMO && player.hasStatusEffect(StatusEffects.ChargeWeapon)) {
-			if (monster.findPerk(PerkLib.DarknessNature) >= 0) powerfistspowervalue *= 0.2;
-			if (monster.findPerk(PerkLib.LightningVulnerability) >= 0) powerfistspowervalue *= 0.5;
-			if (monster.findPerk(PerkLib.DarknessVulnerability) >= 0) powerfistspowervalue *= 2;
-			if (monster.findPerk(PerkLib.LightningNature) >= 0) powerfistspowervalue *= 5;
+			if (monster.hasPerk(PerkLib.DarknessNature)) powerfistspowervalue *= 0.2;
+			if (monster.hasPerk(PerkLib.LightningVulnerability)) powerfistspowervalue *= 0.5;
+			if (monster.hasPerk(PerkLib.DarknessVulnerability)) powerfistspowervalue *= 2;
+			if (monster.hasPerk(PerkLib.LightningNature)) powerfistspowervalue *= 5;
 		}
 		if (player.hasPerk(PerkLib.HistoryFighter) || player.hasPerk(PerkLib.PastLifeFighter)) powerfistspowervalue *= 1.1;
 		if (player.hasPerk(PerkLib.JobWarrior)) powerfistspowervalue *= 1.05;

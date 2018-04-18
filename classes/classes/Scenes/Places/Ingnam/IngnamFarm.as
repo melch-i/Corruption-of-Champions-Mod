@@ -72,7 +72,7 @@ public class IngnamFarm extends BaseContent
 				outputText("\n\nYou place the bucket under one of the cows' udders. You gently squeeze the udders. Milk squirts from its udders and into the bucket. When the milk flow stops, you move on to the next cow. You repeat the process, cow after cow.");
 				outputText("\n\nBy the time you've finished milking all the cows, you are left with ten full buckets of milk. The farmer comes back and says, \"<i>Did you milk all these cows?</i>\" You give her a nod and show her the full buckets of milk. \"<i>Thank you. You know what? You've deserved some free milk! Now would be a good time for some break,</i>\" She says happily. She fills a cup with milk and gives it to you. You promptly drink the milk. Wow, this stuff is delicious when it's freshly milked! After a good drink, you strike up some conversation with her.");
 				player.refillHunger(20);
-				player.HP += 50;
+				EngineCore.HPChange(50,false);
 				fatigue(-10);
 				outputText("\n\nAfter a few minutes of chatting, the break is over and you help her with hauling the buckets to her farmhouse, four at a time. After three trips, she gives you a final task of filling the milk bottles. You carefully pour the milk through a funnel into the bottle and when you manage to fill it, you move on to the next bottle. You repeat the process until the buckets are empty. \"<i>Good work! You have finished your work! Here's your payment,</i>\" she says as she hands you the five gems you deserve.");
 				if (player.str < 25 && rand(2) == 0) {
@@ -85,7 +85,7 @@ public class IngnamFarm extends BaseContent
 				}
 				fatigue(10);
 			}
-			if (player.findPerk(PerkLib.HistorySlacker) >= 0 || player.findPerk(PerkLib.PastLifeSlacker) >= 0) fatigue(-5);
+			if (player.hasPerk(PerkLib.HistorySlacker) || player.hasPerk(PerkLib.PastLifeSlacker)) fatigue(-5);
 			outputText("\n\nYou walk back to Ingnam.");
 			player.gems += 5;
 			statScreenRefresh();

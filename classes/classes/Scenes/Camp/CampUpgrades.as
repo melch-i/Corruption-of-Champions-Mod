@@ -99,12 +99,12 @@ public function buildmiscMenu():void {
 	if (flags[kFLAGS.CAMP_UPGRADES_WAREHOUSE_GRANARY] == 4 || flags[kFLAGS.CAMP_UPGRADES_WAREHOUSE_GRANARY] == 5) addButton(1, "2nd Warehouse", warehousegranary).hint("Build 2nd part of the Warehouse to expand your storage space. (Req. 250 fatigue)");
 	if (player.kitsuneScore() >= 6 && (flags[kFLAGS.CAMP_UPGRADES_KITSUNE_SHRINE] < 1 || flags[kFLAGS.CAMP_UPGRADES_KITSUNE_SHRINE] == 1 || flags[kFLAGS.CAMP_UPGRADES_KITSUNE_SHRINE] == 2)) addButton(2, "Shrine", kitsuneshrine).hint("Build up kitsune shrine at the camp. (Req. 300 fatigue)");
 	if (flags[kFLAGS.CAMP_UPGRADES_KITSUNE_SHRINE] == 3) {
-		if (player.findPerk(PerkLib.StarSphereMastery) < 0 && !(player.hasItem(useables.GLDSTAT))) addButtonDisabled(2, "Shrine", "You need to have Kitsune Statue and your own Star Sphere to finish the shrine!");
-		if (player.findPerk(PerkLib.StarSphereMastery) >= 0 && player.hasItem(useables.GLDSTAT)) addButton(2, "Shrine", kitsuneshrine2).hint("Finish up kitsune shrine at the camp.");
+		if (!player.hasPerk(PerkLib.StarSphereMastery) && !(player.hasItem(useables.GLDSTAT))) addButtonDisabled(2, "Shrine", "You need to have Kitsune Statue and your own Star Sphere to finish the shrine!");
+		if (player.hasPerk(PerkLib.StarSphereMastery) && player.hasItem(useables.GLDSTAT)) addButton(2, "Shrine", kitsuneshrine2).hint("Finish up kitsune shrine at the camp.");
 	}
 	if (flags[kFLAGS.CAMP_UPGRADES_HOT_SPRINGS] == 2 || flags[kFLAGS.CAMP_UPGRADES_HOT_SPRINGS] == 3) addButton(3, "Hot Spring", hotspring).hint("Build up hot spring at the camp. (Req. 100 fatigue)");
 	if (flags[kFLAGS.CAMP_UPGRADES_SPARING_RING] == 1) addButton(4, "Sparring Ring", sparringRing).hint("Build up sparring ring at the camp. (Unlock sparring option for all camp members that have this option)(Req. 50 fatigue)");
-	if (player.findPerk(PerkLib.JobElementalConjurer) >= 0 && flags[kFLAGS.CAMP_UPGRADES_ARCANE_CIRCLE] < 3) addButton(5, "Arcane Circle", arcaneCircle).hint("Build an arcane circle at the camp. (Unlock elementals summons related options)(Req. 50 fatigue, enough mana and blood)");
+	if (player.hasPerk(PerkLib.JobElementalConjurer) && flags[kFLAGS.CAMP_UPGRADES_ARCANE_CIRCLE] < 3) addButton(5, "Arcane Circle", arcaneCircle).hint("Build an arcane circle at the camp. (Unlock elementals summons related options)(Req. 50 fatigue, enough mana and blood)");
 	if (player.inte >= 50 && flags[kFLAGS.CAMP_UPGRADES_MAGIC_WARD] == 1) addButton(6, "Magic Ward", magicWard).hint("Set up a Magic Ward around the camp. (Req. 200 fatigue)");
 	if (flags[kFLAGS.CAMP_UPGRADES_DAM] < 1) addButton(7, "Dam", dam).hint("Build up a dam on the steam next to the camp. (Req. 200 fatigue)");
 	if (flags[kFLAGS.CAMP_UPGRADES_DAM] >= 1 && flags[kFLAGS.CAMP_UPGRADES_FISHERY] < 1) addButton(8, "Fishery", fishery).hint("Build up a fishery on the steam next to the camp. (Req. 200 fatigue)");
@@ -187,7 +187,7 @@ private function doWoodStorageWork():void {
 	fatigueAmount -= player.str / 5;
 	fatigueAmount -= player.tou / 10;
 	fatigueAmount -= player.spe / 10;
-	if (player.findPerk(PerkLib.IronMan) >= 0) fatigueAmount -= 20;
+	if (player.hasPerk(PerkLib.IronMan)) fatigueAmount -= 20;
 	fatigueAmount /= (helpers + 1);
 	if (fatigueAmount < 10) fatigueAmount = 10;
 	fatigue(fatigueAmount);
@@ -252,7 +252,7 @@ private function doStoneStorageWork():void {
 	fatigueAmount -= player.str / 5;
 	fatigueAmount -= player.tou / 10;
 	fatigueAmount -= player.spe / 10;
-	if (player.findPerk(PerkLib.IronMan) >= 0) fatigueAmount -= 20;
+	if (player.hasPerk(PerkLib.IronMan)) fatigueAmount -= 20;
 	fatigueAmount /= (helpers + 1);
 	if (fatigueAmount < 10) fatigueAmount = 10;
 	fatigue(fatigueAmount);
@@ -357,7 +357,7 @@ private function do1stWarehouse1Work():void {
 	fatigueAmount -= player.str / 5;
 	fatigueAmount -= player.tou / 10;
 	fatigueAmount -= player.spe / 10;
-	if (player.findPerk(PerkLib.IronMan) >= 0) fatigueAmount -= 20;
+	if (player.hasPerk(PerkLib.IronMan)) fatigueAmount -= 20;
 	fatigueAmount /= (helpers + 1);
 	if (fatigueAmount < 10) fatigueAmount = 10;
 	fatigue(fatigueAmount);
@@ -422,7 +422,7 @@ private function do1stWarehouse2Work():void {
 	fatigueAmount -= player.str / 5;
 	fatigueAmount -= player.tou / 10;
 	fatigueAmount -= player.spe / 10;
-	if (player.findPerk(PerkLib.IronMan) >= 0) fatigueAmount -= 20;
+	if (player.hasPerk(PerkLib.IronMan)) fatigueAmount -= 20;
 	fatigueAmount /= (helpers + 1);
 	if (fatigueAmount < 10) fatigueAmount = 10;
 	fatigue(fatigueAmount);
@@ -494,7 +494,7 @@ private function doGranary1Work():void {
 	fatigueAmount -= player.str / 5;
 	fatigueAmount -= player.tou / 10;
 	fatigueAmount -= player.spe / 10;
-	if (player.findPerk(PerkLib.IronMan) >= 0) fatigueAmount -= 20;
+	if (player.hasPerk(PerkLib.IronMan)) fatigueAmount -= 20;
 	fatigueAmount /= (helpers + 1);
 	if (fatigueAmount < 10) fatigueAmount = 10;
 	fatigue(fatigueAmount);
@@ -559,7 +559,7 @@ private function doGranary2Work():void {
 	fatigueAmount -= player.str / 5;
 	fatigueAmount -= player.tou / 10;
 	fatigueAmount -= player.spe / 10;
-	if (player.findPerk(PerkLib.IronMan) >= 0) fatigueAmount -= 20;
+	if (player.hasPerk(PerkLib.IronMan)) fatigueAmount -= 20;
 	fatigueAmount /= (helpers + 1);
 	if (fatigueAmount < 10) fatigueAmount = 10;
 	fatigue(fatigueAmount);
@@ -631,7 +631,7 @@ private function do2ndWarehouse1Work():void {
 	fatigueAmount -= player.str / 5;
 	fatigueAmount -= player.tou / 10;
 	fatigueAmount -= player.spe / 10;
-	if (player.findPerk(PerkLib.IronMan) >= 0) fatigueAmount -= 20;
+	if (player.hasPerk(PerkLib.IronMan)) fatigueAmount -= 20;
 	fatigueAmount /= (helpers + 1);
 	if (fatigueAmount < 10) fatigueAmount = 10;
 	fatigue(fatigueAmount);
@@ -696,7 +696,7 @@ private function do2ndWarehouse2Work():void {
 	fatigueAmount -= player.str / 5;
 	fatigueAmount -= player.tou / 10;
 	fatigueAmount -= player.spe / 10;
-	if (player.findPerk(PerkLib.IronMan) >= 0) fatigueAmount -= 20;
+	if (player.hasPerk(PerkLib.IronMan)) fatigueAmount -= 20;
 	fatigueAmount /= (helpers + 1);
 	if (fatigueAmount < 10) fatigueAmount = 10;
 	fatigue(fatigueAmount);
@@ -791,7 +791,7 @@ private function doBuildStructure():void {
 	fatigueAmount -= player.str / 5;
 	fatigueAmount -= player.tou / 10;
 	fatigueAmount -= player.spe / 10;
-	if (player.findPerk(PerkLib.IronMan) >= 0) fatigueAmount -= 20;
+	if (player.hasPerk(PerkLib.IronMan)) fatigueAmount -= 20;
 	fatigueAmount /= (helpers + 1);
 	if (fatigueAmount < 50) fatigueAmount = 50;
 	fatigue(fatigueAmount);
@@ -855,7 +855,7 @@ private function doBuildAltair():void {
 	fatigueAmount -= player.str / 5;
 	fatigueAmount -= player.tou / 10;
 	fatigueAmount -= player.spe / 10;
-	if (player.findPerk(PerkLib.IronMan) >= 0) fatigueAmount -= 20;
+	if (player.hasPerk(PerkLib.IronMan)) fatigueAmount -= 20;
 	fatigueAmount /= (helpers + 1);
 	if (fatigueAmount < 30) fatigueAmount = 30;
 	fatigue(fatigueAmount);
@@ -946,7 +946,7 @@ private function doDigAPoolWork():void {
 	fatigueAmount -= player.str / 5;
 	fatigueAmount -= player.tou / 10;
 	fatigueAmount -= player.spe / 10;
-	if (player.findPerk(PerkLib.IronMan) >= 0) fatigueAmount -= 20;
+	if (player.hasPerk(PerkLib.IronMan)) fatigueAmount -= 20;
 	fatigueAmount /= (helpers + 1);
 	if (fatigueAmount < 10) fatigueAmount = 10;
 	fatigue(fatigueAmount);
@@ -1009,7 +1009,7 @@ private function doAddAWoodenWallsWork():void {
 	fatigueAmount -= player.str / 5;
 	fatigueAmount -= player.tou / 10;
 	fatigueAmount -= player.spe / 10;
-	if (player.findPerk(PerkLib.IronMan) >= 0) fatigueAmount -= 20;
+	if (player.hasPerk(PerkLib.IronMan)) fatigueAmount -= 20;
 	fatigueAmount /= (helpers + 1);
 	if (fatigueAmount < 10) fatigueAmount = 10;
 	fatigue(fatigueAmount);
@@ -1072,7 +1072,7 @@ private function doBuildSmallRing():void {
 	outputText("\n\nYou work most of the day on this project but by the end the hole is dug and the ring is made!");
 	//Gain fatigue.
 	var fatigueAmount:int = 50;
-	if (player.findPerk(PerkLib.IronMan) >= 0) fatigueAmount -= 20;
+	if (player.hasPerk(PerkLib.IronMan)) fatigueAmount -= 20;
 	fatigue(fatigueAmount);
 	doNext(camp.returnToCampUseFourHours);
 }
@@ -1087,7 +1087,7 @@ public function arcaneCircle():void {
 			return; 
 		}
 		if (flags[kFLAGS.CAMP_UPGRADES_ARCANE_CIRCLE] == 1) { 
-			if (player.findPerk(PerkLib.ElementalContractRank4) >= 0) {
+			if (player.hasPerk(PerkLib.ElementalContractRank4)) {
 				buildSecondArcaneCircle();
 				return; 
 			}
@@ -1097,7 +1097,7 @@ public function arcaneCircle():void {
 			}
 		}
 		if (flags[kFLAGS.CAMP_UPGRADES_ARCANE_CIRCLE] == 2) { 
-			if (player.findPerk(PerkLib.ElementalContractRank8) >= 0) {
+			if (player.hasPerk(PerkLib.ElementalContractRank8)) {
 				buildThirdArcaneCircle();
 				return;
 			}
@@ -1137,7 +1137,7 @@ private function doBuildFirstArcaneCircle():void {
 	flags[kFLAGS.CAMP_UPGRADES_ARCANE_CIRCLE] = 1;
 	//Gain fatigue.
 	var fatigueAmount:int = 50;
-	if (player.findPerk(PerkLib.IronMan) >= 0) fatigueAmount -= 20;
+	if (player.hasPerk(PerkLib.IronMan)) fatigueAmount -= 20;
 	outputText("\n\n");
 	HPChange(-75, true);
 	fatigue(fatigueAmount);
@@ -1165,7 +1165,7 @@ private function doBuildSecondArcaneCircle():void {
 	outputText(" \"<b>You can now perform the rituals to release more of your minions powers!</b>\"");
 	//Gain fatigue.
 	var fatigueAmount:int = 50;
-	if (player.findPerk(PerkLib.IronMan) >= 0) fatigueAmount -= 20;
+	if (player.hasPerk(PerkLib.IronMan)) fatigueAmount -= 20;
 	outputText("\n\n");
 	HPChange(-150, true);
 	fatigue(fatigueAmount);
@@ -1193,7 +1193,7 @@ private function doBuildThirdArcaneCircle():void {
 	outputText(" \"<b>You can now perform the rituals to release more of your minions powers!</b>\"");
 	//Gain fatigue.
 	var fatigueAmount:int = 50;
-	if (player.findPerk(PerkLib.IronMan) >= 0) fatigueAmount -= 20;
+	if (player.hasPerk(PerkLib.IronMan)) fatigueAmount -= 20;
 	outputText("\n\n");
 	HPChange(-225, true);
 	fatigue(fatigueAmount);
@@ -1247,7 +1247,7 @@ private function setUpMagicWard2():void {
 	fatigueAmount -= player.str / 5;
 	fatigueAmount -= player.tou / 10;
 	fatigueAmount -= player.spe / 10;
-	if (player.findPerk(PerkLib.IronMan) >= 0) fatigueAmount -= 20;
+	if (player.hasPerk(PerkLib.IronMan)) fatigueAmount -= 20;
 	if (fatigueAmount < 10) fatigueAmount = 10;
 	fatigue(fatigueAmount);
 	doNext(camp.returnToCampUseEightHours);
@@ -1297,7 +1297,7 @@ private function buildUpMinorWoodDam2():void {
 	fatigueAmount -= player.str / 5;
 	fatigueAmount -= player.tou / 10;
 	fatigueAmount -= player.spe / 10;
-	if (player.findPerk(PerkLib.IronMan) >= 0) fatigueAmount -= 20;
+	if (player.hasPerk(PerkLib.IronMan)) fatigueAmount -= 20;
 	if (fatigueAmount < 10) fatigueAmount = 10;
 	fatigue(fatigueAmount);
 	doNext(camp.returnToCampUseEightHours);
@@ -1344,7 +1344,7 @@ private function buildUpFishery2():void {
 	fatigueAmount -= player.str / 5;
 	fatigueAmount -= player.tou / 10;
 	fatigueAmount -= player.spe / 10;
-	if (player.findPerk(PerkLib.IronMan) >= 0) fatigueAmount -= 20;
+	if (player.hasPerk(PerkLib.IronMan)) fatigueAmount -= 20;
 	if (fatigueAmount < 10) fatigueAmount = 10;
 	fatigue(fatigueAmount);
 	doNext(camp.returnToCampUseEightHours);

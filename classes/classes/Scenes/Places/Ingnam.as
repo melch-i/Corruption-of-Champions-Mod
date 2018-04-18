@@ -70,7 +70,7 @@ CoC.instance.saves.saveGame(player.slotName);
 					removeButton(4);
 				}
 				addButton(8, "Masturbate", SceneLib.masturbation.masturbateMenu);
-				if ((((player.findPerk(PerkLib.HistoryReligious) >= 0 || player.findPerk(PerkLib.PastLifeReligious) >= 0) && player.cor <= 66) || (player.findPerk(PerkLib.Enlightened) >= 0 && player.cor < 10)) && !(player.hasStatusEffect(StatusEffects.Exgartuan) && player.statusEffectv2(StatusEffects.Exgartuan) == 0) || flags[kFLAGS.SFW_MODE] >= 1) addButton(8, "Meditate", SceneLib.masturbation.masturbateMenu);
+				if ((((player.hasPerk(PerkLib.HistoryReligious) || player.hasPerk(PerkLib.PastLifeReligious)) && player.cor <= 66) || (player.hasPerk(PerkLib.Enlightened) && player.cor < 10)) && !(player.hasStatusEffect(StatusEffects.Exgartuan) && player.statusEffectv2(StatusEffects.Exgartuan) == 0) || flags[kFLAGS.SFW_MODE] >= 1) addButton(8, "Meditate", SceneLib.masturbation.masturbateMenu);
 			}
 			//Show wait/rest/sleep depending on conditions.
 			addButton(9, "Wait", SceneLib.camp.doWait);
@@ -82,7 +82,7 @@ CoC.instance.saves.saveGame(player.slotName);
 				removeButton(4);
                 addButton(9, "Sleep", SceneLib.camp.doSleep);
             }
-			if (player.findPerk(PerkLib.JobSoulCultivator) >= 0) addButton(10, "Soulforce", soulforce.accessSoulforceMenu).hint("Spend some time on the cultivation or spend some of the soulforce.");
+			if (player.hasPerk(PerkLib.JobSoulCultivator)) addButton(10, "Soulforce", soulforce.accessSoulforceMenu).hint("Spend some time on the cultivation or spend some of the soulforce.");
 		}
 		
 		//The end of prologue, starts the game.
@@ -173,7 +173,7 @@ CoC.instance.saves.saveGame(player.slotName);
 			}
 			outputText("\n\n<b><u>Blacksmith's pricings</u></b>");
 			menu();
-			if (player.findPerk(PerkLib.HistoryFighter) >= 0) { //20% discount for History: Fighter
+			if (player.hasPerk(PerkLib.HistoryFighter)) { //20% discount for History: Fighter
 				addShopItem(weapons.DAGGER, 32, 1);
 				addShopItem(weapons.PIPE, 40, 1);
 				addShopItem(weapons.SPEAR, 140, 1);
@@ -187,7 +187,7 @@ CoC.instance.saves.saveGame(player.slotName);
 				addShopItem(weapons.KATANA, 250, 1);
 				addShopItem(weapons.MACE, 100, 1);
 			}
-			if (player.findPerk(PerkLib.HistorySmith) >= 0) { //20% discount for History: Smith perk
+			if (player.hasPerk(PerkLib.HistorySmith)) { //20% discount for History: Smith perk
 				addShopItem(armors.LEATHRA, 40, 2);
 				addShopItem(armors.FULLCHN, 120, 2);
 				addShopItem(armors.SCALEML, 160, 2);
@@ -232,7 +232,7 @@ CoC.instance.saves.saveGame(player.slotName);
 			}
 			outputText("\n\n<b><u>Alchemy shop pricings</u></b>");
 			menu();
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0) { //20% discount for History: Alchemist perk
+			if (player.hasPerk(PerkLib.HistoryAlchemist)) { //20% discount for History: Alchemist perk
 				addShopItem(consumables.REDUCTO, 80, 4);
 				addShopItem(consumables.GROPLUS, 80, 4);
 				addShopItem(consumables.L_DRAFT, 25, 4);
@@ -372,7 +372,7 @@ CoC.instance.saves.saveGame(player.slotName);
 			addButton(0, "Order Drink", orderDrink).hint("Buy some refreshing beverages.");
 			addButton(1, "Order Food", orderFood).hint("Buy some food" + (flags[kFLAGS.HUNGER_ENABLED] > 0 && player.hunger < 50 ? " and curb that hunger of yours!": ".") + "");
 			if (flags[kFLAGS.INGNAM_RUMORS] < 3) addButton(2, "Stories", hearRumors).hint("Hear the story the innkeeper has to offer.");
-			//if (player.findPerk(PerkLib.HistoryWhore) >= 0) addButton(5, "Prostitute", whoreForGems).hint("Seek someone who's willing to have sex with you for profit.");
+			//if (player.hasPerk(PerkLib.HistoryWhore)) addButton(5, "Prostitute", whoreForGems).hint("Seek someone who's willing to have sex with you for profit.");
 			addButton(14, "Leave", menuIngnam);
 		}
 		

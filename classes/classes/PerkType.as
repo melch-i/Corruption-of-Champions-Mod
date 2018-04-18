@@ -312,7 +312,7 @@ public class PerkType extends BaseContent
 		public function requirePerk(perk:PerkType):PerkType {
 			requirements.push({
 				fn  : function (player:Player):Boolean {
-					return player.findPerk(perk) >= 0;
+					return player.hasPerk(perk);
 				},
 				text: perk.name,
 				type: "perk",
@@ -329,7 +329,7 @@ public class PerkType extends BaseContent
 			requirements.push({
 				fn  : function (player:Player):Boolean {
 					for each (var perk:PerkType in perks) {
-						if (player.findPerk(perk) >= 0) return true;
+						if (player.hasPerk(perk)) return true;
 					}
 					return false;
 				},

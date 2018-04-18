@@ -1315,12 +1315,12 @@ public class PerkLib
 		public static const RefinedBodyVI:PerkType = mk("Refined Body VI", "Refined Body VI",
 				"Raises max HP by 50.",
 				"You choose the 'Refined Body VI' perk, giving you an additional 50 HP!");
-		public static const Regeneration:RegenerationPerk = new RegenerationPerk();
-		public static const Regeneration2:Regeneration2Perk = new Regeneration2Perk();
-		public static const Regeneration3:Regeneration3Perk = new Regeneration3Perk();
-		public static const Regeneration4:Regeneration4Perk = new Regeneration4Perk();
-		public static const Regeneration5:Regeneration5Perk = new Regeneration5Perk();
-		public static const Regeneration6:Regeneration6Perk = new Regeneration6Perk();
+		public static const Regeneration :RegenerationPerk = new RegenerationPerk(1);
+		public static const Regeneration2:RegenerationPerk = new RegenerationPerk(2);
+		public static const Regeneration3:RegenerationPerk = new RegenerationPerk(3);
+		public static const Regeneration4:RegenerationPerk = new RegenerationPerk(4);
+		public static const Regeneration5:RegenerationPerk = new RegenerationPerk(5);
+		public static const Regeneration6:RegenerationPerk = new RegenerationPerk(6);
 		public static const ResistanceI:PerkType = mk("Resistance I", "Resistance I",
 				"Reduces lust gain by 5%.",
 				"You choose the 'Resistance I' perk, reducing the rate at which your lust increases by 5%.");

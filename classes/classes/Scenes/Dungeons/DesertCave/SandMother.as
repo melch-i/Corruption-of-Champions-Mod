@@ -66,8 +66,8 @@ public class SandMother extends Monster
 				damage *= 0.2;
 				damage = Math.round(damage);
 			}
-			if (player.findPerk(PerkLib.FromTheFrozenWaste) >= 0 || player.findPerk(PerkLib.ColdAffinity) >= 0) damage *= 3;
-			if (player.findPerk(PerkLib.FireAffinity) >= 0) damage *= 0.3;
+			if (player.hasPerk(PerkLib.FromTheFrozenWaste) || player.hasPerk(PerkLib.ColdAffinity)) damage *= 3;
+			if (player.hasPerk(PerkLib.FireAffinity)) damage *= 0.3;
 			damage = Math.round(damage);
 			damage = player.takeMagicDamage(damage, true);
 			removeStatusEffect(StatusEffects.Gigafire);

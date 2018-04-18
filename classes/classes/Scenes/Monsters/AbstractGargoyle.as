@@ -50,7 +50,7 @@ public class AbstractGargoyle extends Monster
 		damage = Math.round(damage);
 		player.takePhysDamage(damage, true);
 		outputText(" It hurt a lot, but you hold your ground wincing against the blow. <b>(<font color=\"#800000\">" + damage + "</font>)</b>");
-		if (player.findPerk(PerkLib.Resolute) < 0) {
+		if (!player.hasPerk(PerkLib.Resolute)) {
 			outputText(" You recoil, stunned by the massive impact and take <b><font color=\"#800000\">" + damage + "</font></b> damage!");
 			player.createStatusEffect(StatusEffects.Stunned, 2, 0, 0, 0);
 		}
@@ -101,8 +101,8 @@ public class AbstractGargoyle extends Monster
 		createStatusEffect(StatusEffects.AbilityCooldown2, 4, 0, 0, 0);
 		outputText(capitalA + short + " flaps " + pronoun1 + " massive stone wings at you trying to knock you down. You’re thrown to the ground. <b>(<font color=\"#800000\">" + damage + "</font>)</b>");
 		if (crit == true) outputText(" <b>*Critical Hit!*</b>");
-		if (player.findPerk(PerkLib.Resolute) < 0) player.createStatusEffect(StatusEffects.Stunned, 1, 0, 0, 0);
-		if (player.findPerk(PerkLib.Resolute) >= 0) outputText(" You’re thankfully to resilient to be stunned by such attacks and remain standing.");
+		if (!player.hasPerk(PerkLib.Resolute)) player.createStatusEffect(StatusEffects.Stunned, 1, 0, 0, 0);
+		if (player.hasPerk(PerkLib.Resolute)) outputText(" You’re thankfully to resilient to be stunned by such attacks and remain standing.");
 		outputText("\n\n");
 	}
 	

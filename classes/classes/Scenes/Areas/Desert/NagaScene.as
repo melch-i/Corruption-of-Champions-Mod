@@ -552,7 +552,7 @@ public function nagaFUCKSJOOOOOO():void {
 	clearOutput();
 	//BIMBO!  LIKE, TOTALLY AWESOME AND CUM!
 	//[Naga-on-Female Bimbo Loss Scene]
-	if((player.findPerk(PerkLib.BimboBrains) >= 0 || player.findPerk(PerkLib.FutaFaculties) >= 0) && player.hasVagina()) {
+	if((player.hasPerk(PerkLib.BimboBrains) || player.hasPerk(PerkLib.FutaFaculties)) && player.hasVagina()) {
 		outputText("You fall to your knees, like usual, your sexy form shaking with desire.\n\n");
         outputText("The " + gorgonOrNaga);
         outputText(" slowly approaches you with a smile of delight, devouring you with her eyes like the easy little thing you are. When she is close enough, she slides her tail under you and brings you closer to her. As she hisses in your ear, a chill goes down your spine: You don't understand a word she is saying. That seems to happen a lot with your tiny brain, but at least you can tell by the tones that she won't be going easy on you. Your nipples harden at the thought, and your " + vaginaDescript(0) + " agrees. Now astride the base of her tail and facing towards her, your eyes are directed to her crotch where a scaly covering rests where you would guess -- if you had the brains -- that a vagina should be. The " + gorgonOrNaga);
@@ -1001,36 +1001,36 @@ public function naggaTease():void {
     //1% chance for each tease level.
     chance += player.teaseLevel;
     //10% for seduction perk
-    if (player.findPerk(PerkLib.Seduction) >= 0) chance += 10;
+    if (player.hasPerk(PerkLib.Seduction)) chance += 10;
     //10% for sexy armor types
-    if (player.findPerk(PerkLib.SluttySeduction) >= 0) chance += 10;
+    if (player.hasPerk(PerkLib.SluttySeduction)) chance += 10;
     //10% for bimbo shits
-    if (player.findPerk(PerkLib.BimboBody) >= 0) {
+    if (player.hasPerk(PerkLib.BimboBody)) {
         chance += 10;
         bimbo = true;
     }
-    if (player.findPerk(PerkLib.BroBody) >= 0) {
+    if (player.hasPerk(PerkLib.BroBody)) {
         chance += 10;
         bro = true;
     }
-    if (player.findPerk(PerkLib.FutaForm) >= 0) {
+    if (player.hasPerk(PerkLib.FutaForm)) {
         chance += 10;
         futa = true;
     }
     //2 & 2 for seductive valentines!
-    if (player.findPerk(PerkLib.SensualLover) >= 0) {
+    if (player.hasPerk(PerkLib.SensualLover)) {
         chance += 2;
     }
     //==============================
     //Determine basic damage.
     //==============================
     damage = 6 + rand(3);
-    if (player.findPerk(PerkLib.SensualLover) >= 0) {
+    if (player.hasPerk(PerkLib.SensualLover)) {
         damage += 2;
     }
-    if (player.findPerk(PerkLib.Seduction) >= 0) damage += 5;
+    if (player.hasPerk(PerkLib.Seduction)) damage += 5;
     //+ slutty armor bonus
-    if (player.findPerk(PerkLib.SluttySeduction) >= 0) damage += player.perkv1(PerkLib.SluttySeduction);
+    if (player.hasPerk(PerkLib.SluttySeduction)) damage += player.perkv1(PerkLib.SluttySeduction);
     //10% for bimbo shits
     if (bimbo || bro || futa) {
         damage += 5;
@@ -1077,14 +1077,14 @@ public function naggaTease():void {
     if (rand(100) <= chance) {
         //NERF TEASE DAMAGE
         damage *= .9;
-        if (player.findPerk(PerkLib.HistoryWhore) >= 0 || player.findPerk(PerkLib.PastLifeWhore) >= 0) {
+        if (player.hasPerk(PerkLib.HistoryWhore) || player.hasPerk(PerkLib.PastLifeWhore)) {
             damage *= 1.15;
         }
-        if (player.findPerk(PerkLib.DazzlingDisplay) >= 0 && rand(100) < 10) damage *= 1.2;
+        if (player.hasPerk(PerkLib.DazzlingDisplay) && rand(100) < 10) damage *= 1.2;
         //Determine if critical tease!
         var crit:Boolean = false;
         var critChance:int = 5;
-        if (player.findPerk(PerkLib.CriticalPerformance) >= 0) {
+        if (player.hasPerk(PerkLib.CriticalPerformance)) {
             if (player.lib <= 100) critChance += player.lib / 5;
             if (player.lib > 100) critChance += 20;
         }

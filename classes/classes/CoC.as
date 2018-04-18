@@ -12,7 +12,6 @@ package classes
 {
 // BREAKING ALL THE RULES.
 import classes.GlobalFlags.kACHIEVEMENTS;
-import classes.GlobalFlags.kCOUNTERS;
 import classes.GlobalFlags.kFLAGS;
 import classes.CoC;
 import classes.Items.*;
@@ -22,8 +21,6 @@ import classes.Scenes.NPCs.JojoScene;
 import classes.display.DebugInfo;
 import classes.display.PerkMenu;
 import classes.display.SpriteDb;
-import classes.internals.CountersStorage;
-import classes.internals.RootCounters;
 
 import coc.model.GameModel;
 import coc.model.TimeModel;
@@ -139,7 +136,6 @@ public class CoC extends MovieClip
     public var player2:Player;
     public var monster:Monster;
     public var flags:DefaultDict;
-    public var counters:RootCounters;
     public var achievements:DefaultDict;
     private var _gameState:int;
     public var time :TimeModel;
@@ -151,7 +147,6 @@ public class CoC extends MovieClip
     public var testingBlockExiting:Boolean;
 
     public var kFLAGS_REF:*;
-    public var kCOUNTERS_REF:*;
     public var kACHIEVEMENTS_REF:*;
 
     public function get inCombat():Boolean { return _gameState == 1; }
@@ -194,7 +189,6 @@ public class CoC extends MovieClip
         useables = new UseableLib();
 
         this.kFLAGS_REF = kFLAGS;
-        this.kCOUNTERS_REF = kCOUNTERS;
         this.kACHIEVEMENTS_REF = kACHIEVEMENTS;
         // cheat for the parser to be able to find kFLAGS
         // If you're not the parser, DON'T USE THIS
@@ -289,9 +283,6 @@ public class CoC extends MovieClip
         flags = new DefaultDict();
 
         achievements = new DefaultDict();
-        var countersStorage:CountersStorage = kCOUNTERS.create();
-        kCOUNTERS.initialize(countersStorage);
-        counters = new RootCounters(countersStorage);
 
         ///Used everywhere to establish what the current game state is
         // Key system variables
@@ -325,6 +316,7 @@ public class CoC extends MovieClip
 
         // *************************************************************************************
 
+	    mainViewManager.registerShiftKeys();
         //Used for stat tracking to keep up/down arrows correct.
         oldStats = {};
         model.oldStats = oldStats;
@@ -415,7 +407,7 @@ public class CoC extends MovieClip
     public function spriteSelect(choice:Object = 0):void {
         // Inlined call from lib/src/coc/view/MainView.as
         // TODO: When flags goes away, if it goes away, replace this with the appropriate settings thing.
-        if (choice <= 0 || choice == null || flags[kFLAGS.SHOW_SPRITES_FLAG] == 1) {
+        if (choice <= 0 || choice == null || flags[kFLAGS.SHOW_SPRITES_FLAG] == 0) {
             mainViewManager.hideSprite();
         } else {
             if (choice is Class) {

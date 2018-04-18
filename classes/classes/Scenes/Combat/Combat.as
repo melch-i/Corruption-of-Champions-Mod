@@ -61,6 +61,10 @@ public class Combat extends BaseContent {
 	public static const WOOD:int      = 8;
 	public static const METAL:int     = 9;
 	public static const ETHER:int     = 10;
+
+	//Used to display image of the enemy while fighting
+	//Set once during startCombat() to prevent it from changing every combat turn
+	private var imageText:String = "";
 	
 	public function get inCombat():Boolean {
         return CoC.instance.inCombat;
@@ -209,7 +213,7 @@ public function endLustLoss():void
 }
 
 public function spellPerkUnlock():void {
-		if(flags[kFLAGS.SPELLS_CAST] >= 10 && player.findPerk(PerkLib.SpellcastingAffinity) < 0) {
+		if(flags[kFLAGS.SPELLS_CAST] >= 10 && !player.hasPerk(PerkLib.SpellcastingAffinity)) {
 			outputText("<b>You've become more comfortable with your spells, unlocking the Spellcasting Affinity perk and reducing mana cost of spells by 10%!</b>\n\n");
 			player.createPerk(PerkLib.SpellcastingAffinity,10,0,0,0);
 		}
@@ -238,6 +242,10 @@ public function cleanupAfterCombatImpl(nextFunc:Function = null):void {
 	if (inCombat) {
 		//clear status
 		clearStatuses(false);
+
+		//reset the stored image for next monster
+		imageText = "";
+
 		//Clear itemswapping in case it hung somehow
 //No longer used:		itemSwapping = false;
 		//Player won
@@ -350,7 +358,7 @@ public function approachAfterKnockback1():void
 	if (player.weaponRangePerk == "Pistol") outputText("pistol");
 	if (player.weaponRangePerk == "Rifle") outputText("rifle");
 	outputText(" to reload the ammunition.");
-	if (player.findPerk(PerkLib.RapidReload) < 0) {
+	if (!player.hasPerk(PerkLib.RapidReload)) {
 		outputText("  This takes up a turn.\n\n");
 		enemyAI();
 		return;
@@ -572,7 +580,7 @@ public function unarmedAttack():Number {
 		else unarmed += 2 * player.statusEffectv2(StatusEffects.SummonedElementalsMetal) * (1 + player.newGamePlusMod());
 	}
 	if (player.hasStatusEffect(StatusEffects.CrinosShape) && player.hasPerk(PerkLib.ImprovingNaturesBlueprintsNaturalWeapons)) unarmed *= 1.1;
-	if (player.findPerk(PerkLib.Lycanthropy) >= 0) unarmed += 8 * (1 + player.newGamePlusMod());
+	if (player.hasPerk(PerkLib.Lycanthropy)) unarmed += 8 * (1 + player.newGamePlusMod());
 //	if (player.jewelryName == "fox hairpin") unarmed += .2;
 	unarmed = Math.round(unarmed);
 	return unarmed;
@@ -836,7 +844,7 @@ public function elementalattacks(elementType:int, summonedElementals:int):void {
 		if (player.inte > 100) critChance += 10;
 	}
 	if (elementType == AIR || elementType == WATER || elementType == METAL || elementType == ETHER) critChance += 10;
-	if (monster.isImmuneToCrits() && player.findPerk(PerkLib.EnableCriticals) < 0) critChance = 0;
+	if (monster.isImmuneToCrits() && !player.hasPerk(PerkLib.EnableCriticals)) critChance = 0;
 	if (rand(100) < critChance) {
 		crit = true;
 		switch(elementType){
@@ -1035,9 +1043,7 @@ internal function wait():void {
 	else if (player.hasStatusEffect(StatusEffects.NagaBind)) {
 		clearOutput();
 		if(monster is Diva){(monster as Diva).moveBite();}
-		if (monster is CaiLin && flags[kFLAGS.CAILIN_AFFECTION] >= 10) outputText("Cai'Lin");
-		else outputText("The [monster name]");
-		outputText("'s grip on you tightens as you relax into the stimulating pressure.");
+		outputText("The [monster name]'s grip on you tightens as you relax into the stimulating pressure.");
 		dynStats("lus", player.sens / 5 + 5);
 		player.takePhysDamage(5 + rand(5));
 		skipMonsterAction = true;
@@ -1177,13 +1183,10 @@ internal function wait():void {
 			player.removeStatusEffect(StatusEffects.NagaBind);
 		}
 		else {
-			if (monster is CaiLin && flags[kFLAGS.CAILIN_AFFECTION] >= 10) outputText("Cai'Lin");
-			else outputText("The [monster name]");
-			outputText("'s grip on you tightens as you struggle to break free from the stimulating pressure.");
+			outputText("The [monster name]'s grip on you tightens as you struggle to break free from the stimulating pressure.");
 			dynStats("lus", player.sens / 10 + 2);
 			if (monster is Naga) player.takePhysDamage(7 + rand(5));
 			if (monster is Gorgon) player.takePhysDamage(17 + rand(15));
-			if (monster is CaiLin) player.takePhysDamage(10 + rand(8));
 			if (monster is Diva){(monster as Diva).moveBite();}
 		}
 		skipMonsterAction = true;
@@ -1496,7 +1499,7 @@ public function multiArrowsStrike():void {
 			if (damage < 10) damage = 10;
 		}
 		if (weaponRangePerk == "Crossbow") damage += player.weaponRangeAttack * 10;
-		if (player.findPerk(PerkLib.DeadlyAim) < 0) damage *= (monster.damagePercent() / 100);//jak ten perk o ignorowaniu armora bedzie czy coś to tu dać jak nie ma tego perku to sie dolicza
+		if (!player.hasPerk(PerkLib.DeadlyAim)) damage *= (monster.damagePercent() / 100);//jak ten perk o ignorowaniu armora bedzie czy coś to tu dać jak nie ma tego perku to sie dolicza
 		//Weapon addition!
 		if (player.weaponRangeAttack < 51) damage *= (1 + (player.weaponRangeAttack * 0.03));
 		else if (player.weaponRangeAttack >= 51 && player.weaponRangeAttack < 101) damage *= (2.5 + ((player.weaponRangeAttack - 50) * 0.025));
@@ -1551,7 +1554,7 @@ public function multiArrowsStrike():void {
 			if (player.inte > 100) critChance += 10;
 		}
 		if (player.hasPerk(PerkLib.VitalShot) && player.inte >= 50) critChance += 10;
-		if (monster.isImmuneToCrits() && player.findPerk(PerkLib.EnableCriticals) < 0) critChance = 0;
+		if (monster.isImmuneToCrits() && !player.hasPerk(PerkLib.EnableCriticals)) critChance = 0;
 		if (rand(100) < critChance) {
 			crit = true;
 			damage *= 1.75;
@@ -1757,7 +1760,7 @@ public function multiArrowsStrike():void {
 }
 
 public function bowPerkUnlock():void {
-	if(flags[kFLAGS.ARROWS_SHOT] >= 10 && player.findPerk(PerkLib.BowShooting) < 0) {
+	if(flags[kFLAGS.ARROWS_SHOT] >= 10 && !player.hasPerk(PerkLib.BowShooting)) {
 		outputText("<b>You've become more comfortable with using bow, unlocking the Bow Shooting perk and reducing fatigue cost of shooting arrows by 20%!</b>\n\n");
 		player.createPerk(PerkLib.BowShooting,20,0,0,0);
 	}
@@ -1858,7 +1861,7 @@ public function throwWeapon():void {
 			if (player.inte > 100) critChance += 10;
 		}
 		if (player.hasPerk(PerkLib.VitalShot) && player.inte >= 50) critChance += 10;
-		if (monster.isImmuneToCrits() && player.findPerk(PerkLib.EnableCriticals) < 0) critChance = 0;
+		if (monster.isImmuneToCrits() && !player.hasPerk(PerkLib.EnableCriticals)) critChance = 0;
 		if (rand(100) < critChance) {
 			crit = true;
 			damage *= 1.75;
@@ -1952,7 +1955,7 @@ public function shootWeapon():void {
 	if (rand(100) < accRange) {
 		var damage:Number = 0;
 		if (player.weaponRangePerk == "Pistol" || player.weaponRangePerk == "Rifle") damage += player.weaponRangeAttack * 20;
-		if (player.findPerk(PerkLib.DeadlyAim) < 0) damage *= (monster.damagePercent() / 100);//jak ten perk o ignorowaniu armora bedzie czy coś to tu dać jak nie ma tego perku to sie dolicza
+		if (!player.hasPerk(PerkLib.DeadlyAim)) damage *= (monster.damagePercent() / 100);//jak ten perk o ignorowaniu armora bedzie czy coś to tu dać jak nie ma tego perku to sie dolicza
 		//Weapon addition!
 		if (player.weaponRangeAttack < 51) damage *= (1 + (player.weaponRangeAttack * 0.03));
 		else if (player.weaponRangeAttack >= 51 && player.weaponRangeAttack < 101) damage *= (2.5 + ((player.weaponRangeAttack - 50) * 0.025));
@@ -2008,7 +2011,7 @@ public function shootWeapon():void {
 			if (player.inte > 100) critChance += 10;
 		}
 		if (player.hasPerk(PerkLib.VitalShot) && player.inte >= 50) critChance += 10;
-		if (monster.isImmuneToCrits() && player.findPerk(PerkLib.EnableCriticals) < 0) critChance = 0;
+		if (monster.isImmuneToCrits() && !player.hasPerk(PerkLib.EnableCriticals)) critChance = 0;
 		if (rand(100) < critChance) {
 			crit = true;
 			damage *= 1.75;
@@ -2095,7 +2098,7 @@ public function reloadWeapon():void {
 	if (player.weaponRangeName == "blunderbuss rifle") outputText("rifle");
 	outputText(" to reload the ammunition.  If you too tired it would use up this turn action.\n\n");
 	if(player.fatigue + (10 * player.ammo) > player.maxFatigue()) {
-		if (player.findPerk(PerkLib.RapidReload) < 0) {
+		if (!player.hasPerk(PerkLib.RapidReload)) {
 			clearOutput();
 			outputText("You are too tired to act in this round after reloaing your weapon.");
 			enemyAI();
@@ -2103,7 +2106,7 @@ public function reloadWeapon():void {
 		else doNext(combatMenu);
 	}
 	else {
-		if (player.findPerk(PerkLib.RapidReload) < 0) fatigue(10 * player.ammo);
+		if (!player.hasPerk(PerkLib.RapidReload)) fatigue(10 * player.ammo);
 		else fatigue(5 * player.ammo);//czy całkiem usunąć koszt przeładowania?
 		doNext(combatMenu);
 	}
@@ -2296,7 +2299,7 @@ public function attack():void {
 	if(player.hasStatusEffect(StatusEffects.Blind)) {
 		outputText("You attempt to attack, but as blinded as you are right now, you doubt you'll have much luck!  ");
 	}
-	if (monster is Basilisk && player.findPerk(PerkLib.BasiliskResistance) < 0 && !isWieldingRangedWeapon()) {
+	if (monster is Basilisk && !player.hasPerk(PerkLib.BasiliskResistance) && !isWieldingRangedWeapon()) {
 		if (monster.hasStatusEffect(StatusEffects.Blind) || monster.hasStatusEffect(StatusEffects.InkBlind))
 			outputText("Blind basilisk can't use his eyes, so you can actually aim your strikes!  ");
 		//basilisk counter attack (block attack, significant speed loss): 
@@ -2479,10 +2482,10 @@ public function meleeDamageAcc():void {
 	if (player.hasPerk(PerkLib.WeaponGrandMastery) && player.weaponPerk == "Dual Large" && player.str >= 140) critChance += 10;
 	if (player.hasStatusEffect(StatusEffects.Rage)) critChance += player.statusEffectv1(StatusEffects.Rage);
 	if (player.weapon == weapons.MASAMUN || (player.weapon == weapons.WG_GAXE && monster.cor > 66) || ((player.weapon == weapons.DE_GAXE || player.weapon == weapons.YAMARG) && monster.cor < 33)) critChance += 10;
-	if (monster.isImmuneToCrits() && player.findPerk(PerkLib.EnableCriticals) < 0) critChance = 0;
+	if (monster.isImmuneToCrits() && !player.hasPerk(PerkLib.EnableCriticals)) critChance = 0;
 	if (rand(100) < critChance) {
 		crit = true;
-		if (player.hasPerk(PerkLib.Impale) && (player.findPerk(PerkLib.DoubleAttack) < 0 || (player.hasPerk(PerkLib.DoubleAttack) && flags[kFLAGS.DOUBLE_ATTACK_STYLE] == 0)) && player.spe >= 100 && (player.weaponName == "deadly spear" || player.weaponName == "deadly lance" || player.weaponName == "deadly trident")) critDamage += 0.75;
+		if (player.hasPerk(PerkLib.Impale) && (!player.hasPerk(PerkLib.DoubleAttack) || (player.hasPerk(PerkLib.DoubleAttack) && flags[kFLAGS.DOUBLE_ATTACK_STYLE] == 0)) && player.spe >= 100 && (player.weaponName == "deadly spear" || player.weaponName == "deadly lance" || player.weaponName == "deadly trident")) critDamage += 0.75;
 		if ((player.weapon == weapons.WG_GAXE && monster.cor > 66) || (player.weapon == weapons.DE_GAXE && monster.cor < 33)) critDamage += 0.1;
 		damage *= critDamage;
 	}
@@ -2692,27 +2695,27 @@ public function meleeDamageAcc():void {
 		}
 		//Weapon Procs!
 		//10% Stun chance
-		if ((player.weapon == weapons.WARHAMR || player.weapon == weapons.D_WHAM_ || player.weapon == weapons.OTETSU || (player.weapon == weapons.S_GAUNT && player.findPerk(PerkLib.MightyFist) < 0)) && rand(10) == 0 && monster.findPerk(PerkLib.Resolute) < 0) {
+		if ((player.weapon == weapons.WARHAMR || player.weapon == weapons.D_WHAM_ || player.weapon == weapons.OTETSU || (player.weapon == weapons.S_GAUNT && !player.hasPerk(PerkLib.MightyFist))) && rand(10) == 0 && !monster.hasPerk(PerkLib.Resolute)) {
 			outputText("\n" + monster.capitalA + monster.short + " reels from the brutal blow, stunned.");
 			if (!monster.hasStatusEffect(StatusEffects.Stunned)) monster.createStatusEffect(StatusEffects.Stunned,rand(2),0,0,0);
 		}
 		//15% Stun Chance
-		if ((player.weapon == weapons.POCDEST || player.weapon == weapons.DOCDEST) && rand(100) < 15 && monster.findPerk(PerkLib.Resolute) < 0) {
+		if ((player.weapon == weapons.POCDEST || player.weapon == weapons.DOCDEST) && rand(100) < 15 && !monster.hasPerk(PerkLib.Resolute)) {
 			outputText("\n" + monster.capitalA + monster.short + " reels from the brutal blow, stunned.");
 			if (!monster.hasStatusEffect(StatusEffects.Stunned)) monster.createStatusEffect(StatusEffects.Stunned,rand(2),0,0,0);
 		}
 		//20% Stun chance
-		if (player.isFistOrFistWeapon() && player.weapon != weapons.KARMTOU && player.hasPerk(PerkLib.MightyFist) && rand(5) == 0 && monster.findPerk(PerkLib.Resolute) < 0) {
+		if (player.isFistOrFistWeapon() && player.weapon != weapons.KARMTOU && player.hasPerk(PerkLib.MightyFist) && rand(5) == 0 && !monster.hasPerk(PerkLib.Resolute)) {
 			outputText("\n" + monster.capitalA + monster.short + " reels from the brutal blow, stunned.");
 			if (!monster.hasStatusEffect(StatusEffects.Stunned)) monster.createStatusEffect(StatusEffects.Stunned,rand(2),0,0,0);
 		}
 		//25% Stun chance
-		if (player.weapon != weapons.KARMTOU && player.hasPerk(PerkLib.MightyFist) && rand(4) == 0 && monster.findPerk(PerkLib.Resolute) < 0) {
+		if (player.weapon != weapons.KARMTOU && player.hasPerk(PerkLib.MightyFist) && rand(4) == 0 && !monster.hasPerk(PerkLib.Resolute)) {
 			outputText("\n" + monster.capitalA + monster.short + " reels from the brutal blow, stunned.");
 			if (!monster.hasStatusEffect(StatusEffects.Stunned)) monster.createStatusEffect(StatusEffects.Stunned,rand(2),0,0,0);
 		}
 		//30% Stun chance
-		if (player.weapon == weapons.ZWNDER && !monster.hasStatusEffect(StatusEffects.Stunned) && rand(10) <= 2 && monster.findPerk(PerkLib.Resolute) < 0) {
+		if (player.weapon == weapons.ZWNDER && !monster.hasStatusEffect(StatusEffects.Stunned) && rand(10) <= 2 && !monster.hasPerk(PerkLib.Resolute)) {
 			outputText("\n" + monster.capitalA + monster.short + " reels from the brutal blow, stunned.");
 			if (!monster.hasStatusEffect(StatusEffects.Stunned)) monster.createStatusEffect(StatusEffects.Stunned,3,0,0,0);
 		}
@@ -4454,6 +4457,12 @@ public function startCombatImpl(monster_:Monster, plotFight_:Boolean = false):vo
 	//Flag the game as being "in combat"
 	inCombat = true;
 	monster = monster_;
+	if(monster.imageName != ""){
+		var monsterName:String = "monster-"+monster.imageName;
+		imageText = images.showImage(monsterName);
+	} else {
+		imageText = "";
+	}
 	monster.prepareForCombat();
 	if(monster.short == "Ember") {
 		monster.pronoun1 = SceneLib.emberScene.emberMF("he","she");
@@ -4467,7 +4476,7 @@ public function startCombatImpl(monster_:Monster, plotFight_:Boolean = false):vo
 	}
 	if (player.hasPerk(PerkLib.WellspringOfLust)) {
 		if (player.hasPerk(PerkLib.GreyMage) && player.lust < 30) player.lust = 30;
-		if (player.findPerk(PerkLib.GreyMage) < 0 && player.lust < 50) player.lust = 50;
+		if (!player.hasPerk(PerkLib.GreyMage) && player.lust < 50) player.lust = 50;
 	}
 	magic.applyAutocast();
 	//Adjust lust vulnerability in New Game+.
@@ -4526,13 +4535,9 @@ public function display():void {
 	}
 	var math:Number = monster.HPRatio();
 
-	//trace("trying to show monster image!");
-	if (monster.imageName != "")
-	{
-		var monsterName:String = "monster-" + monster.imageName;
-		//trace("Monster name = ", monsterName);
-		outputText(images.showImage(monsterName));
-	}
+	//imageText set in startCombat()
+	outputText(imageText);
+
 	outputText("<b>You are fighting ");
 	outputText(monster.a + monster.short + ":</b> \n");
 	if (player.hasStatusEffect(StatusEffects.Blind)) {
@@ -5074,7 +5079,7 @@ public function ScyllaTease():void {
 				if (player.lib <= 100) critChance += player.lib / 5;
 				if (player.lib > 100) critChance += 20;
 			}
-			if (monster.isImmuneToCrits() && player.findPerk(PerkLib.EnableCriticals) < 0) critChance = 0;
+			if (monster.isImmuneToCrits() && !player.hasPerk(PerkLib.EnableCriticals)) critChance = 0;
 			if (rand(100) < critChance) {
 				crit = true;
 				damage *= 1.75;
@@ -5235,7 +5240,7 @@ public function GooTease():void {
 				if (player.lib <= 100) critChance += player.lib / 5;
 				if (player.lib > 100) critChance += 20;
 			}
-			if (monster.isImmuneToCrits() && player.findPerk(PerkLib.EnableCriticals) < 0) critChance = 0;
+			if (monster.isImmuneToCrits() && !player.hasPerk(PerkLib.EnableCriticals)) critChance = 0;
 			if (rand(100) < critChance) {
 				crit = true;
 				damage *= 1.75;
@@ -5669,7 +5674,7 @@ public function takeFlight():void {
 	clearOutput();
 	outputText("You open you wing taking flight.\n\n");
 	player.createStatusEffect(StatusEffects.Flying, 7, 0, 0, 0);
-	if (player.findPerk(PerkLib.Resolute) < 0) {
+	if (!player.hasPerk(PerkLib.Resolute)) {
 		player.createStatusEffect(StatusEffects.FlyingNoStun, 0, 0, 0, 0);
 		player.createPerk(PerkLib.Resolute, 0, 0, 0, 0);
 	}

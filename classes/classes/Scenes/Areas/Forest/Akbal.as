@@ -29,12 +29,12 @@ public class Akbal extends Monster
 				return;
 			}
 			//Determine if evaded
-			if (player.findPerk(PerkLib.Evade) >= 0 && rand(100) < 10) {
+			if (player.hasPerk(PerkLib.Evade) && rand(100) < 10) {
 				outputText("Using your skills at evading attacks, you anticipate and sidestep " + a + short + "'s attack.");
 				return;
 			}
 			//Determine if flexibilitied
-			if (player.findPerk(PerkLib.Flexibility) >= 0 && rand(100) < 10) {
+			if (player.hasPerk(PerkLib.Flexibility) && rand(100) < 10) {
 				outputText("Using your cat-like agility, you twist out of the way of " + a + short + "'s attack.");
 				return;
 			}
@@ -126,13 +126,13 @@ public class Akbal extends Monster
 					return;
 				}
 				//Determine if evaded
-				if (player.findPerk(PerkLib.Evade) >= 0 && rand(100) < 20)
+				if (player.hasPerk(PerkLib.Evade) && rand(100) < 20)
 				{
 					outputText("Using your skills at evading attacks, you anticipate and sidestep " + a + short + "'s fire-breath.");
 					return;
 				}
 				//Determine if flexibilitied
-				if (player.findPerk(PerkLib.Flexibility) >= 0 && rand(100) < 10)
+				if (player.hasPerk(PerkLib.Flexibility) && rand(100) < 10)
 				{
 					outputText("Using your cat-like agility, you contort your body to avoid " + a + short + "'s fire-breath.");
 					return;
@@ -140,8 +140,8 @@ public class Akbal extends Monster
 				if (player.hasStatusEffect(StatusEffects.Blizzard)) {
 					player.addStatusValue(StatusEffects.Blizzard, 1, -1);
 					var damage2:int = inte / 4;
-					if (player.findPerk(PerkLib.FromTheFrozenWaste) >= 0 || player.findPerk(PerkLib.ColdAffinity) >= 0) damage2 *= 3;
-					if (player.findPerk(PerkLib.FireAffinity) >= 0) damage2 *= 0.3;
+					if (player.hasPerk(PerkLib.FromTheFrozenWaste) || player.hasPerk(PerkLib.ColdAffinity)) damage2 *= 3;
+					if (player.hasPerk(PerkLib.FireAffinity)) damage2 *= 0.3;
 					damage2 = Math.round(damage2);
 					outputText("Surrounding your blizzard absorbed huge part of the attack at the price of loosing some of it protective power.\n");
 					outputText("You are burned badly by the flames! ");
@@ -149,8 +149,8 @@ public class Akbal extends Monster
 					return;
 				}
 				var damage:int = inte;
-				if (player.findPerk(PerkLib.FromTheFrozenWaste) >= 0 || player.findPerk(PerkLib.ColdAffinity) >= 0) damage *= 3;
-				if (player.findPerk(PerkLib.FireAffinity) >= 0) damage *= 0.3;
+				if (player.hasPerk(PerkLib.FromTheFrozenWaste) || player.hasPerk(PerkLib.ColdAffinity)) damage *= 3;
+				if (player.hasPerk(PerkLib.FireAffinity)) damage *= 0.3;
 				damage = Math.round(damage);
 				outputText("You are burned badly by the flames! ");
 				damage = player.takeMagicDamage(damage, true);

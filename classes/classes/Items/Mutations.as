@@ -111,16 +111,16 @@ public final class Mutations extends MutationsHelper
 			var temp2:Number = 0;
 			var temp3:Number = 0;
 			var rando:Number = rand(100);
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) rando += 10;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) rando += 10;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) rando -= 10;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) rando += 10;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) rando += 10;
+			if (player.hasPerk(PerkLib.TransformationResistance)) rando -= 10;
 			clearOutput();
 			outputText("The draft is slick and sticky, ");
 			if (player.cor <= 33) outputText("just swallowing it makes you feel unclean.");
 			if (player.cor > 33 && player.cor <= 66) outputText("reminding you of something you just can't place.");
 			if (player.cor > 66) outputText("deliciously sinful in all the right ways.");
 			if (player.cor >= 90) outputText("  You're sure it must be distilled from the cum of an incubus.");
-			if (player.findPerk(PerkLib.TransformationImmunity) < 0) {
+			if (!player.hasPerk(PerkLib.TransformationImmunity)) {
 			//Lowlevel changes
 			if (rando < 50) {
 				if (player.cocks.length == 1) {
@@ -309,7 +309,7 @@ public final class Mutations extends MutationsHelper
 			if (!purified) player.minoCumAddiction(7);
 			else player.minoCumAddiction(-2);
 			outputText("As soon as you crack the seal on the bottled white fluid, a ");
-			if (flags[kFLAGS.MINOTAUR_CUM_ADDICTION_STATE] == 0 && (player.findPerk(PerkLib.MinotaurCumResistance) < 0 || player.findPerk(PerkLib.ManticoreCumAddict) < 0)) outputText("potent musk washes over you.");
+			if (flags[kFLAGS.MINOTAUR_CUM_ADDICTION_STATE] == 0 && (!player.hasPerk(PerkLib.MinotaurCumResistance) || !player.hasPerk(PerkLib.ManticoreCumAddict))) outputText("potent musk washes over you.");
 			else outputText("heavenly scent fills your nostrils.");
 			if (!purified) {
 				if (flags[kFLAGS.MINOTAUR_CUM_ADDICTION_TRACKER] < 50) outputText("  It makes you feel dizzy, ditzy, and placid.");
@@ -343,24 +343,24 @@ public final class Mutations extends MutationsHelper
 				else outputText("  Slick fluids soak your thighs as your body reacts to this new stimulus.");
 			}
 			//(Minotaur fantasy)
-			if (!CoC.instance.inCombat && rand(10) == 1 && (!purified && (player.findPerk(PerkLib.MinotaurCumResistance) < 0) || player.findPerk(PerkLib.ManticoreCumAddict) < 0)) {
+			if (!CoC.instance.inCombat && rand(10) == 1 && (!purified && (!player.hasPerk(PerkLib.MinotaurCumResistance)) || !player.hasPerk(PerkLib.ManticoreCumAddict))) {
 				outputText("\n\nYour eyes flutter closed for a second as a fantasy violates your mind.  You're on your knees, prostrate before a minotaur.  Its narcotic scent fills the air around you, and you're swaying back and forth with your belly already sloshing and full of spunk.  Its equine-like member is rubbing over your face, and you submit to the beast, stretching your jaw wide to take its sweaty, glistening girth inside you.  Your tongue quivers happily as you begin sucking and slurping, swallowing each drop of pre-cum you entice from the beastly erection.  Gurgling happily, you give yourself to your inhuman master for a chance to swallow into unthinking bliss.");
 				dynStats("lib", 1, "lus", rand(5) + player.cor / 20 + flags[kFLAGS.MINOTAUR_CUM_ADDICTION_TRACKER] / 5);
 			}
 			//(Healing – if hurt and uber-addicted (hasperk))
-			if (player.HP < player.maxHP() && player.findPerk(PerkLib.MinotaurCumAddict) >= 0) {
+			if (player.HP < player.maxHP() && player.hasPerk(PerkLib.MinotaurCumAddict)) {
 				outputText("\n\nThe fire of your arousal consumes your body, leaving vitality in its wake.  You feel much better!");
 				HPChange(int(player.maxHP() / 4), false);
 			}
 			//Uber-addicted status!
-			if (player.findPerk(PerkLib.MinotaurCumAddict) >= 0 && flags[kFLAGS.MINOTAUR_CUM_REALLY_ADDICTED_STATE] <= 0 && !purified) {
+			if (player.hasPerk(PerkLib.MinotaurCumAddict) && flags[kFLAGS.MINOTAUR_CUM_REALLY_ADDICTED_STATE] <= 0 && !purified) {
 				flags[kFLAGS.MINOTAUR_CUM_REALLY_ADDICTED_STATE] = 3 + rand(2);
 				outputText("\n\n<b>Your body feels so amazing and sensitive.  Experimentally you pinch yourself and discover that even pain is turning you on!</b>");
 			}
 			//Clear mind a bit
-			if (purified && (player.findPerk(PerkLib.MinotaurCumAddict) >= 0 || flags[kFLAGS.MINOTAUR_CUM_ADDICTION_TRACKER] >= 40)) {
+			if (purified && (player.hasPerk(PerkLib.MinotaurCumAddict) || flags[kFLAGS.MINOTAUR_CUM_ADDICTION_TRACKER] >= 40)) {
 				outputText("\n\nYour mind feels a bit clearer just from drinking the purified minotaur cum. Maybe if you drink more of these, you'll be able to rid yourself of your addiction?");
-				if (player.findPerk(PerkLib.MinotaurCumAddict) >= 0 && flags[kFLAGS.MINOTAUR_CUM_ADDICTION_TRACKER] <= 50) {
+				if (player.hasPerk(PerkLib.MinotaurCumAddict) && flags[kFLAGS.MINOTAUR_CUM_ADDICTION_TRACKER] <= 50) {
 					outputText("  Suddenly, you black out and images flash in your mind about getting abducted by minotaurs and the abandonment of your quest that eventually leads to Lethice's success in taking over Mareth. No, it cannot be! You wake up and recover from the blackout, horrified to find out what would really happen if you spend the rest of your life with the Minotaurs! You shake your head and realize that you're no longer dependent on the cum.  ");
 					outputText("\n<b>(Lost Perk: Minotaur Cum Addict!)</b>");
 					player.removePerk(PerkLib.MinotaurCumAddict);
@@ -377,9 +377,9 @@ public final class Mutations extends MutationsHelper
 			var temp2:Number = 0;
 			var temp3:Number = 0;
 			var rando:Number = Math.random() * 100;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) rando += 10;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) rando += 10;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) rando -= 10;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) rando += 10;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) rando += 10;
+			if (player.hasPerk(PerkLib.TransformationResistance)) rando -= 10;
 			if (rando >= 90 && !tainted) rando -= 10;
 			if (player.cor < 35) {
 				clearOutput();
@@ -541,9 +541,9 @@ public final class Mutations extends MutationsHelper
 				if (player.skinTone == "blue" || player.skinTone == "purple" || player.skinTone == "indigo" || player.skinTone == "shiny black") {
 					if (player.vaginas.length > 0) {
 						outputText("\n\nYour heart begins beating harder and harder as heat floods to your groin.  You feel your clit peeking out from under its hood, growing larger and longer as it takes in more and more blood.");
-						if (player.clitLength > 3 && player.findPerk(PerkLib.BigClit) < 0) outputText("  After some time it shrinks, returning to its normal aroused size.  You guess it can't get any bigger.");
-						if (player.clitLength > 5 && player.findPerk(PerkLib.BigClit) >= 0) outputText("  Eventually it shrinks back down to its normal (but still HUGE) size.  You guess it can't get any bigger.");
-						if (((player.findPerk(PerkLib.BigClit) >= 0) && player.clitLength < 6)
+						if (player.clitLength > 3 && !player.hasPerk(PerkLib.BigClit)) outputText("  After some time it shrinks, returning to its normal aroused size.  You guess it can't get any bigger.");
+						if (player.clitLength > 5 && player.hasPerk(PerkLib.BigClit)) outputText("  Eventually it shrinks back down to its normal (but still HUGE) size.  You guess it can't get any bigger.");
+						if (((player.hasPerk(PerkLib.BigClit)) && player.clitLength < 6)
 								|| player.clitLength < 3) {
 							index += 2;
 							player.clitLength += (rand(4) + 2) / 10;
@@ -605,9 +605,9 @@ public final class Mutations extends MutationsHelper
 			var changes:Number = 0;
 			var changeLimit:Number = 1;
 			if (rand(3) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			player.slimeFeed();
 			clearOutput();
 			outputText("The pepper taste and feels like trying to eat snow and ice. However you eat it anyway still feeling a cold tingling in your mouth.");
@@ -989,9 +989,9 @@ public final class Mutations extends MutationsHelper
 			var changeLimit:Number = 1;
 			if (rand(2) == 0) changeLimit++;
 			if (rand(2) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			//Initial outputs & crit level
 			clearOutput();
 			if (type == 0) {
@@ -1027,11 +1027,11 @@ public final class Mutations extends MutationsHelper
 				outputText("You eat the pepper, even the two orb-like growths that have grown out from the base.  It's delicious!");
 			}
 			//OVERDOSE Bad End!
-			if (type <= 0 && crit > 1 && player.hasFullCoatOfType(Skin.FUR) && player.faceType == Face.DOG && player.ears.type == Ears.DOG && player.lowerBody == LowerBody.DOG && player.tailType == Tail.DOG && rand(2) == 0 && player.hasStatusEffect(StatusEffects.DogWarning) && player.findPerk(PerkLib.TransformationResistance) < 0) {
+			if (type <= 0 && crit > 1 && player.hasFullCoatOfType(Skin.FUR) && player.faceType == Face.DOG && player.ears.type == Ears.DOG && player.lowerBody == LowerBody.DOG && player.tailType == Tail.DOG && rand(2) == 0 && player.hasStatusEffect(StatusEffects.DogWarning) && !player.hasPerk(PerkLib.TransformationResistance)) {
 				var choice:int = rand(2);
 				if (choice == 0) {
 					outputText("\n\nAs you swallow the pepper, you note that the spicy hotness on your tongue seems to be spreading. Your entire body seems to tingle and burn, making you feel far warmer than normal, feverish even. Unable to stand it any longer you tear away your clothes, hoping to cool down a little. Sadly, this does nothing to aid you with your problem. On the bright side, the sudden feeling of vertigo you've developed is more than enough to take your mind off your temperature issues. You fall forward onto your hands and knees, well not really hands and knees to be honest. More like paws and knees. That can't be good, you think for a moment, before the sensation of your bones shifting into a quadrupedal configuration robs you of your concentration. After that, it is only a short time before your form is remade completely into that of a large dog, or perhaps a wolf. The distinction would mean little to you now, even if you were capable of comprehending it. ");
-					if (player.findPerk(PerkLib.MarblesMilk) >= 0) outputText("All you know is that there is a scent on the wind, it is time to hunt, and at the end of the day you need to come home for your milk.");
+					if (player.hasPerk(PerkLib.MarblesMilk)) outputText("All you know is that there is a scent on the wind, it is time to hunt, and at the end of the day you need to come home for your milk.");
 					else outputText("All you know is that there is a scent on the wind, and it is time to hunt.");
 				}
 				if (choice == 1) outputText("\n\nYou devour the sweet pepper, carefully licking your fingers for all the succulent juices of the fruit, and are about to go on your way when suddenly a tightness begins to build in your chest and stomach, horrid cramps working their way first through your chest, then slowly flowing out to your extremities, the feeling soon joined by horrible, blood-curdling cracks as your bones begin to reform, twisting and shifting, your mind exploding with pain. You fall to the ground, reaching one hand forward. No... A paw, you realize in horror, as you try to push yourself back up. You watch in horror, looking down your foreleg as thicker fur erupts from your skin, a [haircolor] coat slowly creeping from your bare flesh to cover your body. Suddenly, you feel yourself slipping away, as if into a dream, your mind warping and twisting, your body finally settling into its new form. With one last crack of bone you let out a yelp, kicking free of the cloth that binds you, wresting yourself from its grasp and fleeing into the now setting sun, eager to find prey to dine on tonight.");
@@ -1307,7 +1307,7 @@ public final class Mutations extends MutationsHelper
 				if (player.cumMultiplier < 2 && rand(2) == 0 && changes < changeLimit && type != 6) {
 					choice = 1.5;
 					//Lots of cum raises cum multiplier cap to 2 instead of 1.5
-					if (player.findPerk(PerkLib.MessyOrgasms) >= 0) choice = 2;
+					if (player.hasPerk(PerkLib.MessyOrgasms)) choice = 2;
 					if (choice < player.cumMultiplier + .05 * crit) {
 						changes--;
 					}
@@ -1722,9 +1722,9 @@ public final class Mutations extends MutationsHelper
 			//Chances to up the max number of changes
 			if (rand(2) == 0) changeLimit++;
 			if (rand(2) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			//Generic drinking text
 			clearOutput();
 			outputText("You uncork the bottle and drink down the strange substance, struggling to down the thick liquid.");
@@ -1772,7 +1772,7 @@ public final class Mutations extends MutationsHelper
 				if (player.cumMultiplier < 6 && rand(2) == 0 && changes < changeLimit) {
 					var max:int = 3;
 					//Lots of cum raises cum multiplier cap to 6 instead of 3
-					if (player.findPerk(PerkLib.MessyOrgasms) >= 0) max = 6;
+					if (player.hasPerk(PerkLib.MessyOrgasms)) max = 6;
 					if (max < player.cumMultiplier + .4 * crit) {
 						changes--;
 					}
@@ -1810,9 +1810,9 @@ public final class Mutations extends MutationsHelper
 			//Chances to up the max number of changes
 			if (rand(2) == 0) changeLimit++;
 			if (rand(2) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			//Generic drinking text
 			clearOutput();
 			outputText("You uncork the bottle and drink down the strange substance, struggling to down the thick liquid.");
@@ -1863,7 +1863,7 @@ public final class Mutations extends MutationsHelper
 					//Temp is the max it can be raised to
 					var max:int = 3;
 					//Lots of cum raises cum multiplier cap to 6 instead of 3
-					if (player.findPerk(PerkLib.MessyOrgasms) >= 0) max = 6;
+					if (player.hasPerk(PerkLib.MessyOrgasms)) max = 6;
 					if (max < player.cumMultiplier + .4 * crit) {
 						changes--;
 					}
@@ -2350,14 +2350,14 @@ public final class Mutations extends MutationsHelper
 			clearOutput();
 			outputText("You cram the pearl in your mouth and swallow it like a giant pill with some difficulty.  Surprisingly there is no discomfort, only a cool calming sensation that springs up from your core.");
 			dynStats("lib", -5, "lus", -25, "cor", -10);
-			if (player.findPerk(PerkLib.PurityBlessing) < 0) player.createPerk(PerkLib.PurityBlessing, 0, 0, 0, 0);
+			if (!player.hasPerk(PerkLib.PurityBlessing)) player.createPerk(PerkLib.PurityBlessing, 0, 0, 0, 0);
 		}
 
 		public function ezekielfruit(player:Player):void
 		{
 			clearOutput();
 			outputText("You take first bite of fruit that Evangeline gave you.  Surprisingly it taste delicious as nothing else you tasted before so without thinking more you ate rest of the fruit.");
-			if (player.findPerk(PerkLib.EzekielBlessing) < 0) player.createPerk(PerkLib.EzekielBlessing, 0, 0, 0, 0);
+			if (!player.hasPerk(PerkLib.EzekielBlessing)) player.createPerk(PerkLib.EzekielBlessing, 0, 0, 0, 0);
 			statScreenRefresh();
 			dynStats("str", 5, "tou", 5, "spe", 5, "inte", 5, "wis", 5, "lib", 5, "sen", 5);
 			player.refillHunger(50);
@@ -2367,19 +2367,19 @@ public final class Mutations extends MutationsHelper
 		{
 			clearOutput();
 			outputText("You cram the pearl in your mouth and swallow it like a giant pill with some difficulty.  Surprisingly there is no discomfort, only a calming sensation of three steams of mystical energies spreading in your body.");
-			if (player.findPerk(PerkLib.ElementalConjurerMindAndBodyResolve) < 0) player.createPerk(PerkLib.ElementalConjurerMindAndBodyResolve, 0, 0, 0, 0);
+			if (!player.hasPerk(PerkLib.ElementalConjurerMindAndBodyResolve)) player.createPerk(PerkLib.ElementalConjurerMindAndBodyResolve, 0, 0, 0, 0);
 		}
 		public function middlegradeelementalPearl(player:Player):void
 		{
 			clearOutput();
 			outputText("You cram the pearl in your mouth and swallow it like a giant pill with some difficulty.  Surprisingly there is no discomfort, only a calming sensation of five steams of mystical energies spreading in your body.");
-			if (player.findPerk(PerkLib.ElementalConjurerMindAndBodyDedication) < 0) player.createPerk(PerkLib.ElementalConjurerMindAndBodyDedication, 0, 0, 0, 0);
+			if (!player.hasPerk(PerkLib.ElementalConjurerMindAndBodyDedication)) player.createPerk(PerkLib.ElementalConjurerMindAndBodyDedication, 0, 0, 0, 0);
 		}
 		public function highgradeelementalPearl(player:Player):void
 		{
 			clearOutput();
 			outputText("You cram the pearl in your mouth and swallow it like a giant pill with some difficulty.  Surprisingly there is no discomfort, only a calming sensation of seven steams of mystical energies spreading in your body.");
-			if (player.findPerk(PerkLib.ElementalConjurerMindAndBodySacrifice) < 0) player.createPerk(PerkLib.ElementalConjurerMindAndBodySacrifice, 0, 0, 0, 0);
+			if (!player.hasPerk(PerkLib.ElementalConjurerMindAndBodySacrifice)) player.createPerk(PerkLib.ElementalConjurerMindAndBodySacrifice, 0, 0, 0, 0);
 		}
 
 		public function bagofcosmos(player:Player):void
@@ -2542,10 +2542,10 @@ public final class Mutations extends MutationsHelper
 			else if (player.statusEffectv3(StatusEffects.Marble) <= 0) outputText("You gulp down the bottle's contents; Marble makes some really good tasting milk.\n\n");
 			else if (player.statusEffectv3(StatusEffects.Marble) > 0) {
 				//[player is completely addicted]
-				if (player.findPerk(PerkLib.MarblesMilk) >= 0) outputText("You gulp down the bottle's contents; it's no substitute for the real thing, but it's a nice pick me up.\n\n");
+				if (player.hasPerk(PerkLib.MarblesMilk)) outputText("You gulp down the bottle's contents; it's no substitute for the real thing, but it's a nice pick me up.\n\n");
 				else {
 					//[player is no longer addicted]
-					if (player.findPerk(PerkLib.MarbleResistant) >= 0) outputText("You gulp down the bottle's contents; you're careful not to get too attached to the taste.\n\n");
+					if (player.hasPerk(PerkLib.MarbleResistant)) outputText("You gulp down the bottle's contents; you're careful not to get too attached to the taste.\n\n");
 					//[player is addicted]
 					else outputText("You gulp down the bottle's contents; you really needed that.\n\n");
 				}
@@ -2599,9 +2599,9 @@ public final class Mutations extends MutationsHelper
 			if (rand(2) == 0) changeLimit++;
 			if (rand(3) == 0) changeLimit++;
 			if (rand(3) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			if (enhanced) changeLimit += 2;
 			//Temporary storage
 			var temp:Number = 0;
@@ -3213,7 +3213,7 @@ public final class Mutations extends MutationsHelper
 					outputText(vaginaDescript(0) + " soaks your thighs");
 				}
 				if (player.gender == 0) outputText("body begins to quiver with orgasmic bliss");
-				if (player.findPerk(PerkLib.ElectrifiedDesire) >= 0 || player.hasStatusEffect(StatusEffects.RaijuLightningStatus)) outputText(" with charged, glowing, plasma");
+				if (player.hasPerk(PerkLib.ElectrifiedDesire) || player.hasStatusEffect(StatusEffects.RaijuLightningStatus)) outputText(" with charged, glowing, plasma");
 				outputText(".  Once you've had a chance to calm down, you notice that the explosion of pleasure you just experienced has rocked you to your core.  You are a little hornier than you were before.");
 				//increase player libido, and maybe sensitivity too?
 				player.orgasm();
@@ -3234,9 +3234,9 @@ public final class Mutations extends MutationsHelper
 			if (rand(3) == 0) changeLimit++;
 			if (rand(4) == 0) changeLimit++;
 			if (rand(5) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			clearOutput();
 			outputText("You drink the ale, finding it to have a remarkably smooth yet potent taste.  You lick your lips and sneeze, feeling slightly tipsy.");
 			dynStats("lus", 15);
@@ -3391,7 +3391,7 @@ public final class Mutations extends MutationsHelper
 				player.vaginaType(0);
 				changes++;
 			}
-			if (changes < changeLimit && rand(4) == 0 && ((player.ass.analWetness > 0 && player.findPerk(PerkLib.MaraesGiftButtslut) < 0) || player.ass.analWetness > 1)) {
+			if (changes < changeLimit && rand(4) == 0 && ((player.ass.analWetness > 0 && !player.hasPerk(PerkLib.MaraesGiftButtslut)) || player.ass.analWetness > 1)) {
 				outputText("\n\nYou feel a tightening up in your colon and your [asshole] sucks into itself.  You feel sharp pain at first but that thankfully fades.  Your ass seems to have dried and tightened up.");
 				player.ass.analWetness--;
 				if (player.ass.analLooseness > 1) player.ass.analLooseness--;
@@ -3547,9 +3547,9 @@ public final class Mutations extends MutationsHelper
 			var changeLimit:Number = 2;
 			if (rand(2) == 0) changeLimit++;
 			if (rand(2) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			if (type == 0) {
 				clearOutput();
 				outputText("You have no idea why, but you decide to eat the pointed tooth. To your surprise, it's actually quite brittle, turning into a fishy-tasting dust. You figure it must just be a tablet made to look like a shark's tooth.");
@@ -3680,7 +3680,7 @@ public final class Mutations extends MutationsHelper
 					player.skin.growCoat(Skin.SCALES,{color:"orange and black"});
 					changes++;
 				}
-				if (player.findPerk(PerkLib.GeneticMemory) >= 0 && !player.hasStatusEffect(StatusEffects.UnlockedScales)) {
+				if (player.hasPerk(PerkLib.GeneticMemory) && !player.hasStatusEffect(StatusEffects.UnlockedScales)) {
 					outputText("\n\n<b>Genetic Memory: Scales - Memorized!</b>\n\n");
 					player.createStatusEffect(StatusEffects.UnlockedScales, 0, 0, 0, 0);
 				}
@@ -3746,9 +3746,9 @@ public final class Mutations extends MutationsHelper
 			var changeLimit:Number = 1;
 			if (rand(2) == 0) changeLimit++;
 			if (rand(2) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			//b) Description while used
 			outputText("Pinching your nose, you quickly uncork the vial and bring it to your mouth, determined to see what effects it might have on your body. Pouring in as much as you can take, you painfully swallow before going for another shot, emptying the bottle.");
 			//(if outside combat)
@@ -3875,9 +3875,9 @@ public final class Mutations extends MutationsHelper
 			var changeLimit:Number = 1;
 			if (rand(2) == 0) changeLimit++;
 			if (rand(4) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			outputText("Pinching your nose, you quickly uncork the vial and bring it to your mouth, determined to see what effects it might have on your body. Pouring in as much as you can take, you painfully swallow before going for another shot, emptying the bottle.  Minutes pass as you start wishing you had water with you, to get rid of the ");
 			if (type == 0) outputText("aftertaste.");
 			if (type == 1 || type == 2) outputText("strange mixed taste.");
@@ -4062,25 +4062,25 @@ public final class Mutations extends MutationsHelper
 				}
 				changes++;
 			}
-			if (type == 1 && player.dragonScore() >= 4 && changes < changeLimit && player.findPerk(PerkLib.DragonFireBreath) < 0) {
+			if (type == 1 && player.dragonScore() >= 4 && changes < changeLimit && !player.hasPerk(PerkLib.DragonFireBreath)) {
 				outputText("\n\nYou feel something awakening within you... then a sudden sensation of choking grabs hold of your throat, sending you to your knees as you clutch and gasp for breath.  It feels like there's something trapped inside your windpipe, clawing and crawling its way up.  You retch and splutter and then, with a feeling of almost painful relief, you expel a bellowing roar from deep inside of yourself... with enough force that clods of dirt and shattered gravel are sent flying all around.  You look at the small crater you have literally blasted into the landscape with a mixture of awe and surprise.");
 				outputText("\n\nIt seems vouivre oil has awaked some kind of power within you... your throat and chest feel very sore, however; you doubt you can force out more than one such blast before resting.  (<b>Gained Perk: Dragon fire breath!</b>)");
 				player.createPerk(PerkLib.DragonFireBreath, 0, 0, 0, 0);
 				changes++;
 			}
-			if (type == 1 && player.dragonScore() >= 4 && changes < changeLimit && player.findPerk(PerkLib.DragonIceBreath) < 0) {
+			if (type == 1 && player.dragonScore() >= 4 && changes < changeLimit && !player.hasPerk(PerkLib.DragonIceBreath)) {
 				outputText("\n\nYou feel something awakening within you... then a sudden sensation of choking grabs hold of your throat, sending you to your knees as you clutch and gasp for breath.  It feels like there's something trapped inside your windpipe, clawing and crawling its way up.  You retch and splutter and then, with a feeling of almost painful relief, you expel a bellowing roar from deep inside of yourself... with enough force that clods of dirt and shattered gravel are sent flying all around.  You look at the small crater you have literally blasted into the landscape with a mixture of awe and surprise.");
 				outputText("\n\nIt seems vouivre oil has awaked some kind of power within you... your throat and chest feel very cold, however; you doubt you can force out more than one such blast before resting.  (<b>Gained Perk: Dragon ice breath!</b>)");
 				player.createPerk(PerkLib.DragonIceBreath, 0, 0, 0, 0);
 				changes++;
 			}
-			if (type == 1 && player.dragonScore() >= 4 && changes < changeLimit && player.findPerk(PerkLib.DragonLightningBreath) < 0) {
+			if (type == 1 && player.dragonScore() >= 4 && changes < changeLimit && !player.hasPerk(PerkLib.DragonLightningBreath)) {
 				outputText("\n\nYou feel something awakening within you... then a sudden sensation of choking grabs hold of your throat, sending you to your knees as you clutch and gasp for breath.  It feels like there's something trapped inside your windpipe, clawing and crawling its way up.  You retch and splutter and then, with a feeling of almost painful relief, you expel a bellowing roar from deep inside of yourself... with enough force that clods of dirt and shattered gravel are sent flying all around.  You look at the small crater you have literally blasted into the landscape with a mixture of awe and surprise.");
 				outputText("\n\nIt seems vouivre oil has awaked some kind of power within you... your throat and chest feel like it was electrocuted, however; you doubt you can force out more than one such blast before resting.  (<b>Gained Perk: Dragon fire breath!</b>)");
 				player.createPerk(PerkLib.DragonLightningBreath, 0, 0, 0, 0);
 				changes++;
 			}
-			if (type == 1 && player.dragonScore() >= 4 && changes < changeLimit && player.findPerk(PerkLib.DragonDarknessBreath) < 0) {
+			if (type == 1 && player.dragonScore() >= 4 && changes < changeLimit && !player.hasPerk(PerkLib.DragonDarknessBreath)) {
 				outputText("\n\nYou feel something awakening within you... then a sudden sensation of choking grabs hold of your throat, sending you to your knees as you clutch and gasp for breath.  It feels like there's something trapped inside your windpipe, clawing and crawling its way up.  You retch and splutter and then, with a feeling of almost painful relief, you expel a bellowing roar from deep inside of yourself... with enough force that clods of dirt and shattered gravel are sent flying all around.  You look at the small crater you have literally blasted into the landscape with a mixture of awe and surprise.");
 				outputText("\n\nIt seems vouivre oil has awaked some kind of power within you... your throat and chest feel very... strange and you can't put a finger what this feeling exactly is, however; you doubt you can force out more than one such blast before resting.  (<b>Gained Perk: Dragon ice breath!</b>)");
 				player.createPerk(PerkLib.DragonDarknessBreath, 0, 0, 0, 0);
@@ -4132,7 +4132,7 @@ public final class Mutations extends MutationsHelper
 				else {
 					outputText("\n\nYou idly reach back to scratch yourself and nearly jump out of your [armor] when you hit something hard.  A quick glance down reveals that scales are growing out of your " + color + " skin with alarming speed.  As you watch, the surface of your skin is covered in smooth scales.  They interlink together so well that they may as well be seamless.  You peel back your [armor] and the transformation has already finished on the rest of your body.  <b>You're covered from head to waist in shiny scales.</b>");
 				}
-				if (player.findPerk(PerkLib.GeneticMemory) >= 0 && !player.hasStatusEffect(StatusEffects.UnlockedScales)) {
+				if (player.hasPerk(PerkLib.GeneticMemory) && !player.hasStatusEffect(StatusEffects.UnlockedScales)) {
 					outputText("\n\n<b>Genetic Memory: Scales - Memorized!</b>\n\n");
 					player.createStatusEffect(StatusEffects.UnlockedScales, 0, 0, 0, 0);
 				}
@@ -4143,7 +4143,7 @@ public final class Mutations extends MutationsHelper
 				outputText("\n\nPrickling discomfort suddenly erupts all over your body, like every last inch of your skin has suddenly developed pins and needles.  You scratch yourself, as new scales grew up filling the gaps. ");
 				player.skin.growCoat(Skin.DRAGON_SCALES,{},Skin.COVERAGE_COMPLETE);
 				outputText("<b>Your body is now fully covered in " + color + " shield-shaped dragon scales.</b>");
-				if (player.findPerk(PerkLib.GeneticMemory) >= 0 && !player.hasStatusEffect(StatusEffects.UnlockedDragonScales)) {
+				if (player.hasPerk(PerkLib.GeneticMemory) && !player.hasStatusEffect(StatusEffects.UnlockedDragonScales)) {
 					outputText("\n\n<b>Genetic Memory: Dragon Scales - Memorized!</b>\n\n");
 					player.createStatusEffect(StatusEffects.UnlockedDragonScales, 0, 0, 0, 0);
 				}
@@ -4312,9 +4312,9 @@ public final class Mutations extends MutationsHelper
 			var changeLimit:Number = 1;
 			if (rand(2) == 0) changeLimit++;
 			if (rand(2) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			clearOutput();
 			outputText("You shovel the stuff into your face, not sure WHY you're eating it, but once you start, you just can't stop.  It tastes incredibly bland, and with a slight hint of cheese.");
 			player.refillHunger(20);
@@ -4334,7 +4334,7 @@ public final class Mutations extends MutationsHelper
 				changes++;
 			}
 			//Remove Incorporeality Perk
-			if (player.findPerk(PerkLib.Incorporeality) >= 0 && changes < changeLimit && rand(10) == 0) {
+			if (player.hasPerk(PerkLib.Incorporeality) && changes < changeLimit && rand(10) == 0) {
 				outputText("\n\nYou feel a strange sensation in your [legs] as they start to feel more solid. They become more opaque until finally, you can no longer see through your [legs]. \n<b>(Perk Lost: Incorporeality!)</b>");
 				player.removePerk(PerkLib.Incorporeality);
 				changes++;
@@ -4366,12 +4366,8 @@ public final class Mutations extends MutationsHelper
 				outputText(player.skinTone + " colored.</b>");
 			}
 			//Change skin to normal
-			if (player.hasCoat() && player.skin.base.isAny(Skin.PLAIN, Skin.STONE) && rand(4) == 0 && changes < changeLimit) {
-				outputText("\n\nA slowly-building itch spreads over your whole body, and as you idly scratch yourself, you find that your " + player.skinFurScales() + " ");
-				if (player.hasScales()) outputText("are");
-				else outputText("is");
-				outputText(" falling to the ground, revealing flawless skin below.  <b>You now have normal skin.</b>");
-				player.skin.setBaseOnly({type:Skin.PLAIN});
+			if (!player.hasPlainSkinOnly() && rand(4) == 0 && changes < changeLimit) {
+				humanizeSkin();
 				changes++;
 			}
 			//-Remove feather-arms (copy this for goblin ale, mino blood, equinum, centaurinum, canine pepps, demon items)
@@ -4623,9 +4619,9 @@ public final class Mutations extends MutationsHelper
 			if (rand(2) == 0) changeLimit++;
 			if (rand(2) == 0) changeLimit++;
 			if (rand(3) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			//Text go!
 			clearOutput();
 			if (type == 0) outputText("You take a bite of the fruit and gulp it down. It's thick and juicy and has an almost overpowering sweetness. Nevertheless, it is delicious and you certainly could use a meal.  You devour the fruit, stopping only when the hard, nubby pit is left; which you toss aside.");
@@ -4982,9 +4978,9 @@ public final class Mutations extends MutationsHelper
 			if (rand(2) == 0) changeLimit++;
 			if (rand(2) == 0) changeLimit++;
 			if (rand(4) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			//clear screen
 			clearOutput();
 			outputText("You uncork the vial of fluid and drink it down.  The taste is sour, like a dry wine with an aftertaste not entirely dissimilar to alcohol.  Instead of the warmth you'd expect, it leaves your throat feeling cold and a little numb.");
@@ -5148,7 +5144,7 @@ public final class Mutations extends MutationsHelper
 				outputText(" nipples relax.  It's a strange feeling, and you pull back your top to touch one.  It feels fine, though there doesn't seem to be any milk leaking out.  You give it a squeeze and marvel when nothing ");
 				if (player.hasFuckableNipples()) outputText("but sexual fluid ");
 				outputText("escapes it.  <b>You are no longer lactating.</b>  That makes sense, only mammals lactate!  Smiling, you muse at how much time this will save you when cleaning your gear.");
-				if (player.findPerk(PerkLib.Feeder) >= 0 || player.hasStatusEffect(StatusEffects.Feeder)) {
+				if (player.hasPerk(PerkLib.Feeder) || player.hasStatusEffect(StatusEffects.Feeder)) {
 					outputText("\n\n(<b>Feeder perk lost!</b>)");
 					player.removePerk(PerkLib.Feeder);
 					player.removeStatusEffect(StatusEffects.Feeder);
@@ -5171,7 +5167,7 @@ public final class Mutations extends MutationsHelper
 				}
 			}
 			//-VAGs
-			if (player.hasVagina() && player.findPerk(PerkLib.Oviposition) < 0 && changes < changeLimit && rand(5) == 0 && player.lizardScore() > 3) {
+			if (player.hasVagina() && !player.hasPerk(PerkLib.Oviposition) && changes < changeLimit && rand(5) == 0 && player.lizardScore() > 3) {
 				outputText("\n\nDeep inside yourself there is a change.  It makes you feel a little woozy, but passes quickly.  Beyond that, you aren't sure exactly what just happened, but you are sure it originated from your womb.\n");
 				outputText("(<b>Perk Gained: Oviposition</b>)");
 				player.createPerk(PerkLib.Oviposition, 0, 0, 0, 0);
@@ -5311,7 +5307,7 @@ public final class Mutations extends MutationsHelper
 				else {
 					outputText("\n\nYou idly reach back to scratch yourself and nearly jump out of your [armor] when you hit something hard.  A quick glance down reveals that scales are growing out of your " + player.skinTone + " skin with alarming speed.  As you watch, the surface of your skin is covered in smooth scales.  They interlink together so well that they may as well be seamless.  You peel back your [armor] and the transformation has already finished on the rest of your body.  <b>You're covered from head to toe in shiny " + color + " scales.</b>");
 				}
-				if (player.findPerk(PerkLib.GeneticMemory) >= 0 && !player.hasStatusEffect(StatusEffects.UnlockedScales)) {
+				if (player.hasPerk(PerkLib.GeneticMemory) && !player.hasStatusEffect(StatusEffects.UnlockedScales)) {
 					outputText("\n\n<b>Genetic Memory: Scales - Memorized!</b>\n\n");
 					player.createStatusEffect(StatusEffects.UnlockedScales, 0, 0, 0, 0);
 				}
@@ -5348,9 +5344,9 @@ public final class Mutations extends MutationsHelper
 			if (rand(2) == 0) changeLimit++;
 			if (rand(3) == 0) changeLimit++;
 			if (rand(4) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			//clear screen
 			clearOutput();
 			outputText("You uncork the hip flash and drink it down.  The taste is actualy quite good, like an alcohol but with a little fire within.  Just as you expected it makes you feel all hot and ready to take whole world head on.");
@@ -5594,9 +5590,9 @@ public final class Mutations extends MutationsHelper
 			if (rand(2) == 0) changeLimit++;
 			if (rand(3) == 0) changeLimit++;
 			if (rand(4) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			//clear screen
 			clearOutput();
 			outputText("You uncork the bottle and drink it down.  The taste is actualy quite sweet, like an alcohol but with a hint of hazelnuts flavor.  Would it change anything about you than making feeling of warmth spreading inside?");
@@ -5874,7 +5870,7 @@ public final class Mutations extends MutationsHelper
 			// Remove gills
 			if (rand(4) == 0 && player.hasGills() && changes < changeLimit) updateGills();
 			//Phoenix Fire Breath
-			if (player.phoenixScore() >= 5 && changes < changeLimit && player.findPerk(PerkLib.PhoenixFireBreath) < 0) {
+			if (player.phoenixScore() >= 5 && changes < changeLimit && !player.hasPerk(PerkLib.PhoenixFireBreath)) {
 				outputText("\n\nYou feel something awakening within you... then a sudden sensation of choking grabs hold of your throat, sending you to your knees as you clutch and gasp for breath.  It feels like there's something trapped inside your windpipe, clawing and crawling its way up.  You retch and splutter and then, with a feeling of almost painful relief, you expel a bellowing roar from deep inside of yourself.  It had enough force to sent a little bit of dirt and shattered gravel all around.");
 				outputText("\n\nIt seems Nocello liqueur has awaked some kind of power within you... your throat feel quite dry.  (<b>Gained Perk: Phoenix fire breath!</b>)");
 				player.createPerk(PerkLib.PhoenixFireBreath, 0, 0, 0, 0);
@@ -5920,9 +5916,9 @@ public final class Mutations extends MutationsHelper
 			var changeLimit:Number = 1;
 			if (rand(2) == 0) changeLimit++;
 			if (rand(2) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			//If this is a pregnancy change, only 1 change per proc.
 			if (pregnantChange) changeLimit = 1;
 			else clearOutput();
@@ -6073,7 +6069,7 @@ public final class Mutations extends MutationsHelper
 				outputText("\n\nYou feel strange.  Fertile... somehow.  You don't know how else to think of it, but you know your body is just aching to be pregnant and give birth.");
 			}
 			//-VAGs
-			if (player.hasVagina() && player.findPerk(PerkLib.BunnyEggs) < 0 && changes < changeLimit && rand(4) == 0 && player.bunnyScore() > 3) {
+			if (player.hasVagina() && !player.hasPerk(PerkLib.BunnyEggs) && changes < changeLimit && rand(4) == 0 && player.bunnyScore() > 3) {
 				outputText("\n\nDeep inside yourself there is a change.  It makes you feel a little woozy, but passes quickly.  Beyond that, you aren't sure exactly what just happened, but you are sure it originated from your womb.\n\n");
 				outputText("(<b>Perk Gained: Bunny Eggs</b>)");
 				player.createPerk(PerkLib.BunnyEggs, 0, 0, 0, 0);
@@ -6262,9 +6258,9 @@ public final class Mutations extends MutationsHelper
 			if (type == 1) changeLimit += 2;
 			if (rand(2) == 0) changeLimit++;
 			if (rand(2) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			//Generic eating text:
 			clearOutput();
 			outputText("You pop the nut into your mouth, chewing the delicious treat and swallowing it quickly.  No wonder harpies love these things so much!");
@@ -6555,12 +6551,12 @@ public final class Mutations extends MutationsHelper
 			if (rand(4) == 0 && player.hasGills() && changes < changeLimit) updateGills();
 			//SPECIAL:
 			//Harpy Womb – All eggs are automatically upgraded to large, requires legs + tail to be harpy.
-			if (player.findPerk(PerkLib.HarpyWomb) < 0 && player.lowerBody == LowerBody.HARPY && player.tailType == Tail.HARPY && rand(4) == 0 && changes < changeLimit) {
+			if (!player.hasPerk(PerkLib.HarpyWomb) && player.lowerBody == LowerBody.HARPY && player.tailType == Tail.HARPY && rand(4) == 0 && changes < changeLimit) {
 				player.createPerk(PerkLib.HarpyWomb, 0, 0, 0, 0);
 				outputText("\n\nThere's a rumbling in your womb, signifying that some strange change has taken place in your most feminine area. No doubt something in it has changed to be more like a harpy. (<b>You've gained the Harpy Womb perk! All the eggs you lay will always be large so long as you have harpy legs and a harpy tail.</b>)");
 				changes++;
 			}
-			if (changes < changeLimit && rand(4) == 0 && ((player.ass.analWetness > 0 && player.findPerk(PerkLib.MaraesGiftButtslut) < 0) || player.ass.analWetness > 1)) {
+			if (changes < changeLimit && rand(4) == 0 && ((player.ass.analWetness > 0 && !player.hasPerk(PerkLib.MaraesGiftButtslut)) || player.ass.analWetness > 1)) {
 				outputText("\n\nYou feel a tightening up in your colon and your [asshole] sucks into itself.  You feel sharp pain at first but that thankfully fades.  Your ass seems to have dried and tightened up.");
 				player.ass.analWetness--;
 				if (player.ass.analLooseness > 1) player.ass.analLooseness--;
@@ -6594,9 +6590,9 @@ public final class Mutations extends MutationsHelper
 			var temp2:Number = 0;
 			if (rand(2) == 0) changeLimit++;
 			if (rand(2) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			//Generic eating text:
 			clearOutput();
 			if (type == 0) outputText("You crack open the seed easily, and eat the fruit inside. A bit dry, as you expected, but with a sweet and aromatic taste that leaves you wanting another one.");
@@ -6915,16 +6911,16 @@ public final class Mutations extends MutationsHelper
 			if (type == 1) changeLimit += 2;
 			if (rand(2) == 0) changeLimit++;
 			if (rand(2) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			//Used as a holding variable for biggest dicks and the like
 			var biggestCock:Number;
 			//****************
 			//General Effects:
 			//****************
 			//-Int less than 10
-			if (player.inte < 10 && player.findPerk(PerkLib.TransformationResistance) < 0) {
+			if (player.inte < 10 && !player.hasPerk(PerkLib.TransformationResistance)) {
 				if (player.inte < 8 && player.kangaScore() >= 5) {
 					outputText("\n\nWhile you gnaw on the fibrous fruit, your already vacant mind continues to empty, leaving nothing behind but the motion of your jaw as you slowly chew and swallow your favorite food.  Swallow.  Chew.  Swallow.  You don't even notice your posture worsening or your arms shortening.  Without a single thought, you start to hunch over but keep munching on the food in your paws as if were the most normal thing in the world.  Teeth sink into one of your fingers, leaving you to yelp in pain.  With the last of your senses, you look at your throbbing paw to notice you've run out of kanga fruit!");
 					outputText("\n\nStill hungry and licking your lips in anticipation, you sniff in deep lungfuls of air.  There's more of that wonderful fruit nearby!  You bound off in search of it on your incredibly muscular legs, their shape becoming more and more feral with every hop.  Now guided completely by instinct, you find a few stalks that grow from the ground.  Your belly rumbles, reminding you of your hunger, as you begin to dig into the kanga fruits...");
@@ -7103,7 +7099,7 @@ public final class Mutations extends MutationsHelper
 			}
 			//UBEROOOO
 			//kangaroo perk: - any liquid or food intake will accelerate a pregnancy, but it will not progress otherwise
-			if (player.findPerk(PerkLib.Diapause) < 0 && player.kangaScore() > 4 && rand(4) == 0 && changes < changeLimit && player.hasVagina()) {
+			if (!player.hasPerk(PerkLib.Diapause) && player.kangaScore() > 4 && rand(4) == 0 && changes < changeLimit && player.hasVagina()) {
 				//Perk name and description:
 				player.createPerk(PerkLib.Diapause, 0, 0, 0, 0);
 				outputText("\n\nYour womb rumbles as something inside it changes.\n<b>(You have gained the Diapause perk.  Pregnancies will not progress when fluid intake is scarce, and will progress much faster when it isn't.)</b>");
@@ -7141,9 +7137,9 @@ public final class Mutations extends MutationsHelper
 			var changeLimit:Number = 1;
 			if (rand(2) == 0) changeLimit++;
 			if (rand(2) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			//Consuming Text
 			if (type == 0) outputText("You wad up the sweet, pink gossamer and eat it, finding it to be delicious and chewy, almost like gum.  Munching away, your mouth generates an enormous amount of spit until you're drooling all over yourself while you devour the sweet treat.");
 			else if (type == 1) outputText("You wad up the sweet, black gossamer and eat it, finding it to be delicious and chewy, almost like licorice.  Munching away, your mouth generates an enormous amount of spit until you're drooling all over yourself while you devour the sweet treat.");
@@ -7269,7 +7265,7 @@ public final class Mutations extends MutationsHelper
 				} else outputText("\n\nA slowly-building itch spreads over your whole body, and as you idly scratch yourself, you find that your skin stating to harden turning slowly into chitin.");
 				outputText("  <b>You now have pale white chitin exoskeleton covering your body.</b>");
 				player.skin.growCoat(Skin.CHITIN,{color:"pale white"});
-				if (player.findPerk(PerkLib.GeneticMemory) >= 0 && !player.hasStatusEffect(StatusEffects.UnlockedChitin)) {
+				if (player.hasPerk(PerkLib.GeneticMemory) && !player.hasStatusEffect(StatusEffects.UnlockedChitin)) {
 					outputText("\n\n<b>Genetic Memory: Chitin - Memorized!</b>\n\n");
 					player.createStatusEffect(StatusEffects.UnlockedChitin, 0, 0, 0, 0);
 				}
@@ -7347,7 +7343,7 @@ public final class Mutations extends MutationsHelper
 				changes++;
 			}
 			//Drider butt
-			if (type == 1 && player.findPerk(PerkLib.SpiderOvipositor) < 0 && player.isDrider() && player.tailType == Tail.SPIDER_ADBOMEN && changes < changeLimit && rand(3) == 0 && (player.hasVagina || rand(2) == 0)) {
+			if (type == 1 && !player.hasPerk(PerkLib.SpiderOvipositor) && player.isDrider() && player.tailType == Tail.SPIDER_ADBOMEN && changes < changeLimit && rand(3) == 0 && (player.hasVagina || rand(2) == 0)) {
 				outputText("\n\nAn odd swelling sensation floods your spider half.  Curling your abdomen underneath you for a better look, you gasp in recognition at your new 'equipment'!  Your semi-violent run-ins with the swamp's population have left you <i>intimately</i> familiar with the new appendage.  <b>It's a drider ovipositor!</b>  A few light prods confirm that it's just as sensitive as any of your other sexual organs.  You idly wonder what laying eggs with this thing will feel like...");
 				outputText("\n\n(<b>Perk Gained:  Spider Ovipositor - Allows you to lay eggs in your foes!</b>)");
 				//V1 - Egg Count
@@ -7425,7 +7421,7 @@ public final class Mutations extends MutationsHelper
 			player.slimeFeed();
 			clearOutput();
 			//no drink for bimbos!
-			if (player.findPerk(PerkLib.BimboBody) >= 0) {
+			if (player.hasPerk(PerkLib.BimboBody)) {
 				outputText("The stuff hits you like a giant cube, nearly staggering you as it begins to settle.");
 				if (player.tallness < 77) {
 					player.tallness = 77;
@@ -7467,7 +7463,7 @@ public final class Mutations extends MutationsHelper
 					dynStats("lib", .1);
 				}
 				outputText("\n\n<b>(Lost Perk - ");
-				if (player.findPerk(PerkLib.BimboBrains) >= 0) outputText("Bimbo Brains, ");
+				if (player.hasPerk(PerkLib.BimboBrains)) outputText("Bimbo Brains, ");
 				outputText("Bimbo Body)\n");
 				player.removePerk(PerkLib.BimboBrains);
 				player.removePerk(PerkLib.BimboBody);
@@ -7477,7 +7473,7 @@ public final class Mutations extends MutationsHelper
 				return;
 			}
 			//HP restore for bros!
-			if (player.findPerk(PerkLib.BroBody) >= 0 || player.findPerk(PerkLib.FutaForm) >= 0) {
+			if (player.hasPerk(PerkLib.BroBody) || player.hasPerk(PerkLib.FutaForm)) {
 				outputText("You crack open the can and guzzle it in a hurry.  Goddamn, this shit is the best.  As you crush the can against your forehead, you wonder if you can find a six-pack of it somewhere?\n\n");
 				fatigue(-33);
 				HPChange(100, true);
@@ -7572,7 +7568,7 @@ public final class Mutations extends MutationsHelper
 			player.createPerk(PerkLib.BroBody, 0, 0, 0, 0);
 			outputText("<b>(Bro Body - Perk Gained!)\n");
 			outputText("(Bro Brains - Perk Gained!)</b>\n");//int to 20.  max int 50)
-			if (player.findPerk(PerkLib.Feeder) >= 0) {
+			if (player.hasPerk(PerkLib.Feeder)) {
 				outputText("<b>(Perk Lost - Feeder!)</b>\n");
 				player.removePerk(PerkLib.Feeder);
 			}
@@ -7600,9 +7596,9 @@ public final class Mutations extends MutationsHelper
 			var changeLimit:Number = 1;
 			if (rand(2) == 0) changeLimit++;
 			if (rand(3) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			//Effect script 1:  (higher intelligence)
 			if (player.inte < 100 && rand(3) == 0 && changes < changeLimit) {
 				outputText("\n\nYou groan softly as your head begins pounding something fierce.  Wincing in pain, you massage your temples as the throbbing continues, and soon, the pain begins to fade; in its place comes a strange sense of sureness and wit.");
@@ -7661,7 +7657,7 @@ public final class Mutations extends MutationsHelper
 				changes++;
 			}
 			//Legs
-			if (changes < changeLimit && player.findPerk(PerkLib.Incorporeality) < 0 && (player.skinTone == "white" || player.skinTone == "sable") && player.hairType == 2) {
+			if (changes < changeLimit && !player.hasPerk(PerkLib.Incorporeality) && (player.skinTone == "white" || player.skinTone == "sable") && player.hairType == 2) {
 				//(ghost-legs!  Absolutely no problem with regular encounters, though! [if you somehow got this with a centaur it'd probably do nothing cuz you're not supposed to be a centaur with ectoplasm ya dingus])
 				outputText("\n\nAn otherworldly sensation begins in your belly, working its way to your [hips]. Before you can react, your [legs] begin to tingle, and you fall on your rump as a large shudder runs through them. As you watch, your lower body shimmers, becoming ethereal, wisps rising from the newly ghost-like [legs]. You manage to rise, surprised to find your new, ghostly form to be as sturdy as its former corporeal version. Suddenly, like a dam breaking, fleeting visions and images flow into your head, never lasting long enough for you to concentrate on one. You don't even realize it, but your arms fly up to your head, grasping your temples as you groan in pain. As fast as the mental bombardment came, it disappears, leaving you with a surprising sense of spiritual superiority.  <b>You have ghost legs!</b>\n\n");
 				outputText("<b>(Gained Perk:  Incorporeality</b>)");
@@ -7689,9 +7685,9 @@ public final class Mutations extends MutationsHelper
 			var changeLimit:Number = 1;
 			if (rand(2) == 0) changeLimit++;
 			if (rand(3) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			outputText("You really should’ve brought this to someone who knew about it first!  Your stomach grumbles, and you feel a short momentaneous pain in your head.  As you swallow you feel your body start to change into something else.");
 			//Stats
 			if (player.sens < 80 && rand(4) == 0 && changes < changeLimit) {
@@ -7807,9 +7803,9 @@ public final class Mutations extends MutationsHelper
 			if (itemused == true) {
 				if (rand(2) == 0) changeLimit++;
 				if (rand(3) == 0) changeLimit++;
-				if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-				if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-				if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+				if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+				if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+				if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 				outputText("As you admire the shiny jewel, you notice a flicker of energy flash across it, before a sudden jolt runs through your body! Letting out a howling moan, the jewel crumbles to dust as your body spasms in pleasure before the feeling subsides into dull ecstasy. You twitch and drool as something seems to be happening to your body...");
 			}
 			//Stats
@@ -7915,7 +7911,7 @@ public final class Mutations extends MutationsHelper
 			}
 			if (!player.skin.hasLightningShapedTattoo() && rand(3) == 0 && changes < changeLimit) {//player.skin.base.type == PLAIN &&
 				outputText("\n\nYou suddenly feel a rush of electricity on your skin as glowing tattoos in the shape of lightning bolts form in various place across your body. Well, how shocking. <b>Your skin is now inscribed with some lightning shaped tattoos.</b>");
-			//	if (player.findPerk(PerkLib.GeneticMemory) >= 0 && !player.hasStatusEffect(StatusEffects.UnlockedTattoed)) {
+			//	if (player.hasPerk(PerkLib.GeneticMemory) && !player.hasStatusEffect(StatusEffects.UnlockedTattoed)) {
 			//		outputText("\n\n<b>Genetic Memory: Tattoed Skin - Memorized!</b>\n\n");
 			//		player.createStatusEffect(StatusEffects.UnlockedTattoed, 0, 0, 0, 0);
 			//	}
@@ -7953,9 +7949,9 @@ public final class Mutations extends MutationsHelper
 			var changeLimit:Number = 1;
 			if (rand(2) == 0) changeLimit++;
 			if (rand(3) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 
 			//possible use effects:
 			//- toughess up, sensitivity down
@@ -8042,13 +8038,13 @@ public final class Mutations extends MutationsHelper
 			if (enhanced) changeLimit += 2;
 			if (rand(2) == 0) changeLimit++;
 			if (rand(2) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			//Used for dick and boob TFs
 			var counter:int = 0;
 
-			if (player.faceType == Face.FOX && player.tailType == Tail.FOX && player.ears.type == Ears.FOX && player.lowerBody == LowerBody.FOX && player.hasFur() && rand(3) == 0 && player.findPerk(PerkLib.TransformationResistance) < 0) {
+			if (player.faceType == Face.FOX && player.tailType == Tail.FOX && player.ears.type == Ears.FOX && player.lowerBody == LowerBody.FOX && player.hasFur() && rand(3) == 0 && !player.hasPerk(PerkLib.TransformationResistance)) {
 				if (flags[kFLAGS.FOX_BAD_END_WARNING] == 0) {
 					outputText("\n\nYou get a massive headache and a craving to raid a henhouse.  Thankfully, both pass in seconds, but <b>maybe you should cut back on the vulpine items...</b>");
 					flags[kFLAGS.FOX_BAD_END_WARNING] = 1;
@@ -8195,7 +8191,7 @@ public final class Mutations extends MutationsHelper
 			if (player.cumQ() < 5000 && rand(3) == 0 && changes < changeLimit && player.hasCock()) {
 				var mult:int = 2 + rand(4);
 				//Lots of cum raises cum multiplier cap to 2 instead of 1.5
-				if (player.findPerk(PerkLib.MessyOrgasms) >= 0) mult += rand(10);
+				if (player.hasPerk(PerkLib.MessyOrgasms)) mult += rand(10);
 				player.cumMultiplier += mult;
 				//Flavor text
 				if (player.balls == 0) outputText("\n\nYou feel a churning inside your gut as something inside you changes.");
@@ -8292,7 +8288,7 @@ public final class Mutations extends MutationsHelper
 					// TODO patterns
 					player.skin.coat.color = randomChoice("orange and white", "orange and white", "orange and white", "red and white", "black and white", "white", "tan", "brown");
 				}
-				if (player.findPerk(PerkLib.GeneticMemory) >= 0 && !player.hasStatusEffect(StatusEffects.UnlockedFur)) {
+				if (player.hasPerk(PerkLib.GeneticMemory) && !player.hasStatusEffect(StatusEffects.UnlockedFur)) {
 					outputText("\n\n<b>Genetic Memory: Fur - Memorized!</b>\n\n");
 					player.createStatusEffect(StatusEffects.UnlockedFur, 0, 0, 0, 0);
 				}
@@ -8491,7 +8487,7 @@ public final class Mutations extends MutationsHelper
 			//Effect:
 			//Boosts the special effect of Dragonbreath by 20% for 1 use. ie: if Tainted's breath weapon has a 80% chance to stun on hit, +20% equals 100% chance to stun.
 			outputText("You crack the shell easily and swallow the large yolk and the copious amounts of albumen - the yolk is blue, while the rest is crimson-tinted.  It tastes like... well, it tastes mostly of spiced mint, you think.");
-			if (player.findPerk(PerkLib.DragonFireBreath) >= 0 || player.findPerk(PerkLib.DragonIceBreath) >= 0) {
+			if (player.hasPerk(PerkLib.DragonFireBreath) || player.hasPerk(PerkLib.DragonIceBreath)) {
 				if (player.hasStatusEffect(StatusEffects.DragonBreathCooldown)) player.removeStatusEffect(StatusEffects.DragonBreathCooldown);
 				if (player.hasStatusEffect(StatusEffects.DragonDarknessBreathCooldown)) player.removeStatusEffect(StatusEffects.DragonDarknessBreathCooldown);
 				if (player.hasStatusEffect(StatusEffects.DragonFireBreathCooldown)) player.removeStatusEffect(StatusEffects.DragonFireBreathCooldown);
@@ -8660,8 +8656,8 @@ public final class Mutations extends MutationsHelper
 				outputText("\n\nA tingling pressure builds on your backside, and your bushy tails begin to glow with an eerie, ghostly light.  With a crackle of electrical energy, one of your tails splits in two, giving you " + num2Text(player.tailCount + 1) + "!  <b>You now have a cluster of " + num2Text(player.tailCount + 1) + " fox-tails.</b>");
 				setTailType(Tail.FOX, 6);
 			});
-			mutationStep(nFoxTails == 6 && player.level >= 30 && player.inte >= 90 && player.wis >= 90 && (player.findPerk(PerkLib.EnlightenedKitsune) < 0 || player.perkv4(PerkLib.EnlightenedKitsune) > 0) && (player.findPerk(PerkLib.EnlightenedNinetails) < 0 || player.perkv4(PerkLib.EnlightenedNinetails) > 0), mystic ? 1 : 3, function(): void {
-				if (player.findPerk(PerkLib.CorruptedKitsune) < 0) {
+			mutationStep(nFoxTails == 6 && player.level >= 30 && player.inte >= 90 && player.wis >= 90 && (!player.hasPerk(PerkLib.EnlightenedKitsune) || player.perkv4(PerkLib.EnlightenedKitsune) > 0) && (!player.hasPerk(PerkLib.EnlightenedNinetails) || player.perkv4(PerkLib.EnlightenedNinetails) > 0), mystic ? 1 : 3, function(): void {
+				if (!player.hasPerk(PerkLib.CorruptedKitsune)) {
 					outputText("Your bushy tails begin to glow with an eerie, ghostly light, and with a crackle of electrical energy, split into seven tails.  <b>You are now a seven-tails!  But something is wrong...  The cosmic power radiating from your body feels...  tainted somehow.  The corruption pouring off your body feels...  good.</b>");
 					outputText("\n\n(Perk Gained: Corrupted Kitsune - Grants Corrupted Fox Fire and Terror special attacks.)");
 					player.createPerk(PerkLib.CorruptedKitsune, 0, 0, 0, 0);
@@ -8669,22 +8665,22 @@ public final class Mutations extends MutationsHelper
 				}
 				else outputText("\n\nA tingling pressure builds on your backside, and your bushy tails begin to glow with an eerie, ghostly light.  With a crackle of electrical energy, one of your tails splits in two, giving you " + num2Text(player.tailCount + 1) + "!  <b>You now have a cluster of " + num2Text(player.tailCount + 1) + " fox-tails.</b>");
 				player.tailCount = 7;
-				if (player.findPerk(PerkLib.GeneticMemory) >= 0 && !player.hasStatusEffect(StatusEffects.UnlockedFoxTail7th) && player.findPerk(PerkLib.NinetailsKitsuneOfBalance) >= 0 && player.perkv4(PerkLib.NinetailsKitsuneOfBalance) > 0) {
+				if (player.hasPerk(PerkLib.GeneticMemory) && !player.hasStatusEffect(StatusEffects.UnlockedFoxTail7th) && player.hasPerk(PerkLib.NinetailsKitsuneOfBalance) && player.perkv4(PerkLib.NinetailsKitsuneOfBalance) > 0) {
 					outputText("\n\n<b>Genetic Memory: 7th Fox Tail - Memorized!</b>\n\n");
 					player.createStatusEffect(StatusEffects.UnlockedFoxTail7th, 0, 0, 0, 0);
 				}
 			});
-			mutationStep(nFoxTails == 7 && player.level >= 36 && player.inte >= 105 && player.wis >= 105 && (player.findPerk(PerkLib.EnlightenedKitsune) < 0 || player.perkv4(PerkLib.EnlightenedKitsune) > 0) && (player.findPerk(PerkLib.EnlightenedNinetails) < 0 || player.perkv4(PerkLib.EnlightenedNinetails) > 0), mystic ? 1 : 4, function(): void {
+			mutationStep(nFoxTails == 7 && player.level >= 36 && player.inte >= 105 && player.wis >= 105 && (!player.hasPerk(PerkLib.EnlightenedKitsune) || player.perkv4(PerkLib.EnlightenedKitsune) > 0) && (!player.hasPerk(PerkLib.EnlightenedNinetails) || player.perkv4(PerkLib.EnlightenedNinetails) > 0), mystic ? 1 : 4, function(): void {
 				outputText("\n\nA tingling pressure builds on your backside, and your bushy tails begin to glow with an eerie, ghostly light.  With a crackle of electrical energy, one of your tails splits in two, giving you " + num2Text(player.tailCount + 1) + "!  <b>You now have a cluster of " + num2Text(player.tailCount + 1) + " fox-tails.</b>");
 				player.tailCount++;
-				if (player.findPerk(PerkLib.GeneticMemory) >= 0 && !player.hasStatusEffect(StatusEffects.UnlockedFoxTail8th) && player.findPerk(PerkLib.NinetailsKitsuneOfBalance) >= 0 && player.perkv4(PerkLib.NinetailsKitsuneOfBalance) > 0) {
+				if (player.hasPerk(PerkLib.GeneticMemory) && !player.hasStatusEffect(StatusEffects.UnlockedFoxTail8th) && player.hasPerk(PerkLib.NinetailsKitsuneOfBalance) && player.perkv4(PerkLib.NinetailsKitsuneOfBalance) > 0) {
 					outputText("\n\n<b>Genetic Memory: 8th Fox Tail - Memorized!</b>\n\n");
 					player.createStatusEffect(StatusEffects.UnlockedFoxTail8th, 0, 0, 0, 0);
 				}
 			});
 			//[Grow 9th tail and gain Corrupted Nine-tails perk]
-			mutationStep(nFoxTails == 8 && player.level >= 42 && player.inte >= 120 && player.wis >= 120 && (player.findPerk(PerkLib.EnlightenedNinetails) < 0 || player.perkv4(PerkLib.EnlightenedNinetails) > 0), mystic ? 1 : 4, function(): void {
-				if (player.findPerk(PerkLib.CorruptedNinetails) < 0) {
+			mutationStep(nFoxTails == 8 && player.level >= 42 && player.inte >= 120 && player.wis >= 120 && (!player.hasPerk(PerkLib.EnlightenedNinetails) || player.perkv4(PerkLib.EnlightenedNinetails) > 0), mystic ? 1 : 4, function(): void {
+				if (!player.hasPerk(PerkLib.CorruptedNinetails)) {
 					outputText("Your bushy tails begin to glow with an eerie, ghostly light, and with a crackle of electrical energy, split into nine tails.  <b>You are now a nine-tails!  But something is strange...  The cosmic power radiating from your body feels...  somehow more tainted than before.  The corruption pouring off your body feels...  amazing good.</b>");
 					outputText("\n\nYou have the inexplicable urge to set fire to the world, just to watch it burn.  With your newfound power, it's a goal that is well within reach.");
 					outputText("\n\n(Perk Gained: Corrupted Nine-tails - Grants boosts to your racial special attacks.)");
@@ -8693,7 +8689,7 @@ public final class Mutations extends MutationsHelper
 				}
 				else outputText("\n\nA tingling pressure builds on your backside, and your bushy tails begin to glow with an eerie, ghostly light.  With a crackle of electrical energy, one of your tails splits in two, giving you " + num2Text(player.tailCount + 1) + "!  <b>You now have a cluster of " + num2Text(player.tailCount + 1) + " fox-tails.</b>");
 				player.tailCount = 9;
-				if (player.findPerk(PerkLib.GeneticMemory) >= 0 && !player.hasStatusEffect(StatusEffects.UnlockedFoxTail9th) && player.findPerk(PerkLib.NinetailsKitsuneOfBalance) >= 0 && player.perkv4(PerkLib.NinetailsKitsuneOfBalance) > 0) {
+				if (player.hasPerk(PerkLib.GeneticMemory) && !player.hasStatusEffect(StatusEffects.UnlockedFoxTail9th) && player.hasPerk(PerkLib.NinetailsKitsuneOfBalance) && player.perkv4(PerkLib.NinetailsKitsuneOfBalance) > 0) {
 					outputText("\n\n<b>Genetic Memory: 9th Fox Tail - Memorized!</b>\n\n");
 					player.createStatusEffect(StatusEffects.UnlockedFoxTail9th, 0, 0, 0, 0);
 				}
@@ -8756,7 +8752,7 @@ public final class Mutations extends MutationsHelper
 				if (mystic) outputText("angular");
 				else outputText("curved");
 				outputText(" markings remain, as if etched into your skin. <b>You now have Kitsune tattooed skin.</b>");
-			//	if (player.findPerk(PerkLib.GeneticMemory) >= 0 && !player.hasStatusEffect(StatusEffects.UnlockedTattoed)) {
+			//	if (player.hasPerk(PerkLib.GeneticMemory) && !player.hasStatusEffect(StatusEffects.UnlockedTattoed)) {
 			//		outputText("\n\n<b>Genetic Memory: Tattoed Skin - Memorized!</b>\n\n");
 			//		player.createStatusEffect(StatusEffects.UnlockedTattoed, 0, 0, 0, 0);
 			//	}
@@ -8952,7 +8948,7 @@ public final class Mutations extends MutationsHelper
 		public function deBimbo(player:Player):void
 		{
 			clearOutput();
-			if (player.findPerk(PerkLib.BimboBrains) < 0 && player.findPerk(PerkLib.FutaFaculties) < 0 && player.findPerk(PerkLib.BroBrains) < 0) {
+			if (!player.hasPerk(PerkLib.BimboBrains) && !player.hasPerk(PerkLib.FutaFaculties) && !player.hasPerk(PerkLib.BroBrains)) {
 				outputText("You can't use this right now, and it's too expensive to waste!\n\n");
 				if (debug) {}
 				else {
@@ -8962,15 +8958,15 @@ public final class Mutations extends MutationsHelper
 			}
 			outputText("Well, time to see what this smelly, old rat was on about!  You pinch your nose and swallow the foul-tasting mixture with a grimace.  Oh, that's just <i>nasty!</i>  You drop the vial, which shatters on the ground, clutching at your head as a wave of nausea rolls over you.  Stumbling back against a rock for support, you close your eyes.  A constant, pounding ache throbs just behind your temples, and for once, you find yourself speechless.  A pained groan slips through your lips as thoughts and memories come rushing back.  One after another, threads of cognizant thought plow through the simple matrices of your bimbo mind, shredding and replacing them.");
 			outputText("\n\nYou... you were an air-headed ditz!  A vacuous, idiot-girl with nothing between her ears but hunger for dick and pleasure!  You shudder as your faculties return, the pain diminishing with each passing moment.");
-			if (player.findPerk(PerkLib.BimboBrains) >= 0) {
+			if (player.hasPerk(PerkLib.BimboBrains)) {
 				outputText("\n\n(<b>Perk Removed:  Bimbo Brains - Your intelligence and speech patterns are no longer limited to that of a bimbo.</b>)");
 				player.removePerk(PerkLib.BimboBrains);
 			}
-			else if (player.findPerk(PerkLib.FutaFaculties) >= 0) {
+			else if (player.hasPerk(PerkLib.FutaFaculties)) {
 				outputText("\n\n(<b>Perk Removed:  Futa Faculties - Your intelligence and speech patterns are no longer limited to that of a futanari bimbo.</b>)");
 				player.removePerk(PerkLib.FutaFaculties);
 			}
-			else if (player.findPerk(PerkLib.BroBrains) >= 0) {
+			else if (player.hasPerk(PerkLib.BroBrains)) {
 				outputText("\n\n(<b>Perk Removed:  Bro Brains - Your intelligence gains are no longer hampered. You now gain intelligence at a normal pace.</b>)");
 				player.removePerk(PerkLib.BroBrains);
 			}
@@ -9036,9 +9032,9 @@ public final class Mutations extends MutationsHelper
 			if (rand(2) == 0) changeLimit++;
 			if (rand(3) == 0) changeLimit++;
 			if (rand(3) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			outputText("You pour some of the oil onto your hands and ");
 			if (player.cor < 30) outputText("hesitantly ");
 			else if (player.cor > 70) outputText("eagerly ");
@@ -9203,7 +9199,7 @@ public final class Mutations extends MutationsHelper
 				if (rand(4) == 0 && changes < changeLimit) {
 					if (player.femininity < 70 && player.femininity >= 60) {
 						outputText("\n\nYou laugh as you feel your features once again soften, before stopping abruptly.  Your laugh sounded more like a girly giggle than anything else.  Feeling slightly more sober, you touch the soft flesh of your face prospectively.  The trap oil has changed you profoundly, making your innate maleness... difficult to discern, to say the least.  You suspect you could make yourself look even more like a girl now if you wanted to.");
-						if (player.findPerk(PerkLib.Androgyny) < 0) {
+						if (!player.hasPerk(PerkLib.Androgyny)) {
 							player.createPerk(PerkLib.Androgyny, 0, 0, 0, 0);
 							outputText("\n\n(<b>Perk Gained: Androgyny</b>)");
 						}
@@ -9234,7 +9230,7 @@ public final class Mutations extends MutationsHelper
 						player.femininity = 30;
 						//Masculinity Increase Final (max masculinity allowed increased by +10):
 						outputText("\n\nYou laugh as you feel your features once again soften, before stopping abruptly.  Your laugh sounded more like a boyish crow than anything else.  Feeling slightly more sober, you touch the defined lines of your face prospectively.  The trap oil has changed you profoundly, making your innate femaleness... difficult to discern, to say the least.  You suspect you could make yourself look even more like a boy now if you wanted to.");
-						if (player.findPerk(PerkLib.Androgyny) < 0) {
+						if (!player.hasPerk(PerkLib.Androgyny)) {
 							player.createPerk(PerkLib.Androgyny, 0, 0, 0, 0);
 							outputText("\n\n(<b>Perk Gained: Androgyny</b>)");
 						}
@@ -9351,9 +9347,9 @@ public final class Mutations extends MutationsHelper
 			if (rand(2) == 0) changeLimit++;
 			if (rand(3) == 0) changeLimit++;
 			if (rand(3) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			//stat gains:
 			//gain speed to ceiling of 80
 			if (player.spe < 80 && rand(3) == 0 && changes < changeLimit) {
@@ -9524,9 +9520,9 @@ public final class Mutations extends MutationsHelper
 			if (rand(2) == 0) changeLimit++;
 			if (rand(3) == 0) changeLimit++;
 			if (rand(3) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			//use:
 			outputText("You pop several of the beans in your mouth and suck; they immediately reward you by giving up an oily, chocolatey flavor with a hint of bitterness.  For several minutes you ");
 			if (!player.isTaur()) outputText("sit and ");
@@ -9828,7 +9824,7 @@ public final class Mutations extends MutationsHelper
 			outputText("Feeling parched, you gobble down the fruit without much hesitation. Despite the skin being fuzzy like a peach, the inside is relatively hard, and its taste reminds you of that of an apple.  It even has a core like an apple. Finished, you toss the core aside.");
 
 			//BAD END:
-			if(player.ferretScore() >= 6 && player.findPerk(PerkLib.TransformationResistance) < 0)
+			if(player.ferretScore() >= 6 && !player.hasPerk(PerkLib.TransformationResistance))
 			{
 				//Get warned!
 				if(flags[kFLAGS.FERRET_BAD_END_WARNING] == 0) {
@@ -9859,9 +9855,9 @@ public final class Mutations extends MutationsHelper
 			if(rand(2) == 0) changeLimit++;
 			if(rand(2) == 0) changeLimit++;
 			if(rand(3) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			//Ferret Fruit Effects
 			//- + Thin:
 			if(player.thickness > 15 && changes < changeLimit && rand(3) == 0)
@@ -10109,15 +10105,15 @@ public final class Mutations extends MutationsHelper
 			if (rand(2) == 0) changeLimit++;
 			if (rand(3) == 0) changeLimit++;
 			if (boar) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			outputText("You take a bite into the pigtail truffle. It oddly tastes like bacon. You eventually finish eating. ");
 			player.refillHunger(20);
 			//-----------------------
 			// BAD END ALERT!
 			//-----------------------
-			/*if (rand(5) == 0 && player.pigScore() >= 5 && player.findPerk(PerkLib.TransformationResistance) < 0) {
+			/*if (rand(5) == 0 && player.pigScore() >= 5 && !player.hasPerk(PerkLib.TransformationResistance)) {
 				if (flags[kFLAGS.PIG_BAD_END_WARNING] == 0) {
 					outputText("\n\nYou find yourself idly daydreaming of flailing about in the mud, letting go of all of your troubles. Eventually, you shake off the thought. Why would you do something like that? Maybe you should cut back on all the truffles?");
 					dynStats("inte", -3);
@@ -10299,9 +10295,9 @@ public final class Mutations extends MutationsHelper
 			if (rand(2) == 0) changeLimit++;
 			if (rand(3) == 0) changeLimit++;
 			if (rand(4) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			//clear screen
 			clearOutput();
 			outputText("The ink taste salty and slimy, you really think you could use a full glass of fresh water to wash your aching throat.");
@@ -10635,7 +10631,7 @@ public final class Mutations extends MutationsHelper
 				changes++;
 			}
 			//Ink spray attack
-			if ((type == 0 && player.gender == 2 || type == 2 && player.gender == 1) && player.lowerBody == LowerBody.SCYLLA && player.findPerk(PerkLib.InkSpray) < 0) {
+			if ((type == 0 && player.gender == 2 || type == 2 && player.gender == 1) && player.lowerBody == LowerBody.SCYLLA && !player.hasPerk(PerkLib.InkSpray)) {
 				if (type == 0) {
 					outputText("\n\nYour pussy suddenly start gushing around and you squirt so much your tentacle are drenched. Blushing red in embarrassment you examine the damage lifting a tentacle and suddenly a jet black shot of girl juice shoot out of your pussy like a spray dying a nearby tree black.");
 					outputText(" You smell the liquid and discover your girl juice turned into actual ink! Thinking about octopus behing able to spray ink you point your pussy at a random tree and take aim. As your relax the newly discovery organ a gush of ink splatter the tree.");
@@ -10709,9 +10705,9 @@ public final class Mutations extends MutationsHelper
 			if (rand(2) == 0) changeLimit++;
 			if (rand(3) == 0) changeLimit++;
 			if (rand(4) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			//clear screen
 			clearOutput();
 			outputText("The ink taste salty and slimy, you really think you could use a full glass of fresh water to wash your aching throat.");
@@ -10732,9 +10728,9 @@ public final class Mutations extends MutationsHelper
 			//Randomly choose affects limit
 			if (rand(2) == 0) changeLimit++;
 			if (rand(3) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			//clear screen
 			clearOutput();
 			outputText("The cum tastes pretty much like you expected it would, salty. Strangely, you feel warmer by the minute, perhaps it's your body adapting to the very hot feeling the cum left in your stomach.");
@@ -10910,9 +10906,9 @@ public final class Mutations extends MutationsHelper
 			if (rand(2) == 0) changeLimit++;
 			if (rand(3) == 0) changeLimit++;
 			if (rand(3) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			//clear screen
 			clearOutput();
 			outputText("You eat the weird kelp seed and feel suddenly like singing. Seems your talent for music are skyrocketing as you embrace the changes within you.");
@@ -10935,9 +10931,9 @@ public final class Mutations extends MutationsHelper
 			//Randomly choose affects limit
 			if (rand(2) == 0) changeLimit++;
 			if (rand(3) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			//clear screen
 			clearOutput();
 			outputText("You apply the sunscreen on your skin and suddenly feel some of your worries fly as you  laugh cheerfully at the thought of  a vacation day or two to rest and swim at the beach. Your body seems to react weirdly to the sunscreen.");
@@ -11040,9 +11036,9 @@ public final class Mutations extends MutationsHelper
 			if (rand(2) == 0) changeLimit++;
 			if (rand(3) == 0) changeLimit++;
 			if (rand(4) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			//clear screen
 			clearOutput();
 			outputText("You prepare the tea using grass you acquired and then drinks it. Its sharp taste fires up your palate and in moments, you find yourself more mentaly and physicaly sharp just like a blade.");
@@ -11190,7 +11186,7 @@ public final class Mutations extends MutationsHelper
 			}
 			
 			//oviposition (prawdopodobnie podobne do wersji dla bee niż dridera)
-			if (changes < changeLimit && player.findPerk(PerkLib.MantisOvipositor) < 0 && player.tailType == Tail.MANTIS_ABDOMEN && rand(2) == 0) {
+			if (changes < changeLimit && !player.hasPerk(PerkLib.MantisOvipositor) && player.tailType == Tail.MANTIS_ABDOMEN && rand(2) == 0) {
 				outputText("\n\nAn odd swelling starts in your insectile abdomen, somewhere along the underside.  Curling around, you reach back to your extended, bulbous mantis part and run your fingers along the underside.  You gasp when you feel a tender, yielding slit near the end.  As you probe this new orifice, a shock of pleasure runs through you, and a tubular, green, semi-hard appendage drops out, pulsating as heavily as any sexual organ.  <b>The new organ is clearly an ovipositor!</b>  A few gentle prods confirm that it's just as sensitive; you can already feel your internals changing, adjusting to begin the production of unfertilized eggs.  You idly wonder what laying them with your new mantis ovipositor will feel like...");
 				outputText("\n\n(<b>Perk Gained:  Mantis Ovipositor - Allows you to lay eggs in your foes!</b>)");
 				player.createPerk(PerkLib.MantisOvipositor, 0, 0, 0, 0);
@@ -11271,9 +11267,9 @@ public final class Mutations extends MutationsHelper
 			if (rand(2) == 0) changeLimit++;
 			if (rand(3) == 0) changeLimit++;
 			if (rand(4) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			//clear screen
 			clearOutput();
 			outputText("You raise the disgusting black concoction to your mouth. The taste is better than its texture but leaves you with a strong aftertaste of sulfur.");
@@ -11582,9 +11578,9 @@ public final class Mutations extends MutationsHelper
 			if (rand(2) == 0) changeLimit++;
 			if (rand(2) == 0) changeLimit++;
 			if (rand(4) == 0) changeLimit++;
-			if (player.findPerk(PerkLib.HistoryAlchemist) >= 0 || player.findPerk(PerkLib.PastLifeAlchemist) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.EzekielBlessing) >= 0) changeLimit++;
-			if (player.findPerk(PerkLib.TransformationResistance) >= 0) changeLimit--;
+			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
+			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
+			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			clearOutput();
 			outputText("Having bought that odd-looking root on the bakery, you give it a try, only to face the mildly spicy taste of the transformative. Still, it has a rich flavour and texture, but soon that becomes secondary, as you realize that the foreign rhizome is changing your body!");
 			

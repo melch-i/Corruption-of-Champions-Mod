@@ -10,7 +10,6 @@ import classes.BodyParts.RearBody;
 import classes.BodyParts.Tail;
 import classes.BodyParts.Tongue;
 import classes.GlobalFlags.kACHIEVEMENTS;
-import classes.GlobalFlags.kCOUNTERS;
 import classes.GlobalFlags.kFLAGS;
 import classes.Items.*;
 	import classes.Scenes.Areas.Desert.SandWitchScene;
@@ -18,8 +17,6 @@ import classes.Items.*;
 import classes.Scenes.NPCs.JojoScene;
 import classes.Scenes.NPCs.XXCNPC;
 import classes.Scenes.SceneLib;
-import classes.internals.CountersStorage;
-import classes.internals.RootCounters;
 import classes.lists.BreastCup;
 
 import flash.events.Event;
@@ -79,6 +76,7 @@ public var versionProperties:Object = { "legacy" : 100, "0.8.3f7" : 124, "0.8.3f
 public var savedGameDir:String = "data/com.fenoxo.coc";
 
 public var notes:String = "";
+	public static const sharedDir:String = "CoC/EndlessJourney/";
 
 public function loadSaveDisplay(saveFile:Object, slotName:String):String
 {
@@ -244,7 +242,7 @@ public function getGameObjectFromFile(aFile:File):Object
 
 }
 
-public function loadScreen():void
+public function loadScreen(dir:String = sharedDir):void
 {
 	var slots:Array = new Array(saveFileNames.length);
 
@@ -253,7 +251,7 @@ public function loadScreen():void
 	
 	for (var i:int = 0; i < saveFileNames.length; i += 1)
 	{
-		var test:Object = SharedObject.getLocal(saveFileNames[i], "/");
+		var test:Object = SharedObject.getLocal(dir+saveFileNames[i], "/");
 		outputText(loadSaveDisplay(test, String(i + 1)));
 		if (test.data.exists/* && test.data.flags[2066] == undefined*/)
 		{
@@ -263,7 +261,7 @@ public function loadScreen():void
 				slots[i] = function() : void 		// Anonymous functions FTW
 				{
 					trace("Loading save with name", saveFileNames[i], "at index", i);
-					if (loadGame(saveFileNames[i])) 
+					if (loadGame(dir+saveFileNames[i]))
 					{
 						doNext(playerMenu);
 						showStats();
@@ -288,7 +286,7 @@ public function loadScreen():void
 	addButton(14, "Back", returnToSaveMenu);
 }
 
-public function saveScreen():void
+public function saveScreen(dir:String = sharedDir):void
 {
 	mainView.nameBox.x = 210;
 	mainView.nameBox.y = 620;
@@ -317,7 +315,7 @@ public function saveScreen():void
 	
 	for (var i:int = 0; i < saveFileNames.length; i += 1)
 	{
-		var test:Object = SharedObject.getLocal(saveFileNames[i], "/");
+		var test:Object = SharedObject.getLocal(dir + saveFileNames[i], "/");
 		outputText(loadSaveDisplay(test, String(i + 1)));
 		trace("Creating function with indice = ", i);
 		(function(i:int) : void		// messy hack to work around closures. See: http://en.wikipedia.org/wiki/Immediately-invoked_function_expression
@@ -325,7 +323,7 @@ public function saveScreen():void
 			saveFuncs[i] = function() : void 		// Anonymous functions FTW
 			{
 				trace("Saving game with name", saveFileNames[i], "at index", i);
-				saveGame(saveFileNames[i], true);
+				saveGame(dir+saveFileNames[i], true);
 			}
 		})(i);
 		
@@ -376,6 +374,7 @@ public function saveLoad(e:MouseEvent = null):void
 	//addButton(5, "Save to File", saveToFile);
 	addButton(6, "Load File", openSave);
 	//addButton(8, "AutoSave: " + autoSaveSuffix, autosaveToggle);
+	addButton(10, "Import",loadScreen,"").hint("Load a save from another mod. \n\n<b>This may cause issues</b>");
 	addButton(14, "Back", EventParser.gameOver, true);
 
 	if (mainView.getButtonText( 0 ) == "Game Over")
@@ -392,17 +391,15 @@ public function saveLoad(e:MouseEvent = null):void
 		addButton(14, "Back", playerMenu);
 		return;
 	}
+	addButton(0, "Save", saveScreen);
+	addButton(5, "Save to File", saveToFile);
+	addButton(3, "AutoSave: " + autoSaveSuffix, autosaveToggle);
+	addButton(11, "Export",saveScreen,"").hint("Export your save so it can be used by other mods");
 	if (gameStateGet() == 3) {
-		addButton(0, "Save", saveScreen);
-		addButton(5, "Save to File", saveToFile);
-		addButton(3, "AutoSave: " + autoSaveSuffix, autosaveToggle);
 		addButton(14, "Back", CoC.instance.mainMenu.mainMenu);
 	}
 	else
 	{
-		addButton(0, "Save", saveScreen);
-		addButton(5, "Save to File", saveToFile);
-		addButton(3, "AutoSave: " + autoSaveSuffix, autosaveToggle);
 		addButton(14, "Back", playerMenu);
 	}
 	if (flags[kFLAGS.HARDCORE_MODE] >= 1) {
@@ -607,7 +604,7 @@ public function savePermObject(isFile:Boolean):void {
 	}
 	else
 	{
-		saveFile = SharedObject.getLocal("CoC_Main", "/");
+		saveFile = SharedObject.getLocal(sharedDir+"CoC_Main", "/");
 	}
 	
 	saveFile.data.exists = true;
@@ -668,7 +665,7 @@ public function savePermObject(isFile:Boolean):void {
 }
 
 public function loadPermObject():void {
-	var saveFile:* = SharedObject.getLocal("CoC_Main", "/");
+	var saveFile:* = SharedObject.getLocal(sharedDir+"CoC_Main", "/");
 	trace("Loading achievements!");
 	//Initialize the save file
 	//var saveFile:Object = loader.data.readObject();
@@ -794,17 +791,6 @@ public function saveGameObject(slot:String, isFile:Boolean):void
 			{
 				saveFile.data.flags[i] = flags[i];
 			}
-		}
-		saveFile.data.counters = [];
-		var cstorage:CountersStorage = counters._storage;
-		for(i=0; i<cstorage.length; i++) {
-			const ele:* = cstorage[i];
-			const a:Array = [];
-			a.length=ele.length;
-			for (var j:int=0; j<ele.length; j++){
-				a[j]=ele[j];
-			}
-			saveFile.data.counters[i] = a;
 		}
 
 		//CLOTHING/ARMOR
@@ -1176,6 +1162,8 @@ public function saveGameObject(slot:String, isFile:Boolean):void
 		
 		// Keybinds
         saveFile.data.controls = CoC.instance.inputManager.SaveBindsToObj();
+		saveFile.data.settings = [];
+		saveFile.data.settings.showHotkeys = CoC.instance.inputManager.showHotkeys;
         // TODO @Oxdeception recheck
 		saveFile.data.world = [];
 		saveFile.data.world.x = [];
@@ -1478,9 +1466,6 @@ public function loadGameObject(saveData:Object, slot:String = "VOID"):void
 		//KILL ALL COCKS;
 		player = new Player();
 		game.flags = new DefaultDict();
-		var countersStorage:CountersStorage = kCOUNTERS.create();
-		kCOUNTERS.initialize(countersStorage);
-		game.counters = new RootCounters(countersStorage);
 		model.player = player;
 		
 		//trace("Type of saveFile.data = ", getClass(saveFile.data));
@@ -1497,12 +1482,6 @@ public function loadGameObject(saveData:Object, slot:String = "VOID"):void
 		{
 			if (saveFile.data.flags[i] != undefined)
 				flags[i] = saveFile.data.flags[i];
-		}
-		//counters
-		if (saveFile.data.counters != undefined) {
-			for (i = 0; i < saveFile.data.counters.length; i++) {
-				if (saveFile.data.counters[i] != undefined) counters._storage[i] = saveFile.data.counters[i];
-			}
 		}
 		if (saveFile.data.versionID != undefined) {
 			game.versionID = saveFile.data.versionID;
@@ -2350,6 +2329,8 @@ public function loadGameObject(saveData:Object, slot:String = "VOID"):void
 		
 		// TODO @Oxdeception recheck
 		XXCNPC.unloadSavedNPCs();
+		if(saveFile.data.settings == undefined){saveFile.data.settings = [];}
+		if ('showHotkeys' in saveFile.data.settings) game.inputManager.showHotkeys = saveFile.data.settings.showHotkeys;
 		if(saveFile.data.world == undefined){saveFile.data.world = [];}
 		if(saveFile.data.world.x == undefined){saveFile.data.world.x = [];}
 		for each(var savedNPC:* in saveFile.data.world.x){
@@ -2368,7 +2349,7 @@ public function unFuckSave():void
 	//Fixing shit!
 
 	// Fix duplicate elven bounty perks
-	if (player.findPerk(PerkLib.ElvenBounty) >= 0) {
+	if (player.hasPerk(PerkLib.ElvenBounty)) {
 		//CLear duplicates
 		while(player.perkDuplicated(PerkLib.ElvenBounty)) player.removePerk(PerkLib.ElvenBounty);
 		//Fix fudged preggers value
@@ -2441,7 +2422,7 @@ public function unFuckSave():void
 		}
 		if (flags[kFLAGS.AMILY_OVIPOSITED_COUNTDOWN] > 0) {
 			if (flags[kFLAGS.AMILY_BUTT_PREGNANCY_TYPE] != 0) return; //Must be a new format save
-			if (player.findPerk(PerkLib.SpiderOvipositor) >= 0)
+			if (player.hasPerk(PerkLib.SpiderOvipositor))
 				flags[kFLAGS.AMILY_BUTT_PREGNANCY_TYPE] = PregnancyStore.PREGNANCY_DRIDER_EGGS;
 			else
 				flags[kFLAGS.AMILY_BUTT_PREGNANCY_TYPE] = PregnancyStore.PREGNANCY_BEE_EGGS;
@@ -2560,7 +2541,7 @@ public function unFuckSave():void
 		if (flags[kFLAGS.URTA_PREGNANCY_TYPE] == PregnancyStore.PREGNANCY_PLAYER) return; //Must be a new format save
 		if (flags[kFLAGS.URTA_PREGNANCY_TYPE] > 0) { //URTA_PREGNANCY_TYPE was previously URTA_EGG_INCUBATION, assume this was an egg pregnancy
 			flags[kFLAGS.URTA_INCUBATION] = flags[kFLAGS.URTA_PREGNANCY_TYPE];
-			if (player.findPerk(PerkLib.SpiderOvipositor) >= 0)
+			if (player.hasPerk(PerkLib.SpiderOvipositor))
 				flags[kFLAGS.URTA_PREGNANCY_TYPE] = PregnancyStore.PREGNANCY_DRIDER_EGGS;
 			else
 				flags[kFLAGS.URTA_PREGNANCY_TYPE] = PregnancyStore.PREGNANCY_BEE_EGGS;
@@ -2600,10 +2581,6 @@ public function unFuckSave():void
 		flags[kFLAGS.D3_MIRRORS_SHATTERED] = 1;
 	}
 	flags[kFLAGS.SHIFT_KEY_DOWN] = 0;
-	if (!kCOUNTERS.isInitialized(counters._storage)) {
-		kCOUNTERS.initialize(counters._storage);
-		// TODO init counters from flags
-	}
 }
 
     private function saveAllAwareClasses(game:CoC):void {

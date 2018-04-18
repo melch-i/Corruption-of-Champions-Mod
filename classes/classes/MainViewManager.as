@@ -14,6 +14,7 @@ import flash.display.DisplayObjectContainer;
 import flash.display.Stage;
 import flash.events.KeyboardEvent;
 import flash.events.TimerEvent;
+import flash.text.TextField;
 import flash.ui.Keyboard;
 import flash.utils.Timer;
 import flash.utils.getQualifiedClassName;
@@ -240,12 +241,12 @@ public class MainViewManager extends BaseContent {
 			}
 			s += salpha + svis + ssx + ssy;
 
-			/*var txt:IDisplayText = obj as IDisplayText;
+			var txt:TextField = obj as TextField;
 			 if (txt) {
 			 var ts:String = txt.text;
 			 if (ts.length > 20) ts = ts.substr(0, 17) + "...";
 			 s += ", txt='" + ts.replace(/[\r\n\t\0]/g, ' ') + "'";
-			 }*/
+			 }
 
 			var doc:DisplayObjectContainer = obj as DisplayObjectContainer;
 			if (doc /*&& !(obj is Label) && !(obj is ComboBox) && !(obj is TextArea) && !(obj is TextInput)*/) {

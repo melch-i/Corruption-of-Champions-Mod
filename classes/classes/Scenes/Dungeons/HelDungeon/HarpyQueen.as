@@ -33,7 +33,7 @@ public class HarpyQueen extends Monster
 			//Struggle Fail: 
 			if(rand(10) > 0 && player.str/5 + rand(20) < 23 || wait) {
 				outputText("You give a mighty try, but cannot pull free of the magic ropes!  The Harpy Queen laughs uproariously, pulling at your arms harder.");
-				if (player.findPerk(PerkLib.Juggernaut) < 0 && armorPerk != "Heavy") {var damage:int = 25 + rand(10);
+				if (!player.hasPerk(PerkLib.Juggernaut) && armorPerk != "Heavy") {var damage:int = 25 + rand(10);
 				damage = player.takeMagicDamage(damage, true);
 				}
 			}
@@ -62,8 +62,8 @@ public class HarpyQueen extends Monster
 		public function whitefire():void {
 			outputText("The queen narrows her eyes and focuses her mind with deadly intent. She snaps her fingers and you are enveloped in a flash of white flames!");
 			var damage:int = inte + rand(50) * SpellMod();
-			if (player.findPerk(PerkLib.FromTheFrozenWaste) >= 0 || player.findPerk(PerkLib.ColdAffinity) >= 0) damage *= 3;
-			if (player.findPerk(PerkLib.FireAffinity) >= 0) damage *= 0.3;
+			if (player.hasPerk(PerkLib.FromTheFrozenWaste) || player.hasPerk(PerkLib.ColdAffinity)) damage *= 3;
+			if (player.hasPerk(PerkLib.FireAffinity)) damage *= 0.3;
 			if (player.hasStatusEffect(StatusEffects.Blizzard)) {
 			player.addStatusValue(StatusEffects.Blizzard, 1, -1);
 			outputText("Luckly protective ice maelstorm still surrounding you lessening amount of damage.  ");
@@ -84,10 +84,10 @@ public class HarpyQueen extends Monster
 		
 		public function SpellMod():Number {
 			var mod:Number = 1;
-			if (findPerk(PerkLib.JobSorcerer) >= 0) mod += .1;
-			if (findPerk(PerkLib.Mage) >= 0) mod += .2;
-			if (findPerk(PerkLib.Spellpower) >= 0) mod += .2;
-			if (findPerk(PerkLib.WizardsFocus) >= 0) mod += .6;
+			if (hasPerk(PerkLib.JobSorcerer)) mod += .1;
+			if (hasPerk(PerkLib.Mage)) mod += .2;
+			if (hasPerk(PerkLib.Spellpower)) mod += .2;
+			if (hasPerk(PerkLib.WizardsFocus)) mod += .6;
 			return mod;
 		}
 		

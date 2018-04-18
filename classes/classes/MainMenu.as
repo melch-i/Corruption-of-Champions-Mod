@@ -67,11 +67,11 @@ package classes {
 				["Continue", resume, "Get back to gameplay?"],
 				["New Game", CoC.instance.charCreation.newGameFromScratch, "Start a new game."],
 				["Data", CoC.instance.saves.saveLoad, "Load or manage saved games."],
-				["Options",CoC.instance.gameSettings.settingsScreenMain, "Configure game settings and enable cheats."],
+				["Options",CoC.instance.gameSettings.enterSettings, "Configure game settings and enable cheats."],
 				["Achievements", achievements.achievementsScreen, "View all achievements you have earned so far."],
 				["Instructions", howToPlay, "How to play. Starting tips. And hotkeys for easy left-handed play..."],
 				["Credits", creditsScreen, "See a list of all the cool people who have contributed to content for this game!"],
-				["Mod Thread", null, "Check the official mod thread on Fenoxo's forum."]
+				["Discord", curry(openURL,"https://discord.gg/R25MZEx"), "Check the official mod hub Discord server."]
 			];
 			var mainMenuContent:Block = new Block( {
 				name: "MainMenu",

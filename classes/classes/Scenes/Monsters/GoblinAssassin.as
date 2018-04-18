@@ -5,13 +5,10 @@ import classes.BodyParts.Butt;
 import classes.BodyParts.Hips;
 import classes.GlobalFlags.*;
 import classes.Scenes.SceneLib;
-import classes.Scenes.Places.HeXinDao;
 import classes.internals.*;
 
 public class GoblinAssassin extends Monster
 	{
-		public var adventure:HeXinDao = new HeXinDao();
-		
 		protected function goblinDrugAttack():void {
 			var temp2:Number = rand(5);
 			var color:String = "";
@@ -34,7 +31,7 @@ public class GoblinAssassin extends Monster
 				else outputText("  There doesn't seem to be any effect.\n");
 			}
 			//Dodge chance!
-			if((player.findPerk(PerkLib.Evade) >= 0 && rand(10) <= 3) || (rand(100) < player.spe/5)) {
+			if((player.hasPerk(PerkLib.Evade) && rand(10) <= 3) || (rand(100) < player.spe/5)) {
 				outputText("\nYou narrowly avoid the gush of alchemic fluids!\n");
 			}
 			//Get hit!
@@ -99,14 +96,14 @@ public class GoblinAssassin extends Monster
 			outputText("\nYou shield yourself from the explosion, though the goblin has already lit a second needle which she throws behind you, launching your body forwards as it explodes behind your back. ");
 			//(High HP loss, no lust gain)
 			var damage:int = 25 + rand(75);
-			if (player.findPerk(PerkLib.FromTheFrozenWaste) >= 0 || player.findPerk(PerkLib.ColdAffinity) >= 0) damage *= 3;
-			if (player.findPerk(PerkLib.FireAffinity) >= 0) damage *= 0.3;
+			if (player.hasPerk(PerkLib.FromTheFrozenWaste) || player.hasPerk(PerkLib.ColdAffinity)) damage *= 3;
+			if (player.hasPerk(PerkLib.FireAffinity)) damage *= 0.3;
 			damage = Math.round(damage);
 			damage = player.takeMagicDamage(damage, true);
 		}
 		override public function defeated(hpVictory:Boolean):void
 		{
-			if (player.hasStatusEffect(StatusEffects.SoulArenaGaunlet)) adventure.gaunletchallange2fight2();
+			if (player.hasStatusEffect(StatusEffects.SoulArenaGaunlet)) SceneLib.telAdre.arena.gaunletchallange2fight2();
 			else SceneLib.goblinAssassinScene.gobboAssassinRapeIntro();
 		}
 		override public function won(hpVictory:Boolean, pcCameWorms:Boolean):void

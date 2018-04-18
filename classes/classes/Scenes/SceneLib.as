@@ -160,8 +160,6 @@ public class SceneLib {
 
     public static var sophieScene:SophieScene = new SophieScene();
 
-    public static var tedScene:TedScenes = new TedScenes();
-
     public static var urta:Urta = new Urta();
 
     public static var urtaHeatRut:UrtaHeatRut = new UrtaHeatRut();
@@ -189,8 +187,6 @@ public class SceneLib {
     public static var ingnam:Ingnam = new Ingnam();
 
     public static var prison:Prison = new Prison();
-
-    public static var hexindao:HeXinDao = new HeXinDao();
 
     public static var kitsuneScene:KitsuneScene = new KitsuneScene();
 	

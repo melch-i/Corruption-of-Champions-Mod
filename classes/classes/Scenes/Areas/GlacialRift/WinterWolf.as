@@ -85,7 +85,7 @@ public class WinterWolf extends Monster
 		protected function wolfHold():void {
 			outputText("The wolf suddenly grab you crushing you under its paw as it start tearing you apart with its maw.");
 			player.createStatusEffect(StatusEffects.WolfHold,0,0,0,0); 
-			if (player.findPerk(PerkLib.Juggernaut) < 0 && armorPerk != "Heavy") {
+			if (!player.hasPerk(PerkLib.Juggernaut) && armorPerk != "Heavy") {
 				player.takePhysDamage(8+rand(10));
 			}
 		}

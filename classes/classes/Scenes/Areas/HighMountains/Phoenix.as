@@ -44,8 +44,8 @@ public class Phoenix extends Monster
 				//MASSIVE DAMAGE!
 				else {
 					var damage:int = str + weaponAttack + 300 + rand(250);
-					if (player.findPerk(PerkLib.FromTheFrozenWaste) >= 0 || player.findPerk(PerkLib.ColdAffinity) >= 0) damage *= 3;
-					if (player.findPerk(PerkLib.FireAffinity) >= 0) damage *= 0.3;
+					if (player.hasPerk(PerkLib.FromTheFrozenWaste) || player.hasPerk(PerkLib.ColdAffinity)) damage *= 3;
+					if (player.hasPerk(PerkLib.FireAffinity)) damage *= 0.3;
 					if (player.hasStatusEffect(StatusEffects.Blizzard)) {
 						player.addStatusValue(StatusEffects.Blizzard, 1, -1);
 						outputText("As she zooms over you a great gout of flame erupts from the phoenix’s mouth! You dive out of the way, but all too late. The wall of fire rolls over covering you blizzard you as you leap through it, the brief contact with the inferno searing both you and your [armor] slightly due to still swirling around you ice shards. ");

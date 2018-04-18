@@ -38,7 +38,7 @@ public class PerkMenu extends BaseContent {
 			addButton(button++, "Perk Up", CoC.instance.playerInfo.perkBuyMenu);
 		}
 		addButton(4, "Database", perkDatabase);
-		if (player.hasPerk(PerkLib.DoubleAttack) || player.hasPerk(PerkLib.DoubleAttackLarge) || player.findPerk(PerkLib.Combo) >= 0 || (player.hasPerk(PerkLib.JobBeastWarrior) && (player.haveNaturalClaws() || player.haveNaturalClawsTypeWeapon()))) {
+		if (player.hasPerk(PerkLib.DoubleAttack) || player.hasPerk(PerkLib.DoubleAttackLarge) || player.hasPerk(PerkLib.Combo) || (player.hasPerk(PerkLib.JobBeastWarrior) && (player.haveNaturalClaws() || player.haveNaturalClawsTypeWeapon()))) {
 			outputText("\n<b>You can adjust your melee attack settings.</b>");
 			addButton(5, "Melee Opt",doubleAttackOptions);
 		}
@@ -79,7 +79,7 @@ public class PerkMenu extends BaseContent {
 		if (doubleAttackVal == 1) outputText(" using 95% of your current strength");
 		outputText(".");
 		outputText("\n\nYou can change it to different amount of attacks.");
-		if (player.findPerk(PerkLib.JobBeastWarrior) >= 0 && (player.haveNaturalClaws() || player.haveNaturalClawsTypeWeapon())) {
+		if (player.hasPerk(PerkLib.JobBeastWarrior) && (player.haveNaturalClaws() || player.haveNaturalClawsTypeWeapon())) {
 			outputText("\n\nYou can choose between fighting feral or normaly with your fists.");
 			if (flags[kFLAGS.FERAL_COMBAT_MODE] == 0) outputText("\n\nFighting Style: <b>Normal</b>");
 			if (flags[kFLAGS.FERAL_COMBAT_MODE] == 1) outputText("\n\nFighting Style: <b>Feral</b>");
@@ -109,7 +109,7 @@ public class PerkMenu extends BaseContent {
 			if (maxCurrentAttacks < 6) addButtonDisabled(11, "All Hexe", "You current melee weapon not allow to use this option");
 			else addButton(11, "All Hexa", doubleAttackStyle,5);
 		}
-		if (player.findPerk(PerkLib.JobBeastWarrior) >= 0) {
+		if (player.hasPerk(PerkLib.JobBeastWarrior)) {
 			if (flags[kFLAGS.FERAL_COMBAT_MODE] != 0) addButton(4, "Normal", toggleflag, kFLAGS.FERAL_COMBAT_MODE, false);
 			if (((player.weaponName == "fists" && player.haveNaturalClaws()) || player.haveNaturalClawsTypeWeapon()) && flags[kFLAGS.FERAL_COMBAT_MODE] != 1) addButton(9, "Feral", toggleflag ,kFLAGS.FERAL_COMBAT_MODE, true);
 		}
@@ -141,7 +141,7 @@ public class PerkMenu extends BaseContent {
 		if (doubleStrikeVal > 0) outputText("s");
 		outputText(" in combat.");
 		outputText("\n\nYou can change it to different amount of projectiles.");
-		if (player.findPerk(PerkLib.ElementalArrows) >= 0) {
+		if (player.hasPerk(PerkLib.ElementalArrows)) {
 			outputText("\n\nIf you learned specific techniques you could even add some magical effects to the projectiles. (Working only with bows and crosbows)");
 			outputText("\n\nElemental effect added: <b>");
 			switch(flags[kFLAGS.ELEMENTAL_ARROWS]){
@@ -153,12 +153,12 @@ public class PerkMenu extends BaseContent {
 			}
 			outputText("</b>");
 		}
-		if (player.findPerk(PerkLib.Cupid) >= 0) {
+		if (player.hasPerk(PerkLib.Cupid)) {
 			outputText("\n\nIf you learned specific black magical you could add it effects to the projectiles. (Working only with bows and crosbows)");
 			if (flags[kFLAGS.CUPID_ARROWS] == 0) outputText("\n\nBlack Magic effect added: <b>None</b>");
 			if (flags[kFLAGS.CUPID_ARROWS] == 1) outputText("\n\nBlack Magic effect added: <b>Arouse</b>");
 		}
-		if (player.findPerk(PerkLib.EnvenomedBolt) >= 0) {
+		if (player.hasPerk(PerkLib.EnvenomedBolt)) {
 			outputText("\n\nIf you can naturaly produce venom then you could add it effects to the projectiles. (Working only with bows and crosbows)");
 			if (flags[kFLAGS.ENVENOMED_BOLTS] == 0) outputText("\n\nVenom effect added: <b>No</b>");
 			if (flags[kFLAGS.ENVENOMED_BOLTS] == 1) outputText("\n\nVenom effect added: <b>Yes</b>");
@@ -188,14 +188,14 @@ public class PerkMenu extends BaseContent {
 			if (maxCurrentRangeAttacks < 6) addButtonDisabled(7, "All Hexa", "You current range weapon not allow to use this option");
 			else addButton(7, "All Hexa", doubleStrikeStyle,5);
 		}
-		if (player.findPerk(PerkLib.ElementalArrows) >= 0 && flags[kFLAGS.ELEMENTAL_ARROWS] != 0) addButton(3, "None", elementalArrows,NONE);
-		if (player.findPerk(PerkLib.ElementalArrows) >= 0 && player.hasStatusEffect(StatusEffects.KnowsWhitefire) && flags[kFLAGS.ELEMENTAL_ARROWS] != 1) addButton(8, "Fire", elementalArrows,FIRE);
-		if (player.findPerk(PerkLib.ElementalArrows) >= 0 && player.hasStatusEffect(StatusEffects.KnowsIceSpike) && flags[kFLAGS.ELEMENTAL_ARROWS] != 2) addButton(9, "Ice", elementalArrows,ICE);
-		if (player.findPerk(PerkLib.Cupid) >= 0 && flags[kFLAGS.CUPID_ARROWS] != 0) addButton(10, "None", toggleflag,kFLAGS.CUPID_ARROWS,false);
-		if (player.findPerk(PerkLib.Cupid) >= 0 && player.hasStatusEffect(StatusEffects.KnowsArouse) && flags[kFLAGS.CUPID_ARROWS] != 1) addButton(11, "Arouse", toggleflag,kFLAGS.CUPID_ARROWS,true);
-		if (player.findPerk(PerkLib.EnvenomedBolt) >= 0 && flags[kFLAGS.ENVENOMED_BOLTS] != 0) addButton(12, "None", toggleflag,kFLAGS.ENVENOMED_BOLTS,false);
+		if (player.hasPerk(PerkLib.ElementalArrows) && flags[kFLAGS.ELEMENTAL_ARROWS] != 0) addButton(3, "None", elementalArrows,NONE);
+		if (player.hasPerk(PerkLib.ElementalArrows) && player.hasStatusEffect(StatusEffects.KnowsWhitefire) && flags[kFLAGS.ELEMENTAL_ARROWS] != 1) addButton(8, "Fire", elementalArrows,FIRE);
+		if (player.hasPerk(PerkLib.ElementalArrows) && player.hasStatusEffect(StatusEffects.KnowsIceSpike) && flags[kFLAGS.ELEMENTAL_ARROWS] != 2) addButton(9, "Ice", elementalArrows,ICE);
+		if (player.hasPerk(PerkLib.Cupid) && flags[kFLAGS.CUPID_ARROWS] != 0) addButton(10, "None", toggleflag,kFLAGS.CUPID_ARROWS,false);
+		if (player.hasPerk(PerkLib.Cupid) && player.hasStatusEffect(StatusEffects.KnowsArouse) && flags[kFLAGS.CUPID_ARROWS] != 1) addButton(11, "Arouse", toggleflag,kFLAGS.CUPID_ARROWS,true);
+		if (player.hasPerk(PerkLib.EnvenomedBolt) && flags[kFLAGS.ENVENOMED_BOLTS] != 0) addButton(12, "None", toggleflag,kFLAGS.ENVENOMED_BOLTS,false);
 		if (
-				player.findPerk(PerkLib.EnvenomedBolt) >= 0
+				player.hasPerk(PerkLib.EnvenomedBolt)
 				&& (player.tailType == Tail.BEE_ABDOMEN
 						|| player.tailType == Tail.SCORPION
 						|| player.tailType == Tail.MANTICORE_PUSSYTAIL
@@ -216,40 +216,40 @@ public class PerkMenu extends BaseContent {
 		menu();
 		var toggleflag:Function = curry(toggleFlag,spellautocastOptions);
 		outputText("You can choose to autocast or not specific buff spells at the start of each combat.\n");
-		if (player.findPerk(PerkLib.Spellsword) >= 0) {
+		if (player.hasPerk(PerkLib.Spellsword)) {
 			outputText("\n<b>Charge Weapon:</b> ");
 			if (flags[kFLAGS.AUTO_CAST_CHARGE_WEAPON] == 1) outputText("Manual");
 			else outputText("Autocast");
 		}
-		if (player.findPerk(PerkLib.Spellarmor) >= 0) {
+		if (player.hasPerk(PerkLib.Spellarmor)) {
 			outputText("\n<b>Charge Armor:</b> ");
 			if (flags[kFLAGS.AUTO_CAST_CHARGE_ARMOR] == 1) outputText("Manual");
 			else outputText("Autocast");
 		}
-		if (player.findPerk(PerkLib.Battlemage) >= 0) {
+		if (player.hasPerk(PerkLib.Battlemage)) {
 			outputText("\n<b>Might:</b> ");
 			if (flags[kFLAGS.AUTO_CAST_MIGHT] == 1) outputText("Manual");
 			else outputText("Autocast");
 		}
-		if (player.findPerk(PerkLib.Battleflash) >= 0) {
+		if (player.hasPerk(PerkLib.Battleflash)) {
 			outputText("\n<b>Blink:</b> ");
 			if (flags[kFLAGS.AUTO_CAST_BLINK] == 1) outputText("Manual");
 			else outputText("Autocast");
 		}
-		if (player.findPerk(PerkLib.FortressOfIntellect) >= 0) {
+		if (player.hasPerk(PerkLib.FortressOfIntellect)) {
 			outputText("\n<b>Fortress of Intellect:</b> ");
 			if (player.hasStatusEffect(StatusEffects.FortressOfIntellect)) outputText("On");
 			else outputText("Off");
 		}
 		if (flags[kFLAGS.AUTO_CAST_CHARGE_WEAPON] != 0) addButton(0, "Autocast", toggleflag,kFLAGS.AUTO_CAST_CHARGE_WEAPON,false);
-		if (player.findPerk(PerkLib.Spellsword) >= 0 && flags[kFLAGS.AUTO_CAST_CHARGE_WEAPON] != 1) addButton(5, "Manual", toggleflag,kFLAGS.AUTO_CAST_CHARGE_WEAPON,true);
+		if (player.hasPerk(PerkLib.Spellsword) && flags[kFLAGS.AUTO_CAST_CHARGE_WEAPON] != 1) addButton(5, "Manual", toggleflag,kFLAGS.AUTO_CAST_CHARGE_WEAPON,true);
 		if (flags[kFLAGS.AUTO_CAST_CHARGE_ARMOR] != 0) addButton(1, "Autocast", toggleflag,kFLAGS.AUTO_CAST_CHARGE_ARMOR,false);
-		if (player.findPerk(PerkLib.Spellarmor) >= 0 && flags[kFLAGS.AUTO_CAST_CHARGE_ARMOR] != 1) addButton(6, "Manual", toggleflag,kFLAGS.AUTO_CAST_CHARGE_ARMOR,true);
+		if (player.hasPerk(PerkLib.Spellarmor) && flags[kFLAGS.AUTO_CAST_CHARGE_ARMOR] != 1) addButton(6, "Manual", toggleflag,kFLAGS.AUTO_CAST_CHARGE_ARMOR,true);
 		if (flags[kFLAGS.AUTO_CAST_MIGHT] != 0) addButton(2, "Autocast", toggleflag,kFLAGS.AUTO_CAST_MIGHT,false);
-		if (player.findPerk(PerkLib.Battlemage) >= 0 && flags[kFLAGS.AUTO_CAST_MIGHT] != 1) addButton(7, "Manual", toggleflag,kFLAGS.AUTO_CAST_MIGHT,true);
+		if (player.hasPerk(PerkLib.Battlemage) && flags[kFLAGS.AUTO_CAST_MIGHT] != 1) addButton(7, "Manual", toggleflag,kFLAGS.AUTO_CAST_MIGHT,true);
 		if (flags[kFLAGS.AUTO_CAST_BLINK] != 0) addButton(3, "Autocast", toggleflag,kFLAGS.AUTO_CAST_BLINK,false);
-		if (player.findPerk(PerkLib.Battleflash) >= 0 && flags[kFLAGS.AUTO_CAST_BLINK] != 1) addButton(8, "Manual", toggleflag,kFLAGS.AUTO_CAST_BLINK,false);
-		if (player.findPerk(PerkLib.FortressOfIntellect) >= 0 && !player.hasStatusEffect(StatusEffects.FortressOfIntellect)) addButton(12, "FoI On", toggleFortressOfIntelect,true);
+		if (player.hasPerk(PerkLib.Battleflash) && flags[kFLAGS.AUTO_CAST_BLINK] != 1) addButton(8, "Manual", toggleflag,kFLAGS.AUTO_CAST_BLINK,false);
+		if (player.hasPerk(PerkLib.FortressOfIntellect) && !player.hasStatusEffect(StatusEffects.FortressOfIntellect)) addButton(12, "FoI On", toggleFortressOfIntelect,true);
 		if (player.hasStatusEffect(StatusEffects.FortressOfIntellect)) addButton(13, "FoI Off", toggleFortressOfIntelect,false);
 
 		var e:MouseEvent;

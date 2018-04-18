@@ -71,7 +71,7 @@ public class Valkyrie extends Monster
 			else
 			{
 				outputText("but you leave yourself vulnerable as she spins around and slams her heavy shield into you, knocking you ");
-				if (player.findPerk(PerkLib.Resolute) < 0 && rand(2) == 0) 
+				if (!player.hasPerk(PerkLib.Resolute) && rand(2) == 0)
 				{
 					outputText("off balance. ");
 					player.createStatusEffect(StatusEffects.Stunned, 0, 0, 0, 0);
