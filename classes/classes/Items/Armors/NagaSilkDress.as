@@ -100,7 +100,7 @@ public class NagaSilkDress extends Armor implements TimeAwareInterface {
 		clearOutput();
 		outputText("\n\n" + dreams[rand(dreams.length)] + "\n\n");
 		outputText("Lucky Day!   You find a vial of snake oil in your dress and quicky quaff it down.\n\n");
-		SceneLib.mutationsTable.snakeOil(player);
+		SceneLib.mutationsTable.snakeOil(player,false);
 		
 	}
 }}

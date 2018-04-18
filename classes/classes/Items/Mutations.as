@@ -3738,10 +3738,10 @@ public final class Mutations extends MutationsHelper
 		 "A vial the size of your fist made of dark brown glass. It contains what appears to be an oily, yellowish liquid. The odor is abominable."
 		 */
 
-		public function snakeOil(player:Player):void
+		public function snakeOil(player:Player,doClearOutput:Boolean = true):void
 		{
 			player.slimeFeed();
-			clearOutput();
+			if(doClearOutput)clearOutput();
 			var changes:Number = 0;
 			var changeLimit:Number = 1;
 			if (rand(2) == 0) changeLimit++;

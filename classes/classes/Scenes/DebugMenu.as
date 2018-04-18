@@ -503,6 +503,8 @@ public class DebugMenu extends BaseContent
 			armourArray.push(armors.TUBETOP);
 			//Page 4
 			armourArray.push(armors.W_ROBES);
+			armourArray.push(armors.NAGASLK);
+			armourArray.push(armors.FRSGOWN);
 			
 			//------------
 			// Undergarments
