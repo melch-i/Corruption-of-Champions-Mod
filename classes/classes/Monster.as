@@ -3,6 +3,7 @@
 import classes.BodyParts.Antennae;
 import classes.BodyParts.Face;
 import classes.BodyParts.Horns;
+import classes.BodyParts.Skin;
 import classes.BodyParts.Tail;
 import classes.BodyParts.Wings;
 import classes.GlobalFlags.kFLAGS;
@@ -27,6 +28,7 @@ import classes.internals.ChainedDrop;
 import classes.internals.RandomDrop;
 import classes.internals.Utils;
 import classes.internals.WeightedDrop;
+import classes.lists.Gender;
 
 import flash.utils.getQualifiedClassName;
 
@@ -919,7 +921,7 @@ import flash.utils.getQualifiedClassName;
 			//// 6. Skin
 			///*OPTIONAL*/ //this.skinTone = "skinTone"; // default "albino"
 			///*OPTIONAL*/ //this.skinType = SKIN_TYPE_; // default PLAIN
-			///*OPTIONAL*/ //this.skinDesc = "skinDesc"; // default "skin" if this.skinType is not set, else Appearance.DEFAULT_SKIN_DESCS[skinType]
+			///*OPTIONAL*/ //this.skinDesc = "skinDesc"; // default "skin" if this.skinType is not set, else Skin.Types[skinType].name
 			///*OPTIONAL*/ //this.skinAdj = "skinAdj"; // default ""
 
 			//// 7. Hair
@@ -1673,7 +1675,7 @@ import flash.utils.getQualifiedClassName;
 			var Heis:String = Pronoun1+" "+be+" ";
 			var Hehas:String = Pronoun1 + " " + have + " ";
 			result = "You are inspecting "+a+short+" (imageName='"+imageName+"', class='"+getQualifiedClassName(this)+"'). You are fighting "+pronoun2+".\n\n";
-			result += Heis+(Appearance.DEFAULT_GENDER_NAMES[gender]||("gender#"+gender))+
+			result += Heis+Gender.Values[gender].name+
 					" with "+Appearance.numberOfThings(cocks.length,"cock") +
 					", "+Appearance.numberOfThings(vaginas.length,"vagina")+
 					" and "+Appearance.numberOfThings(breastRows.length,"breast row")+".\n\n";
@@ -1684,8 +1686,8 @@ import flash.utils.getQualifiedClassName;
 			result +=Pronoun3+" lower body is "+(Appearance.DEFAULT_LOWER_BODY_NAMES[lowerBody]||("lowerBody#"+lowerBody));
 			result += ", "+pronoun3+" arms are "+(Appearance.DEFAULT_ARM_NAMES[arms.type] || ("arms.type#" + arms.type));
 			result += ", "+pronoun1+" "+have+" "+skinTone+" "+skinAdj+" "+skinDesc+
-					  " (base "+(Appearance.DEFAULT_SKIN_NAMES[skin.baseType()]||("skinType#"+skin.baseType()))+")." +
-					  " (coat "+(Appearance.DEFAULT_SKIN_NAMES[skin.coatType()]||("skinType#"+skin.coatType()))+")." +
+					  " (base "+Skin.Types[skin.baseType()].name+")." +
+					  " (coat "+Skin.Types[skin.coatType()].name+")." +
 					  "\n";
 			result += Hehas;
 			if (hairLength>0){

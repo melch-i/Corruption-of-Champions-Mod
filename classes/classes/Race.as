@@ -3,8 +3,10 @@
  */
 package classes {
 import classes.BodyParts.*;
+import classes.BodyParts.Skin;
 import classes.internals.Utils;
 import classes.lists.BreastCup;
+import classes.lists.Gender;
 import classes.lists.Gender;
 
 /**
@@ -109,11 +111,11 @@ public class Race {
 	public static function ExplainMetricValue(metric:String, value:*):String {
 		switch (metric) {
 			case 'skin'           :
-				return Appearance.DEFAULT_SKIN_NAMES[value].toLowerCase();
+				return Skin.Types[value].name;
 			case 'skin.coverage'  :
 				return ["none", "low", "medium", "high", "complete"][value];
 			case 'skin.coat'      :
-				return Appearance.DEFAULT_SKIN_DESCS[value];
+				return Skin.Types[value].name;
 			case 'hair'           :
 				return Appearance.DEFAULT_HAIR_NAMES[value];
 			case 'face'           :
@@ -141,7 +143,7 @@ public class Race {
 			case 'rear'           :
 				return Appearance.DEFAULT_REAR_BODY_NAMES[value];
 			case 'gender'         :
-				return Appearance.DEFAULT_GENDER_NAMES[value];
+				return Gender.Values[value].name;
 			case 'skin.tone'      :
 			case 'skin.adj'       :
 			case 'skin.coat.color':

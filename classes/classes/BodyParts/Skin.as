@@ -1,5 +1,6 @@
 package classes.BodyParts {
 import classes.Creature;
+import classes.internals.EnumValue;
 
 /**
  * Container class for the players skin
@@ -25,28 +26,29 @@ public class Skin extends SaveableBodyPart {
 	public static const COVERAGE_HIGH:int     = 3;
 	public static const COVERAGE_COMPLETE:int = 4;
 	
-	public static const PLAIN:int                 = 0;
-	public static const FUR:int                   = 1;
-	public static const SCALES:int                = 2;
-	public static const GOO:int                   = 3;
-	public static const UNDEFINED:int             = 4;//[Deprecated] Silently discarded upon loading save
-	public static const CHITIN:int                = 5;
-	public static const BARK:int                  = 6;
-	public static const STONE:int                 = 7;
-	public static const TATTOED:int               = 8;
-	public static const AQUA_SCALES:int           = 9;
-	public static const PARTIAL_FUR:int           = 10;
-	public static const PARTIAL_SCALES:int        = 11;
-	public static const PARTIAL_CHITIN:int        = 12;
-	public static const PARTIAL_BARK:int          = 13;
-	public static const DRAGON_SCALES:int         = 14;
-	public static const MOSS:int                  = 15;
-	public static const PARTIAL_DRAGON_SCALES:int = 16;
-	public static const PARTIAL_STONE:int         = 17;
-	public static const PARTIAL_AQUA_SCALES:int   = 18;
-	public static const AQUA_RUBBER_LIKE:int      = 19;
-	public static const TATTOED_ONI:int           = 20;
-	public static const FEATHER:int 	          = 21;
+	public static const Types:/*EnumValue*/Array  = [];
+	public static const PLAIN:int                 = EnumValue.add(Types,0,"PLAIN",{name:"skin",adj:"",plural:false});
+	public static const FUR:int                   = EnumValue.add(Types,1,"FUR",{name:"fur",adj:"",plural:false});
+	public static const SCALES:int                = EnumValue.add(Types,2,"SCALES",{name:"scales",adj:"",plural:true});
+	public static const GOO:int                   = EnumValue.add(Types,3,"GOO",{name:"skin",adj:"goopey",plural:false});
+	public static const UNDEFINED:int             = EnumValue.add(Types,4,"UNDEFINED",{name:"",adj:"",plural:false});//[Deprecated] Silently discarded upon loading save
+	public static const CHITIN:int                = EnumValue.add(Types,5,"CHITIN",{name:"chitin",adj:"",plural:false});
+	public static const BARK:int                  = EnumValue.add(Types,6,"BARK",{name:"bark",adj:"",plural:false});
+	public static const STONE:int                 = EnumValue.add(Types,7,"STONE",{name:"stone",adj:"",plural:false});
+	public static const TATTOED:int               = EnumValue.add(Types,8,"TATTOED",{name:"tattooed skin",adj:"",plural:false});//[Deprecated] Use pattern
+	public static const AQUA_SCALES:int           = EnumValue.add(Types,9,"AQUA_SCALES",{name:"scales",adj:"",plural:true});
+	public static const PARTIAL_FUR:int           = EnumValue.add(Types,10,"PARTIAL_FUR",{name:"partial fur",adj:"",plural:false});//[Deprecated] Use coverage
+	public static const PARTIAL_SCALES:int        = EnumValue.add(Types,11,"PARTIAL_SCALES",{name:"",adj:"",plural:true});//[Deprecated] Use coverage
+	public static const PARTIAL_CHITIN:int        = EnumValue.add(Types,12,"PARTIAL_CHITIN",{name:"",adj:"",plural:false});//[Deprecated] Use coverage
+	public static const PARTIAL_BARK:int          = EnumValue.add(Types,13,"PARTIAL_BARK",{name:"",adj:"",plural:false});//[Deprecated] Use coverage
+	public static const DRAGON_SCALES:int         = EnumValue.add(Types,14,"DRAGON_SCALES",{name:"dragon scales",adj:"",plural:true});
+	public static const MOSS:int                  = EnumValue.add(Types,15,"MOSS",{name:"moss",adj:"",plural:false});
+	public static const PARTIAL_DRAGON_SCALES:int = EnumValue.add(Types,16,"PARTIAL_DRAGON_SCALES",{name:"",adj:"",plural:true});//[Deprecated] Use coverage
+	public static const PARTIAL_STONE:int         = EnumValue.add(Types,17,"PARTIAL_STONE",{name:"",adj:"",plural:false});//[Deprecated] Use coverage
+	public static const PARTIAL_AQUA_SCALES:int   = EnumValue.add(Types,18,"PARTIAL_AQUA_SCALES",{name:"",adj:"",plural:true});//[Deprecated] Use coverage
+	public static const AQUA_RUBBER_LIKE:int      = EnumValue.add(Types,19,"AQUA_RUBBER_LIKE",{name:"slippery rubber-like skin",adj:"",plural:false});
+	public static const TATTOED_ONI:int           = EnumValue.add(Types,20,"TATTOED_ONI",{name:"tattooed skin",adj:"",plural:false});//[Deprecated] Use pattern
+	public static const FEATHER:int 	          = EnumValue.add(Types,21,"FEATHER",{name:"feathers",adj:"",plural:true});
 	
 	public static const PATTERN_NONE:int = 0;
 	public static const PATTERN_MAGICAL_TATTOO:int = 1;

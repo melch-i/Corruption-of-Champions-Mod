@@ -2363,39 +2363,6 @@ public class Appearance extends Utils
 			return defaultValue;
 		}
 
-
-
-		public static const DEFAULT_GENDER_NAMES:Object = createMapFromPairs(
-				[
-					[Gender.GENDER_NONE, "genderless"],
-					[Gender.GENDER_MALE, "male"],
-					[Gender.GENDER_FEMALE, "female"],
-					[Gender.GENDER_HERM, "hermaphrodite"]
-				]
-		);
-		private static const DEFAULT_SKIN_NAMES_DESCS_ADJS_PLURAL:Object = multipleMapsFromPairs([
-			[Skin.PLAIN, "PLAIN", "skin", "", false],
-			[Skin.FUR, "FUR", "fur", "", false],
-			[Skin.SCALES, "SCALES", "scales", "", true],
-			[Skin.GOO, "GOO", "skin", "goopey", false],
-			[Skin.CHITIN, "CHITIN", "chitin", "", false],
-			[Skin.BARK, "BARK", "bark", "", false],
-			[Skin.STONE, "STONE", "stone", "", false],
-			[Skin.TATTOED, "TATTOED", "tattooed skin", "", false],
-			[Skin.AQUA_SCALES, "AQUA_SCALES", "scales", "", true],
-			[Skin.DRAGON_SCALES, "dragon scales", "dragon scales", "", true],
-			[Skin.MOSS, "moss", "moss", "", false],
-			[Skin.AQUA_RUBBER_LIKE, "AQUA_RUBBER_LIKE", "slippery rubber-like skin", "", false],
-			[Skin.FEATHER, "FEATHER", "feather", "", false],
-			[Skin.TATTOED_ONI, "TATTOED_ONI", "tattooed skin", "", false],
-			[Skin.PARTIAL_DRAGON_SCALES, "partial dragon scales", "partial dragon scales", "", true],
-			[Skin.PARTIAL_STONE, "partial stone", "partial stone", "", false],
-			[Skin.PARTIAL_AQUA_SCALES, "partial fish scales", "partial fish scales", "", true],
-		]);
-		public static const DEFAULT_SKIN_NAMES:Object = DEFAULT_SKIN_NAMES_DESCS_ADJS_PLURAL[0];
-		public static const DEFAULT_SKIN_DESCS:Object = DEFAULT_SKIN_NAMES_DESCS_ADJS_PLURAL[1];
-		public static const DEFAULT_SKIN_ADJS:Object = DEFAULT_SKIN_NAMES_DESCS_ADJS_PLURAL[2];
-		public static const DEFAULT_SKIN_PLURAL:Object = DEFAULT_SKIN_NAMES_DESCS_ADJS_PLURAL[3];
 		public static const DEFAULT_HAIR_NAMES:Object = createMapFromPairs(
 				[
 					[Hair.NORMAL, "normal"],
