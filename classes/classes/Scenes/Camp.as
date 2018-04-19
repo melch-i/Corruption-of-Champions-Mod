@@ -53,7 +53,6 @@ use namespace CoC;
 		public var campUniqueScenes:UniqueCampScenes = new UniqueCampScenes();
 		public var codex:Codex = new Codex();
 		public var questlog:Questlog = new Questlog();
-		public var soulforce:Soulforce = new Soulforce();
 		public var dungeon1:Factory = new Factory();
 		public var dungeon2:DeepCave = new DeepCave();
 		public var dungeonS:DesertCave = new DesertCave();
@@ -848,8 +847,6 @@ CoC.instance.saves.saveGame(player.slotName);
 	if (slavesCount() > 0) addButton(7, "Slaves", campSlavesMenu).hint("Check up on any slaves you have received and interact with them.");
 	addButton(8, "Camp Actions", campActions).hint("Interact with the camp surroundings and also read your codex or questlog.");
 	if (flags[kFLAGS.CAMP_CABIN_PROGRESS] >= 10 || flags[kFLAGS.CAMP_BUILT_CABIN] >= 1) addButton(9, "Enter Cabin", cabinProgress.initiateCabin).hint("Enter your cabin."); //Enter cabin for furnish.
-	if (player.hasPerk(PerkLib.JobSoulCultivator) || debug) addButton(10, "Soulforce", soulforce.accessSoulforceMenu).hint("Spend some time on the cultivation or spend some of the soulforce.");
-	else if (!player.hasPerk(PerkLib.JobSoulCultivator) && player.hasPerk(PerkLib.Metamorph)) addButton(10, "Metamorf", SceneLib.metamorph.accessMetamorphMenu).hint("Use your soulforce to mold freely your body.");
 	var canFap:Boolean = !player.hasStatusEffect(StatusEffects.Dysfunction) && (flags[kFLAGS.UNABLE_TO_MASTURBATE_BECAUSE_CENTAUR] == 0 && !player.isTaur());
 	if (player.lust >= 30) {
 		addButton(11, "Masturbate", SceneLib.masturbation.masturbateMenu);
@@ -1965,10 +1962,7 @@ public function rest():void {
 		fatRecovery += 2;
 		hpRecovery += 5;
 	}
-	if (player.hasPerk(PerkLib.Medicine)) hpRecovery *= 1.5;
 	if (player.hasPerk(PerkLib.SpeedyRecovery)) fatRecovery += 2;
-	if (player.hasPerk(PerkLib.SpeedyRecuperation)) fatRecovery += 4;
-	if (player.hasPerk(PerkLib.SpeedyRejuvenation)) fatRecovery += 8;
 	if (player.hasPerk(PerkLib.ControlledBreath)) fatRecovery *= 1.1;
 	if (player.hasStatusEffect(StatusEffects.BathedInHotSpring)) fatRecovery *= 1.2;
 	if (flags[kFLAGS.AYANE_FOLLOWER] >= 2) fatRecovery *= 3;
@@ -2063,8 +2057,6 @@ public function doWait():void {
 	if (player.level >= 24) fatRecovery += 1;
 	if (player.level >= 42) fatRecovery += 1;
 	if (player.hasPerk(PerkLib.SpeedyRecovery)) fatRecovery += 1;
-	if (player.hasPerk(PerkLib.SpeedyRecuperation)) fatRecovery += 2;
-	if (player.hasPerk(PerkLib.SpeedyRejuvenation)) fatRecovery += 4;
 	if (player.hasPerk(PerkLib.ControlledBreath)) fatRecovery *= 1.1;
 	if (player.hasStatusEffect(StatusEffects.BathedInHotSpring)) fatRecovery *= 1.2;
 	if (timeQ == 0) {
@@ -2304,13 +2296,9 @@ public function sleepRecovery(display:Boolean = false):void {
 		multiplier += 0.5;
 	}
 	if (player.hasPerk(PerkLib.SpeedyRecovery)) fatRecovery += 5;
-	if (player.hasPerk(PerkLib.SpeedyRecuperation)) fatRecovery += 10;
-	if (player.hasPerk(PerkLib.SpeedyRejuvenation)) fatRecovery += 20;
 	if (player.hasPerk(PerkLib.ControlledBreath)) fatRecovery *= 1.1;
 	if (player.hasStatusEffect(StatusEffects.BathedInHotSpring)) fatRecovery *= 1.2;
 	if (flags[kFLAGS.AYANE_FOLLOWER] >= 2) fatRecovery *= 3;
-	if (player.hasPerk(PerkLib.RecuperationSleep)) multiplier += 1;
-	if (player.hasPerk(PerkLib.RejuvenationSleep)) multiplier += 2;
 	if (flags[kFLAGS.HUNGER_ENABLED] > 0)
 	{
 		if (player.hunger < 25)
@@ -2988,12 +2976,6 @@ public function setLevelButton(allowAutoLevelTransition:Boolean):Boolean {
 				wrath += 2;
 				soulforce += 6;
 			}
-			if (player.hasPerk(PerkLib.UnlockBody)) hp += 15;
-			if (player.hasPerk(PerkLib.UnlockMind)) mana += 10;
-			if (player.hasPerk(PerkLib.UnlockId)) lust += 1;
-			if (player.hasPerk(PerkLib.UnlockBody2ndStage)) fatigue += 5;
-			if (player.hasPerk(PerkLib.UnlockMind2ndStage)) soulforce += 5;
-			if (player.hasPerk(PerkLib.UnlockId2ndStage)) wrath += 1;
 			mainView.levelButton.toolTipText = "Level up to increase your maximum HP by " + hp + ", maximum Fatigue by " + fatigue + ", maximum Mana by " + mana + ", maximum Soulforce by " + soulforce + ", maximum Wrath by " + wrath + " and maximum Lust by " + lust + "; gain 5 attribute points and 1 perk points.";
 			if (flags[kFLAGS.AUTO_LEVEL] > 0 && allowAutoLevelTransition) {
                 CoC.instance.playerInfo.levelUpGo();
@@ -3207,10 +3189,6 @@ private function promptSaveUpdate():void {
 	}
 	if (saveVersion() == 10) {
 		saveVersion(11);
-		if (player.hasPerk(PerkLib.JobMonk)) {
-			player.removePerk(PerkLib.JobMonk);
-			player.createPerk(PerkLib.JobBrawler, 0, 0, 0, 0);
-		}
 		doNext(doCamp);
 		return;
 	}
@@ -3227,7 +3205,6 @@ private function promptSaveUpdate():void {
 	if (saveVersion() == 12) {
 		saveVersion(13);
 		outputText("And we do it again since game got more shiny then before so we would fast give additional polishing to your save. No worry it will be now +20% more shiny ;)");
-		if (!player.hasPerk(PerkLib.JobSoulCultivator)) player.perkPoints += 1;
 		var refund:int = 0;
 		if (player.perkv1(PerkLib.AscensionTolerance) > 10) {
 			refund += player.perkv1(PerkLib.AscensionTolerance) - 10;
@@ -3244,10 +3221,6 @@ private function promptSaveUpdate():void {
 	if (saveVersion() == 13) {
 		saveVersion(14);
 		outputText("Attention! All Munchkins Kindly leave thou gate sixty and nine. As replacements there will be whole legion of All-Rounders commin in five, four, ...........aaaand their here ^^");
-		if (player.hasPerk(PerkLib.DeityJobMunchkin)) {
-			player.removePerk(PerkLib.DeityJobMunchkin);
-			player.createPerk(PerkLib.JobAllRounder, 0, 0, 0, 0);
-		}
 		if (flags[kFLAGS.EVANGELINE_TALKS] < 0) flags[kFLAGS.EVANGELINE_TALKS] = 0;
 		doNext(doCamp);
 		return;
@@ -3266,30 +3239,6 @@ private function promptSaveUpdate():void {
 			statScreenRefresh();
 			player.setWeaponRange(weaponsrange.BOWKELT);
 		}
-		if (player.hasPerk(PerkLib.ImprovedEndurance)) {
-			player.removePerk(PerkLib.ImprovedEndurance);
-			player.createPerk(PerkLib.BasicEndurance, 0, 0, 0, 0);
-		}
-		if (player.hasPerk(PerkLib.AdvancedEndurance)) {
-			player.removePerk(PerkLib.AdvancedEndurance);
-			player.createPerk(PerkLib.HalfStepToImprovedEndurance, 0, 0, 0, 0);
-		}
-		if (player.hasPerk(PerkLib.SuperiorEndurance)) {
-			player.removePerk(PerkLib.SuperiorEndurance);
-			player.createPerk(PerkLib.ImprovedEndurance, 0, 0, 0, 0);
-		}
-		if (player.hasPerk(PerkLib.ImprovedSelfControl)) {
-			player.removePerk(PerkLib.ImprovedSelfControl);
-			player.createPerk(PerkLib.BasicSelfControl, 0, 0, 0, 0);
-		}
-		if (player.hasPerk(PerkLib.AdvancedSelfControl)) {
-			player.removePerk(PerkLib.AdvancedSelfControl);
-			player.createPerk(PerkLib.HalfStepToImprovedSelfControl, 0, 0, 0, 0);
-		}
-		if (player.hasPerk(PerkLib.SuperiorSelfControl)) {
-			player.removePerk(PerkLib.SuperiorSelfControl);
-			player.createPerk(PerkLib.ImprovedSelfControl, 0, 0, 0, 0);
-		}
 		doNext(doCamp);
 		return;
 	}
@@ -3298,10 +3247,6 @@ private function promptSaveUpdate():void {
 		outputText("Time for...save upgrade ^^");
 		if (player.hasPerk(PerkLib.EnlightenedNinetails)) player.createPerk(PerkLib.EnlightenedKitsune, 0, 0, 0, 0);
 		if (player.hasPerk(PerkLib.CorruptedNinetails)) player.createPerk(PerkLib.CorruptedKitsune, 0, 0, 0, 0);
-		if (player.hasPerk(PerkLib.Manyshot) && !player.hasPerk(PerkLib.TripleStrike)) {
-			player.removePerk(PerkLib.Manyshot);
-			player.createPerk(PerkLib.TripleStrike, 0, 0, 0, 0);
-		}
 		doNext(doCamp);
 		return;
 	}
@@ -3315,10 +3260,6 @@ private function promptSaveUpdate():void {
 		if (player.hasKeyItem("Divine Bark Plates") >= 0) {
 			player.removeKeyItem("Divine Bark Plates");
 			flags[kFLAGS.PURE_MARAE_ENDGAME] = 1;
-		}
-		if (player.hasPerk(PerkLib.JobSoulArcher)) {
-			player.removePerk(PerkLib.JobSoulArcher);
-			player.perkPoints = player.perkPoints + 1;
 		}
 		//Update chitin
 		if (player.hasCoatOfType(Skin.CHITIN)) {
@@ -3360,15 +3301,7 @@ private function promptSaveUpdate():void {
 	}
 	if (saveVersion() == 18) {
 		saveVersion(19);
-		outputText("Small reorganizing of the house interiors...err I mean mod interiors so not mind it if you not have Soul Cultivator PC. I heard you all likes colors, colors on EVERYTHING ever your belowed lil PC's eyes. So go ahead and pick them. Not much change from addition to appearance screen this small detail. But in future if scene will allow there will be addition of parser for using eyes color too.");
-		if (player.hasPerk(PerkLib.SoulExalt)) {
-			player.removePerk(PerkLib.SoulExalt);
-			player.createPerk(PerkLib.SoulScholar, 0, 0, 0, 0);
-		}
-		if (player.hasPerk(PerkLib.SoulOverlord)) {
-			player.removePerk(PerkLib.SoulOverlord);
-			player.createPerk(PerkLib.SoulElder, 0, 0, 0, 0);
-		}
+		outputText("I heard you all likes colors, colors on EVERYTHING ever your belowed lil PC's eyes. So go ahead and pick them. Not much change from addition to appearance screen this small detail. But in future if scene will allow there will be addition of parser for using eyes color too.");
 		if (flags[kFLAGS.KITSUNE_SHRINE_UNLOCKED] > 0 && flags[kFLAGS.AYANE_FOLLOWER] < 0) flags[kFLAGS.AYANE_FOLLOWER] = 0;
 		if (flags[kFLAGS.GOTTEN_INQUISITOR_ARMOR] > 0) flags[kFLAGS.GOTTEN_INQUISITOR_ARMOR] = 2;
 		eyesColorSelection();
@@ -3376,35 +3309,13 @@ private function promptSaveUpdate():void {
 	}
 	if (saveVersion() == 19) {
 		saveVersion(20);
-		if (player.hasPerk(PerkLib.JobBarbarian)) {
-			player.removePerk(PerkLib.JobBarbarian);
-			player.createPerk(PerkLib.JobSwordsman, 0, 0, 0, 0);
-		}
 		clearOutput();
 		outputText("Switching one perk...if needed.");
 		doNext(doCamp);
 		return;
 	}
-	if(saveVersion() == 20){
-		saveVersion(21);
-		//Remove and refund golem Perks
-		var golemPerks:Array = [
-			PerkLib.JobGolemancer,
-			PerkLib.GolemArmyCaptain, PerkLib.GolemArmyColonel, PerkLib.GolemArmyGeneral, PerkLib.GolemArmyLieutenant, PerkLib.GolemArmyMajor,
-			PerkLib.ApprenticeGolemMaker, PerkLib.BeginnerGolemMaker, PerkLib.EpicGolemMaker, PerkLib.ExpertGolemMaker,PerkLib.MasterGolemMaker,PerkLib.GrandMasterGolemMaker,PerkLib.LegendaryGolemMaker,PerkLib.MythicalGolemMaker,
-			PerkLib.BiggerGolemBag1,PerkLib.BiggerGolemBag2,PerkLib.BiggerGolemBag3,PerkLib.BiggerGolemBag4,PerkLib.BiggerGolemBag5,PerkLib.BiggerGolemBag6,
-			PerkLib.FirstAttackGolems,
-			PerkLib.ChargedCore, PerkLib.SuperChargedCore
-		];
-		for each (var perk:PerkType in golemPerks){
-			if(player.hasPerk(perk)){
-				player.removePerk(perk);
-				player.perkPoints++;
-			}
-		}
-		outputText("The golemancer job and perks have been removed. All perk points have been refunded for these\n\n");
-		doNext(doCamp);
-		return;
+	if(saveVersion() == 21){
+		saveVersion(20);
 	}
 	doCamp();
 }

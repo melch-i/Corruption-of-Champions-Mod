@@ -204,20 +204,5 @@ public function HaveAGirlBath():void {
 	doNext(camp.returnToCampUseOneHour);
 }
 
-public function HclassHTbeaten():void {
-	clearOutput();
-	outputText("\nPLACEHOLDER TEXT 2\n");
-	player.createPerk(PerkLib.HclassHeavenTribulationSurvivor, 0, 0, 0, 0);
-	player.XP = player.XP + 5000;
-	cleanupAfterCombat();
-}
-public function HclassHTsurvived():void {
-	clearOutput();
-	outputText("\nPLACEHOLDER TEXT 3\n");
-	player.createPerk(PerkLib.HclassHeavenTribulationSurvivor, 0, 0, 0, 0);
-	player.XP = player.XP + 2500;
-	cleanupAfterCombat();
-}
-
 }
 }

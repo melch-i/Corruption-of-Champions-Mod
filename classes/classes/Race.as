@@ -186,7 +186,7 @@ public class Race {
 		var score:int = 0;
 		score += calcSimpleScore(metrics);
 		score += calcComplexScore(ch, metrics);
-		if (finalizerScript) score = finalizerScript(ch, metrics, score);
+		if (finalizerScript != null) score = finalizerScript(ch, metrics, score);
 		Utils.End("Race","scoreFor");
 		return score;
 	}

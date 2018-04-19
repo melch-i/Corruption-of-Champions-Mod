@@ -270,22 +270,10 @@ public class Ember extends Monster
 			this.horns.count = 4;
 			this.tailType = Tail.DRACONIC;
 			this.drop = new ChainedDrop().add(useables.D_SCALE, 0.2);
-			if (flags[kFLAGS.EMBER_LVL_UP] >= 1) this.createPerk(PerkLib.InhumanDesireI, 0, 0, 0, 0);
 			if (flags[kFLAGS.EMBER_LVL_UP] >= 2) {
 				this.createPerk(PerkLib.EnemyBossType, 0, 0, 0, 0);
-				this.createPerk(PerkLib.BasicSelfControl, 0, 0, 0, 0);
-			}
-			if (flags[kFLAGS.EMBER_LVL_UP] >= 3) this.createPerk(PerkLib.DemonicDesireI, 0, 0, 0, 0);
-			if (flags[kFLAGS.EMBER_LVL_UP] >= 4) {
-				this.createPerk(PerkLib.RefinedBodyI, 0, 0, 0, 0);
-				this.createPerk(PerkLib.HalfStepToImprovedSelfControl, 0, 0, 0, 0);
 			}
 			if (flags[kFLAGS.EMBER_LVL_UP] >= 5) this.createPerk(PerkLib.TankI, 0, 0, 0, 0);
-			if (flags[kFLAGS.EMBER_LVL_UP] >= 6) {
-				this.createPerk(PerkLib.GoliathI, 0, 0, 0, 0);
-				this.createPerk(PerkLib.ImprovedSelfControl, 0, 0, 0, 0);
-			}
-			if (flags[kFLAGS.EMBER_LVL_UP] >= 7) this.createPerk(PerkLib.CheetahI, 0, 0, 0, 0);
 			checkMonster();
 		}
 		

@@ -20,11 +20,5 @@ package classes.Items.Weapons
 			if (game.player.str >= 80) boost += 8;
 			return (7 + boost); 
 		}
-		
-		override public function canUse():Boolean {
-			if (game.player.hasPerk(PerkLib.DualWieldLarge)) return true;
-			outputText("You aren't skilled enough to handle this pair of weapons!  ");
-			return false;
-		}
 	}
 }

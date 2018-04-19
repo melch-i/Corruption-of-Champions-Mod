@@ -319,29 +319,17 @@ use namespace CoC;
 					add(consumables.LG_SFRP,0.3).
 					add(consumables.SHEEPMK,0.6);
 			this.createPerk(PerkLib.JobRanger, 0, 0, 0, 0);
-			this.createPerk(PerkLib.BasicEndurance, 0, 0, 0, 0);
-			this.createPerk(PerkLib.ArchersStaminaI, 0, 0, 0, 0);
 			this.createPerk(PerkLib.EnemyBeastOrAnimalMorphType, 0, 0, 0, 0);
-			if (flags[kFLAGS.KINDRA_LVL_UP] >= 1) this.createPerk(PerkLib.BasicSelfControl, 0, 0, 0, 0);
 			if (flags[kFLAGS.KINDRA_LVL_UP] >= 2) {
 				this.createPerk(PerkLib.JobSorcerer, 0, 0, 0, 0);
-				this.createPerk(PerkLib.HalfStepToImprovedEndurance, 0, 0, 0, 0);
 			}
 			if (flags[kFLAGS.KINDRA_LVL_UP] >= 4) {
 				this.createPerk(PerkLib.JobHunter, 0, 0, 0, 0);
-				this.createPerk(PerkLib.ImprovedEndurance, 0, 0, 0, 0);
 				this.createPerk(PerkLib.VitalShot, 0, 0, 0, 0);
 			}
 			if (flags[kFLAGS.KINDRA_LVL_UP] >= 6) {
 				this.createPerk(PerkLib.PrestigeJobArcaneArcher, 0, 0, 0, 0);
-				this.createPerk(PerkLib.HalfStepToAdvancedEndurance, 0, 0, 0, 0);
 			}
-			if (flags[kFLAGS.KINDRA_LVL_UP] >= 7) this.createPerk(PerkLib.ArchersStaminaI, 0, 0, 0, 0);
-			if (flags[kFLAGS.KINDRA_LVL_UP] >= 8) {
-				this.createPerk(PerkLib.AdvancedEndurance, 0, 0, 0, 0);
-				this.createPerk(PerkLib.HalfStepToImprovedSelfControl, 0, 0, 0, 0);
-			}
-			if (flags[kFLAGS.KINDRA_LVL_UP] >= 9) this.createPerk(PerkLib.ImprovedSelfControl, 0, 0, 0, 0);
 			//if (flags[kFLAGS.KINDRA_LVL_UP] >= ) this.createPerk(PerkLib.EnemyBossType, 0, 0, 0, 0);kiedy zacznie sie KindraQuest
 			checkMonster();
 		}

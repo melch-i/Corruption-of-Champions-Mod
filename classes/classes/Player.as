@@ -379,32 +379,6 @@ use namespace CoC;
 			if (lowerBody == LowerBody.GARGOYLE) armorDef += (8 * newGamePlusMod);
 			if (lowerBody == LowerBody.GARGOYLE_2) armorDef += (5 * newGamePlusMod);
 			if (hasPerk(PerkLib.Lycanthropy)) armorDef += 10 * newGamePlusMod;
-			//Soul Cultivators bonuses
-			if (hasPerk(PerkLib.BodyCultivator)) {
-				armorDef += (1 * newGamePlusMod);
-			}
-			if (hasPerk(PerkLib.FleshBodyApprenticeStage)) {
-				if (hasPerk(PerkLib.SoulApprentice)) armorDef += 2 * newGamePlusMod;
-				if (hasPerk(PerkLib.SoulPersonage)) armorDef += 2 * newGamePlusMod;
-				if (hasPerk(PerkLib.SoulWarrior)) armorDef += 2 * newGamePlusMod;
-			}
-			if (hasPerk(PerkLib.FleshBodyWarriorStage)) {
-				if (hasPerk(PerkLib.SoulSprite)) armorDef += 3 * newGamePlusMod;
-				if (hasPerk(PerkLib.SoulScholar)) armorDef += 3 * newGamePlusMod;
-				if (hasPerk(PerkLib.SoulElder)) armorDef += 3 * newGamePlusMod;
-			}
-			if (hasPerk(PerkLib.FleshBodyElderStage)) {
-				if (hasPerk(PerkLib.SoulExalt)) armorDef += 4 * newGamePlusMod;
-				if (hasPerk(PerkLib.SoulOverlord)) armorDef += 4 * newGamePlusMod;
-				if (hasPerk(PerkLib.SoulTyrant)) armorDef += 4 * newGamePlusMod;
-			}
-			if (hasPerk(PerkLib.FleshBodyOverlordStage)) {
-				if (hasPerk(PerkLib.SoulKing)) armorDef += 5 * newGamePlusMod;
-				if (hasPerk(PerkLib.SoulEmperor)) armorDef += 5 * newGamePlusMod;
-				if (hasPerk(PerkLib.SoulAncestor)) armorDef += 5 * newGamePlusMod;
-			}
-			if (hasPerk(PerkLib.HclassHeavenTribulationSurvivor)) armorDef += 6 * newGamePlusMod;
-			if (hasPerk(PerkLib.GclassHeavenTribulationSurvivor)) armorDef += 9 * newGamePlusMod;
 			//Agility boosts armor ratings!
 			var speedBonus:int = 0;
 			if (hasPerk(PerkLib.Agility)) {
@@ -415,9 +389,6 @@ use namespace CoC;
 					speedBonus += Math.round(spe / 25);
 				}
 			}
-			if (hasPerk(PerkLib.ArmorMaster)) {
-				if (armorPerk == "Heavy") speedBonus += Math.round(spe / 50);
-			}
 			armorDef += speedBonus;
 			//Feral armor boosts armor ratings!
 			var toughnessBonus:int = 0;
@@ -426,10 +397,6 @@ use namespace CoC;
 			}
 			armorDef += toughnessBonus;
 			if (hasPerk(PerkLib.PrestigeJobSentinel) && armorPerk == "Heavy") armorDef += _armor.def;
-			if (hasPerk(PerkLib.ShieldExpertise) && shieldName != "nothing") {
-				if (shieldBlock >= 4) armorDef += Math.round(shieldBlock);
-				else armorDef += 1;
-			}
 			//Acupuncture effect
 			if (hasPerk(PerkLib.ChiReflowDefense)) armorDef *= UmasShop.NEEDLEWORK_DEFENSE_DEFENSE_MULTI;
 			if (hasPerk(PerkLib.ChiReflowAttack)) armorDef *= UmasShop.NEEDLEWORK_ATTACK_DEFENSE_MULTI;
@@ -440,7 +407,7 @@ use namespace CoC;
 			if (hasStatusEffect(StatusEffects.Berzerking) && !hasPerk(PerkLib.ColdFury)) {
 				armorDef = 0;
 			}
-			if (hasStatusEffect(StatusEffects.ChargeArmor) && (!isNaked() || (isNaked() && haveNaturalArmor() && hasPerk(PerkLib.ImprovingNaturesBlueprintsNaturalArmor)))) armorDef += Math.round(statusEffectv1(StatusEffects.ChargeArmor));
+			if (hasStatusEffect(StatusEffects.ChargeArmor) && (!isNaked())) armorDef += Math.round(statusEffectv1(StatusEffects.ChargeArmor));
 			if (hasStatusEffect(StatusEffects.StoneSkin)) armorDef += Math.round(statusEffectv1(StatusEffects.StoneSkin));
 			if (hasStatusEffect(StatusEffects.BarkSkin)) armorDef += Math.round(statusEffectv1(StatusEffects.BarkSkin));
 			if (hasStatusEffect(StatusEffects.MetalSkin)) armorDef += Math.round(statusEffectv1(StatusEffects.MetalSkin));
@@ -452,7 +419,7 @@ use namespace CoC;
 				armorDef = Math.round(armorDef * 1.1);
 				armorDef += 1;
 			}
-			if (hasStatusEffect(StatusEffects.CrinosShape) && hasPerk(PerkLib.ImprovingNaturesBlueprintsNaturalArmor)) {
+			if (hasStatusEffect(StatusEffects.CrinosShape)) {
 				armorDef = Math.round(armorDef * 1.1);
 				armorDef += 1;
 			}
@@ -512,13 +479,11 @@ use namespace CoC;
 		//Natural Jouster perks req check
 		public function isMeetingNaturalJousterReq():Boolean
 		{
-			return (((isTaur() || isDrider()) && spe >= 60) && hasPerk(PerkLib.Naturaljouster) && (!hasPerk(PerkLib.DoubleAttack) || (hasPerk(PerkLib.DoubleAttack) && flags[kFLAGS.DOUBLE_ATTACK_STYLE] == 0)))
-             || (spe >= 150 && hasPerk(PerkLib.Naturaljouster) && hasPerk(PerkLib.DoubleAttack) && (!hasPerk(PerkLib.DoubleAttack) || (hasPerk(PerkLib.DoubleAttack) && flags[kFLAGS.DOUBLE_ATTACK_STYLE] == 0)));
+			return (((isTaur() || isDrider()) && spe >= 60) && hasPerk(PerkLib.Naturaljouster)) || (spe >= 150 && hasPerk(PerkLib.Naturaljouster));
 		}
 		public function isMeetingNaturalJousterMasterGradeReq():Boolean
 		{
-			return (((isTaur() || isDrider()) && spe >= 180) && hasPerk(PerkLib.NaturaljousterMastergrade) && (!hasPerk(PerkLib.DoubleAttack) || (hasPerk(PerkLib.DoubleAttack) && flags[kFLAGS.DOUBLE_ATTACK_STYLE] == 0)))
-             || (spe >= 450 && hasPerk(PerkLib.NaturaljousterMastergrade) && hasPerk(PerkLib.DoubleAttack) && (!hasPerk(PerkLib.DoubleAttack) || (hasPerk(PerkLib.DoubleAttack) && flags[kFLAGS.DOUBLE_ATTACK_STYLE] == 0)));
+			return (((isTaur() || isDrider()) && spe >= 180) && hasPerk(PerkLib.NaturaljousterMastergrade)) || (spe >= 450 && hasPerk(PerkLib.NaturaljousterMastergrade));
 		}
 		public function haveWeaponForJouster():Boolean
 		{
@@ -534,22 +499,9 @@ use namespace CoC;
 		override public function get weaponAttack():Number {
 			var newGamePlusMod:int = this.newGamePlusMod()+1;
 			var attack:Number = _weapon.attack;
-			if (hasPerk(PerkLib.JobSwordsman) && weaponPerk == "Large") {
-				if (hasPerk(PerkLib.WeaponMastery) && str >= 100) {
-					if (hasPerk(PerkLib.WeaponGrandMastery) && str >= 140) attack *= 2;
-					else attack *= 1.5;
-				}
-				else attack *= 1.25;
-			}
-			if (hasPerk(PerkLib.WeaponGrandMastery) && weaponPerk == "Dual Large" && str >= 140) {
-				attack *= 2;
-			}
 			if (hasPerk(PerkLib.HiddenMomentum) && weaponPerk == "Large" && str >= 75 && spe >= 50) {
 				attack += (((str + spe) - 100) * 0.1);
 			}//30-70-110
-			if (hasPerk(PerkLib.HiddenDualMomentum) && weaponPerk == "Dual Large" && str >= 150 && spe >= 100) {
-				attack += (((str + spe) - 200) * 0.1);
-			}//20-60-100
 			if (hasPerk(PerkLib.LightningStrikes) && spe >= 60 && (weaponPerk != "Large" || weaponPerk != "Dual Large" || !isFistOrFistWeapon())) {
 				attack += ((spe - 50) * 0.3);//wyjątek potem dodać dla daggers i innych assasins weapons i dać im lepszy przelicznik
 			}//45-105-165
@@ -560,24 +512,6 @@ use namespace CoC;
 				if (hasPerk(PerkLib.IronFistsI) && str >= 50) {
 					attack += 10;
 				}
-				if (hasPerk(PerkLib.IronFistsII) && str >= 65) {
-					attack += 10;
-				}
-				if (hasPerk(PerkLib.IronFistsIII) && str >= 80) {
-					attack += 10;
-				}
-				if (hasPerk(PerkLib.IronFistsIV) && str >= 95) {
-					attack += 10;
-				}
-				if (hasPerk(PerkLib.IronFistsV) && str >= 110) {
-					attack += 10;
-				}
-				if (hasPerk(PerkLib.IronFistsVI) && str >= 125) {
-					attack += 10;
-				}
-				if (hasPerk(PerkLib.JobBrawler) && str >= 60) {
-					attack += (5 * newGamePlusMod);
-				}		// && (weaponName == "hooked gauntlets" || weaponName == "spiked gauntlet")
 				if (hasPerk(PerkLib.MightyFist)) {
 					attack += (5 * newGamePlusMod);
 				}
@@ -598,7 +532,7 @@ use namespace CoC;
 			if (hasStatusEffect(StatusEffects.Berzerking)) attack += (15 + (15 * newGamePlusMod));
 			if (hasStatusEffect(StatusEffects.Lustzerking)) attack += (15 + (15 * newGamePlusMod));
 			if (hasStatusEffect(StatusEffects.ChargeWeapon)) {
-				if (((weaponName == "fists" && hasPerk(PerkLib.ImprovingNaturesBlueprintsNaturalWeapons)) || weaponName != "fists") && weaponPerk != "Large" && weaponPerk != "Dual Large") attack += Math.round(statusEffectv1(StatusEffects.ChargeWeapon));
+				if (( weaponName != "fists") && weaponPerk != "Large" && weaponPerk != "Dual Large") attack += Math.round(statusEffectv1(StatusEffects.ChargeWeapon));
 				if (weaponPerk == "Large" || weaponPerk == "Dual Large") attack += Math.round(statusEffectv1(StatusEffects.ChargeWeapon));
 			}
 			attack = Math.round(attack);
@@ -631,40 +565,8 @@ use namespace CoC;
 			return _weaponRange.verb;
 		}
 		override public function get weaponRangeAttack():Number {
-			var newGamePlusMod:int = this.newGamePlusMod()+1;
 			var rangeattack:Number = _weaponRange.attack;
-			if (hasPerk(PerkLib.Sharpshooter) && weaponRangePerk != "Bow") {
-				if (inte < 201) rangeattack *= (1 + (inte / 200));
-				else rangeattack *= 2;
-			}
-		/*	if(hasPerk(PerkLib.LightningStrikes) && spe >= 60 && weaponRangePerk != "Large") {
-				rangeattack += Math.round((spe - 50) / 3);
-			}
-			if(hasPerk(PerkLib.IronFistsI) && str >= 50 && weaponRangeName == "fists") {
-				rangeattack += 10;
-			}
-			if(hasPerk(PerkLib.IronFistsII) && str >= 65 && weaponRangeName == "fists") {
-				rangeattack += 10;
-			}
-			if(hasPerk(PerkLib.IronFistsIII) && str >= 80 && weaponRangeName == "fists") {
-				rangeattack += 10;
-			}
-			if(hasPerk(PerkLib.IronFistsIV) && str >= 95 && weaponRangeName == "fists") {
-				rangeattack += 10;
-			}
-			if(hasPerk(PerkLib.IronFistsV) && str >= 110 && weaponRangeName == "fists") {
-				rangeattack += 10;
-			}
-			if(hasPerk(PerkLib.JobBrawler) && str >= 60 && weaponRangeName == "fists") {
-				rangeattack += (5 * newGamePlusMod);
-			}
-			if(arms.type == MANTIS && weaponRangeName == "fists") {
-				rangeattack += (15 * newGamePlusMod);
-			}
-			if(hasStatusEffect(StatusEffects.Berzerking)) rangeattack += (30 + (15 * newGamePlusMod));
-			if(hasStatusEffect(StatusEffects.Lustzerking)) rangeattack += (30 + (15 * newGamePlusMod));
-			if(findPerk(PerkLib.) >= 0) rangeattack += Math.round(statusEffectv1(StatusEffects.ChargeWeapon));
-		*/	rangeattack = Math.round(rangeattack);
+			rangeattack = Math.round(rangeattack);
 			return rangeattack;
 		}
 		public function get weaponRangeBaseAttack():Number {
@@ -1000,11 +902,6 @@ use namespace CoC;
 			if(hasPerk(PerkLib.PurityBlessing)) lust -= 5;
 			//Resistance = 10%
 			if(hasPerk(PerkLib.ResistanceI)) lust -= 5;
-			if(hasPerk(PerkLib.ResistanceII)) lust -= 5;
-			if(hasPerk(PerkLib.ResistanceIII)) lust -= 5;
-			if(hasPerk(PerkLib.ResistanceIV)) lust -= 5;
-			if(hasPerk(PerkLib.ResistanceV)) lust -= 5;
-			if(hasPerk(PerkLib.ResistanceVI)) lust -= 5;
 			if((hasPerk(PerkLib.UnicornBlessing) && cor <= 20) || (hasPerk(PerkLib.BicornBlessing) && cor >= 80)) lust -= 10;
 			if(hasPerk(PerkLib.ChiReflowLust)) lust -= UmasShop.NEEDLEWORK_LUST_LUST_RESIST;
 			if(lust < minLustCap) lust = minLustCap;
@@ -2297,8 +2194,6 @@ use namespace CoC;
 				demonCounter -= 10;
 			if (hasPerk(PerkLib.ChimericalBodyPerfectStage))
 				demonCounter += 10;
-			if (hasPerk(PerkLib.DemonicLethicite))
-				demonCounter+=1;
 			End("Player","racialScore");
 			return demonCounter;
 		}
@@ -4438,16 +4333,10 @@ use namespace CoC;
 				prestigeJobs--;
 			if (hasPerk(PerkLib.PrestigeJobBerserker))
 				prestigeJobs--;
-			if (hasPerk(PerkLib.PrestigeJobSeer))
-				prestigeJobs--;
 			if (hasPerk(PerkLib.PrestigeJobSentinel))
-				prestigeJobs--;
-			if (hasPerk(PerkLib.PrestigeJobSoulArcher))
 				prestigeJobs--;
 			if (hasPerk(PerkLib.PrestigeJobSoulArtMaster))
 				prestigeJobs--;
-			if (hasPerk(PerkLib.DeityJobMunchkin))
-				prestigeJobs++;
 		//	if (hasPerk(PerkLib.TrachealSystemEvolved))
 		//		prestigeJobs++;
 		//	if (hasPerk(PerkLib.TrachealSystemEvolved))
@@ -4979,7 +4868,6 @@ use namespace CoC;
 				minSen += 15;
 			}
 			//Factory Perks
-			if(this.hasPerk(PerkLib.DemonicLethicite)) {minCor+=10;minLib+=10;}
 			if(this.hasPerk(PerkLib.ProductivityDrugs)) {minLib+=this.perkv1(PerkLib.ProductivityDrugs);minCor+=this.perkv2(PerkLib.ProductivityDrugs);}
 
 			//Minimum Sensitivity
@@ -5941,41 +5829,8 @@ use namespace CoC;
 				maxWis -= (10 * newGamePlusMod);
 				maxLib += (80 * newGamePlusMod);
 			}
-			if (hasPerk(PerkLib.EzekielBlessing)) {
-				maxStr += (5 * newGamePlusMod);
-				maxTou += (5 * newGamePlusMod);
-				maxSpe += (5 * newGamePlusMod);
-				maxInt += (5 * newGamePlusMod);
-				maxWis += (5 * newGamePlusMod);
-				maxLib += (5 * newGamePlusMod);
-				maxSen += (5 * newGamePlusMod);
-			}
 			//Perks
-			if (hasPerk(PerkLib.JobAllRounder)) {
-				maxStr += (10 * newGamePlusMod);
-				maxTou += (10 * newGamePlusMod);
-				maxSpe += (10 * newGamePlusMod);
-				maxInt += (10 * newGamePlusMod);
-				maxWis += (10 * newGamePlusMod);
-				maxLib += (6 * newGamePlusMod);
-				maxSen += (6 * newGamePlusMod);
-			}
-			if (hasPerk(PerkLib.JobSwordsman)) maxStr += (10 * newGamePlusMod);
-			if (hasPerk(PerkLib.JobBeastWarrior)) {
-				maxStr += (5 * newGamePlusMod);
-				maxTou += (5 * newGamePlusMod);
-				maxSpe += (5 * newGamePlusMod);
-				if (hasPerk(PerkLib.ImprovingNaturesBlueprintsApexPredator)) {
-					maxInt += (5 * newGamePlusMod);
-					maxWis += (5 * newGamePlusMod);
-				}
-				else {
-					maxInt -= (5 * newGamePlusMod);
-					maxWis -= (5 * newGamePlusMod);
-				}
-			}
 			if (hasPerk(PerkLib.JobCourtesan)) maxLib += (15 * newGamePlusMod);
-			if (hasPerk(PerkLib.JobBrawler)) maxStr += (10 * newGamePlusMod);
 			if (hasPerk(PerkLib.JobDervish)) maxSpe += (10 * newGamePlusMod);
 			if (hasPerk(PerkLib.JobDefender)) maxTou += (15 * newGamePlusMod);
 			if (hasPerk(PerkLib.JobElementalConjurer)) maxWis += (5 * newGamePlusMod);
@@ -5985,10 +5840,6 @@ use namespace CoC;
 				maxLib += (5 * newGamePlusMod);
 			}
 			if (hasPerk(PerkLib.JobGuardian)) maxTou += (5 * newGamePlusMod);
-			if (hasPerk(PerkLib.JobHealer)) {
-				maxInt += (5 * newGamePlusMod);
-				maxWis += (5 * newGamePlusMod);
-			}
 			if (hasPerk(PerkLib.JobHunter)) {
 				maxSpe += (10 * newGamePlusMod);
 				maxInt += (5 * newGamePlusMod);
@@ -5998,8 +5849,6 @@ use namespace CoC;
 			if (hasPerk(PerkLib.JobRanger)) maxSpe += (5 * newGamePlusMod);
 			if (hasPerk(PerkLib.JobSeducer)) maxLib += (5 * newGamePlusMod);
 			if (hasPerk(PerkLib.JobSorcerer)) maxInt += (5 * newGamePlusMod);
-			if (hasPerk(PerkLib.JobSoulCultivator)) maxWis += (5 * newGamePlusMod);
-			if (hasPerk(PerkLib.JobWarlord)) maxTou += (20 * newGamePlusMod);
 			if (hasPerk(PerkLib.JobWarrior)) maxStr += (5 * newGamePlusMod);
 			if (hasPerk(PerkLib.PrestigeJobArcaneArcher)) {
 				maxSpe += (40 * newGamePlusMod);
@@ -6009,91 +5858,36 @@ use namespace CoC;
 				maxStr += (60 * newGamePlusMod);
 				maxTou += (20 * newGamePlusMod);
 			}
-			if (hasPerk(PerkLib.PrestigeJobSeer)) {
-				maxInt += (60 * newGamePlusMod);
-				maxWis += (20 * newGamePlusMod);
-			}
 			if (hasPerk(PerkLib.PrestigeJobSentinel)) {
 				maxStr += (20 * newGamePlusMod);
 				maxTou += (60 * newGamePlusMod);
-			}
-			if (hasPerk(PerkLib.PrestigeJobSoulArcher)) {
-				maxSpe += (40 * newGamePlusMod);
-				maxWis += (40 * newGamePlusMod);
 			}
 			if (hasPerk(PerkLib.PrestigeJobSoulArtMaster)) {
 				maxStr += (40 * newGamePlusMod);
 				maxWis += (40 * newGamePlusMod);
 			}
-			if (hasPerk(PerkLib.DeityJobMunchkin)) {
-				maxStr += (25 * newGamePlusMod);
-				maxTou += (25 * newGamePlusMod);
-				maxSpe += (25 * newGamePlusMod);
-				maxInt += (25 * newGamePlusMod);
-				maxWis += (25 * newGamePlusMod);
-				maxLib += (15 * newGamePlusMod);
-				maxSen += (15 * newGamePlusMod);
-			}
 			if (hasPerk(PerkLib.WeaponMastery)) maxStr += (5 * newGamePlusMod);
-			if (hasPerk(PerkLib.WeaponGrandMastery)) maxStr += (10 * newGamePlusMod);
 			if (hasPerk(PerkLib.ElementalConjurerResolve)) {
-				if (!hasPerk(PerkLib.ElementalConjurerMindAndBodyResolve)) {
-					maxStr -= (15 * newGamePlusMod);
-					maxTou -= (15 * newGamePlusMod);
-					maxSpe -= (15 * newGamePlusMod);
-				}
+				maxStr -= (15 * newGamePlusMod);
+				maxTou -= (15 * newGamePlusMod);
+				maxSpe -= (15 * newGamePlusMod);
 				maxInt += (20 * newGamePlusMod);
 				maxWis += (30 * newGamePlusMod);
 			}
 			if (hasPerk(PerkLib.ElementalConjurerDedication)) {
-				if (!hasPerk(PerkLib.ElementalConjurerMindAndBodyDedication)) {
-					maxStr -= (30 * newGamePlusMod);
-					maxTou -= (30 * newGamePlusMod);
-					maxSpe -= (30 * newGamePlusMod);
-				}
+				maxStr -= (30 * newGamePlusMod);
+				maxTou -= (30 * newGamePlusMod);
+				maxSpe -= (30 * newGamePlusMod);
 				maxInt += (40 * newGamePlusMod);
 				maxWis += (60 * newGamePlusMod);
 			}
 			if (hasPerk(PerkLib.ElementalConjurerSacrifice)) {
-				if (!hasPerk(PerkLib.ElementalConjurerMindAndBodySacrifice)) {
-					maxStr -= (45 * newGamePlusMod);
-					maxTou -= (45 * newGamePlusMod);
-					maxSpe -= (45 * newGamePlusMod);
-				}
+				maxStr -= (45 * newGamePlusMod);
+				maxTou -= (45 * newGamePlusMod);
+				maxSpe -= (45 * newGamePlusMod);
 				maxInt += (60 * newGamePlusMod);
 				maxWis += (90 * newGamePlusMod);
 			}
-			if (hasPerk(PerkLib.HclassHeavenTribulationSurvivor)) {
-				maxStr += (10 * newGamePlusMod);
-				maxTou += (10 * newGamePlusMod);
-				maxSpe += (10 * newGamePlusMod);
-				maxInt += (10 * newGamePlusMod);
-				maxWis += (10 * newGamePlusMod);
-				maxLib += (10 * newGamePlusMod);
-				maxSen += (10 * newGamePlusMod);
-			}
-			if (hasPerk(PerkLib.GclassHeavenTribulationSurvivor)) {
-				maxStr += (15 * newGamePlusMod);
-				maxTou += (15 * newGamePlusMod);
-				maxSpe += (15 * newGamePlusMod);
-				maxInt += (15 * newGamePlusMod);
-				maxWis += (15 * newGamePlusMod);
-				maxLib += (15 * newGamePlusMod);
-				maxSen += (15 * newGamePlusMod);
-			}
-			if (hasPerk(PerkLib.SoulApprentice)) maxWis += 5;
-			if (hasPerk(PerkLib.SoulPersonage)) maxWis += 5;
-			if (hasPerk(PerkLib.SoulWarrior)) maxWis += 5;
-			if (hasPerk(PerkLib.SoulSprite)) maxWis += 5;
-			if (hasPerk(PerkLib.SoulScholar)) maxWis += 5;
-			if (hasPerk(PerkLib.SoulElder)) maxWis += 5;
-			if (hasPerk(PerkLib.SoulExalt)) maxWis += 5;
-			if (hasPerk(PerkLib.SoulOverlord)) maxWis += 5;
-			if (hasPerk(PerkLib.SoulTyrant)) maxWis += 5;
-			if (hasPerk(PerkLib.SoulKing)) maxWis += 5;
-			if (hasPerk(PerkLib.SoulEmperor)) maxWis += 5;
-			if (hasPerk(PerkLib.SoulAncestor)) maxWis += 5;
-			if (hasPerk(PerkLib.CarefulButRecklessAimAndShooting) && !hasPerk(PerkLib.ColdAim)) maxTou -= (15 * newGamePlusMod);
 			if (hasPerk(PerkLib.Lycanthropy)) {
 				if (flags[kFLAGS.LUNA_MOON_CYCLE] == 3 || flags[kFLAGS.LUNA_MOON_CYCLE] == 5) {
 					maxStr += (10 * newGamePlusMod);

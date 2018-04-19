@@ -36,9 +36,6 @@ public class DriderIncubus extends AbstractSpiderMorph
 			this.additionalXP = 1500;
 			this.level = 44;
 			this.lustVuln = 0.45;
-			this.createPerk(PerkLib.InhumanDesireI, 0, 0, 0, 0);
-			this.createPerk(PerkLib.DemonicDesireI, 0, 0, 0, 0);
-			this.createPerk(PerkLib.RefinedBodyI, 0, 0, 0, 0);
 			this.createPerk(PerkLib.TankI, 0, 0, 0, 0);
 			this.createPerk(PerkLib.EnemyTrueDemon, 0, 0, 0, 0);
 			this.drop = NO_DROP;

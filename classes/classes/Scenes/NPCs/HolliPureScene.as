@@ -41,7 +41,6 @@ public function treeMenu():void {
 		menu();
 		addButton(0, "Destroy It", destroyDatFuckingPlantAtP2);
 		if (player.fatigue + 50 < player.maxFatigue()) addButton(1, "Water It", waterIt);
-		if (player.HP > 150 && player.soulforce>= 50 && player.hasPerk(PerkLib.SoulApprentice)) addButton(2, "Use SFIB", useSouforceInfusedBlood);
 		addButton(14, "Back", inventory.inventoryMenu);
 	}
 	else if (flags[kFLAGS.FLOWER_LEVEL] == 3) {
@@ -52,7 +51,6 @@ public function treeMenu():void {
 		menu();
 		addButton(0, "Torch It", torchP3Tree);
 		if (player.fatigue + 50 < player.maxFatigue()) addButton(1, "Water It", waterIt);
-		if (player.HP > 150 && player.soulforce>= 50 && player.hasPerk(PerkLib.SoulApprentice)) addButton(2, "Use SFIB", useSouforceInfusedBlood);
 		addButton(3, "Drink Sap", drinkThePlantGirlsSap);
 		addButton(14, "Back", inventory.inventoryMenu);
 	}

@@ -20,7 +20,6 @@ package classes.Items.Consumables
 			if (Utils.rand(3) == 0) changeLimit++;
 			if (Utils.rand(4) == 0) changeLimit++;
 			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
-			if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
 			if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 			outputText("You chew on the thin red roots.  They have a rubbery texture and the taste is something like lemons and oranges mixed together.  The roots dry out your mouth as you chew them but at the same time they cause a cooling and numbing sensation that’s rather pleasant.");
 			if (player.hasPerk(PerkLib.TransformationImmunity)) changeLimit = 0;

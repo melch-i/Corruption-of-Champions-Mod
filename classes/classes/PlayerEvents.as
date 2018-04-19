@@ -582,7 +582,7 @@ if (CoC.instance.model.time.hours > 23) { //Once per day
 					if (flags[kFLAGS.CEANI_FOLLOWER] > 0) flags[kFLAGS.FISHES_STORED_AT_FISHERY] -= 5;
 				}
 				//Daily regeneration of soulforce for non soul cultivators
-				if (!player.hasPerk(PerkLib.JobSoulCultivator) && (player.soulforce < player.maxSoulforce())) {
+				if ((player.soulforce < player.maxSoulforce())) {
 					player.soulforce += 50;
 					if (player.soulforce > player.maxSoulforce()) player.soulforce = player.maxSoulforce();
 				}
@@ -668,8 +668,6 @@ if (CoC.instance.model.time.hours > 23) { //Once per day
 			var needNext:Boolean = false;
 			if (flags[kFLAGS.HUNGER_ENABLED] > 0 || prison.inPrison) {
 				var multiplier:Number = 1.0;
-				if (player.hasPerk(PerkLib.Survivalist)) multiplier -= 0.2;
-				if (player.hasPerk(PerkLib.Survivalist2)) multiplier -= 0.2;
 				if (player.hasPerk(PerkLib.ManticoreCumAddict)) multiplier *= 2;
 				//Hunger drain rate. If above 50, 1.5 per hour. Between 25 and 50, 1 per hour. Below 25, 0.5 per hour.
 				//So it takes 100 hours to fully starve from 100/100 to 0/100 hunger. Can be increased to 125 then 166 hours with Survivalist perks.
@@ -909,33 +907,7 @@ if (CoC.instance.model.time.hours > 23) { //Once per day
 				player.removePerk(PerkLib.ElectrifiedDesire);
 				needNext = true;
 			}
-			//Soul Sense
-			if (player.maxSoulforce() >= 200 && player.hasPerk(PerkLib.SoulApprentice) && !player.hasPerk(PerkLib.SoulSense)) {
-				outputText("\nDuring a casual walk around your camp you suddenly notice, or rather feel, something unexpected. Your surrounding blurs for a moment, to be replaced with a forest.You notice a goblin strolling nearby.. Suddenly, she stops and slowly looks around, staring directly at you. A moment later, your vision of the forest becomes blurry, eventually fading away to be replaced by your camp and its surroundings. ");
-				outputText("You shake your head, trying to figure out what had just happened. The only solution that you find within yourself is something that the soul cultivators you met in He’Xin’Dao mentioned. Another sense that they had developed, which allowed them to perceive distant places or find specific people over long distances. It looks as though you developed it, even without training.\n");
-				player.createPerk(PerkLib.SoulSense, 0, 0, 0, 0);
-				needNext = true;
-			}
-			//H class Heaven Tribulation
-			//		if (player.level >= 24 && player.hasPerk(PerkLib.SoulApprentice) && !player.hasStatusEffect(StatusEffects.TribulationCountdown) && !player.hasPerk(PerkLib.HclassHeavenTribulationSurvivor)) {
-			//			outputText("\nPLACEHOLDER TEXT 1\n");
-			//			player.createStatusEffect(StatusEffects.TribulationCountdown, 25, 0, 0, 0);
-			//			needNext = true;
-			//		}
-			//		if (player.hasStatusEffect(StatusEffects.TribulationCountdown)) {
-			//			if (player.statusEffectv1(StatusEffects.TribulationCountdown) <= 1 && !player.hasPerk(PerkLib.HclassHeavenTribulationSurvivor)) {
-			//				player.removeStatusEffect(StatusEffects.TribulationCountdown);
-			//				outputText("\nAN ENDURANCE FIGHT STARTS HERE\n");
-			//				startCombat(new HclassHeavenTribulation());
-			//	needNext = true;
-			//			}
-			//	else if (player.statusEffectv1(StatusEffects.TribulationCountdown) <= 1 && !player.hasPerk(PerkLib.HclassHeavenTribulationSurvivor)) {
-			//		player.removeStatusEffect(StatusEffects.TribulationCountdown);
-			//		outputText("\nYou feel a tingling in your nethers... at last full sensation has returned to your groin.  <b>You can masturbate again!</b>\n");
-			//		needNext = true;
-			//	}
-			//			else player.addStatusValue(StatusEffects.TribulationCountdown, 1, -1);
-			//		}
+
 			//Hot Spring
 			if (flags[kFLAGS.CAMP_UPGRADES_HOT_SPRINGS] == 1 && rand(4) == 0) {
 				outputText("\nWhile wandering around the border of your camp, you randomly kick a rock and a stream of water sprays out. Surprised, you touch the water, discovering it to be startlingly hot. An idea comes to your mind. You get a shovel, digging around the fountaining water which soon turns into a small pool. This is the perfect place to build a hot spring. You smile, delighted at the idea of being able to take frequent baths in it! You resolve to get to work as soon as possible.");
@@ -1530,12 +1502,6 @@ if (CoC.instance.model.time.hours > 23) { //Once per day
 				}
 				if (player.viridianChange()) {
 					dreams.fuckedUpCockDreamChange();
-					return true;
-				}
-				if (player.plantScore() >= 4 && player.hasPerk(PerkLib.SoulSense) && flags[kFLAGS.SOUL_SENSE_WORLD_TREE] < 1) {
-					outputText("\nYou find yourself in a forest. You feel a delicate melody fill the air around you, and while it has no discernable sound it somehow resonates with your being. Without even realizing it, you find yourself walking towards the source. Before long, you’re standing before a towering goliath of a tree, much larger than the others around you. As you touch the bark, you hear a soft voice. “Welcome home”. You bolt awake, and realize it was but a dream.  But somehow, you still feel the song whispering in your mind... <b>Perhaps you could seek out this tree in the waking world?</b>");
-					flags[kFLAGS.SOUL_SENSE_WORLD_TREE] = 1;
-					EngineCore.doNext(playerMenu);
 					return true;
 				}
 				if (player.lib > 50 || player.lust > 40) { //Randomly generated dreams here

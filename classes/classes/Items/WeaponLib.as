@@ -35,7 +35,7 @@ package classes.Items
 		public const D_WHAM_:DualHugeWarhammer = new DualHugeWarhammer();
 		public const DL_AXE_:DualLargeAxe = new DualLargeAxe();
 		public const DOCDEST:DefiledOniChieftainDestroyer = new DefiledOniChieftainDestroyer();
-		public const DSWORD_:DualSwords = new DualSwords();
+		public const DSWORD_:Weapon = new Weapon("DSwords", "DualSwords", "dual swords", "a pair of swords", "slashes", 10, 800, "A pair of swords made of the finest steel usefull for fight groups of enemies.", "Dual");
 		public const DSSPEAR:DemonSnakespear = new DemonSnakespear();
 		public const E_STAFF:EldritchStaff = new EldritchStaff();
 		public const EBNYBLD:EbonyDestroyer = new EbonyDestroyer();
@@ -48,7 +48,7 @@ package classes.Items
 		public const H_GAUNT:Weapon = new Weapon("H.Gaunt", "H.Gaunt", "hooked gauntlets", "a set of hooked gauntlets", "clawing punch", 0, 400, "These metal gauntlets are covered in nasty looking hooks that are sure to tear at your foes flesh and cause them harm.");
 		public const HALBERD:Halberd = new Halberd();
 		public const HNTCANE:HuntsmansCane = new HuntsmansCane();
-		public const HSWORDS:HookSwords = new HookSwords();
+		public const HSWORDS:WeaponWithPerk = new WeaponWithPerk("HSwords", "HookSwords", "hook swords", "a pair of hook swords", "slashes", 20, 1600, "Dual swords with wrist guards and an outwards-facing “hook” on the sword tip, useful for parrying and disarming opponents.", "Dual", PerkLib.DexterousSwordsmanship, 0, 0, 0, 0);
 		public const JRAPIER:JeweledRapier = new JeweledRapier();
 		public const KARMTOU:WeaponWithPerk = new WeaponWithPerk("KarmTou", "KarmicTouch", "karmic gloves", "a pair of karmic gloves", "punch", 0, 400, "A pair of gauntlets, made in shining steel and snow-white cloth. Their touch brings waste into the wicked’s flesh, punishing them in the form of blows more painful then should be.", "Body Cultivator's Focus", PerkLib.BodyCultivatorsFocus, 0.5, 0, 0, 0);
 		public const KATANA :Weapon = new Weapon("Katana ","Katana","katana","a katana","keen cut",10,400,"A curved bladed weapon that cuts through flesh with the greatest of ease.");

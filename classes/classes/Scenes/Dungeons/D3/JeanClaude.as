@@ -114,7 +114,6 @@ import classes.Scenes.SceneLib;
 			level = 38;
 			gems = 700 + rand(100);
 			this.drop = NO_DROP;
-			this.createPerk(PerkLib.BasicSelfControl, 0, 0, 0, 0);
 			this.createPerk(PerkLib.EnemyBeastOrAnimalMorphType, 0, 0, 0, 0);
 			checkMonster();
 		}
