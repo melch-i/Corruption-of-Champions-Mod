@@ -608,15 +608,8 @@ import classes.Items.JewelryLib;
 		public override function maxFatigue():Number
 		{
 			var max:Number = 150;
-			if (game.player.alicornScore() >= 6) max += (50 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (game.player.dragonScore() >= 20) max += (100 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (game.player.dragonScore() >= 28) max += (100 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (game.player.foxScore() >= 7) max += (20 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (game.player.kitsuneScore() >= 5 && game.player.tailCount >= 2 && game.player.tailCount < 9) max += (100 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (game.player.kitsuneScore() >= 12 && game.player.tailCount == 9) max += (300 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (game.player.lizardScore() >= 4) max += (30 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-			if (game.player.unicornScore() >= 5) max += (20 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));
-
+			var ngMult:int = 1 + game.player.newGamePlusMod();
+			max += racialBonuses()[Race.BonusName_maxfatigue]*ngMult;
 			if (hasPerk(PerkLib.JobHunter)) max += 50;
 			if (hasPerk(PerkLib.JobRanger)) max += 5;
 			if (hasPerk(PerkLib.PrestigeJobArcaneArcher)) max += 600;
@@ -631,8 +624,8 @@ import classes.Items.JewelryLib;
 		public override function maxSoulforce():Number
 		{
 			var max:Number = 50;
-			if (game.player.alicornScore() >= 6) max += (150 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));//przenieść do mnożnika?
-			if (game.player.unicornScore() >= 5) max += (50 * (1 + flags[kFLAGS.NEW_GAME_PLUS_LEVEL]));//przenieść do mnożnika?
+			var ngMult:int = 1 + game.player.newGamePlusMod();
+			max += racialBonuses()[Race.BonusName_maxsoulforce]*ngMult;
 			if (flags[kFLAGS.SOUL_CULTIVATION] >= 2) max += 25;
 			if (flags[kFLAGS.SOUL_CULTIVATION] >= 3) max += 25;
 			if (flags[kFLAGS.SOUL_CULTIVATION] >= 4) max += 30;

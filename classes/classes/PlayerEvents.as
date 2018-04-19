@@ -154,6 +154,7 @@ public class PlayerEvents extends BaseContent implements TimeAwareInterface {
 			Begin("PlayerEvents","hourlyCheckRacialPerks");
 			needNext = hourlyCheckRacialPerks();
 			End("PlayerEvents","hourlyCheckRacialPerks");
+			var scores:* = player.racialScores();
 			if (player.hasStatusEffect(StatusEffects.Feeder)) { //Feeder checks
 				if (player.cor <= 20) { //Go away if pure
 					outputText("\nThe desire to breastfeed fades into the background.  It must have been associated with the corruption inside you.\n\n(<b>You have lost the 'Feeder' perk.</b>)\n");
@@ -319,7 +320,7 @@ public class PlayerEvents extends BaseContent implements TimeAwareInterface {
 				}
 			}
 			if (player.hasKeyItem("Ruby Heart") >= 0) { //Regain slime core
-				if (player.hasStatusEffect(StatusEffects.SlimeCraving) && !player.hasPerk(PerkLib.SlimeCore) && player.isGoo() && player.gooScore() >= 4 && player.vaginalCapacity() >= 9000 && player.skinAdj == "slimy" && player.skinDesc == "skin" && player.lowerBody == LowerBody.GOO) {
+				if (player.hasStatusEffect(StatusEffects.SlimeCraving) && !player.hasPerk(PerkLib.SlimeCore) && player.isGoo() && scores[Race.GOO.name] >= 4 && player.vaginalCapacity() >= 9000 && player.skinAdj == "slimy" && player.skinDesc == "skin" && player.lowerBody == LowerBody.GOO) {
 					outputText("\nAs you adjust to your new, goo-like body, you remember the ruby heart you expelled so long ago.  As you reach to pick it up, it quivers and pulses with a warm, cheerful light.  Your fingers close on it and the nucleus slides through your palm, into your body!\n\n");
 					
 					outputText("There is a momentary pressure in your chest and a few memories that are not your own flicker before your eyes.  The dizzying sight passes and the slime core settles within your body, imprinted with your personality and experiences.  There is a comforting calmness from your new nucleus and you feel as though, with your new memories, you will be better able to manage your body's fluid requirements.\n");
@@ -438,7 +439,7 @@ public class PlayerEvents extends BaseContent implements TimeAwareInterface {
 				}
 				else flags[kFLAGS.BIKINI_ARMOR_BONUS] = 0;
 			}
-			if (player.werewolfScore() >= 6 && player.hasPerk(PerkLib.LycanthropyDormant)) {
+			if (scores[Race.WEREWOLF.name] >= 6 && player.hasPerk(PerkLib.LycanthropyDormant)) {
 				outputText("\nAs you become wolf enough your mind recedes into increasingly animalistic urges. It will only get worse as the moon comes closer to full. <b>Gained Lycanthropy.</b>\n");
 				var bonusStats:Number = 0;
 				if (flags[kFLAGS.LUNA_MOON_CYCLE] == 3 || flags[kFLAGS.LUNA_MOON_CYCLE] == 5) bonusStats += 10;
@@ -449,7 +450,7 @@ public class PlayerEvents extends BaseContent implements TimeAwareInterface {
 				player.removePerk(PerkLib.LycanthropyDormant);
 				needNext = true;
 			}
-			if (player.werewolfScore() < 6 && player.hasPerk(PerkLib.Lycanthropy)) {
+			if (scores[Race.WEREWOLF.name] < 6 && player.hasPerk(PerkLib.Lycanthropy)) {
 				outputText("\nYou feel your animalistic urges go dormant within you as you no longer are the werewolf you once were. <b>Gained Dormant lycanthropy.</b>\n");
 				player.createPerk(PerkLib.LycanthropyDormant,0,0,0,0);
 				player.removePerk(PerkLib.Lycanthropy);
@@ -737,6 +738,21 @@ if (CoC.instance.model.time.hours > 23) { //Once per day
 
 		private function hourlyCheckRacialPerks():Boolean {
 			var needNext:Boolean = false;
+			var scores:* = player.racialScores();
+			var racialPerks:Array = Race.AllPerksToAddOrRemoveFor(player,scores);
+			for each (var rp:* in racialPerks) {
+				if (rp.text) {
+					outputText("\n");
+					outputText(rp.text);
+					outputText("\n");
+					needNext = true;
+				}
+				if (rp.add) {
+					player.createPerk(rp.perk, 0, 0, 0, 0);
+				} else {
+					player.removePerk(rp.perk);
+				}
+			}
 			//Recharge tail
 			if (player.tailType == Tail.BEE_ABDOMEN || player.tailType == Tail.SPIDER_ADBOMEN || player.tailType == Tail.SCORPION || player.tailType == Tail.MANTICORE_PUSSYTAIL || player.faceType == Face.SNAKE_FANGS || player.faceType == Face.SPIDER_FANGS) { //Spider, Bee, Scorpion, Manticore and Naga Venom Recharge
 				if (player.tailRecharge < 5) player.tailRecharge = 5;
@@ -789,7 +805,7 @@ if (CoC.instance.model.time.hours > 23) { //Once per day
 				needNext = true;
 			}
 			//Satyr Sexuality
-			if (player.satyrScore() >= 4 && player.balls > 0) {
+			if (scores[Race.SATYR.name] >= 4 && player.balls > 0) {
 				if (!player.hasPerk(PerkLib.SatyrSexuality)) {
 					outputText("\nYou feel a strange churning sensation in your [balls]. With you looking like a satyr, you have unlocked the potential to impregnate anally!\n\n(<b>Gained Perk: Satyr Sexuality</b>)\n");
 					player.createPerk(PerkLib.SatyrSexuality, 0, 0, 0, 0);
@@ -802,7 +818,7 @@ if (CoC.instance.model.time.hours > 23) { //Once per day
 				needNext = true;
 			}
 			//DarkCharm
-			if (player.demonScore() >= 6) {
+			if (scores[Race.DEMON.name] >= 6) {
 				if (!player.hasPerk(PerkLib.DarkCharm)) {
 					outputText("\nYou feel a strange sensation in your body. With you looking like a demon, you have unlocked the potential to use demonic charm attacks!\n\n(<b>Gained Perk: Dark Charm</b>)\n");
 					player.createPerk(PerkLib.DarkCharm, 0, 0, 0, 0);
@@ -813,19 +829,6 @@ if (CoC.instance.model.time.hours > 23) { //Once per day
 				outputText("\nWith some of your demon-like traits gone, so does your ability to use charm attacks.\n\n(<b>Lost Perk: Dark Charm</b>)\n");
 				player.removePerk(PerkLib.DarkCharm);
 				needNext = true;
-			}
-			//Jungle’s Wanderer
-			if (player.redpandaScore() >= 6) {
-				if (!player.hasPerk(PerkLib.JunglesWanderer)) {
-					//outputText("\nWhile stretching, you notice that you're much more flexible than you were before.  \n\n(<b>Gained Perk: Jungle’s Wanderer</b>)\n");
-					player.createPerk(PerkLib.JunglesWanderer, 0, 0, 0, 0);
-					//needNext = true;
-				}
-			}
-			else if (player.hasPerk(PerkLib.JunglesWanderer) && player.redpandaScore() < 6) {
-				//outputText("\nYou notice that you aren't as flexible as you were when you had a more feline body.  \n\n(<b>Lost Perk: Jungle’s Wanderer</b>)\n");
-				player.removePerk(PerkLib.JunglesWanderer);
-				//needNext = true;
 			}
 			//Freezing Breath
 			if (player.faceType == Face.WOLF && !player.hasPerk(PerkLib.FreezingBreath) && player.hasKeyItem("Fenrir Collar") >= 0) {
@@ -854,30 +857,6 @@ if (CoC.instance.model.time.hours > 23) { //Once per day
 				player.rearBody.type = RearBody.FENRIR_ICE_SPIKES;
 				needNext = true;
 			}
-			//Cold Affinity
-			if (player.yetiScore() >= 6 && !player.hasPerk(PerkLib.ColdAffinity)) {
-				outputText("\nYou suddenly no longer feel the cold so you guess you finally got acclimated to the icy winds of the glacial rift. You feel at one with the cold. So well that you actually developed icy power of your own.\n\n(<b>Gained Perks: Cold Affinity and Freezing Breath Yeti</b>)\n");
-				player.createPerk(PerkLib.ColdAffinity, 0, 0, 0, 0);
-				player.createPerk(PerkLib.FreezingBreathYeti, 0, 0, 0, 0);
-				needNext = true;
-			}
-			else if (player.yetiScore() < 6 && player.hasPerk(PerkLib.ColdAffinity)) {
-				outputText("\nYou suddenly feel a chill in the air. You guess you somehow no longer resist the cold.\n\n<b>(Lost Perks: Cold Affinity and Freezing Breath Yeti)</b>\n");
-				player.removePerk(PerkLib.ColdAffinity);
-				player.removePerk(PerkLib.FreezingBreathYeti);
-				needNext = true;
-			}
-			//Fire Affinity
-			if ((player.salamanderScore() >= 4 || player.phoenixScore() >= 10) && !player.hasPerk(PerkLib.FireAffinity)) {
-				outputText("\nYou suddenly feels your body temperature rising to ridiculus level. You pant for several minutes until your finaly at ease with your bodily heat. You doubt any more heat is gunna make you more incomfortable then this as you quietly soak in the soothing warmth your body naturaly produce. Its like your body is made out of living fire.\n\n(<b>Gained Perk: Fire Affinity</b>)\n");
-				player.createPerk(PerkLib.FireAffinity, 0, 0, 0, 0);
-				needNext = true;
-			}
-			else if ((player.salamanderScore() < 4 && player.phoenixScore() < 10) && player.hasPerk(PerkLib.FireAffinity)) {
-				outputText("\nYou suddenly feel chilly as your bodily temperature drop down to human level. You lost your natural warmth reverting to that of a standard human.\n\n<b>(Lost Perk: Fire Affinity)</b>\n");
-				player.removePerk(PerkLib.FireAffinity);
-				needNext = true;
-			}
 			//Aquatic Affinity
 			if (player.lowerBody == LowerBody.ORCA && player.arms.type == Arms.ORCA && player.tailType == Tail.ORCA && player.ears.type == Ears.ORCA && !player.hasPerk(PerkLib.AquaticAffinity)) {
 				outputText("\nYou suddenly feel an urge to jump into the nearest pool of water as your breath becomes ragged and messy. You swiftly run up to the stream and scream in release as you fill your aching respiratory systems with water. Wait water? You realise you just gained the ability to breath underwater but to make sure you can still breath normal air you go back to the surface. It soon appears you can still breath fresh air. Reassured on your condition you head back to camp.\n");
@@ -893,21 +872,6 @@ if (CoC.instance.model.time.hours > 23) { //Once per day
 				player.removePerk(PerkLib.AquaticAffinity);
 				needNext = true;
 			}
-			//Lightning Affinity
-			if (player.raijuScore() >= 7 && !player.hasPerk(PerkLib.LightningAffinity)) {
-				outputText("\nYou suddenly feel a rush of electricity run across your skin as your arousal builds up and begin to masturbate in order to get rid of your creeping desire. However even after achieving orgasm not only are you still aroused but you are even hornier than before! You realise deep down that the only way for you to be freed from this jolting pleasure is to have sex with a partner!\n");
-				outputText("\n(<b>Gained the lightning affinity perk, electrified desire perk and Orgasmic lightning strike ability!</b>)\n");
-				player.createPerk(PerkLib.LightningAffinity, 0, 0, 0, 0);
-				player.createPerk(PerkLib.ElectrifiedDesire, 0, 0, 0, 0);
-				needNext = true;
-			}
-			else if (player.raijuScore() < 7 && player.hasPerk(PerkLib.LightningAffinity)) {
-				outputText("\nYour natural electricity production start dropping at a dramatic rate until finally there is no more. You realise you likely aren’t raiju enough to build electricity anymore which, considering you can reach satisfaction again, might not be a bad thing.\n\n<b>(Lost the lightning affinity perk, electrified desire perk and Orgasmic lightning strike ability!)</b>\n");
-				player.removePerk(PerkLib.LightningAffinity);
-				player.removePerk(PerkLib.ElectrifiedDesire);
-				needNext = true;
-			}
-
 			//Hot Spring
 			if (flags[kFLAGS.CAMP_UPGRADES_HOT_SPRINGS] == 1 && rand(4) == 0) {
 				outputText("\nWhile wandering around the border of your camp, you randomly kick a rock and a stream of water sprays out. Surprised, you touch the water, discovering it to be startlingly hot. An idea comes to your mind. You get a shovel, digging around the fountaining water which soon turns into a small pool. This is the perfect place to build a hot spring. You smile, delighted at the idea of being able to take frequent baths in it! You resolve to get to work as soon as possible.");
@@ -1159,12 +1123,12 @@ if (CoC.instance.model.time.hours > 23) { //Once per day
 				}
 			}
 			if (player.hasPerk(PerkLib.Oviposition) || player.hasPerk(PerkLib.BunnyEggs)) { //Oviposition perk for lizard and bunny folks
-				if ((player.nagaScore() + player.lizardScore() < 3) && player.hasPerk(PerkLib.Oviposition) && !player.hasPerk(PerkLib.BasiliskWomb)) { //--Lose Oviposition perk if lizard score gets below 3.
+				if ((scores[Race.NAGA.name] + scores[Race.LIZARD.name] < 3) && player.hasPerk(PerkLib.Oviposition) && !player.hasPerk(PerkLib.BasiliskWomb)) { //--Lose Oviposition perk if lizard score gets below 3.
 					outputText("\nAnother change in your uterus ripples through your reproductive systems.  Somehow you know you've lost a little bit of reptilian reproductive ability.\n(<b>Perk Lost: Oviposition</b>)\n");
 					player.removePerk(PerkLib.Oviposition);
 					needNext = true;
 				}
-				else if (player.bunnyScore() < 3 && player.hasPerk(PerkLib.BunnyEggs)) { //--Lose Oviposition perk if bunny score gets below 3.
+				else if (scores[Race.BUNNY.name] < 3 && player.hasPerk(PerkLib.BunnyEggs)) { //--Lose Oviposition perk if bunny score gets below 3.
 					outputText("\nAnother change in your uterus ripples through your reproductive systems.  Somehow you know you've lost your ability to spontaneously lay eggs.\n(<b>Perk Lost: Bunny Eggs</b>)\n");
 					player.removePerk(PerkLib.BunnyEggs);
 					needNext = true;

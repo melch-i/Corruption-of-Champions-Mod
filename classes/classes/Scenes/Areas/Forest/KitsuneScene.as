@@ -2342,9 +2342,9 @@ public class KitsuneScene extends BaseContent
 			doNext(camp.returnToCampUseOneHour);
 		}
 		
-		public static var basicKitsuneHair:Array = ["white", "black", "black", "black", "red", "red", "red"];
-		public static var basicKitsuneFur:Array = ["orange and white", "black", "black and white", "red", "red and white", "white"];
-		public static var elderKitsuneColors:Array = ["metallic golden", "golden blonde", "metallic silver", "silver blonde", "snow white", "iridescent gray"];
+		public static var basicKitsuneHair:Array = Race.KitsuneHairColors;
+		public static var basicKitsuneFur:Array = Race.KitsuneFurColors;
+		public static var elderKitsuneColors:Array = Race.KitsuneElderColors;
 		
 		//[Meditate]
 		// If kitsune-level-upped, returns new number of tails

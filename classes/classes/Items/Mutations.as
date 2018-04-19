@@ -26,7 +26,6 @@ public final class Mutations extends MutationsHelper
 		public function Mutations() {}
 
         public static const gooSkinColors:Array = ["green","purple","blue","cerulean","emerald"];
-		public static const oniEyeColors:Array = ["red", "orange", "yellow"];
 // import classes.ItemSlotClass;
 
 //const FOX_BAD_END_WARNING:int = 477;
