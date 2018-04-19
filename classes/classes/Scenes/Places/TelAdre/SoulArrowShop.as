@@ -9,7 +9,7 @@ package classes.Scenes.Places.TelAdre
 		}
 		public function soularrowmerchant():void {
 			clearOutput();//później zamienić soulequipment na imie sprzedawczyni ^^ female centaur npc
-			outputText("After entering the shop with a sign saying 'Soul Arrow' over the doors you see a few shelves filled with various ranged weapons of all sorts from bows, to crossbows to exotic ones that you can't identify. ");
+			outputText("After entering the shop with a sign saying 'Swift Arrow' over the doors you see a few shelves filled with various ranged weapons of all sorts from bows, to crossbows to exotic ones that you can't identify. ");
 			outputText("A centauress tends the shop behind a desk. She doesn't have fancy or provocative clothes.  Her build is average.  She moves quite gracesfully around stalls with items for sale despite her naturaly larger body.");
 			outputText("\n\n\"<i>Greeting dear customer.  Look around and if something catch your eyes let me know,</i>\" she says all that almost on one breath after noticing your near.");
 			menu();
