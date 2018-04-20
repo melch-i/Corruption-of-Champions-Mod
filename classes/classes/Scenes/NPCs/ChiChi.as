@@ -74,16 +74,16 @@ use namespace CoC;
 		
 		public function SoulBlast():void {
 			if (!hasStatusEffect(StatusEffects.AbilityChanneled)) {
-				outputText("You see Chi Chi assuming a stance and waving soul art signs, - characteristic of a deadly attack you don’t recognise - it's obviously a dangerous technique. The best option would be to dodge it.");
+				outputText("You see Chi Chi assuming a stance strange stance.  Her hands make strange gestures, - characteristics of a deadly attack you don’t recognise - it's obviously a dangerous technique. The best option would be to dodge it.");
 				createStatusEffect(StatusEffects.AbilityChanneled, 0, 0, 0, 0);
 			}
 			else {
 				removeStatusEffect(StatusEffects.AbilityChanneled);
 				if (flags[kFLAGS.IN_COMBAT_USE_PLAYER_WAITED_FLAG] == 1) {
-					outputText("When Chi Chi unleashes a torrent of soulforce energy at you, you’ve already dodged out of the way, predicting her move. The attack leaves a massive hole where you stood earlier. You are glad you moved out of the way!");
+					outputText("When Chi Chi unleashes a torrent of energy at you, you dodge out of the way, predicting her move. The attack leaves a massive hole where you stood earlier. You are glad dodged that!");
 				}
 				else {
-					outputText("Chi Chi’s palms fill with a massive sphere of red energy which suddenly explodes in a devastating beam of concentrated soul force. You see the devastating torrent a mere fraction of a second before it hits you. Your defences are shattered, utterly unable to stop it as the energy overwhelms you. The blast barely leaves you intact.");
+					outputText("Chi Chi’s palms fill with a massive sphere of red energy which suddenly explodes in a devastating beam of concentrated energy. You see the devastating torrent a mere fraction of a second before it hits you. Your defences are shattered, utterly unable to stop it as the energy overwhelms you. The blast barely leaves you intact.");
 					player.takePhysDamage(5000000);
 					player.takeMagicDamage(5000000);
 				}
