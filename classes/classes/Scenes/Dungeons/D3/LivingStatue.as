@@ -47,7 +47,6 @@ import classes.StatusEffects;
 			this.armorDef = 100;
 			this.additionalXP = 1000;
 			createPerk(PerkLib.Resolute, 0, 0, 0, 0);
-			this.createPerk(PerkLib.RefinedBodyI, 0, 0, 0, 0);
 			this.createPerk(PerkLib.TankI, 0, 0, 0, 0);
 			this.createPerk(PerkLib.EnemyConstructType, 0, 0, 0, 0);
 			checkMonster();
@@ -126,11 +125,6 @@ import classes.StatusEffects;
 			{
 				//Get hit
 				outputText(" It chits you square in the chest.");
-				if (player.hasPerk(PerkLib.ShieldWard) && rand (2) == 0) {
-					outputText(" The momentum sends you flying through the air. You land with a crunch against a wall. <b>You'll have to run back to the giant to engage it in melee once more.</b> ");
-					player.createStatusEffect(StatusEffects.KnockedBack, 0, 0, 0, 0);
-					this.createStatusEffect(StatusEffects.KnockedBack, 0, 0, 0, 0); // Applying to mob as a "used ability" marker
-				}
 				damage = player.takePhysDamage(damage, true);
 			}
 		}
@@ -155,7 +149,7 @@ import classes.StatusEffects;
 			outputText("The animated statue spins its hammer around, striking at your [weapon] with its haft.");
 	
 			//Avoid
-			if ((combatMiss() && combatMiss()) || player.getEvasionRoll(false) || (player.hasPerk(PerkLib.ShieldWard) && rand (2) == 0)) outputText(" You manage to hold onto your equipment, for now.");
+			if ((combatMiss() && combatMiss()) || player.getEvasionRoll(false)) outputText(" You manage to hold onto your equipment, for now.");
 			//Oh noes!
 			else
 			{

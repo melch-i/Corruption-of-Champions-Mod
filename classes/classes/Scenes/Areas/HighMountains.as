@@ -157,14 +157,7 @@ use namespace CoC;
 			}
 			if (chooser == 3) 
 			{
-				if (flags[kFLAGS.SOUL_SENSE_IZUMI] < 3) {
-					this.izumiScenes.encounter();
-					return;
-				}
-				else {
-					basiliskScene.basiliskGreeting();
-					return;
-				}
+				this.izumiScenes.encounter();
 			}
 			//Dark Elf Scout
 			if (chooser == 4) {

@@ -8,7 +8,6 @@ import classes.GlobalFlags.*;
 import classes.Items.*;
 import classes.Scenes.Places.Ingnam.*;
 import classes.Scenes.SceneLib;
-import classes.Scenes.Soulforce;
 
 import coc.view.MainView;
 
@@ -16,7 +15,6 @@ public class Ingnam extends BaseContent
 	{
 		public var ingnamFarm:IngnamFarm = new IngnamFarm();
 		public var thiefScene:ThiefScene = new ThiefScene();
-		public var soulforce:Soulforce = new Soulforce();
 		
 		public function get inIngnam():Boolean { return flags[kFLAGS.IN_INGNAM] > 0; }
 		
@@ -82,7 +80,6 @@ CoC.instance.saves.saveGame(player.slotName);
 				removeButton(4);
                 addButton(9, "Sleep", SceneLib.camp.doSleep);
             }
-			if (player.hasPerk(PerkLib.JobSoulCultivator)) addButton(10, "Soulforce", soulforce.accessSoulforceMenu).hint("Spend some time on the cultivation or spend some of the soulforce.");
 		}
 		
 		//The end of prologue, starts the game.

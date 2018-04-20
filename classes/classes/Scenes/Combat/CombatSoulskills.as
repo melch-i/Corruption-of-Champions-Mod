@@ -211,7 +211,7 @@ public class CombatSoulskills extends BaseCombatContent {
 			if (player.inte > 100) critChance += 10;
 		}
 		if (player.hasStatusEffect(StatusEffects.Rage)) critChance += player.statusEffectv1(StatusEffects.Rage);
-		if (monster.isImmuneToCrits() && !player.hasPerk(PerkLib.EnableCriticals)) critChance = 0;
+		if (monster.isImmuneToCrits()) critChance = 0;
 		if (rand(100) < critChance) {
 			crit = true;
 			damage *= 1.75;
@@ -281,7 +281,7 @@ public class CombatSoulskills extends BaseCombatContent {
 			if (player.inte > 100) critChance += 10;
 		}
 		if (player.hasStatusEffect(StatusEffects.Rage)) critChance += player.statusEffectv1(StatusEffects.Rage);
-		if (monster.isImmuneToCrits() && !player.hasPerk(PerkLib.EnableCriticals)) critChance = 0;
+		if (monster.isImmuneToCrits()) critChance = 0;
 		if (rand(100) < critChance) {
 			crit = true;
 			damage *= 1.75;
@@ -335,7 +335,7 @@ public class CombatSoulskills extends BaseCombatContent {
 			if (player.inte <= 100) critChance += (player.inte - 50) / 50;
 			if (player.inte > 100) critChance += 10;
 		}
-		if (monster.isImmuneToCrits() && !player.hasPerk(PerkLib.EnableCriticals)) critChance = 0;
+		if (monster.isImmuneToCrits()) critChance = 0;
 		if (rand(100) < critChance) {
 			crit = true;
 			damage *= 1.75;
@@ -385,7 +385,7 @@ public class CombatSoulskills extends BaseCombatContent {
 			if (player.inte <= 100) critChance += (player.inte - 50) / 50;
 			if (player.inte > 100) critChance += 10;
 		}
-		if (monster.isImmuneToCrits() && !player.hasPerk(PerkLib.EnableCriticals)) critChance = 0;
+		if (monster.isImmuneToCrits()) critChance = 0;
 		if (rand(100) < critChance) {
 			crit = true;
 			damage *= 1.75;
@@ -401,7 +401,7 @@ public class CombatSoulskills extends BaseCombatContent {
 		if (monster.HP < 1) doNext(endHpVictory);
 		else enemyAI();
 	}
-	
+
 	public function IceFist():void {
 		flags[kFLAGS.LAST_ATTACK_TYPE] = 2;
 		clearOutput();
@@ -420,7 +420,7 @@ public class CombatSoulskills extends BaseCombatContent {
 			if (player.inte <= 100) critChance += (player.inte - 50) / 50;
 			if (player.inte > 100) critChance += 10;
 		}
-		if (monster.isImmuneToCrits() && !player.hasPerk(PerkLib.EnableCriticals)) critChance = 0;
+		if (monster.isImmuneToCrits()) critChance = 0;
 		if (rand(100) < critChance) {
 			crit = true;
 			damage *= 1.75;
@@ -484,7 +484,7 @@ public class CombatSoulskills extends BaseCombatContent {
 			if (player.inte <= 100) critChance += (player.inte - 50) / 50;
 			if (player.inte > 100) critChance += 10;
 		}
-		if (monster.isImmuneToCrits() && !player.hasPerk(PerkLib.EnableCriticals)) critChance = 0;
+		if (monster.isImmuneToCrits()) critChance = 0;
 		if (rand(100) < critChance) {
 			crit = true;
 			damage *= 1.75;
@@ -540,7 +540,7 @@ public class CombatSoulskills extends BaseCombatContent {
 			if (player.inte <= 100) critChance += (player.inte - 50) / 50;
 			if (player.inte > 100) critChance += 10;
 		}
-		if (monster.isImmuneToCrits() && !player.hasPerk(PerkLib.EnableCriticals)) critChance = 0;
+		if (monster.isImmuneToCrits()) critChance = 0;
 		if (rand(100) < critChance) {
 			crit = true;
 			damage *= 1.75;
@@ -582,7 +582,7 @@ public class CombatSoulskills extends BaseCombatContent {
 			if (player.inte <= 100) critChance += (player.inte - 50) / 50;
 			if (player.inte > 100) critChance += 10;
 		}
-		if (monster.isImmuneToCrits() && !player.hasPerk(PerkLib.EnableCriticals)) critChance = 0;
+		if (monster.isImmuneToCrits()) critChance = 0;
 		if (rand(100) < critChance) {
 			crit = true;
 			damage *= 1.75;
@@ -638,7 +638,7 @@ public class CombatSoulskills extends BaseCombatContent {
 		player.removeStatusEffect(StatusEffects.VioletPupilTransformation);
 		enemyAI();
 	}
-	
+
 	private static const TranceABC:Object = FnHelpers.FN.buildLogScaleABC(10,100,1000,10,100);
 	public function TranceTransformation():void {
 		clearOutput();
@@ -646,29 +646,17 @@ public class CombatSoulskills extends BaseCombatContent {
 			var TranceBoost:Number = 10;
 			if (player.hasPerk(PerkLib.JobSorcerer) && player.inte >= 25) TranceBoost += 5;
 			if (player.hasPerk(PerkLib.Spellpower) && player.inte >= 50) TranceBoost += 5;
-			if (player.hasPerk(PerkLib.Mage) && player.inte >= 50) TranceBoost += 10;
-			if (player.hasPerk(PerkLib.FocusedMind) && player.inte >= 50) TranceBoost += 10;
-			if (player.hasPerk(PerkLib.Channeling) && player.inte >= 60) TranceBoost += 10;
-			if (player.hasPerk(PerkLib.Archmage) && player.inte >= 75) TranceBoost += 15;
-			if (player.hasPerk(PerkLib.GrandArchmage) && player.inte >= 100) TranceBoost += 20;
-			if (player.hasPerk(PerkLib.GreyMage) && player.inte >= 125) TranceBoost += 25;
-			if (player.hasPerk(PerkLib.GreyArchmage) && player.inte >= 150) TranceBoost += 30;
 			if (player.hasPerk(PerkLib.JobEnchanter) && player.inte >= 50) TranceBoost += 5;
 			if (player.hasPerk(PerkLib.Battleflash) && player.inte >= 50) TranceBoost += 15;
-			if (player.hasPerk(PerkLib.JobSwordsman)) TranceBoost -= 10;
-			if (player.hasPerk(PerkLib.JobBrawler)) TranceBoost -= 10;
 			if (player.hasPerk(PerkLib.JobDervish)) TranceBoost -= 10;
 			if (player.hasPerk(PerkLib.IronFistsI)) TranceBoost -= 10;
 			if (player.hasPerk(PerkLib.JobMonk)) TranceBoost -= 15;
 			if (player.hasPerk(PerkLib.Berzerker)) TranceBoost -= 15;
 			if (player.hasPerk(PerkLib.Lustzerker)) TranceBoost -= 15;
 			if (player.hasPerk(PerkLib.WeaponMastery)) TranceBoost -= 15;
-			if (player.hasPerk(PerkLib.WeaponGrandMastery)) TranceBoost -= 25;
 			if (player.hasPerk(PerkLib.HeavyArmorProficiency)) TranceBoost -= 15;
-			if (player.hasPerk(PerkLib.AyoArmorProficiency)) TranceBoost -= 20;
 			if (player.hasPerk(PerkLib.Agility)) TranceBoost -= 10;
 			if (player.hasPerk(PerkLib.LightningStrikes)) TranceBoost -= 10;
-			if (player.hasPerk(PerkLib.BodyCultivator)) TranceBoost -= 5;
 		//	TranceBoost += player.inte / 10;player.inte * 0.1 - może tylko jak bedzie mieć perk z prestige job: magus/warock/inny związany z spells
 			if (TranceBoost < 10) TranceBoost = 10;
 		//	if (player.hasPerk(PerkLib.JobEnchanter)) TranceBoost *= 1.2;
@@ -844,7 +832,7 @@ public class CombatSoulskills extends BaseCombatContent {
 	 if (player.inte <= 100) critChance += (player.inte - 50) / 50;
 	 if (player.inte > 100) critChance += 1;
 	 }
-	 if (monster.isImmuneToCrits() && !player.hasPerk(PerkLib.EnableCriticals)) critChance = 0;
+	 if (monster.isImmuneToCrits()) critChance = 0;
 	 if (rand(100) < critChance) {
 	 crit = true;
 	 damage *= 1.75;

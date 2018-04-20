@@ -152,7 +152,6 @@ public class EventParser {
             CoC.instance.timeQ--;
             CoC.instance.model.time.hours++;
             SceneLib.combat.regeneration(false);
-            if (player.hasPerk(PerkLib.JobSoulCultivator)) SceneLib.combat.soulforceregeneration(false);
             if (player.hasPerk(PerkLib.JobSorcerer)) SceneLib.combat.manaregeneration(false);
             SceneLib.combat.wrathregeneration(false);
             //Inform all time aware classes that a new hour has arrived

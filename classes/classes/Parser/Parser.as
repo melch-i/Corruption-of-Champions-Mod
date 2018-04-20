@@ -613,6 +613,20 @@ public class Parser
 			return textCtnt.toLowerCase().indexOf("if") == 0;
 		}
 
+		private static function isSpeechStatement(textCtnt:String):Boolean
+		{
+			return textCtnt.toLowerCase().indexOf("say: ") == 0;
+		}
+
+		/**
+		 * Converts `[say: Text]` to `<i>\"Text\"</i>
+		 * @param textCtnt string to convert
+		 * @return
+		 */
+		private static function parseSpeech(textCtnt:String):String{
+			return "\u201c<i>" + textCtnt.substring(5,textCtnt.length + 1) + "</i>\u201d";
+		}
+
         /**
          *  Called to determine if the contents of a bracket are a parseable statement or not
          *  If the contents *are* a parseable, it calls the relevant function to evaluate it
@@ -721,6 +735,10 @@ public class Parser
                                     trace("WARNING: ------------------0000000000000000000000000000000000000000000000000000000000000000-----------------------");
                                 }
                                 //trace("WARNING: Parsed Ccnditional - ", retStr)
+                            }
+                            else if (isSpeechStatement(tmpStr))
+                            {
+	                            retStr += parseSpeech(recParser(tmpStr,depth));
                             }
                             else if (tmpStr) {
                                 if (printCcntentDebug) {

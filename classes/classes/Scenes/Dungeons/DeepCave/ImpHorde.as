@@ -233,8 +233,6 @@ public class ImpHorde extends Monster
 			this.drop = new WeightedDrop(armors.NURSECL, 1);
 			this.wings.type = Wings.IMP;
 			this.wings.desc = "imp wings";
-			this.createPerk(PerkLib.InhumanDesireI, 0, 0, 0, 0);
-			this.createPerk(PerkLib.RefinedBodyI, 0, 0, 0, 0);
 			this.createPerk(PerkLib.Regeneration, 0, 0, 0, 0);
 			this.createPerk(PerkLib.EnemyGroupType, 0, 0, 0, 0);
 			this.createPerk(PerkLib.EnemyTrueDemon, 0, 0, 0, 0);

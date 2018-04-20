@@ -33,7 +33,6 @@ public class MinotaurBlood extends Consumable {
 		if (rand(3) == 0) changeLimit++;
 		if (rand(3) == 0) changeLimit++;
 		if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
-		if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
 		if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 		if (changeLimit == 1) changeLimit = 2;
 		//Temporary storage

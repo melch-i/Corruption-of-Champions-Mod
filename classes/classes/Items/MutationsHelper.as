@@ -244,7 +244,6 @@ import classes.BodyParts.Wings;
 			if (rand(i) == 0) changeLimit++;
 		}
 		if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
-		if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
 		if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 		return changes;
 	}

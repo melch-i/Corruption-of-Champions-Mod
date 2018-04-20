@@ -186,8 +186,6 @@ public class HeroslayerOmnibus extends Monster
 			this.level = 30;
 			this.gems = rand(5) + 38;
 			this.drop = NO_DROP;
-			this.createPerk(PerkLib.InhumanDesireI, 0, 0, 0, 0);
-			this.createPerk(PerkLib.DemonicDesireI, 0, 0, 0, 0);
 			this.createPerk(PerkLib.EnemyBossType, 0, 0, 0, 0);
 			this.createPerk(PerkLib.EnemyTrueDemon, 0, 0, 0, 0);
 			checkMonster();

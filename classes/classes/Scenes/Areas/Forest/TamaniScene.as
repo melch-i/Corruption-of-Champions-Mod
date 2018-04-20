@@ -227,11 +227,6 @@ private function tamaniMaleRepeatEncounter():void {
 	}
 	//(+1 lust per 10 sensitivity)
 	dynStats("lus", player.sens / 10);
-	if (player.hasPerk(PerkLib.SoulSense) && flags[kFLAGS.SOUL_SENSE_TAMANI] < 2) flags[kFLAGS.SOUL_SENSE_TAMANI]++;
-	if (flags[kFLAGS.SOUL_SENSE_TAMANI] == 2) {
-		flags[kFLAGS.SOUL_SENSE_TAMANI]++;
-		outputText("\n\n<b>You have meet her enough times to be able to find her in the future when using soul sense. (Removes Tamani from forest explore encounters pool!)</b>\n\n");
-	}
 	//[Take Her – win sex] 
 	//[Let Her – Get dommed] 
 	//[No – starts fight]

@@ -217,10 +217,7 @@ import classes.Items.*;
 	
 			player.createPerk(PerkLib.Regeneration, 0, 0, 0, 0);
 			player.createPerk(PerkLib.Smart, 0, 0, 0, 0);
-			player.createPerk(PerkLib.Channeling, 0, 0, 0, 0);
-			player.createPerk(PerkLib.Mage, 0, 0, 0, 0);
 			player.createPerk(PerkLib.HistoryHealer, 0, 0, 0, 0);
-			player.createPerk(PerkLib.RefinedBodyI, 0, 0, 0, 0);
 			player.createStatusEffect(StatusEffects.KnowsArouse,0,0,0,0);
 			player.createStatusEffect(StatusEffects.KnowsHeal,0,0,0,0);
 			player.createStatusEffect(StatusEffects.KnowsMight,0,0,0,0);
@@ -397,8 +394,7 @@ import classes.Items.*;
 			player.createPerk(PerkLib.Feeder, 0, 0, 0, 0);
 	
 			player.createPerk(PerkLib.StrongBack, 0, 0, 0, 0);
-			player.createPerk(PerkLib.StrongBack2, 0, 0, 0, 0);
-	
+
 			//Equipment: 
 			//Weapon: Warhammer
 			player.setWeapon(weapons.WARHAMR);
@@ -1305,7 +1301,6 @@ import classes.Items.*;
 			player.createPerk(PerkLib.Acclimation, 			0, 0, 0, 0);
 			player.createPerk(PerkLib.Berzerker, 			0, 0, 0, 0);
 			player.createPerk(PerkLib.BrutalBlows, 			0, 0, 0, 0);
-			player.createPerk(PerkLib.DoubleAttack, 		0, 0, 0, 0);
 			player.createPerk(PerkLib.ImmovableObject, 		0, 0, 0, 0);
 			player.createPerk(PerkLib.LightningStrikes, 	0, 0, 0, 0);
 			player.createPerk(PerkLib.LungingAttacks, 		0, 0, 0, 0);
@@ -1315,7 +1310,6 @@ import classes.Items.*;
 			player.createPerk(PerkLib.Resolute,				0, 0, 0, 0);
 			player.createPerk(PerkLib.SpeedyRecovery,		0, 0, 0, 0);
 			player.createPerk(PerkLib.Tactician,			0, 0, 0, 0);
-			player.createPerk(PerkLib.RefinedBodyI,			0, 0, 0, 0);
 			player.createPerk(PerkLib.TankI,				0, 0, 0, 0);
 			player.createPerk(PerkLib.ThunderousStrikes,	0, 0, 0, 0);
 			player.createPerk(PerkLib.WeaponMastery,		0, 0, 0, 0);
@@ -1542,7 +1536,6 @@ import classes.Items.*;
 			player.createPerk(PerkLib.StrongBack,0,0,0,0);
 			player.itemSlot4.unlocked = true;
 			player.itemSlot5.unlocked = true;
-			player.createPerk(PerkLib.StrongBack2,0,0,0,0);
 			player.createPerk(PerkLib.HistorySlacker,0,0,0,0);
 			player.str += 4;
 			player.tou += 4;
@@ -1577,11 +1570,8 @@ import classes.Items.*;
 
 			player.createPerk(PerkLib.HistoryScholar, 0, 0, 0, 0);
 			player.createPerk(PerkLib.HistoryHealer, 0, 0, 0, 0);
-			player.createPerk(PerkLib.JobSoulCultivator, 0, 0, 0, 0);
 			player.createPerk(PerkLib.TankI, 0, 0, 0, 0);
 			player.createPerk(PerkLib.Spellpower, 0, 0, 0, 0);
-			player.createPerk(PerkLib.Mage, 0, 0, 0, 0);
-			player.createPerk(PerkLib.SoulApprentice, 0, 0, 0, 0);
 			player.createPerk(PerkLib.DarkCharm, 0, 0, 0, 0);
 			player.createPerk(PerkLib.BlackHeart, 0, 0, 0, 0);
 			player.createPerk(PerkLib.Pervert, 0, 0, 0, 0);
@@ -1680,9 +1670,8 @@ import classes.Items.*;
 				if (player.teaseLevel < 3) player.teaseLevel = 3; }			
 			
 			// almost compulsive hoarder, start with backpack, chests and racks... never enough storage space
-			if (!player.hasPerk(PerkLib.StrongBack)) { player.createPerk(PerkLib.StrongBack, 0, 0, 0, 0); player.itemSlot4.unlocked = true; }
-			if (!player.hasPerk(PerkLib.StrongBack2)) { player.createPerk(PerkLib.StrongBack2, 0, 0, 0, 0); player.itemSlot5.unlocked = true; }
-			var i:int = 0;			
+			if (!player.hasPerk(PerkLib.StrongBack)) { player.createPerk(PerkLib.StrongBack, 0, 0, 0, 0); player.itemSlot4.unlocked = true; player.itemSlot5.unlocked = true; }
+			var i:int = 0;
 			if (player.hasKeyItem("Backpack") < 0) player.createKeyItem("Backpack", 5, 0, 0, 0);			
 			if (player.hasKeyItem("Camp - Chest") < 0) { player.createKeyItem("Camp - Chest", 0, 0, 0, 0); for (i = 0; i < 6; i++) inventory.createStorage(); }			
 			if (player.hasKeyItem("Camp - Murky Chest") < 0) { player.createKeyItem("Camp - Murky Chest", 0, 0, 0, 0); for (i = 0; i < 4; i++) inventory.createStorage(); }			
@@ -1695,7 +1684,6 @@ import classes.Items.*;
 			if (!player.hasPerk(PerkLib.HistoryAlchemist)) player.createPerk(PerkLib.HistoryAlchemist, 0, 0, 0, 0); // and resorted to your hobby - alchemy
 			if (!player.hasPerk(PerkLib.TransformationResistance)) player.createPerk(PerkLib.TransformationResistance, 0, 0, 0, 0);  // tf resistance and alchemist are actually mutually nullifying each other - this is flavor mostly
 			if (!player.hasPerk(PerkLib.HistoryHealer)) player.createPerk(PerkLib.HistoryHealer, 0, 0, 0, 0);  // with religious and alchemical knowlege you are skilled healer
-			if (!player.hasPerk(PerkLib.Medicine)) player.createPerk(PerkLib.Medicine, 0, 0, 0, 0); // able to treat wounds and poisoning alike
 			if (!player.hasPerk(PerkLib.AscensionMoralShifter)) player.createPerk(PerkLib.AscensionMoralShifter, 5, 0, 0, 0); // your kitsune's trickster nature makes you susceptable to corruption
 			if (!player.hasPerk(PerkLib.AscensionTolerance)) player.createPerk(PerkLib.AscensionTolerance, 10, 0, 0, 0); // but in the same time your enlightment keeps you from really turning to demon, so corruption level does not really affect you much
 			if (!player.hasPerk(PerkLib.Fast)) player.createPerk(PerkLib.Fast, 0.25, 0, 0, 0); // gaining speed is pain in ass... this one is not for history flavor
@@ -1707,7 +1695,6 @@ import classes.Items.*;
 			if (!player.hasPerk(PerkLib.Sadist)) player.createPerk(PerkLib.Sadist, 0, 0, 0, 0); // and you are always ready to return favor
 			if (!player.hasPerk(PerkLib.SensualLover)) player.createPerk(PerkLib.SensualLover, 0, 0, 0, 0); // still you tend to care about mutual enjoyment - there are difference between extreme entertainment and torture, and you are mischievous, not evil
 			if (!player.hasPerk(PerkLib.SpellcastingAffinity)) player.createPerk(PerkLib.SpellcastingAffinity, 80, 0, 0, 0); // very strong magic affinity, can even be effective as mage without robe
-			if (!player.hasPerk(PerkLib.Channeling)) player.createPerk(PerkLib.Channeling, 0, 0, 0, 0); // despite strong magic affinity wasn't actually much interested in combat magic before, so only can use fox fire as offensive spell
 			if (!player.hasPerk(PerkLib.Spellpower)) player.createPerk(PerkLib.Spellpower, 0, 0, 0, 0);
 			// have some racial traits
 			if (!player.hasPerk(PerkLib.EnlightenedNinetails)) player.createPerk(PerkLib.EnlightenedNinetails, 0, 0, 0, 0);
@@ -1965,8 +1952,6 @@ import classes.Items.*;
 			player.createPerk(PerkLib.Smart, 0.25, 0, 0, 0);
 			player.createPerk(PerkLib.HistoryScholar, 0, 0, 0, 0);
 			player.createPerk(PerkLib.HistoryAlchemist, 0, 0, 0, 0);
-			player.createPerk(PerkLib.Channeling, 0, 0, 0, 0);
-			player.createPerk(PerkLib.Mage, 0, 0, 0, 0);
 			player.createPerk(PerkLib.SpellcastingAffinity, 50, 0, 0, 0);
 			
 			// and knows white magic

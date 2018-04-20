@@ -113,7 +113,7 @@ public class Race {
 			'gender'         : ch.gender
 		}
 	}
-	
+
 	public static function ExplainMetricValue(metric:String, value:*):String {
 		switch (metric) {
 			case 'skin'           :
@@ -162,7 +162,7 @@ public class Race {
 				return value;
 		}
 	}
-	
+
 	public static const BonusName_maxstr:String       = 'maxstr';
 	public static const BonusName_maxtou:String       = 'maxtou';
 	public static const BonusName_maxspe:String       = 'maxspe';
@@ -191,7 +191,7 @@ public class Race {
 		BonusName_maxsoulforce,
 		BonusName_defense
 	];
-	
+
 	/**
 	 * @param metrics object{metricName:metricValue}
 	 * @return object{raceName:raceScore}
@@ -271,7 +271,7 @@ public class Race {
 		}
 		return add;
 	}
-	
+
 	public static var HUMAN:Race = new Race("human")
 			.simpleScores({
 				'face'       : [Face.HUMAN, +1],
@@ -383,10 +383,10 @@ public class Race {
 						return score;
 					}
 			);
-	
+
 	// ^^^^^ SPECIAL RACES
 	// vvvvv NOT-SO-SPECIAL RACES
-	
+
 	public static var ALICORN:Race = new Race("alicorn")
 			.simpleScores({
 				'face'      : [
@@ -428,7 +428,7 @@ public class Race {
 				'maxspe'      : +50,
 				'maxint'      : +90
 			});
-	
+
 	public static var ALRAUNE:Race = new Race("alraune")
 			.simpleScores({
 				'face' : [Face.HUMAN, +1],
@@ -453,7 +453,7 @@ public class Race {
 				'maxspe': -50,
 				'maxlib': +100
 			});
-	
+
 	public static var AVIAN:Race = new Race("avian")
 			.simpleScores({
 				'hair'     : [Hair.FEATHER, +1],
@@ -483,7 +483,7 @@ public class Race {
 				'maxspe': +75,
 				'maxint': +30
 			});
-	
+
 	public static var BAT:Race = new Race("bat")
 			.simpleScores({
 				'ears' : [
@@ -506,7 +506,7 @@ public class Race {
 				'maxint': +35,
 				'maxlib': +45
 			});
-	
+
 	public static var BEE:Race = new Race("bee")
 			.simpleScores({
 				'hair.color': [
@@ -550,7 +550,7 @@ public class Race {
 				'maxspe': +50,
 				'maxint': +35
 			});
-	
+
 	public static var BUNNY:Race = new Race("bunny")
 			.simpleScores({
 				'face': [Face.BUNNY, +1],
@@ -579,7 +579,7 @@ public class Race {
 			).withBonusTier(4,{
 				'maxspe': +10
 			});
-	
+
 	public static var CAT:Race = new Race("cat")
 			.simpleScores({
 				'face'     : [
@@ -645,7 +645,7 @@ public class Race {
 				'maxspe': +60,
 				'maxlib': +60
 			});
-	
+
 	public static var CENTAUR:Race = new Race("centaur")
 			.simpleScores({
 				'tail'      : [Tail.HORSE, +1],
@@ -678,7 +678,7 @@ public class Race {
 				'maxspe': +40,
 				'maxhp' : +100
 			});
-	
+
 	public static var CHESHIRE:Race = new Race("cheshire")
 			.simpleScores({
 				'eyes'     : [Eyes.CAT_SLITS, +1],
@@ -709,7 +709,7 @@ public class Race {
 				'maxint': +80,
 				'maxsen': +25
 			});
-	
+
 	public static var COUATL:Race = new Race("couatl")
 			.simpleScores({
 				'tongue'   : [Tongue.SNAKE, +1],
@@ -732,7 +732,7 @@ public class Race {
 				'maxtou': +25,
 				'maxspe': +100
 			});
-	
+
 	public static var COW:Race = new Race("cow")
 			.simpleScores({
 				'face'  : [
@@ -777,7 +777,7 @@ public class Race {
 				'maxlib' : +45,
 				'maxlust': +50
 			});
-	
+
 	public static var DEMON:Race = new Race("demon")
 			.simpleScores({
 				'horns' : [
@@ -817,8 +817,6 @@ public class Race {
 							score++;
 						if (ch.hasPerk(PerkLib.ChimericalBodyPerfectStage))
 							score += 10;
-						if (ch.hasPerk(PerkLib.DemonicLethicite))
-							score += 1;
 						return score;
 					}
 			).withBonusTier(5, {
@@ -832,7 +830,7 @@ public class Race {
 				'maxlib' : +100,
 				'maxlust': +50
 			});
-	
+
 	public static var DOG:Race = new Race("dog")
 			.simpleScores({
 				'face': [Face.DOG, +1],
@@ -860,7 +858,7 @@ public class Race {
 				'maxspe': +15,
 				'maxint': -5
 			});
-	
+
 	public static var DEER:Race = new Race("deer")
 			.simpleScores({
 				'ears': [Ears.DEER, +1],
@@ -885,7 +883,7 @@ public class Race {
 			).withBonusTier(4,{
 				'maxspe': +20
 			});
-	
+
 	public static var DEVILKIN:Race = new Race("devilkin")
 			.simpleScores({
 				'legs' : [LowerBody.HOOFED, +1],
@@ -931,7 +929,7 @@ public class Race {
 				'maxlib' : +100,
 				'maxlust': +150
 			});
-	
+
 	public static var DRAGON:Race = new Race("dragon")
 			.simpleScores({
 				'eyes'     : [Eyes.DRAGON, +1],
@@ -1021,7 +1019,7 @@ public class Race {
 				'maxhp'     : +400,
 				'maxlust'   : +50
 			});
-	
+
 	public static var DRAGONNE:Race = new Race("dragonne")
 			.simpleScores({
 				'face'  : [Face.CAT, +1],
@@ -1040,7 +1038,7 @@ public class Race {
 						return score;
 					}
 			);
-	
+
 	public static var ECHIDNA:Race = new Race("echidna")
 			.simpleScores({
 				'ears'  : [Ears.ECHIDNA, +1],
@@ -1057,7 +1055,7 @@ public class Race {
 						return score;
 					}
 			);
-	
+
 	public static var ELF:Race = new Race("elf")
 			.simpleScores({
 				'ears'      : [Ears.ELVEN, +1],
@@ -1109,7 +1107,7 @@ public class Race {
 				'maxwis': +60,
 				'maxsen': +30
 			});
-	
+
 	public static var FERRET:Race = new Race("ferret")
 			.simpleScores({
 				'face': [
@@ -1123,7 +1121,7 @@ public class Race {
 				if (ch.hasFur() && score > 0) score++;
 				return score;
 			});
-	
+
 	public static var FOX:Race = new Race("fox")
 			.simpleScores({
 				'face': [Face.FOX, +1],
@@ -1157,7 +1155,7 @@ public class Race {
 				'maxint': +55,
 				'maxfatigue': +20
 			});
-	
+
 	public static var GARGOYLE:Race = new Race("gargoyle")
 			.simpleScores({
 				'horns'     : [Horns.GARGOYLE, +1],
@@ -1201,7 +1199,7 @@ public class Race {
 				'maxtou':+100,
 				'maxint':+70
 			});
-	
+
 	public static var GoblinSkinColors:/*String*/Array = ["pale yellow", "grayish-blue", "green", "dark green"];
 	public static var GOBLIN:Race                      = new Race("goblin")
 			.simpleScores({
@@ -1230,7 +1228,7 @@ public class Race {
 			).withBonusTier(4,{
 				'maxint': +20
 			});
-	
+
 	public static var GOO:Race = new Race("goo")
 			.simpleScores({
 				'hair' : [Hair.GOO, +1],
@@ -1272,7 +1270,7 @@ public class Race {
 				'maxspe': -40,
 				'maxlib': +80
 			});
-	
+
 	public static var GORGON:Race = new Race("gorgon")
 			.simpleScores({
 				'tongue'   : [Tongue.SNAKE, +1],
@@ -1308,7 +1306,7 @@ public class Race {
 				'maxspe': +70,
 				'maxhp' : +50
 			});
-	
+
 	public static var HARPY:Race = new Race("harpy")
 			.simpleScores({
 				'arms' : [Arms.HARPY, +1],
@@ -1345,7 +1343,7 @@ public class Race {
 				'maxspe': +80,
 				'maxlib': +60
 			});
-	
+
 	public static var HORSE:Race = new Race("horse")
 			.simpleScores({
 				'face'     : [Face.HORSE, +1],
@@ -1382,7 +1380,7 @@ public class Race {
 				'maxtou': +35,
 				'maxhp' : +70
 			});
-	
+
 	public static var JABBERWOCKY:Race = new Race("jabberwocky")
 			.simpleScores({
 				'face'     : [
@@ -1455,7 +1453,7 @@ public class Race {
 				'maxwis': -50,
 				'maxlib': +20
 			});
-	
+
 	public static var KANGA:Race = new Race("kangaroo")
 			.simpleScores({
 				'ears': [Ears.KANGAROO, +1],
@@ -1474,7 +1472,7 @@ public class Race {
 				'maxtou': +5,
 				'maxspe': +15
 			});
-	
+
 	public static var KITSHOO:Race = new Race("kitshoo")
 			.simpleScores({
 				'ears'     : [Ears.FOX, +1],
@@ -1535,7 +1533,7 @@ public class Race {
 						return score;
 					}
 			);
-	
+
 	public static const KitsuneHairColors:/*String*/Array  = ["white", "black", "black", "black", "red", "red", "red"];
 	public static const KitsuneFurColors:/*String*/Array   = ["orange and white", "black", "black and white", "red", "red and white", "white"];
 	public static const KitsuneElderColors:/*String*/Array = ["metallic golden", "golden blonde", "metallic silver", "silver blonde", "snow white", "iridescent gray"];
@@ -1627,7 +1625,7 @@ public class Race {
 				'maxlib'    : +20,
 				'maxfatigue': +300
 			});
-	
+
 	public static var LIZARD:Race = new Race("lizard")
 			.simpleScores({
 				'face' : [Face.LIZARD, +1],
@@ -1669,7 +1667,7 @@ public class Race {
 				'maxlib'    : +50,
 				'maxfatigue': +30
 			});
-	
+
 	public static var MANTICORE:Race = new Race("manticore")
 			.simpleScores({
 				'face'  : [Face.MANTICORE, +1],
@@ -1713,7 +1711,7 @@ public class Race {
 				'maxlib': +60,
 				'maxhp' : +50
 			});
-	
+
 	public static var MANTIS:Race = new Race("mantis")
 			.simpleScores({
 				'arms'     : [Arms.MANTIS, +1],
@@ -1760,7 +1758,7 @@ public class Race {
 				'maxspe': +140,
 				'maxint': +20
 			});
-	
+
 	public static var MINOTAUR:Race = new Race("minotaur")
 			.simpleScores({
 				'face'  : [
@@ -1803,7 +1801,7 @@ public class Race {
 				'maxlib' : +45,
 				'maxlust': +50
 			});
-	
+
 	public static var MOUSE:Race = new Race("mouse")
 			.simpleScores({
 				'ears': [Ears.MOUSE, +1],
@@ -1821,7 +1819,7 @@ public class Race {
 						return score;
 					}
 			);
-	
+
 	public static var NAGA:Race = new Race("naga")
 			.simpleScores({
 				'tongue': [Tongue.SNAKE, +1],
@@ -1846,7 +1844,7 @@ public class Race {
 				'maxtou': +20,
 				'maxspe': +60
 			});
-	
+
 	public static var NEKOMATA:Race = new Race("nekomata")
 			.simpleScores({
 				'face'  : [
@@ -1874,7 +1872,7 @@ public class Race {
 				'maxint': +40,
 				'maxwis': +85
 			});
-	
+
 	public static const OniEyeColors:/*String*/Array = ["red", "orange", "yellow"];
 	public static var ONI:Race                       = new Race("oni")
 			.simpleScores({
@@ -1919,7 +1917,7 @@ public class Race {
 				'maxint': -20,
 				'maxwis': +40
 			});
-	
+
 	public static var ORCA:Race = new Race("orca")
 			.simpleScores({
 				'ears'             : [Ears.ORCA, +1],
@@ -1954,7 +1952,7 @@ public class Race {
 				'maxtou': +40,
 				'maxspe': +70
 			});
-	
+
 	public static var PHOENIX:Race = new Race("phoenix")
 			.simpleScores({
 				'eyes' : [Eyes.REPTILIAN, +1],
@@ -1996,7 +1994,7 @@ public class Race {
 					"You suddenly feels your body temperature rising to ridiculus level. You pant for several minutes until your finaly at ease with your bodily heat. You doubt any more heat is gunna make you more incomfortable then this as you quietly soak in the soothing warmth your body naturaly produce. Its like your body is made out of living fire.\n\n(<b>Gained Perk: Fire Affinity</b>)",
 					"You suddenly feel chilly as your bodily temperature drop down to human level. You lost your natural warmth reverting to that of a standard human.\n\n<b>(Lost Perk: Fire Affinity)</b>"
 			);
-	
+
 	public static var PIG:Race = new Race("pig")
 			.simpleScores({
 				'ears': [Ears.PIG, +1],
@@ -2012,7 +2010,7 @@ public class Race {
 						return score;
 					}
 			);
-	
+
 	public static var PLANT:Race = new Race("plant")
 			.simpleScores({
 				'face' : [
@@ -2073,7 +2071,7 @@ public class Race {
 				'maxtou': +100,
 				'maxspe': -50
 			});
-	
+
 	public static var RACCOON:Race = new Race("raccoon")
 			.simpleScores({
 				'face': [
@@ -2097,7 +2095,7 @@ public class Race {
 			).withBonusTier(4,{
 				'maxspe': +15
 			});
-	
+
 	public static var RAIJU:Race = new Race("raiju")
 			.simpleScores({
 				'ears'             : [Ears.WEASEL, +1],
@@ -2139,7 +2137,7 @@ public class Race {
 					"You suddenly feel a rush of electricity run across your skin as your arousal builds up and begin to masturbate in order to get rid of your creeping desire. However even after achieving orgasm not only are you still aroused but you are even hornier than before! You realise deep down that the only way for you to be freed from this jolting pleasure is to have sex with a partner!\n\n(<b>Gained the lightning affinity perk, electrified desire perk and Orgasmic lightning strike ability!</b>)",
 					"Your natural electricity production start dropping at a dramatic rate until finally there is no more. You realise you likely aren’t raiju enough to build electricity anymore which, considering you can reach satisfaction again, might not be a bad thing.\n\n<b>(Lost the lightning affinity perk, electrified desire perk and Orgasmic lightning strike ability!)</b>"
 			).withRacialPerk(7,PerkLib.ElectrifiedDesire,"","");
-	
+
 	public static var REDPANDA:Race = new Race("red panda")
 			.simpleScores({
 				'face': [Face.RED_PANDA, +2],
@@ -2168,7 +2166,7 @@ public class Race {
 					"",
 					""
 			);
-	
+
 	public static var RHINO:Race = new Race("rhino")
 			.simpleScores({
 				'ears' : [Ears.RHINO, +1],
@@ -2194,7 +2192,7 @@ public class Race {
 				'maxint': -10,
 				'maxhp' : +100
 			});
-	
+
 	public static var SALAMANDER:Race = new Race("salamander")
 			.simpleScores({
 				'eyes': [Eyes.REPTILIAN, +1],
@@ -2240,7 +2238,7 @@ public class Race {
 				"You suddenly feels your body temperature rising to ridiculus level. You pant for several minutes until your finaly at ease with your bodily heat. You doubt any more heat is gunna make you more incomfortable then this as you quietly soak in the soothing warmth your body naturaly produce. Its like your body is made out of living fire.\n\n(<b>Gained Perk: Fire Affinity</b>)",
 				"You suddenly feel chilly as your bodily temperature drop down to human level. You lost your natural warmth reverting to that of a standard human.\n\n<b>(Lost Perk: Fire Affinity)</b>"
 			);
-	
+
 	public static var SANDTRAP:Race = new Race("sandtrap")
 			.simpleScores({
 				'eyes' : [Eyes.BLACK_EYES_SAND_TRAP, +1],
@@ -2258,7 +2256,7 @@ public class Race {
 						return score;
 					}
 			);
-	
+
 	public static var SATYR:Race = new Race("satyr")
 			.simpleScores({
 				'legs': [LowerBody.HOOFED, +1],
@@ -2289,7 +2287,7 @@ public class Race {
 				'maxstr': +5,
 				'maxspe': +5
 			});
-	
+
 	public static var SCORPION:Race = new Race("scorpion")
 			.simpleScores({
 				'tail'     : [Tail.SCORPION, +1],
@@ -2305,7 +2303,7 @@ public class Race {
 						return score;
 					}
 			);
-	
+
 	public static var SCYLLA:Race = new Race("scylla")
 			.simpleScores({
 				'face': [Face.HUMAN, +1],
@@ -2346,7 +2344,7 @@ public class Race {
 				'maxint': +60,
 				'maxhp' : +150
 			});
-	
+
 	public static var SHARK:Race = new Race("shark")
 			.simpleScores({
 				'face' : [Face.SHARK_TEETH, +1],
@@ -2386,7 +2384,7 @@ public class Race {
 				'maxlib' : +20,
 				'maxlust': +50
 			});
-	
+
 	public static var SIREN:Race = new Race("siren")
 			.simpleScores({
 				'face'      : [Face.SHARK_TEETH, +1],
@@ -2414,7 +2412,7 @@ public class Race {
 				'maxspe': +70,
 				'maxint': +40
 			});
-	
+
 	public static var SPHINX:Race = new Race("sphinx")
 			.simpleScores({
 				'eyes'  : [Eyes.CAT_SLITS, +1],
@@ -2470,7 +2468,7 @@ public class Race {
 				'maxint': +100,
 				'maxwis': +40
 			});
-	
+
 	public static var SPIDER:Race = new Race("spider")
 			.simpleScores({
 				'eyes'     : [Eyes.FOUR_SPIDER_EYES, +1],
@@ -2507,7 +2505,7 @@ public class Race {
 				'maxtou': +50,
 				'maxint': +75
 			});
-	
+
 	public static var UNICORN:Race = new Race("unicorn")
 			.simpleScores({
 				'face'      : [
@@ -2548,7 +2546,7 @@ public class Race {
 				'maxsoulforce': +50,
 				'maxhp'       : +120
 			});
-	
+
 	public static var VAMPIRE:Race = new Race("vampire")
 			.simpleScores({
 				'ears' : [
@@ -2571,7 +2569,7 @@ public class Race {
 				'maxint': +35,
 				'maxlib': +45
 			});
-	
+
 	public static var VOUIVRE:Race = new Race("vouivre")
 			.simpleScores({
 				'tongue'   : [Tongue.SNAKE, +1],
@@ -2615,7 +2613,7 @@ public class Race {
 				'maxint': +10,
 				'maxwis': -20
 			});
-	
+
 	public static var WEREWOLF:Race = new Race("werewolf")
 			.simpleScores({
 				'face'  : [Face.WOLF_FANGS, +1],
@@ -2660,7 +2658,7 @@ public class Race {
 				'maxspe': +60,
 				'maxint': -20
 			});
-	
+
 	public static var WOLF:Race = new Race("wolf")
 			.simpleScores({
 				'face'     : [Face.WOLF, +1],
@@ -2706,7 +2704,7 @@ public class Race {
 				'maxspe': +60,
 				'maxint': -10
 			});
-	
+
 	public static var YETI:Race = new Race("yeti")
 			.simpleScores({
 				'skin.tone' : ['dark', +1],
@@ -2750,7 +2748,7 @@ public class Race {
 					"",
 					""
 			);
-	
+
 	public static var YGGDRASIL:Race = new Race("yggdrasil")
 			.simpleScores({
 				'face' : [Face.PLANT_DRAGON, +2],
@@ -2785,7 +2783,7 @@ public class Race {
 				'maxwis': +80,
 				'maxlib': -50
 			});
-	
+
 	/*
 	//////////////
 	// TEMPLATE //
@@ -3064,7 +3062,7 @@ public class Race {
 		}
 		return rslt;
 	}
-	
+
 	private static function error(msg:String):* {
 		trace("[RACE CONFIG ERROR]", msg);
 		if (CoC_Settings.haltOnErrors) {

@@ -473,8 +473,7 @@ if (!CoC.instance.inCombat && inDungeon == false && inRoomedDungeon == false && 
 		
 		public function getMaxSlots():int {
 			var slots:int = 3;
-			if (player.hasPerk(PerkLib.StrongBack)) slots++;
-			if (player.hasPerk(PerkLib.StrongBack2)) slots++;
+			if (player.hasPerk(PerkLib.StrongBack)) slots += 2;
 			slots += player.keyItemv1("Backpack");
 			//Constrain slots to between 3 and 10.
 			if (slots < 3) slots = 3;

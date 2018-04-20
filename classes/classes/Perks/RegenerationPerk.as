@@ -14,11 +14,14 @@ import classes.PerkClass;
 			else return super.desc(params);
 		}
 		
-		public function RegenerationPerk() 
+		public function RegenerationPerk()
 		{
-			super("Regeneration I", "Regeneration I",
-				"Regenerates 1% of max HP/hour and 0,5% of max HP/round.",
-				"You choose the 'Regeneration I' perk, allowing you to heal 0,5% of max HP every round of combat and 1% of max HP every hour!");
+			var num:String = "Regeneration I";
+			super(
+					num, num, "Regenerates 1% of max HP/hour and 0,5% of max HP/round.",
+					"You choose the '"+num+"' perk, allowing you to heal 0,5% of max HP every round of combat and 1% of max HP every hour!"
+			);
+
 		}
 		
 	}

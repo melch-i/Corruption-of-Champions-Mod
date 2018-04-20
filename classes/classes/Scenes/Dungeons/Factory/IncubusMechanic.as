@@ -214,14 +214,12 @@ public class IncubusMechanic extends Monster {
 				this.inte += 30 + (6 * flags[kFLAGS.NEW_GAME_PLUS_LEVEL]);
 				this.weaponAttack += 10;
 				this.HP = maxHP();
-				this.createPerk(PerkLib.DemonicDesireI, 0, 0, 0, 0);
 			}
 			this.special1 = cockTripAttack;
 			this.special2 = spoogeAttack;
 			this.tailType = Tail.DEMONIC;
 			this.wings.type = Wings.BAT_LIKE_TINY;
 			this.wings.desc = "tiny hidden";
-			this.createPerk(PerkLib.InhumanDesireI, 0, 0, 0, 0);
 			this.createPerk(PerkLib.EnemyTrueDemon, 0, 0, 0, 0);
 			checkMonster();
 		}

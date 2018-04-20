@@ -132,15 +132,12 @@ public class MonsterStatsView extends Block {
 		fatigueBar.maxValue   = monster.maxFatigue();
 		soulforceBar.value    = monster.soulforce;
 		soulforceBar.maxValue = monster.maxSoulforce();
-		soulforceBar.visible  = player.hasPerk(PerkLib.SoulSense);
 		manaBar.value         = monster.mana;
 		manaBar.maxValue      = monster.maxMana();
 		manaBar.visible       = player.hasPerk(PerkLib.JobSorcerer);
 		wrathBar.value        = monster.wrath;
 		wrathBar.maxValue     = monster.maxWrath();
-		wrathBar.visible      = player.hasPerk(PerkLib.SenseWrath);
 		corBar.value          = monster.cor;
-		corBar.visible        = player.hasPerk(PerkLib.SenseCorruption);
 		
 		invalidateLayout();
 	}
