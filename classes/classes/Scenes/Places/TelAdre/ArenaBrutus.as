@@ -18,7 +18,7 @@ package classes.Scenes.Places.TelAdre
 		{
 			this.a = "";
 			this.short = "Brutus";
-			this.long = "Your opponent is a minotaur sized dog morph with the face of a pitbull. His overly muscular body suggests he spent maybe a few too many hours at the city gym, although considering how dumb and feral he look it’s also possible that he overfed himself on medicinal drugs. His chest and epic abs are not covered with any armor, perhaps for the sake of the show or because he doesn’t care about it. He carries with him a massive steel spiked ball, linked with a four feet long chain.";
+			this.long = "Your opponent is a minotaur sized dog morph with the face of a pitbull. His overly muscular body suggests he spent maybe a few too many hours at the city gym, although considering how dumb and feral he looks it’s also possible that he overfed himself on medicinal drugs. His chest and epic abs are not covered with any armor, perhaps for the sake of the show or because he doesn’t care about it. He wields a massive steel spiked ball, linked with a four foot long chain.";
 			this.level = 12;
 			this.weaponName = "spiked ball and chain";
 			this.weaponVerb = "smash";
@@ -78,13 +78,13 @@ package classes.Scenes.Places.TelAdre
 					outputText("Brutus begins whirling his ball and chain.");
 					break;
 				case 1:
-					outputText("The dog morph continues whirling his ball and chain, he's about to attack!");
+					outputText("The Minotaur continues whirling his ball and chain, he's about to attack!");
 					break;
 				case 2:
 					if(flags[kFLAGS.IN_COMBAT_USE_PLAYER_WAITED_FLAG] == 1){
-						outputText("Brutus slams the spiked ball in an attempt to crush you, but you saw it coming all along. You sidestep out of the ball’s reach as it crashes into the arena sand leaving a massive hole where you used to stand.");
+						outputText("Brutus attempts to crush you with his spiked ball and chain.  However, you saw it coming all along. You sidestep out of the ball’s reach as it crashes into the arena sand leaving a massive hole where you were standing.");
 					} else {
-						outputText("Brutus slams the spiked ball in an attempt to crush you. Having not prepared for this attack, you are squarely stamped in the arena sand for <b><font color=\"#800000\">5000</font></b> damage!");
+						outputText("Brutus slams the spiked ball into you with great force. Having not prepared for this attack, you are squarely stamped in the arena sand for <b><font color=\"#800000\">5000</font></b> damage!");
 						player.HP -= 5000;
 						game.mainView.statsView.showStatDown('hp');
 						dynStats("lus", 0); //Force display arrow.

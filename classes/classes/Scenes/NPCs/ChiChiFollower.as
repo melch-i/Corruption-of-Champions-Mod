@@ -36,7 +36,7 @@ public function WonFirstFight():void {
 	clearOutput();
 	outputText("The mouse looks at you in complete disbelief, her shaking voice slowly breaking down as she falls to her knees and coughs blood on the ground.\n\n");
 	outputText("\"<i>Is this... my blood... it is... beautiful. I never thought I would see the day when I...</i>\"\n\n");
-	outputText("She smiles as she stand a final time, trying to run toward you to deliver one last punch. But midway, she falls to the ground, still smiling, with an obvious trail of blood on the corner of her mouth. Muttering two last words as her eyes lose their light.\n\n");
+	outputText("She smiles as she stands a final time, trying to run toward you to deliver one last punch. But midway, she falls to the ground, still smiling, with an obvious trail of blood on the corner of her mouth. Muttering two last words as her eyes lose their light.\n\n");
 	outputText("\"<i>Thank you...</i>\"\n\n");
 	outputText("The entire crowd falls silent as the mouse morph hits the sandy arena ground, a small kid starts to cry in background. The medics run to her in a hurry, but scream something about her having died from fatal self inflicted injuries. You don’t really care however and just pick up her gloves on the ground as a prize for your victory. Surprisingly no-one cheers for you this time, not even the announcer who is normally so talkative. (I sincerely advise that you reload your game without saving unless you are fine with losing access to a lot of important key content.)\n\n");
 	flags[kFLAGS.CHI_CHI_FOLLOWER] = 2;
@@ -297,7 +297,7 @@ public function VeryReadyForTheFinalTraining():void {
 
 public function SoulskilsManualsShop():void {
 	clearOutput();
-	outputText("\"<i>I’m glad you take your training seriously, [name]. There are various scrolls I can teach you");
+	outputText("\"<i>I’m glad you take your training seriously, [name]. There are various scrolls I have that you can learn from.");
 	if (flags[kFLAGS.CHI_CHI_FOLLOWER] < 1) outputText(" but I would need a few spirit stones first");
 	outputText(".</i>\"\n\n");
 	menu();

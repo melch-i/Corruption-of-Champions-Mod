@@ -78,7 +78,8 @@ public class DebugMenu extends BaseContent
 				if (player.isPregnant()) addButton(4, "Abort Preg", abortPregnancy);
 				addButton(5, "DumpEffects", dumpEffectsMenu).hint("Display your status effects");
 				addButton(7, "HACK STUFFZ", styleHackMenu).hint("H4X0RZ");
-	            addButton(8, "Test Scene", testScene);
+	            addButton(8, "Test Scene", testScene).hint("Select a scene.  Don't use unless you are trying to test something.");
+				addButton(9, "Echo", echo).hint("Paste text into box to have it echo back.");
 				addButton(14, "Exit", playerMenu);
 			}
             if (CoC.instance.inCombat) {
@@ -94,7 +95,20 @@ public class DebugMenu extends BaseContent
 			}
 			doNext(playerMenu);
 		}
-		
+		private function echo():void{
+            clearOutput();
+            mainView.eventTestInput.text = "";
+            mainView.showTestInputPanel();
+			mainView.eventTestInput.multiline = true;
+			mainView.eventTestInput.multiline=true;
+            doNext(doecho);
+            addButton(14,"Back",accessDebugMenu);
+		}
+		private function doecho():void{
+			var text:String = mainView.eventTestInput.text;
+			outputText(text);
+			doNext(accessDebugMenu);
+		}
 		private var selectedScene:*;
 		private function testScene(selected:*=null):void{
 			clearOutput();
@@ -489,6 +503,8 @@ public class DebugMenu extends BaseContent
 			armourArray.push(armors.TUBETOP);
 			//Page 4
 			armourArray.push(armors.W_ROBES);
+			armourArray.push(armors.NAGASLK);
+			armourArray.push(armors.FRSGOWN);
 			
 			//------------
 			// Undergarments
