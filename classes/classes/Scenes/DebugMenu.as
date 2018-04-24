@@ -100,14 +100,14 @@ public class DebugMenu extends BaseContent
             mainView.eventTestInput.text = "";
             mainView.showTestInputPanel();
 			mainView.eventTestInput.multiline = true;
-			mainView.eventTestInput.multiline=true;
             doNext(doecho);
             addButton(14,"Back",accessDebugMenu);
-		}
-		private function doecho():void{
-			var text:String = mainView.eventTestInput.text;
-			outputText(text);
-			doNext(accessDebugMenu);
+
+			function doecho():void{
+				var text:String = mainView.eventTestInput.text;
+				outputText(text);
+				doNext(accessDebugMenu);
+			}
 		}
 		private var selectedScene:*;
 		private function testScene(selected:*=null):void{
