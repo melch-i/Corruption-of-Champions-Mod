@@ -136,9 +136,6 @@ public final class ConsumableLib extends BaseContent
 		public const COMETMA:SimpleConsumable = mk("COMETMA", "COManual", "a manual for Comet Soulskill", 250, "This manual would teach you how to use Comet soulskill.", m.cometmanual);
 		public const VPTRMAN:SimpleConsumable = mk("VPTRMAN", "VPTManual", "a manual for Violet Pupil Transformation Soulskill", 250, "This manual would teach you how to use Violet Pupil Transformation soulskill.", m.violetpupiltransformationmanual);
 		public const SOBLMAN:SimpleConsumable = mk("SOBLMAN", "SOBLManual", "a manual for Soul Blast Soulskill", 1000, "This manual would teach you how to use Soul Blast soulskill.", m.soulblastmanual);
-	/*	public const XXXXMAN:SimpleConsumable = mk("MAN", "Manual", "", x, ".", m.xxx);
-		public const XXXXMAN:SimpleConsumable = mk("MAN", "Manual", "", x, ".", m.xxx);
-		public const XXXXMAN:SimpleConsumable = mk("MAN", "Manual", "", x, ".", m.xxx);*/
 
 		//RARE ITEMS (Permanent effects, gives perks on consumption.)
 		public const BIMBOLQ:BimboLiqueur = new BimboLiqueur();
