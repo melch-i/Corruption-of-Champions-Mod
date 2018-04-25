@@ -26,8 +26,14 @@ import classes.Scenes.NPCs.JojoScene;
 
 import coc.view.Color;
 
-import flash.events.TextEvent;
-import flash.utils.describeType;
+	import flash.events.Event;
+
+	import flash.events.KeyboardEvent;
+
+	import flash.events.TextEvent;
+	import flash.text.TextFieldType;
+	import flash.text.TextFormat;
+	import flash.utils.describeType;
 
 public class DebugMenu extends BaseContent
 	{
@@ -95,17 +101,73 @@ public class DebugMenu extends BaseContent
 			}
 			doNext(playerMenu);
 		}
+
+
+		//todo @Oxdeception clean echo function
+		private var mainTextCoords:Object = {};
+		private var mvtf:TextFormat;
 		private function echo():void{
+			var svx:int = mainView.statsView.x;
+			var svy:int = mainView.statsView.y;
+			var svw:int = mainView.statsView.width;
+			mvtf = mainView.mainText.defaultTextFormat;
+			mainTextCoords.x = mainView.mainText.x;
+			mainTextCoords.y = mainView.mainText.y;
+
             clearOutput();
             mainView.eventTestInput.text = "";
-            mainView.showTestInputPanel();
 			mainView.eventTestInput.multiline = true;
+			mainView.eventTestInput.x = mainView.monsterStatsView.x - svw;
+			mainView.eventTestInput.y = mainView.monsterStatsView.y;
+			mainView.eventTestInput.height = mainView.monsterStatsView.height;
+			mainView.eventTestInput.width = mainView.monsterStatsView.width + svw;
+			mainView.eventTestInput.type = TextFieldType.INPUT;
+			mainView.eventTestInput.visible = true;
+			mainView.eventTestInput.selectable = true;
+			mainView.eventTestInput.wordWrap = true;
+
+
+			mainView.mainText.x = svx;
+			mainView.mainText.y = svy;
+			mainView.textBGTan.x = svx;
+			mainView.textBGTan.y = svy;
+			mainView.textBGTranslucent.x = svx;
+			mainView.textBGTranslucent.y = svy;
+			mainView.textBGWhite.x = svx;
+			mainView.textBGWhite.y = svy;
+			mainView.scrollBar.visible = false;
+			mainView.statsView.hide();
+
             doNext(doecho);
-            addButton(14,"Back",accessDebugMenu);
+
+			CoC.instance.stage.removeEventListener(KeyboardEvent.KEY_DOWN, CoC.instance.inputManager.KeyHandler);
+			mainView.eventTestInput.addEventListener(Event.CHANGE,inputHandler);
+
+			function inputHandler(event:Event):void{
+				mainView.mainText.defaultTextFormat = mvtf;
+				var text:String = Parser.recursiveParser(CoC.instance.mainView.eventTestInput.text);
+				CoC.instance.mainView.mainText.htmlText = text;
+			}
 
 			function doecho():void{
-				var text:String = mainView.eventTestInput.text;
-				outputText(text);
+				mainView.removeEventListener(KeyboardEvent.KEY_DOWN, inputHandler);
+				CoC.instance.stage.addEventListener(KeyboardEvent.KEY_DOWN, CoC.instance.inputManager.KeyHandler);
+				mainView.hideTestInputPanel();
+				mainView.eventTestInput.height = mainView.mainText.height;
+				mainView.eventTestInput.width = mainView.mainText.width;
+
+				svx = mainTextCoords.x;
+				svy = mainTextCoords.y;
+				mainView.mainText.x = svx;
+				mainView.mainText.y = svy;
+				mainView.textBGTan.x = svx;
+				mainView.textBGTan.y = svy;
+				mainView.textBGTranslucent.x = svx;
+				mainView.textBGTranslucent.y = svy;
+				mainView.textBGWhite.x = svx;
+				mainView.textBGWhite.y = svy;
+
+				mainView.scrollBar.visible = true;
 				doNext(accessDebugMenu);
 			}
 		}
