@@ -1,9 +1,9 @@
 ﻿package classes.Parser
 {
-import classes.CoC;
-import classes.CoC_Settings;
+	import classes.CoC;
+	import classes.CoC_Settings;
 
-public class Parser
+	public class Parser
 	{
 		public static var mainParserDebug:Boolean = false;
 		public static var lookupParserDebug:Boolean = false;
@@ -608,24 +608,37 @@ public class Parser
 
 		}
 
+		private static function isFormatStatement(ret:Object,textCtnt:String,depth:Number):Boolean
+		{
+			function colour(col:String):Object {
+				return {pre:"<font color='"+col+"'>",post:"</font>"}
+			}
+			var dark:Boolean = CoC.instance.mainViewManager.isDarkTheme();
+
+			var formatStatements:Object = {
+				"say: "    : {pre: "\u201c<i>", post: "</i>\u201d"},
+				"b: "      : {pre: "<b>", post: "</b>"},
+				"i: "      : {pre: "<i>", post: "</i>"},
+				"u: "      : {pre: "<u>", post: "</u>"},
+				"red: "    : colour(dark ? '#ff4444' : '#aa2222'),
+				"yellow: " : colour(dark ? '#ffcc44' : '#cdab22'),
+				"green: "  : colour(dark ? '#44cc44' : '#228822'),
+				"blue: "   : colour(dark ? "#0000fe" : "#000080")
+			};
+			for (var k:String in formatStatements) {
+				if (textCtnt.indexOf(k) == 0) {
+					var stmt:Object = formatStatements[k];
+					ret.text = stmt.pre + recParser(textCtnt.substr(k.length), depth) + stmt.post;
+					return true;
+				}
+			}
+			return false;
+		}
 		private static function isIfStatement(textCtnt:String):Boolean
 		{
 			return textCtnt.toLowerCase().indexOf("if") == 0;
 		}
 
-		private static function isSpeechStatement(textCtnt:String):Boolean
-		{
-			return textCtnt.toLowerCase().indexOf("say: ") == 0;
-		}
-
-		/**
-		 * Converts `[say: Text]` to `<i>\"Text\"</i>
-		 * @param textCtnt string to convert
-		 * @return
-		 */
-		private static function parseSpeech(textCtnt:String):String{
-			return "\u201c<i>" + textCtnt.substring(5,textCtnt.length + 1) + "</i>\u201d";
-		}
 
         /**
          *  Called to determine if the contents of a bracket are a parseable statement or not
@@ -726,6 +739,7 @@ public class Parser
 						var tmpStr:String = textCtnt.substring(lastBracket+1, i);
 
                         try {
+	                        var fmtstr:Object = {}; //passed by ref to isFormatStatement. Holds parsed text returned.
                             if (isIfStatement(tmpStr)) {
                                 if (conditionalDebug) {
                                     trace("WARNING: early eval as if");
@@ -736,9 +750,9 @@ public class Parser
                                 }
                                 //trace("WARNING: Parsed Ccnditional - ", retStr)
                             }
-                            else if (isSpeechStatement(tmpStr))
+                            else if (isFormatStatement(fmtstr,tmpStr,depth))
                             {
-	                            retStr += parseSpeech(recParser(tmpStr,depth));
+	                            retStr += fmtstr.text;
                             }
                             else if (tmpStr) {
                                 if (printCcntentDebug) {
