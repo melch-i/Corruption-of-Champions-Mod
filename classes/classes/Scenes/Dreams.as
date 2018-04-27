@@ -7,7 +7,8 @@ import classes.GlobalFlags.kFLAGS;
 import classes.CoC;
 import classes.PerkLib;
 	import classes.Player;
-	import classes.StatusEffects;
+import classes.Race;
+import classes.StatusEffects;
 import classes.internals.Utils;
 
 public class Dreams {
@@ -20,15 +21,16 @@ public class Dreams {
         //dream quantity
         var dreamtemp:Number;
 	    var player:Player = CoC.instance.player;
+        var racialScores:* = player.racialScores();
 	    dreamtemp = Utils.rand(player.lib / 10 + player.cor / 20) + player.cor / 20;
         //BUILD UP CHOICES ARRAY
         var scores:Array = [
-                [player.humanScore(), 0],
+                [racialScores[Race.HUMAN.name], 0],
                 [player.horseScore(), 1],
                 [player.dogScore(),   2],
                 [player.cowScore(),   3],
                 [player.catScore(),   4],
-                [player.demonScore(), 5]
+                [racialScores[Race.DEMON.name], 5]
         ];
         for each (var score:Array in scores){
             for(var i:int = score[0]; i > 0; i--){
@@ -92,7 +94,7 @@ public class Dreams {
             choices[choices.length] = 15;
         }
         //Sand trap
-        if(player.sandTrapScore() >= 2) {
+        if(player.sandtrapScore() >= 2) {
             choices[choices.length] = 16;
             choices[choices.length] = 16;
             choices[choices.length] = 16;

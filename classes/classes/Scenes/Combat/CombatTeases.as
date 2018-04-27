@@ -1476,7 +1476,7 @@ public class CombatTeases extends BaseCombatContent {
 				if (player.lib <= 100) critChance += player.lib / 5;
 				if (player.lib > 100) critChance += 20;
 			}
-			if (monster.isImmuneToCrits() && !player.hasPerk(PerkLib.EnableCriticals)) critChance = 0;
+			if (monster.isImmuneToCrits()) critChance = 0;
 			if (rand(100) < critChance) {
 				crit = true;
 				damage *= 1.75;

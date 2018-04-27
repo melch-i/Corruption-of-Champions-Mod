@@ -25,7 +25,6 @@ public class MaraFruit extends Consumable{
 		var changeLimit:Number = 1;
 		if (rand(3) == 0) changeLimit++;
 		if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
-		if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
 		if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 		player.slimeFeed();
 		//Temporary storage

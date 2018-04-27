@@ -103,11 +103,6 @@ public function encounterTamanisDaughters():void {
 	spriteSelect(57);
 	flags[kFLAGS.TIMES_ENCOUNTED_TAMANIS_DAUGHTERS]++;
 	clearOutput();
-	if (player.hasPerk(PerkLib.SoulSense) && flags[kFLAGS.SOUL_SENSE_TAMANI_DAUGHTERS] < 2) flags[kFLAGS.SOUL_SENSE_TAMANI_DAUGHTERS]++;
-	if (flags[kFLAGS.SOUL_SENSE_TAMANI_DAUGHTERS] == 2) {
-		flags[kFLAGS.SOUL_SENSE_TAMANI_DAUGHTERS]++;
-		outputText("\n\n<b>You have meet them enough times to be able to find them in the future when using soul sense. (Removes Tamani Daughters from forest explore encounters pool!)</b>\n\n");
-	}
 	if(flags[kFLAGS.TIMES_ENCOUNTED_TAMANIS_DAUGHTERS] > 0 && rand(10) == 0) {
 		tamaniPresent = true;
 		outputText("While roaming along, you find your path ahead blocked by " + num2Text(int(flags[kFLAGS.TAMANI_NUMBER_OF_DAUGHTERS] / 4)) + " goblins.  At the forefront of the mob is Tamani");

@@ -26,8 +26,14 @@ import classes.Scenes.NPCs.JojoScene;
 
 import coc.view.Color;
 
-import flash.events.TextEvent;
-import flash.utils.describeType;
+	import flash.events.Event;
+
+	import flash.events.KeyboardEvent;
+
+	import flash.events.TextEvent;
+	import flash.text.TextFieldType;
+	import flash.text.TextFormat;
+	import flash.utils.describeType;
 
 public class DebugMenu extends BaseContent
 	{
@@ -95,19 +101,75 @@ public class DebugMenu extends BaseContent
 			}
 			doNext(playerMenu);
 		}
+
+
+		//todo @Oxdeception clean echo function
+		private var mainTextCoords:Object = {};
+		private var mvtf:TextFormat;
 		private function echo():void{
+			var svx:int = mainView.statsView.x;
+			var svy:int = mainView.statsView.y;
+			var svw:int = mainView.statsView.width;
+			mvtf = mainView.mainText.defaultTextFormat;
+			mainTextCoords.x = mainView.mainText.x;
+			mainTextCoords.y = mainView.mainText.y;
+
             clearOutput();
             mainView.eventTestInput.text = "";
-            mainView.showTestInputPanel();
 			mainView.eventTestInput.multiline = true;
-			mainView.eventTestInput.multiline=true;
+			mainView.eventTestInput.x = mainView.monsterStatsView.x - svw;
+			mainView.eventTestInput.y = mainView.monsterStatsView.y;
+			mainView.eventTestInput.height = mainView.monsterStatsView.height;
+			mainView.eventTestInput.width = mainView.monsterStatsView.width + svw;
+			mainView.eventTestInput.type = TextFieldType.INPUT;
+			mainView.eventTestInput.visible = true;
+			mainView.eventTestInput.selectable = true;
+			mainView.eventTestInput.wordWrap = true;
+
+
+			mainView.mainText.x = svx;
+			mainView.mainText.y = svy;
+			mainView.textBGTan.x = svx;
+			mainView.textBGTan.y = svy;
+			mainView.textBGTranslucent.x = svx;
+			mainView.textBGTranslucent.y = svy;
+			mainView.textBGWhite.x = svx;
+			mainView.textBGWhite.y = svy;
+			mainView.scrollBar.visible = false;
+			mainView.statsView.hide();
+
             doNext(doecho);
-            addButton(14,"Back",accessDebugMenu);
-		}
-		private function doecho():void{
-			var text:String = mainView.eventTestInput.text;
-			outputText(text);
-			doNext(accessDebugMenu);
+
+			CoC.instance.stage.removeEventListener(KeyboardEvent.KEY_DOWN, CoC.instance.inputManager.KeyHandler);
+			mainView.eventTestInput.addEventListener(Event.CHANGE,inputHandler);
+
+			function inputHandler(event:Event):void{
+				mainView.mainText.defaultTextFormat = mvtf;
+				var text:String = Parser.recursiveParser(CoC.instance.mainView.eventTestInput.text);
+				CoC.instance.mainView.mainText.htmlText = text;
+			}
+
+			function doecho():void{
+				mainView.removeEventListener(KeyboardEvent.KEY_DOWN, inputHandler);
+				CoC.instance.stage.addEventListener(KeyboardEvent.KEY_DOWN, CoC.instance.inputManager.KeyHandler);
+				mainView.hideTestInputPanel();
+				mainView.eventTestInput.height = mainView.mainText.height;
+				mainView.eventTestInput.width = mainView.mainText.width;
+
+				svx = mainTextCoords.x;
+				svy = mainTextCoords.y;
+				mainView.mainText.x = svx;
+				mainView.mainText.y = svy;
+				mainView.textBGTan.x = svx;
+				mainView.textBGTan.y = svy;
+				mainView.textBGTranslucent.x = svx;
+				mainView.textBGTranslucent.y = svy;
+				mainView.textBGWhite.x = svx;
+				mainView.textBGWhite.y = svy;
+
+				mainView.scrollBar.visible = true;
+				doNext(accessDebugMenu);
+			}
 		}
 		private var selectedScene:*;
 		private function testScene(selected:*=null):void{
@@ -1359,6 +1421,13 @@ public class DebugMenu extends BaseContent
 			[LowerBody.YETI, "36 YETI"],
 			[LowerBody.ORCA, "37 ORCA"],
 			[LowerBody.YGG_ROOT_CLAWS, "38 YGG_ROOT_CLAWS"],
+			[LowerBody.ONI, "39 ONI"],
+			[LowerBody.ELF, "40 ELF"],
+			[LowerBody.RAIJU, "41 RAIJU"],
+			[LowerBody.RED_PANDA, "42 RED_PANDA"],
+			[LowerBody.GARGOYLE_2, "43 GARGOYLE_2"],
+			[LowerBody.AVIAN, "44 AVIAN"],
+			[LowerBody.GRYPHON, "45 GRYPHON"]
 		];
 		private static const LEG_COUNT_CONSTANTS:Array = [
 			1,2,4,6,8,
@@ -1373,6 +1442,9 @@ public class DebugMenu extends BaseContent
 			[RearBody.BEHEMOTH, "5 BEHEMOTH"],
 			[RearBody.SHARK_FIN, "6 SHARK_FIN"],
 			[RearBody.ORCA_BLOWHOLE, "7 ORCA_BLOWHOLE"],
+			[RearBody.RAIJU_MANE, "8 RAIJU_MANE"],
+			[RearBody.BAT_COLLAR, "9 BAT_COLLAR"],
+			[RearBody.WOLF_COLLAR, "10 WOLF_COLLAR"]
 		];
 		private function changeArmType(page:int=0,setIdx:int=-1):void {
 			if (setIdx>=0) player.arms.type = setIdx;

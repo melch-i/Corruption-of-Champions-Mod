@@ -14,19 +14,9 @@ import classes.PerkClass;
 			else return super.desc(params);
 		}
 		
-		public function RegenerationPerk(level:int)
+		public function RegenerationPerk()
 		{
-			var num:String = "Regeneration ";
-			switch(level){
-				case 1: num += "I"; break;
-				case 2: num += "II"; break;
-				case 3: num += "III"; break;
-				case 4: num += "IV"; break;
-				case 5: num += "V"; break;
-				case 6:
-				default:
-					num += "VI";
-			}
+			var num:String = "Regeneration I";
 			super(
 					num, num, "Regenerates 1% of max HP/hour and 0,5% of max HP/round.",
 					"You choose the '"+num+"' perk, allowing you to heal 0,5% of max HP every round of combat and 1% of max HP every hour!"

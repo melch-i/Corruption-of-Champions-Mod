@@ -42,14 +42,14 @@ public class CombatMagic extends BaseCombatContent {
 			if(!player.hasStatusEffect(StatusEffects.CastedSpell)) player.createStatusEffect(StatusEffects.CastedSpell,0,0,0,0);
 			spellPerkUnlock(); // XXX: message?
 		}
-		if (player.hasPerk(PerkLib.Battlemage) && ((player.hasPerk(PerkLib.GreyMage) && player.lust >= 30) || player.lust >= 50) && player.mana >= (spellCostBlack(50) * spellMightCostMultiplier()) && flags[kFLAGS.AUTO_CAST_MIGHT] == 0) {
+		if (player.hasPerk(PerkLib.Battlemage) && (player.lust >= 50) && player.mana >= (spellCostBlack(50) * spellMightCostMultiplier()) && flags[kFLAGS.AUTO_CAST_MIGHT] == 0) {
 			spellMight(true);
 			useMana((50 * spellMightCostMultiplier()),6);
 			flags[kFLAGS.SPELLS_CAST]++;
 			if(!player.hasStatusEffect(StatusEffects.CastedSpell)) player.createStatusEffect(StatusEffects.CastedSpell,0,0,0,0);
 			spellPerkUnlock(); // XXX: message?
 		}
-		if (player.hasPerk(PerkLib.Battleflash) && ((player.hasPerk(PerkLib.GreyMage) && player.lust >= 30) || player.lust >= 50) && player.mana >= (spellCostBlack(40) * spellBlinkCostMultiplier()) && flags[kFLAGS.AUTO_CAST_BLINK] == 0) {
+		if (player.hasPerk(PerkLib.Battleflash) && (player.lust >= 50) && player.mana >= (spellCostBlack(40) * spellBlinkCostMultiplier()) && flags[kFLAGS.AUTO_CAST_BLINK] == 0) {
 			spellBlink(true);
 			useMana((40 * spellBlinkCostMultiplier()),6);
 			flags[kFLAGS.SPELLS_CAST]++;
@@ -97,21 +97,10 @@ public class CombatMagic extends BaseCombatContent {
 		if (player.hasPerk(PerkLib.WizardsEnduranceAndSluttySeduction)) costPercent -= player.perkv1(PerkLib.WizardsEnduranceAndSluttySeduction);
 		if (player.hasPerk(PerkLib.WizardsAndDaoistsEndurance)) costPercent -= player.perkv1(PerkLib.WizardsAndDaoistsEndurance);
 		if (player.hasPerk(PerkLib.WizardsEndurance)) costPercent -= player.perkv1(PerkLib.WizardsEndurance);
-		if (player.hasPerk(PerkLib.WisenedHealer)) {
-			costPercent += 100;
-			if (player.level >= 24 && player.wis >= 60) costPercent += 25;
-			if (player.level >= 42 && player.wis >= 120) costPercent += 25;
-			if (player.level >= 60 && player.wis >= 180) costPercent += 25;
-			if (player.level >= 78 && player.wis >= 240) costPercent += 25;
-		}
 		if (player.level >= 24 && player.inte >= 60) costPercent += 25;
 		if (player.level >= 42 && player.inte >= 120) costPercent += 25;
 		if (player.level >= 60 && player.inte >= 180) costPercent += 25;
 		if (player.level >= 78 && player.inte >= 240) costPercent += 25;
-		if (player.hasPerk(PerkLib.NaturalHealingMinor)) costPercent -= 10;
-		if (player.hasPerk(PerkLib.NaturalHealingMajor)) costPercent -= 15;
-		if (player.hasPerk(PerkLib.NaturalHealingEpic)) costPercent -= 20;
-		if (player.hasPerk(PerkLib.NaturalHealingLegendary)) costPercent -= 25;
 		if (player.jewelry == jewelries.FOXHAIR) costPercent -= 20;
 		if (player.weapon == weapons.ASCENSU) costPercent -= 15;
 		if (player.weapon == weapons.N_STAFF) costPercent += 200;
@@ -157,21 +146,11 @@ public class CombatMagic extends BaseCombatContent {
 		if (player.hasPerk(PerkLib.WizardsEnduranceAndSluttySeduction)) costPercent -= player.perkv1(PerkLib.WizardsEnduranceAndSluttySeduction);
 		if (player.hasPerk(PerkLib.WizardsAndDaoistsEndurance)) costPercent -= player.perkv1(PerkLib.WizardsAndDaoistsEndurance);
 		if (player.hasPerk(PerkLib.WizardsEndurance)) costPercent -= player.perkv1(PerkLib.WizardsEndurance);
-		if (player.hasPerk(PerkLib.WisenedHealer)) {
-			costPercent += 100;
-			if (player.level >= 24 && player.wis >= 60) costPercent += 25;
-			if (player.level >= 42 && player.wis >= 120) costPercent += 25;
-			if (player.level >= 60 && player.wis >= 180) costPercent += 25;
-			if (player.level >= 78 && player.wis >= 240) costPercent += 25;
-		}
+
 		if (player.level >= 24 && player.inte >= 60) costPercent += 25;
 		if (player.level >= 42 && player.inte >= 120) costPercent += 25;
 		if (player.level >= 60 && player.inte >= 180) costPercent += 25;
 		if (player.level >= 78 && player.inte >= 240) costPercent += 25;
-		if (player.hasPerk(PerkLib.NaturalHealingMinor)) costPercent -= 10;
-		if (player.hasPerk(PerkLib.NaturalHealingMajor)) costPercent -= 15;
-		if (player.hasPerk(PerkLib.NaturalHealingEpic)) costPercent -= 20;
-		if (player.hasPerk(PerkLib.NaturalHealingLegendary)) costPercent -= 25;
 		if (player.jewelry == jewelries.FOXHAIR) costPercent -= 20;
 		if (player.weapon == weapons.PURITAS || player.weapon == weapons.ASCENSU) costPercent -= 15;
 		if (player.weapon == weapons.N_STAFF) costPercent += 200;
@@ -217,21 +196,11 @@ public class CombatMagic extends BaseCombatContent {
 		if (player.hasPerk(PerkLib.WizardsEnduranceAndSluttySeduction)) costPercent -= player.perkv1(PerkLib.WizardsEnduranceAndSluttySeduction);
 		if (player.hasPerk(PerkLib.WizardsAndDaoistsEndurance)) costPercent -= player.perkv1(PerkLib.WizardsAndDaoistsEndurance);
 		if (player.hasPerk(PerkLib.WizardsEndurance)) costPercent -= player.perkv1(PerkLib.WizardsEndurance);
-		if (player.hasPerk(PerkLib.WisenedHealer)) {
-			costPercent += 100;
-			if (player.level >= 24 && player.wis >= 60) costPercent += 25;
-			if (player.level >= 42 && player.wis >= 120) costPercent += 25;
-			if (player.level >= 60 && player.wis >= 180) costPercent += 25;
-			if (player.level >= 78 && player.wis >= 240) costPercent += 25;
-		}
+
 		if (player.level >= 24 && player.inte >= 60) costPercent += 25;
 		if (player.level >= 42 && player.inte >= 120) costPercent += 25;
 		if (player.level >= 60 && player.inte >= 180) costPercent += 25;
 		if (player.level >= 78 && player.inte >= 240) costPercent += 25;
-		if (player.hasPerk(PerkLib.NaturalHealingMinor)) costPercent -= 10;
-		if (player.hasPerk(PerkLib.NaturalHealingMajor)) costPercent -= 15;
-		if (player.hasPerk(PerkLib.NaturalHealingEpic)) costPercent -= 20;
-		if (player.hasPerk(PerkLib.NaturalHealingLegendary)) costPercent -= 25;
 		if (player.jewelry == jewelries.FOXHAIR) costPercent -= 20;
 		if (player.weapon == weapons.DEPRAVA || player.weapon == weapons.ASCENSU) costPercent -= 15;
 		if (player.weapon == weapons.N_STAFF) costPercent += 200;
@@ -244,20 +213,9 @@ public class CombatMagic extends BaseCombatContent {
 
 	internal function spellModImpl():Number {
 		var mod:Number = 1;
-		if(player.hasPerk(PerkLib.Archmage) && player.inte >= 75) mod += .3;
-		if(player.hasPerk(PerkLib.Channeling) && player.inte >= 60) mod += .2;
-		if(player.hasPerk(PerkLib.GrandArchmage) && player.inte >= 100) mod += .4;
-		if(player.hasPerk(PerkLib.GreyArchmage) && player.inte >= 150) mod += 1;
-		if(player.hasPerk(PerkLib.GreyMage) && player.inte >= 125) mod += .7;
 		if(player.hasPerk(PerkLib.JobSorcerer) && player.inte >= 25) mod += .1;
-		if(player.hasPerk(PerkLib.Mage) && player.inte >= 50) mod += .2;
 		if(player.hasPerk(PerkLib.Spellpower) && player.inte >= 50) mod += .1;
 		if(player.hasPerk(PerkLib.TraditionalMageI) && player.weaponPerk == "Staff" && player.isUsingTome()) mod += 1;
-		if(player.hasPerk(PerkLib.TraditionalMageII) && player.weaponPerk == "Staff" && player.isUsingTome()) mod += 1;
-		if(player.hasPerk(PerkLib.TraditionalMageIII) && player.weaponPerk == "Staff" && player.isUsingTome()) mod += 1;
-		if(player.hasPerk(PerkLib.TraditionalMageIV) && player.weaponPerk == "Staff" && player.isUsingTome()) mod += 1;
-		if(player.hasPerk(PerkLib.TraditionalMageV) && player.weaponPerk == "Staff" && player.isUsingTome()) mod += 1;
-		if(player.hasPerk(PerkLib.TraditionalMageVI) && player.weaponPerk == "Staff" && player.isUsingTome()) mod += 1;
 		if(player.hasPerk(PerkLib.Obsession)) {
 			mod += player.perkv1(PerkLib.Obsession);
 		}
@@ -291,11 +249,6 @@ public class CombatMagic extends BaseCombatContent {
 	}
 	internal function healModImpl():Number {
 		var mod:Number = 1;
-		if(player.hasPerk(PerkLib.SpellpowerHealing) && player.wis >= 50) mod += .2;
-		if(player.hasPerk(PerkLib.NaturalHealingMinor)) mod += .3;
-		if(player.hasPerk(PerkLib.NaturalHealingMajor)) mod += .4;
-		if(player.hasPerk(PerkLib.NaturalHealingEpic)) mod += .5;
-		if(player.hasPerk(PerkLib.NaturalHealingLegendary)) mod += .6;
 		if(player.hasPerk(PerkLib.Obsession)) {
 			mod += player.perkv1(PerkLib.Obsession);
 		}
@@ -327,20 +280,9 @@ public class CombatMagic extends BaseCombatContent {
 	}
 	internal function spellModWhiteImpl():Number {
 		var mod:Number = 1;
-		if(player.hasPerk(PerkLib.Archmage) && player.inte >= 75) mod += .3;
-		if(player.hasPerk(PerkLib.Channeling) && player.inte >= 60) mod += .2;
-		if(player.hasPerk(PerkLib.GrandArchmage) && player.inte >= 100) mod += .4;
-		if(player.hasPerk(PerkLib.GreyArchmage) && player.inte >= 150) mod += 1;
-		if(player.hasPerk(PerkLib.GreyMage) && player.inte >= 125) mod += .7;
 		if(player.hasPerk(PerkLib.JobSorcerer) && player.inte >= 25) mod += .1;
-		if(player.hasPerk(PerkLib.Mage) && player.inte >= 50) mod += .2;
 		if(player.hasPerk(PerkLib.Spellpower) && player.inte >= 50) mod += .1;
 		if(player.hasPerk(PerkLib.TraditionalMageI) && player.weaponPerk == "Staff" && player.weaponRangeName == "nothing") mod += 1;
-		if(player.hasPerk(PerkLib.TraditionalMageII) && player.weaponPerk == "Staff" && player.weaponRangeName == "nothing") mod += 1;
-		if(player.hasPerk(PerkLib.TraditionalMageIII) && player.weaponPerk == "Staff" && player.weaponRangeName == "nothing") mod += 1;
-		if(player.hasPerk(PerkLib.TraditionalMageIV) && player.weaponPerk == "Staff" && player.weaponRangeName == "nothing") mod += 1;
-		if(player.hasPerk(PerkLib.TraditionalMageV) && player.weaponPerk == "Staff" && player.weaponRangeName == "nothing") mod += 1;
-		if(player.hasPerk(PerkLib.TraditionalMageVI) && player.weaponPerk == "Staff" && player.weaponRangeName == "nothing") mod += 1;
 		if(player.hasPerk(PerkLib.Ambition)) {
 			mod += player.perkv2(PerkLib.Ambition);
 		}
@@ -374,11 +316,6 @@ public class CombatMagic extends BaseCombatContent {
 	}
 	internal function healModWhiteImpl():Number {
 		var mod:Number = 1;
-		if(player.hasPerk(PerkLib.SpellpowerHealing) && player.wis >= 50) mod += .2;
-		if(player.hasPerk(PerkLib.NaturalHealingMinor)) mod += .3;
-		if(player.hasPerk(PerkLib.NaturalHealingMajor)) mod += .4;
-		if(player.hasPerk(PerkLib.NaturalHealingEpic)) mod += .5;
-		if(player.hasPerk(PerkLib.NaturalHealingLegendary)) mod += .6;
 		if(player.hasPerk(PerkLib.Ambition)) {
 			mod += player.perkv2(PerkLib.Ambition);
 		}
@@ -410,20 +347,9 @@ public class CombatMagic extends BaseCombatContent {
 	}
 	internal function spellModBlackImpl():Number {
 		var mod:Number = 1;
-		if(player.hasPerk(PerkLib.Archmage) && player.inte >= 75) mod += .3;
-		if(player.hasPerk(PerkLib.Channeling) && player.inte >= 60) mod += .2;
-		if(player.hasPerk(PerkLib.GrandArchmage) && player.inte >= 100) mod += .4;
-		if(player.hasPerk(PerkLib.GreyArchmage) && player.inte >= 150) mod += 1;
-		if(player.hasPerk(PerkLib.GreyMage) && player.inte >= 125) mod += .7;
 		if(player.hasPerk(PerkLib.JobSorcerer) && player.inte >= 25) mod += .1;
-		if(player.hasPerk(PerkLib.Mage) && player.inte >= 50) mod += .2;
 		if(player.hasPerk(PerkLib.Spellpower) && player.inte >= 50) mod += .1;
 		if(player.hasPerk(PerkLib.TraditionalMageI) && player.weaponPerk == "Staff" && player.weaponRangeName == "nothing") mod += 1;
-		if(player.hasPerk(PerkLib.TraditionalMageII) && player.weaponPerk == "Staff" && player.weaponRangeName == "nothing") mod += 1;
-		if(player.hasPerk(PerkLib.TraditionalMageIII) && player.weaponPerk == "Staff" && player.weaponRangeName == "nothing") mod += 1;
-		if(player.hasPerk(PerkLib.TraditionalMageIV) && player.weaponPerk == "Staff" && player.weaponRangeName == "nothing") mod += 1;
-		if(player.hasPerk(PerkLib.TraditionalMageV) && player.weaponPerk == "Staff" && player.weaponRangeName == "nothing") mod += 1;
-		if(player.hasPerk(PerkLib.TraditionalMageVI) && player.weaponPerk == "Staff" && player.weaponRangeName == "nothing") mod += 1;
 		if(player.hasPerk(PerkLib.Obsession)) {
 			mod += player.perkv2(PerkLib.Obsession);
 		}
@@ -454,11 +380,6 @@ public class CombatMagic extends BaseCombatContent {
 	}
 	internal function healModBlackImpl():Number {
 		var mod:Number = 1;
-		if(player.hasPerk(PerkLib.SpellpowerHealing) && player.wis >= 50) mod += .2;
-		if(player.hasPerk(PerkLib.NaturalHealingMinor)) mod += .3;
-		if(player.hasPerk(PerkLib.NaturalHealingMajor)) mod += .4;
-		if(player.hasPerk(PerkLib.NaturalHealingEpic)) mod += .5;
-		if(player.hasPerk(PerkLib.NaturalHealingLegendary)) mod += .6;
 		if(player.hasPerk(PerkLib.Obsession)) {
 			mod += player.perkv2(PerkLib.Obsession);
 		}
@@ -488,42 +409,30 @@ public class CombatMagic extends BaseCombatContent {
 	
 	public function spellMightCostMultiplier():Number {
 		var spellMightMultiplier:Number = 1;
-		if (player.hasPerk(PerkLib.EverLastingBuffs)) spellMightMultiplier *= 2;
-		if (player.hasPerk(PerkLib.EternalyLastingBuffs)) spellMightMultiplier *= 2;
 		return spellMightMultiplier;
 	}
 
 	public function spellBlinkCostMultiplier():Number {
 		var spellBlinkMultiplier:Number = 1;
-		if (player.hasPerk(PerkLib.EverLastingBuffs)) spellBlinkMultiplier *= 2;
-		if (player.hasPerk(PerkLib.EternalyLastingBuffs)) spellBlinkMultiplier *= 2;
 		return spellBlinkMultiplier;
 	}
 
 	public function spellChargeWeaponCostMultiplier():Number {
 		var spellChargeWeaponMultiplier:Number = 1;
-		if (player.hasPerk(PerkLib.EverLastingBuffs)) spellChargeWeaponMultiplier *= 2;
-		if (player.hasPerk(PerkLib.EternalyLastingBuffs)) spellChargeWeaponMultiplier *= 2;
 		return spellChargeWeaponMultiplier;
 	}
 
 	public function spellChargeArmorCostMultiplier():Number {
 		var spellChargeArmorMultiplier:Number = 1;
-		if (player.hasPerk(PerkLib.EverLastingBuffs)) spellChargeArmorMultiplier *= 2;
-		if (player.hasPerk(PerkLib.EternalyLastingBuffs)) spellChargeArmorMultiplier *= 2;
 		return spellChargeArmorMultiplier;
 	}
 
 	public function getBlackMagicMinLust():Number {
-		if (player.hasPerk(PerkLib.GreyMage)) return 30;
 		return 50;
 	}
 	public function getWhiteMagicLustCap():Number {
 		var whiteLustCap:int = player.maxLust() * 0.75;
 		if (player.hasPerk(PerkLib.Enlightened) && player.cor < (10 + player.corruptionTolerance())) whiteLustCap += (player.maxLust() * 0.1);
-		if (player.hasPerk(PerkLib.FocusedMind) && !player.hasPerk(PerkLib.GreyMage)) whiteLustCap += (player.maxLust() * 0.1);
-		if (player.hasPerk(PerkLib.GreyMage)) whiteLustCap = (player.maxLust() - 45);
-		if (player.hasPerk(PerkLib.GreyMage) && player.hasPerk(PerkLib.Enlightened) && player.cor < (10 + player.corruptionTolerance())) whiteLustCap = (player.maxLust() - 15);
 		return whiteLustCap;
 	}
 
@@ -531,148 +440,24 @@ public class CombatMagic extends BaseCombatContent {
 	private var fireMagicLastTurn:int = -100;
 	private var fireMagicCumulated:int = 0;
 	internal function calcInfernoModImpl(damage:Number):int {
-		if (player.hasPerk(PerkLib.RagingInferno)) {
-			var multiplier:Number = 1;
-			if (combatRound - fireMagicLastTurn == 2) {
-				outputText("Traces of your previously used fire magic are still here, and you use them to empower another spell!\n\n");
-				switch(fireMagicCumulated) {
-					case 0:
-					case 1:
-						multiplier = 1;
-						break;
-					case 2:
-						multiplier = 1.2;
-						break;
-					case 3:
-						multiplier = 1.35;
-						break;
-					case 4:
-						multiplier = 1.45;
-						break;
-					default:
-						multiplier = 1.5 + ((fireMagicCumulated - 5) * 0.05); //Diminishing returns at max, add 0.05 to multiplier.
-				}
-				damage = Math.round(damage * multiplier);
-				fireMagicCumulated++;
-				// XXX: Message?
-			} else {
-				if (combatRound - fireMagicLastTurn > 2 && fireMagicLastTurn > 0)
-					outputText("Unfortunately, traces of your previously used fire magic are too weak to be used.\n\n");
-				fireMagicCumulated = 1;
-			}
-			fireMagicLastTurn = combatRound;
-		}
 		return damage;
 	}
 
 	private var iceMagicLastTurn:int = -100;
 	private var iceMagicCumulated:int = 0;
 	internal function calcGlacialModImpl(damage:Number):int {
-		if (player.hasPerk(PerkLib.GlacialStorm)) {
-			var multiplier:Number = 1;
-			if (combatRound - iceMagicLastTurn == 2) {
-				outputText("Traces of your previously used ice magic are still here, and you use them to empower another spell!\n\n");
-				switch(iceMagicCumulated) {
-					case 0:
-					case 1:
-						multiplier = 1;
-						break;
-					case 2:
-						multiplier = 1.2;
-						break;
-					case 3:
-						multiplier = 1.35;
-						break;
-					case 4:
-						multiplier = 1.45;
-						break;
-					default:
-						multiplier = 1.5 + ((iceMagicCumulated - 5) * 0.05); //Diminishing returns at max, add 0.05 to multiplier.
-				}
-				damage = Math.round(damage * multiplier);
-				iceMagicCumulated++;
-				// XXX: Message?
-			} else {
-				if (combatRound - iceMagicLastTurn > 2 && iceMagicLastTurn > 0)
-					outputText("Unfortunately, traces of your previously used ice magic are too weak to be used.\n\n");
-				iceMagicCumulated = 1;
-			}
-			iceMagicLastTurn = combatRound;
-		}
 		return damage;
 	}
 
 	private var lightningMagicLastTurn:int = -100;
 	private var lightningMagicCumulated:int = 0;
 	internal function calcVoltageModImpl(damage:Number):int {
-		if (player.hasPerk(PerkLib.HighVoltage)) {
-			var multiplier:Number = 1;
-			if (combatRound - lightningMagicLastTurn == 2) {
-				outputText("Traces of your previously used lightning magic are still here, and you use them to empower another spell!\n\n");
-				switch(lightningMagicCumulated) {
-					case 0:
-					case 1:
-						multiplier = 1;
-						break;
-					case 2:
-						multiplier = 1.2;
-						break;
-					case 3:
-						multiplier = 1.35;
-						break;
-					case 4:
-						multiplier = 1.45;
-						break;
-					default:
-						multiplier = 1.5 + ((lightningMagicCumulated - 5) * 0.05); //Diminishing returns at max, add 0.05 to multiplier.
-				}
-				damage = Math.round(damage * multiplier);
-				lightningMagicCumulated++;
-				// XXX: Message?
-			} else {
-				if (combatRound - lightningMagicLastTurn > 2 && lightningMagicLastTurn > 0)
-					outputText("Unfortunately, traces of your previously used lightning magic are too weak to be used.\n\n");
-				lightningMagicCumulated = 1;
-			}
-			lightningMagicLastTurn = combatRound;
-		}
 		return damage;
 	}
 
 	private var darknessMagicLastTurn:int = -100;
 	private var darknessMagicCumulated:int = 0;
 	internal function calcEclypseModImpl(damage:Number):int {
-		if (player.hasPerk(PerkLib.EclipsingShadow)) {
-			var multiplier:Number = 1;
-			if (combatRound - darknessMagicLastTurn == 2) {
-				outputText("Traces of your previously used darkness magic are still here, and you use them to empower another spell!\n\n");
-				switch(darknessMagicCumulated) {
-					case 0:
-					case 1:
-						multiplier = 1;
-						break;
-					case 2:
-						multiplier = 1.2;
-						break;
-					case 3:
-						multiplier = 1.35;
-						break;
-					case 4:
-						multiplier = 1.45;
-						break;
-					default:
-						multiplier = 1.5 + ((darknessMagicCumulated - 5) * 0.05); //Diminishing returns at max, add 0.05 to multiplier.
-				}
-				damage = Math.round(damage * multiplier);
-				darknessMagicCumulated++;
-				// XXX: Message?
-			} else {
-				if (combatRound - darknessMagicLastTurn > 2 && darknessMagicLastTurn > 0)
-					outputText("Unfortunately, traces of your previously used darkness magic are too weak to be used.\n\n");
-				darknessMagicCumulated = 1;
-			}
-			darknessMagicLastTurn = combatRound;
-		}
 		return damage;
 	}
 	
@@ -726,7 +511,7 @@ public class CombatMagic extends BaseCombatContent {
 			bd = buttons.add("Charge W.", spellChargeWeapon)
 						.hint("The Charge Weapon spell will surround your weapon in electrical energy, causing it to do even more damage.  The effect lasts for a few combat turns.  " +
 							  "\n\nMana Cost: " + spellCostWhite(30) * spellChargeWeaponCostMultiplier() + "", "Charge Weapon");
-			if (player.weaponName == "fists" && !player.hasPerk(PerkLib.ImprovingNaturesBlueprintsNaturalWeapons)) {
+			if (player.weaponName == "fists") {
 				bd.disable("Charge weapon can't be casted on your own fists.");
 			} else if (badLustForWhite) {
 				bd.disable("You are far too aroused to focus on white magic.");
@@ -742,7 +527,7 @@ public class CombatMagic extends BaseCombatContent {
 			bd = buttons.add("Charge A.", spellChargeArmor)
 						.hint("The Charge Armor spell will surround your armor with electrical energy, causing it to do provide additional protection.  The effect lasts for a few combat turns.  " +
 							  "\n\nMana Cost: " + spellCostWhite(40) * spellChargeArmorCostMultiplier() + "", "Charge Armor");
-			if (player.isNaked() && (!player.haveNaturalArmor() || player.hasPerk(PerkLib.ImprovingNaturesBlueprintsNaturalArmor))) {
+			if (player.isNaked() && (!player.haveNaturalArmor())) {
 				bd.disable("Charge armor can't be casted without wearing any armor or even underwear.");
 			} else if (badLustForWhite) {
 				bd.disable("You are far too aroused to focus on white magic.");
@@ -978,7 +763,7 @@ public class CombatMagic extends BaseCombatContent {
 			if (player.lib <= 100) critChance += player.lib / 5;
 			if (player.lib > 100) critChance += 20;
 		}
-		if (monster.isImmuneToCrits() && !player.hasPerk(PerkLib.EnableCriticals)) critChance = 0;
+		if (monster.isImmuneToCrits()) critChance = 0;
 		if (rand(100) < critChance) {
 			crit = true;
 			lustDmg *= 1.75;
@@ -1007,10 +792,8 @@ public class CombatMagic extends BaseCombatContent {
 		outputText("You focus on your body and its desire to end pain, trying to draw on your arousal without enhancing it.\n");
 		//30% backfire!
 		var backfire:int = 30;
-		if (player.hasPerk(PerkLib.FocusedMind)) backfire = 20;
 		backfire -= (player.inte * 0.15);
 		if (backfire < 15) backfire = 15;
-		else if (backfire < 5 && player.hasPerk(PerkLib.FocusedMind)) backfire = 5;
 		if(rand(100) < backfire) {
 			outputText("An errant sexual thought crosses your mind, and you lose control of the spell!  Your ");
 			if(player.gender == 0) outputText(assholeDescript() + " tingles with a desire to be filled as your libido spins out of control.");
@@ -1051,29 +834,17 @@ public class CombatMagic extends BaseCombatContent {
 			var MightBoost:Number = 10;
 			if (player.hasPerk(PerkLib.JobSorcerer) && player.inte >= 25) MightBoost += 5;
 			if (player.hasPerk(PerkLib.Spellpower) && player.inte >= 50) MightBoost += 5;
-			if (player.hasPerk(PerkLib.Mage) && player.inte >= 50) MightBoost += 10;
-			if (player.hasPerk(PerkLib.FocusedMind) && player.inte >= 50) MightBoost += 10;
-			if (player.hasPerk(PerkLib.Channeling) && player.inte >= 60) MightBoost += 10;
-			if (player.hasPerk(PerkLib.Archmage) && player.inte >= 75) MightBoost += 15;
-			if (player.hasPerk(PerkLib.GrandArchmage) && player.inte >= 100) MightBoost += 20;
-			if (player.hasPerk(PerkLib.GreyMage) && player.inte >= 125) MightBoost += 25;
-			if (player.hasPerk(PerkLib.GreyArchmage) && player.inte >= 150) MightBoost += 30;
 			if (player.hasPerk(PerkLib.JobEnchanter) && player.inte >= 50) MightBoost += 5;
 			if (player.hasPerk(PerkLib.Battlemage) && player.inte >= 50) MightBoost += 15;
-			if (player.hasPerk(PerkLib.JobSwordsman)) MightBoost -= 10;
-			if (player.hasPerk(PerkLib.JobBrawler)) MightBoost -= 10;
 			if (player.hasPerk(PerkLib.JobDervish)) MightBoost -= 10;
 			if (player.hasPerk(PerkLib.IronFistsI)) MightBoost -= 10;
 			if (player.hasPerk(PerkLib.JobMonk)) MightBoost -= 15;
 			if (player.hasPerk(PerkLib.Berzerker)) MightBoost -= 15;
 			if (player.hasPerk(PerkLib.Lustzerker)) MightBoost -= 15;
 			if (player.hasPerk(PerkLib.WeaponMastery)) MightBoost -= 15;
-			if (player.hasPerk(PerkLib.WeaponGrandMastery)) MightBoost -= 25;
 			if (player.hasPerk(PerkLib.HeavyArmorProficiency)) MightBoost -= 15;
-			if (player.hasPerk(PerkLib.AyoArmorProficiency)) MightBoost -= 20;
 			if (player.hasPerk(PerkLib.Agility)) MightBoost -= 10;
 			if (player.hasPerk(PerkLib.LightningStrikes)) MightBoost -= 10;
-			if (player.hasPerk(PerkLib.BodyCultivator)) MightBoost -= 5;
 		//	MightBoost += player.inte / 10;player.inte * 0.1 - może tylko jak bedzie mieć perk z prestige job: magus/warock/inny związany z spells
 			if (MightBoost < 10) MightBoost = 10;
 			if (player.hasPerk(PerkLib.JobEnchanter)) MightBoost *= 1.2;
@@ -1081,14 +852,6 @@ public class CombatMagic extends BaseCombatContent {
 			MightBoost = FnHelpers.FN.logScale(MightBoost,MightABC,10);
 			MightBoost = Math.round(MightBoost);
 			var MightDuration:Number = 5;
-			if (player.hasPerk(PerkLib.LongerLastingBuffsI)) MightDuration += 1;
-			if (player.hasPerk(PerkLib.LongerLastingBuffsII)) MightDuration += 1;
-			if (player.hasPerk(PerkLib.LongerLastingBuffsIII)) MightDuration += 1;
-			if (player.hasPerk(PerkLib.LongerLastingBuffsIV)) MightDuration += 1;
-			if (player.hasPerk(PerkLib.LongerLastingBuffsV)) MightDuration += 1;
-			if (player.hasPerk(PerkLib.LongerLastingBuffsVI)) MightDuration += 1;
-			if (player.hasPerk(PerkLib.EverLastingBuffs)) MightDuration += 5;
-			if (player.hasPerk(PerkLib.EternalyLastingBuffs)) MightDuration += 5;
 			tempTou = MightBoost;
 			if (player.hasStatusEffect(StatusEffects.FortressOfIntellect)) {
 				var MightIntBoost:Number = 0;
@@ -1132,9 +895,7 @@ public class CombatMagic extends BaseCombatContent {
 		outputText("You flush, drawing on your body's desires to empower your muscles and toughen you up.\n\n");
 		//30% backfire!
 		var backfire:int = 30;
-		if (player.hasPerk(PerkLib.FocusedMind)) backfire = 20;
 		if (backfire < 15) backfire = 15;
-		else if (backfire < 5 && player.hasPerk(PerkLib.FocusedMind)) backfire = 5;
 		if(rand(100) < backfire) {
 			outputText("An errant sexual thought crosses your mind, and you lose control of the spell!  Your ");
 			if(player.gender == 0) outputText(assholeDescript() + " tingles with a desire to be filled as your libido spins out of control.");
@@ -1175,29 +936,17 @@ public class CombatMagic extends BaseCombatContent {
 			var BlinkBoost:Number = 10;
 			if (player.hasPerk(PerkLib.JobSorcerer) && player.inte >= 25) BlinkBoost += 5;
 			if (player.hasPerk(PerkLib.Spellpower) && player.inte >= 50) BlinkBoost += 5;
-			if (player.hasPerk(PerkLib.Mage) && player.inte >= 50) BlinkBoost += 10;
-			if (player.hasPerk(PerkLib.FocusedMind) && player.inte >= 50) BlinkBoost += 10;
-			if (player.hasPerk(PerkLib.Channeling) && player.inte >= 60) BlinkBoost += 10;
-			if (player.hasPerk(PerkLib.Archmage) && player.inte >= 75) BlinkBoost += 15;
-			if (player.hasPerk(PerkLib.GrandArchmage) && player.inte >= 100) BlinkBoost += 20;
-			if (player.hasPerk(PerkLib.GreyMage) && player.inte >= 125) BlinkBoost += 25;
-			if (player.hasPerk(PerkLib.GreyArchmage) && player.inte >= 150) BlinkBoost += 30;
 			if (player.hasPerk(PerkLib.JobEnchanter) && player.inte >= 50) BlinkBoost += 5;
 			if (player.hasPerk(PerkLib.Battleflash) && player.inte >= 50) BlinkBoost += 15;
-			if (player.hasPerk(PerkLib.JobSwordsman)) BlinkBoost -= 10;
-			if (player.hasPerk(PerkLib.JobBrawler)) BlinkBoost -= 10;
 			if (player.hasPerk(PerkLib.JobDervish)) BlinkBoost -= 10;
 			if (player.hasPerk(PerkLib.IronFistsI)) BlinkBoost -= 10;
 			if (player.hasPerk(PerkLib.JobMonk)) BlinkBoost -= 15;
 			if (player.hasPerk(PerkLib.Berzerker)) BlinkBoost -= 15;
 			if (player.hasPerk(PerkLib.Lustzerker)) BlinkBoost -= 15;
 			if (player.hasPerk(PerkLib.WeaponMastery)) BlinkBoost -= 15;
-			if (player.hasPerk(PerkLib.WeaponGrandMastery)) BlinkBoost -= 25;
 			if (player.hasPerk(PerkLib.HeavyArmorProficiency)) BlinkBoost -= 15;
-			if (player.hasPerk(PerkLib.AyoArmorProficiency)) BlinkBoost -= 20;
 			if (player.hasPerk(PerkLib.Agility)) BlinkBoost -= 10;
 			if (player.hasPerk(PerkLib.LightningStrikes)) BlinkBoost -= 10;
-			if (player.hasPerk(PerkLib.BodyCultivator)) BlinkBoost -= 5;
 		//	BlinkBoost += player.inte / 10;player.inte * 0.1 - może tylko jak bedzie mieć perk z prestige job: magus/warock/inny związany z spells
 			if (BlinkBoost < 10) BlinkBoost = 10;
 			BlinkBoost *= 1.2;
@@ -1206,14 +955,6 @@ public class CombatMagic extends BaseCombatContent {
 			BlinkBoost = FnHelpers.FN.logScale(BlinkBoost,BlinkABC,10);
 			BlinkBoost = Math.round(BlinkBoost);
 			var BlinkDuration:Number = 5;
-			if (player.hasPerk(PerkLib.LongerLastingBuffsI)) BlinkDuration += 1;
-			if (player.hasPerk(PerkLib.LongerLastingBuffsII)) BlinkDuration += 1;
-			if (player.hasPerk(PerkLib.LongerLastingBuffsIII)) BlinkDuration += 1;
-			if (player.hasPerk(PerkLib.LongerLastingBuffsIV)) BlinkDuration += 1;
-			if (player.hasPerk(PerkLib.LongerLastingBuffsV)) BlinkDuration += 1;
-			if (player.hasPerk(PerkLib.LongerLastingBuffsVI)) BlinkDuration += 1;
-			if (player.hasPerk(PerkLib.EverLastingBuffs)) BlinkDuration += 5;
-			if (player.hasPerk(PerkLib.EternalyLastingBuffs)) BlinkDuration += 5;
 			player.createStatusEffect(StatusEffects.Blink,0,0,BlinkDuration,0);
 			tempSpe = BlinkBoost;
 			//if(player.spe + temp > 100) tempSpe = 100 - player.spe;
@@ -1243,9 +984,7 @@ public class CombatMagic extends BaseCombatContent {
 		outputText("You flush, drawing on your body's desires to empower your muscles and hasten you up.\n\n");
 		//30% backfire!
 		var backfire:int = 30;
-		if (player.hasPerk(PerkLib.FocusedMind)) backfire = 20;
 		if (backfire < 15) backfire = 15;
-		else if (backfire < 5 && player.hasPerk(PerkLib.FocusedMind)) backfire = 5;
 		if(rand(100) < backfire) {
 			outputText("An errant sexual thought crosses your mind, and you lose control of the spell!  Your ");
 			if(player.gender == 0) outputText(assholeDescript() + " tingles with a desire to be filled as your libido spins out of control.");
@@ -1301,7 +1040,7 @@ public class CombatMagic extends BaseCombatContent {
 			if (player.inte <= 100) critChance += (player.inte - 50) / 50;
 			if (player.inte > 100) critChance += 10;
 		}
-		if (monster.isImmuneToCrits() && !player.hasPerk(PerkLib.EnableCriticals)) critChance = 0;
+		if (monster.isImmuneToCrits()) critChance = 0;
 		if (rand(100) < critChance) {
 			crit = true;
 			damage *= 1.75;
@@ -1368,7 +1107,7 @@ public class CombatMagic extends BaseCombatContent {
 			if (player.inte <= 100) critChance += (player.inte - 50) / 50;
 			if (player.inte > 100) critChance += 10;
 		}
-		if (monster.isImmuneToCrits() && !player.hasPerk(PerkLib.EnableCriticals)) critChance = 0;
+		if (monster.isImmuneToCrits()) critChance = 0;
 		if (rand(100) < critChance) {
 			crit = true;
 			damage *= 1.75;
@@ -1436,7 +1175,7 @@ public class CombatMagic extends BaseCombatContent {
 			if (player.inte <= 100) critChance += (player.inte - 50) / 50;
 			if (player.inte > 100) critChance += 10;
 		}
-		if (monster.isImmuneToCrits() && !player.hasPerk(PerkLib.EnableCriticals)) critChance = 0;
+		if (monster.isImmuneToCrits()) critChance = 0;
 		if (rand(100) < critChance) {
 			crit = true;
 			damage *= 1.75;
@@ -1454,7 +1193,6 @@ public class CombatMagic extends BaseCombatContent {
 		//if (monster.short == "tentacle beast") damage = Math.round(damage * 1.2); - tak samo przemyśleć czy bdą dodatkowo ranione
 		if (monster.plural == true) damage *= 5;
 		outputText(monster.capitalA + monster.short + " takes <b><font color=\"#800000\">(" + damage + ")");
-		if (!monster.hasPerk(PerkLib.EnemyGroupType) && player.hasPerk(PerkLib.Convergence)) outputText(" (" + damage + ") ");
 		outputText("</font></b> damage.");
 		//Using fire attacks on the goo]
 		//if(monster.short == "goo-girl") {
@@ -1464,7 +1202,6 @@ public class CombatMagic extends BaseCombatContent {
 		if (crit == true) outputText(" <b>*Critical Hit!*</b>");
 		outputText("\n\n");
 		if (player.weapon == weapons.DEMSCYT && player.cor < 90) dynStats("cor", 0.3);
-		if (!monster.hasPerk(PerkLib.EnemyGroupType) && player.hasPerk(PerkLib.Convergence)) damage *= 2;
 		checkAchievementDamage(damage);
 		flags[kFLAGS.SPELLS_CAST]++;
 		if(!player.hasStatusEffect(StatusEffects.CastedSpell)) player.createStatusEffect(StatusEffects.CastedSpell,0,0,0,0);
@@ -1508,7 +1245,7 @@ public class CombatMagic extends BaseCombatContent {
 			if (player.inte <= 100) critChance += (player.inte - 50) / 50;
 			if (player.inte > 100) critChance += 10;
 		}
-		if (monster.isImmuneToCrits() && !player.hasPerk(PerkLib.EnableCriticals)) critChance = 0;
+		if (monster.isImmuneToCrits()) critChance = 0;
 		if (rand(100) < critChance) {
 			crit = true;
 			damage *= 1.75;
@@ -1525,7 +1262,6 @@ public class CombatMagic extends BaseCombatContent {
 		if (player.hasPerk(PerkLib.FireAffinity)) damage *= 2;
 		damage = Math.round(damage);
 		outputText(monster.capitalA + monster.short + " takes <b><font color=\"#800000\">(" + damage + ")");
-		if (!monster.hasPerk(PerkLib.EnemyGroupType) && player.hasPerk(PerkLib.Convergence)) outputText(" (" + damage + ") ");
 		outputText("</font></b> damage.");
 		//Using fire attacks on the goo]
 		if(monster.short == "goo-girl") {
@@ -1535,7 +1271,6 @@ public class CombatMagic extends BaseCombatContent {
 		if (crit == true) outputText(" <b>*Critical Hit!*</b>");
 		outputText("\n\n");
 		if (player.weapon == weapons.DEMSCYT && player.cor < 90) dynStats("cor", 0.3);
-		if (!monster.hasPerk(PerkLib.EnemyGroupType) && player.hasPerk(PerkLib.Convergence)) damage *= 2;
 		checkAchievementDamage(damage);
 		flags[kFLAGS.SPELLS_CAST]++;
 		if(!player.hasStatusEffect(StatusEffects.CastedSpell)) player.createStatusEffect(StatusEffects.CastedSpell,0,0,0,0);
@@ -1574,10 +1309,8 @@ public class CombatMagic extends BaseCombatContent {
 		outputText("You focus on your magic, trying to draw on it without enhancing your own arousal.\n");
 		//30% backfire!
 		var backfire:int = 30;
-		if (player.hasPerk(PerkLib.FocusedMind)) backfire = 20;
 		backfire -= (player.inte * 0.15);
 		if (backfire < 15) backfire = 15;
-		else if (backfire < 5 && player.hasPerk(PerkLib.FocusedMind)) backfire = 5;
 		if(rand(100) < backfire) {
 			outputText("An errant sexual thought crosses your mind, and you lose control of the spell!  Your ");
 			if(player.gender == 0) outputText(assholeDescript() + " tingles with a desire to be filled as your libido spins out of control.");
@@ -1592,7 +1325,6 @@ public class CombatMagic extends BaseCombatContent {
 		else {
 			var nosferatu:Number = 0;
 			nosferatu += player.inte;
-			if (player.hasPerk(PerkLib.WisenedHealer)) nosferatu += player.wis;
 			outputText(" You chant as your shadow suddenly takes on a life of its own, sprouting a multitude of mouths and tentacles which seek and tear into " + monster.a + monster.short + " shadow");
 			if (monster.plural == true) outputText("s");
 			outputText(", gorging on its owner’s life force to replenish your own. Soon enough the spell is over and your shadow returns to you, leaving you better for the wear.");
@@ -1622,29 +1354,17 @@ public class CombatMagic extends BaseCombatContent {
 		var ChargeWeaponBoost:Number = 10;
 		if (player.hasPerk(PerkLib.JobSorcerer) && player.inte >= 25) ChargeWeaponBoost += 5;
 		if (player.hasPerk(PerkLib.Spellpower) && player.inte >= 50) ChargeWeaponBoost += 5;
-		if (player.hasPerk(PerkLib.Mage) && player.inte >= 50) ChargeWeaponBoost += 10;
-		if (player.hasPerk(PerkLib.FocusedMind) && player.inte >= 50) ChargeWeaponBoost += 10;
-		if (player.hasPerk(PerkLib.Channeling) && player.inte >= 60) ChargeWeaponBoost += 10;
-		if (player.hasPerk(PerkLib.Archmage) && player.inte >= 75) ChargeWeaponBoost += 15;
-		if (player.hasPerk(PerkLib.GrandArchmage) && player.inte >= 100) ChargeWeaponBoost += 20;
-		if (player.hasPerk(PerkLib.GreyMage) && player.inte >= 125) ChargeWeaponBoost += 25;
-		if (player.hasPerk(PerkLib.GreyArchmage) && player.inte >= 150) ChargeWeaponBoost += 30;
 		if (player.hasPerk(PerkLib.JobEnchanter) && player.inte >= 50) ChargeWeaponBoost += 5;
 		if (player.hasPerk(PerkLib.Spellsword) && player.inte >= 50) ChargeWeaponBoost += 15;
-		if (player.hasPerk(PerkLib.JobSwordsman)) ChargeWeaponBoost -= 10;
-		if (player.hasPerk(PerkLib.JobBrawler)) ChargeWeaponBoost -= 10;
 		if (player.hasPerk(PerkLib.JobDervish)) ChargeWeaponBoost -= 10;
 		if (player.hasPerk(PerkLib.IronFistsI)) ChargeWeaponBoost -= 10;
 		if (player.hasPerk(PerkLib.JobMonk)) ChargeWeaponBoost -= 15;
 		if (player.hasPerk(PerkLib.Berzerker)) ChargeWeaponBoost -= 15;
 		if (player.hasPerk(PerkLib.Lustzerker)) ChargeWeaponBoost -= 15;
 		if (player.hasPerk(PerkLib.WeaponMastery)) ChargeWeaponBoost -= 15;
-		if (player.hasPerk(PerkLib.WeaponGrandMastery)) ChargeWeaponBoost -= 25;
 		if (player.hasPerk(PerkLib.HeavyArmorProficiency)) ChargeWeaponBoost -= 15;
-		if (player.hasPerk(PerkLib.AyoArmorProficiency)) ChargeWeaponBoost -= 15;
 		if (player.hasPerk(PerkLib.Agility)) ChargeWeaponBoost -= 10;
 		if (player.hasPerk(PerkLib.LightningStrikes)) ChargeWeaponBoost -= 10;
-		if (player.hasPerk(PerkLib.BodyCultivator)) ChargeWeaponBoost -= 5;
 	//	ChargeWeaponBoost += player.inte / 10;player.inte * 0.1 - może tylko jak bedzie mieć perk z prestige job: magus/warock/inny związany z spells
 		if (ChargeWeaponBoost < 10) ChargeWeaponBoost = 10;
 		ChargeWeaponBoost *= 1.5;
@@ -1653,14 +1373,6 @@ public class CombatMagic extends BaseCombatContent {
 		ChargeWeaponBoost = FnHelpers.FN.logScale(ChargeWeaponBoost,ChargeWeaponABC,10);
 		ChargeWeaponBoost = Math.round(ChargeWeaponBoost);
 		var ChargeWeaponDuration:Number = 5;
-		if (player.hasPerk(PerkLib.LongerLastingBuffsI)) ChargeWeaponDuration += 1;
-		if (player.hasPerk(PerkLib.LongerLastingBuffsII)) ChargeWeaponDuration += 1;
-		if (player.hasPerk(PerkLib.LongerLastingBuffsIII)) ChargeWeaponDuration += 1;
-		if (player.hasPerk(PerkLib.LongerLastingBuffsIV)) ChargeWeaponDuration += 1;
-		if (player.hasPerk(PerkLib.LongerLastingBuffsV)) ChargeWeaponDuration += 1;
-		if (player.hasPerk(PerkLib.LongerLastingBuffsVI)) ChargeWeaponDuration += 1;
-		if (player.hasPerk(PerkLib.EverLastingBuffs)) ChargeWeaponDuration += 5;
-		if (player.hasPerk(PerkLib.EternalyLastingBuffs)) ChargeWeaponDuration += 5;
 		if (silent) {
 			player.createStatusEffect(StatusEffects.ChargeWeapon,ChargeWeaponBoost,ChargeWeaponDuration,0,0);
 			statScreenRefresh();
@@ -1698,29 +1410,17 @@ public class CombatMagic extends BaseCombatContent {
 		var ChargeArmorBoost:Number = 10;
 		if (player.hasPerk(PerkLib.JobSorcerer) && player.inte >= 25) ChargeArmorBoost += 5;
 		if (player.hasPerk(PerkLib.Spellpower) && player.inte >= 50) ChargeArmorBoost += 5;
-		if (player.hasPerk(PerkLib.Mage) && player.inte >= 50) ChargeArmorBoost += 10;
-		if (player.hasPerk(PerkLib.FocusedMind) && player.inte >= 50) ChargeArmorBoost += 10;
-		if (player.hasPerk(PerkLib.Channeling) && player.inte >= 60) ChargeArmorBoost += 10;
-		if (player.hasPerk(PerkLib.Archmage) && player.inte >= 75) ChargeArmorBoost += 15;
-		if (player.hasPerk(PerkLib.GrandArchmage) && player.inte >= 100) ChargeArmorBoost += 20;
-		if (player.hasPerk(PerkLib.GreyMage) && player.inte >= 125) ChargeArmorBoost += 25;
-		if (player.hasPerk(PerkLib.GreyArchmage) && player.inte >= 150) ChargeArmorBoost += 30;
 		if (player.hasPerk(PerkLib.JobEnchanter) && player.inte >= 50) ChargeArmorBoost += 5;
 		if (player.hasPerk(PerkLib.Spellarmor) && player.inte >= 50) ChargeArmorBoost += 15;
-		if (player.hasPerk(PerkLib.JobSwordsman)) ChargeArmorBoost -= 10;
-		if (player.hasPerk(PerkLib.JobBrawler)) ChargeArmorBoost -= 10;
 		if (player.hasPerk(PerkLib.JobDervish)) ChargeArmorBoost -= 10;
 		if (player.hasPerk(PerkLib.IronFistsI)) ChargeArmorBoost -= 10;
 		if (player.hasPerk(PerkLib.JobMonk)) ChargeArmorBoost -= 15;
 		if (player.hasPerk(PerkLib.Berzerker)) ChargeArmorBoost -= 15;
 		if (player.hasPerk(PerkLib.Lustzerker)) ChargeArmorBoost -= 15;
 		if (player.hasPerk(PerkLib.WeaponMastery)) ChargeArmorBoost -= 15;
-		if (player.hasPerk(PerkLib.WeaponGrandMastery)) ChargeArmorBoost -= 25;
 		if (player.hasPerk(PerkLib.HeavyArmorProficiency)) ChargeArmorBoost -= 15;
-		if (player.hasPerk(PerkLib.AyoArmorProficiency)) ChargeArmorBoost -= 15;
 		if (player.hasPerk(PerkLib.Agility)) ChargeArmorBoost -= 10;
 		if (player.hasPerk(PerkLib.LightningStrikes)) ChargeArmorBoost -= 10;
-		if (player.hasPerk(PerkLib.BodyCultivator)) ChargeArmorBoost -= 5;
 	//	ChargeArmorBoost += player.inte / 10;player.inte * 0.1 - może tylko jak bedzie mieć perk z prestige job: magus/warock/inny związany z spells
 		if (ChargeArmorBoost < 10) ChargeArmorBoost = 10;
 		if (player.hasPerk(PerkLib.JobEnchanter)) ChargeArmorBoost *= 1.2;
@@ -1728,14 +1428,6 @@ public class CombatMagic extends BaseCombatContent {
 		ChargeArmorBoost = FnHelpers.FN.logScale(ChargeArmorBoost,ChargeArmorABC,10);
 		ChargeArmorBoost = Math.round(ChargeArmorBoost);
 		var ChargeArmorDuration:Number = 5;
-		if (player.hasPerk(PerkLib.LongerLastingBuffsI)) ChargeArmorDuration += 1;
-		if (player.hasPerk(PerkLib.LongerLastingBuffsII)) ChargeArmorDuration += 1;
-		if (player.hasPerk(PerkLib.LongerLastingBuffsIII)) ChargeArmorDuration += 1;
-		if (player.hasPerk(PerkLib.LongerLastingBuffsIV)) ChargeArmorDuration += 1;
-		if (player.hasPerk(PerkLib.LongerLastingBuffsV)) ChargeArmorDuration += 1;
-		if (player.hasPerk(PerkLib.LongerLastingBuffsVI)) ChargeArmorDuration += 1;
-		if (player.hasPerk(PerkLib.EverLastingBuffs)) ChargeArmorDuration += 5;
-		if (player.hasPerk(PerkLib.EternalyLastingBuffs)) ChargeArmorDuration += 5;
 		if (silent) {
 			player.createStatusEffect(StatusEffects.ChargeArmor,ChargeArmorBoost,ChargeArmorDuration,0,0);
 			statScreenRefresh();
@@ -1752,7 +1444,7 @@ public class CombatMagic extends BaseCombatContent {
 		}
 		clearOutput();
 		outputText("You utter words of power, summoning an electrical charge around your");
-		if (player.isNaked() && player.haveNaturalArmor() && player.hasPerk(PerkLib.ImprovingNaturesBlueprintsNaturalArmor)) outputText(" natural armor.");
+		if (player.isNaked() && player.haveNaturalArmor()) outputText(" natural armor.");
 		else outputText(" [armor].");
 		outputText("  It crackles loudly, ensuring you'll have more protection for the rest of the fight.\n\n");
 		player.createStatusEffect(StatusEffects.ChargeArmor, ChargeArmorBoost, ChargeArmorDuration, 0, 0);
@@ -1785,7 +1477,6 @@ public class CombatMagic extends BaseCombatContent {
 	public function spellHealEffect():void {
 		var heal:Number = 0;
 		heal += scalingBonusIntelligence();
-		if (player.hasPerk(PerkLib.WisenedHealer)) heal += scalingBonusWisdom();
 		heal *= healModWhite();
 		if (player.unicornScore() >= 5) heal *= ((player.unicornScore() - 4) * 0.5);
 		if (player.alicornScore() >= 6) heal *= ((player.alicornScore() - 5) * 0.5);
@@ -1941,7 +1632,7 @@ public class CombatMagic extends BaseCombatContent {
 				if (player.inte <= 100) critChance += (player.inte - 50) / 50;
 				if (player.inte > 100) critChance += 10;
 			}
-			if (monster.isImmuneToCrits() && !player.hasPerk(PerkLib.EnableCriticals)) critChance = 0;
+			if (monster.isImmuneToCrits()) critChance = 0;
 			if (rand(100) < critChance) {
 				crit = true;
 				damage *= 1.75;
@@ -2041,7 +1732,7 @@ public class CombatMagic extends BaseCombatContent {
 			if (player.inte <= 100) critChance += (player.inte - 50) / 50;
 			if (player.inte > 100) critChance += 10;
 		}
-		if (monster.isImmuneToCrits() && !player.hasPerk(PerkLib.EnableCriticals)) critChance = 0;
+		if (monster.isImmuneToCrits()) critChance = 0;
 		if (rand(100) < critChance) {
 			crit = true;
 			damage *= 1.75;
@@ -2160,7 +1851,7 @@ public class CombatMagic extends BaseCombatContent {
 				if (player.inte <= 100) critChance += (player.inte - 50) / 50;
 				if (player.inte > 100) critChance += 10;
 			}
-			if (monster.isImmuneToCrits() && !player.hasPerk(PerkLib.EnableCriticals)) critChance = 0;
+			if (monster.isImmuneToCrits()) critChance = 0;
 			if (rand(100) < critChance) {
 				crit = true;
 				damage *= 1.75;

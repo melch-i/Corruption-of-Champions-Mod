@@ -666,11 +666,6 @@ public class KitsuneScene extends BaseContent
 					}
 					outputText("production has been enhanced.</b>");
 				}
-				if (player.hasPerk(PerkLib.SoulSense) && flags[kFLAGS.SOUL_SENSE_KITSUNE_MANSION] < 2) flags[kFLAGS.SOUL_SENSE_KITSUNE_MANSION]++;
-				if (flags[kFLAGS.SOUL_SENSE_KITSUNE_MANSION] == 2) {
-					flags[kFLAGS.SOUL_SENSE_KITSUNE_MANSION]++;
-					outputText("\n\n<b>You have been in mansion enough times to be able to find it in the future when using soul sense. (Removes Kitsunes from deepwoods explore encounters pool!)</b>");
-				}
 				model.time.hours = 6;
 				model.time.days++;
                 if (!CoC.instance.inCombat)
@@ -2347,9 +2342,9 @@ public class KitsuneScene extends BaseContent
 			doNext(camp.returnToCampUseOneHour);
 		}
 		
-		public static var basicKitsuneHair:Array = ["white", "black", "black", "black", "red", "red", "red"];
-		public static var basicKitsuneFur:Array = ["orange and white", "black", "black and white", "red", "red and white", "white"];
-		public static var elderKitsuneColors:Array = ["metallic golden", "golden blonde", "metallic silver", "silver blonde", "snow white", "iridescent gray"];
+		public static var basicKitsuneHair:Array = Race.KitsuneHairColors;
+		public static var basicKitsuneFur:Array = Race.KitsuneFurColors;
+		public static var elderKitsuneColors:Array = Race.KitsuneElderColors;
 		
 		//[Meditate]
 		// If kitsune-level-upped, returns new number of tails

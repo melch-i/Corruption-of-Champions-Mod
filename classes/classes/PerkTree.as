@@ -15,9 +15,6 @@ public class PerkTree extends BaseContent {
 		return {
 			roots: [
 				PerkLib.JobArcaneArcher,
-				PerkLib.JobBarbarian,
-				PerkLib.JobBeastWarrior,
-				PerkLib.JobBrawler,
 				PerkLib.JobCourtesan,
 				PerkLib.JobDervish,
 				PerkLib.JobElementalConjurer,
@@ -29,15 +26,10 @@ public class PerkTree extends BaseContent {
 				PerkLib.JobRanger,
 				PerkLib.JobSeducer,
 				PerkLib.JobSorcerer,
-				PerkLib.JobSoulCultivator,
-				PerkLib.JobSwordsman,
-				PerkLib.JobWarlord,
 				PerkLib.JobWarrior,
 				PerkLib.PrestigeJobArcaneArcher,
 				PerkLib.PrestigeJobBerserker,
-				PerkLib.PrestigeJobSeer,
 				PerkLib.PrestigeJobSentinel,
-				PerkLib.PrestigeJobSoulArcher,
 				PerkLib.PrestigeJobSoulArtMaster,
 			],
 			stops: [

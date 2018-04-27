@@ -259,16 +259,6 @@ public class MagicSpecials extends BaseCombatContent {
 				bd.disable("You're already pretty goddamn mad & lustfull!");
 			}
 		}
-		if (player.hasPerk(PerkLib.JobBeastWarrior)) {
-			if (player.hasStatusEffect(StatusEffects.CrinosShape)) {
-				buttons.add("Return", returnToNormalShape).hint("Return to normal from Crinos Shape.");
-			} else {
-				bd = buttons.add("CrinosShape", assumeCrinosShape).hint("Let your wrath flow thou you, transforming you into more bestial shape!  Greatly increases your strength, speed and fortitude! \n\nWrath Cost: " + crinosshapeCost() + " per turn");
-				if (player.wrath < crinosshapeCost()) {
-					bd.disable("Your wrath is too low to enter this state!");
-				}
-			}
-		}
 		if (player.oniScore() >= 12) {
 			bd = buttons.add("Oni Rampage", startOniRampage).hint("Increase all damage done by a massive amount but silences you preventing using spells or magical oriented soulskills.");
 			bd.requireFatigue(spellCost(50));
@@ -716,7 +706,7 @@ public class MagicSpecials extends BaseCombatContent {
 				if (player.lib <= 100) critChance += player.lib / 5;
 				if (player.lib > 100) critChance += 20;
 			}
-			if (monster.isImmuneToCrits() && !player.hasPerk(PerkLib.EnableCriticals)) critChance = 0;
+			if (monster.isImmuneToCrits()) critChance = 0;
 			if (rand(100) < critChance) {
 				crit = true;
 				lustDmgF *= 1.75;
@@ -1614,7 +1604,7 @@ public class MagicSpecials extends BaseCombatContent {
 			if (player.inte <= 100) critChance += (player.inte - 50) / 50;
 			if (player.inte > 100) critChance += 10;
 		}
-		if (monster.isImmuneToCrits() && !player.hasPerk(PerkLib.EnableCriticals)) critChance = 0;
+		if (monster.isImmuneToCrits()) critChance = 0;
 		if (rand(100) < critChance) {
 			crit = true;
 			damage *= 1.75;
@@ -1655,8 +1645,6 @@ public class MagicSpecials extends BaseCombatContent {
 		var tempTouSpe:Number = 0;
 		var dwarfrageDuration:Number = 10;
 		var DwarfRageBoost:Number = 10;
-		if (player.hasPerk(PerkLib.JobSwordsman)) DwarfRageBoost += 5;
-		if (player.hasPerk(PerkLib.JobBrawler)) DwarfRageBoost += 5;
 		if (player.hasPerk(PerkLib.Berzerker)) DwarfRageBoost += 5;
 		if (player.hasPerk(PerkLib.Lustzerker)) DwarfRageBoost += 5;
 	//	DwarfRageBoost += player.tou / 10;player.tou * 0.1 - im wytrzymalesze ciało tym wiekszy bonus może udźwignąć
@@ -1705,52 +1693,16 @@ public class MagicSpecials extends BaseCombatContent {
 	
 	public function crinosshapeCost():Number {
 		var modcsc:Number = 5;
-		if (player.hasPerk(PerkLib.ImprovedCrinosShape)) modcsc += 5;
-		if (player.hasPerk(PerkLib.GreaterCrinosShape)) modcsc += 10;
-		if (player.hasPerk(PerkLib.MasterCrinosShape)) modcsc += 20;
 		return modcsc;
 	}
 	public function assumeCrinosShape():void {
 		clearOutput();
 		player.wrath -= crinosshapeCost();
-		var temp1:Number = 0;
-		var temp2:Number = 0;
-		var temp3:Number = 0;
-		var tempStr:Number = 0;
-		var tempTou:Number = 0;
-		var tempSpe:Number = 0;
-		if (player.hasPerk(PerkLib.ImprovedCrinosShape)) {
-			if (player.hasPerk(PerkLib.GreaterCrinosShape)) {
-				if (player.hasPerk(PerkLib.MasterCrinosShape)) {
-					temp1 += player.str * 1.6;
-					temp2 += player.tou * 1.6;
-					temp3 += player.spe * 1.6;
-				}
-				else {
-					temp1 += player.str * 0.8;
-					temp2 += player.tou * 0.8;
-					temp3 += player.spe * 0.8;
-				}
-			}
-			else {
-				temp1 += player.str * 0.4;
-				temp2 += player.tou * 0.4;
-				temp3 += player.spe * 0.4;
-			}
-		}
-		else {
-			temp1 += player.str * 0.2;
-			temp2 += player.tou * 0.2;
-			temp3 += player.spe * 0.2;
-		}
-		temp1 = Math.round(temp1);
-		temp2 = Math.round(temp2);
-		temp3 = Math.round(temp3);
+		var tempStr:Number = Math.round(player.str * 0.2);
+		var tempTou:Number = Math.round(player.tou * 0.2);
+		var tempSpe:Number = Math.round(player.spe * 0.2);
 		outputText("You roar and unleash your inner beast assuming Crinos Shape in order to destroy your foe!\n\n");
 		player.createStatusEffect(StatusEffects.CrinosShape, 0, 0, 0, 0);
-		tempStr = temp1;
-		tempTou = temp2;
-		tempSpe = temp3;
 		player.changeStatusValue(StatusEffects.CrinosShape,1,tempStr);
 		player.changeStatusValue(StatusEffects.CrinosShape,2,tempTou);
 		player.changeStatusValue(StatusEffects.CrinosShape,3,tempSpe);
@@ -1820,7 +1772,7 @@ public class MagicSpecials extends BaseCombatContent {
 			if (player.inte <= 100) critChance += (player.inte - 50) / 50;
 			if (player.inte > 100) critChance += 10;
 		}
-		if (monster.isImmuneToCrits() && !player.hasPerk(PerkLib.EnableCriticals)) critChance = 0;
+		if (monster.isImmuneToCrits()) critChance = 0;
 		if (rand(100) < critChance) {
 			crit = true;
 			damage *= 1.75;
@@ -1926,7 +1878,7 @@ public class MagicSpecials extends BaseCombatContent {
 	 if (player.inte <= 100) critChance += (player.inte - 50) / 50;
 	 if (player.inte > 100) critChance += 10;
 	 }
-	 if (monster.isImmuneToCrits() && !player.hasPerk(PerkLib.EnableCriticals)) critChance = 0;
+	 if (monster.isImmuneToCrits()) critChance = 0;
 	 if (rand(100) < critChance) {
 	 crit = true;
 	 dmg *= 1.75;
@@ -2032,7 +1984,7 @@ public class MagicSpecials extends BaseCombatContent {
 			if (player.inte <= 100) critChance += (player.inte - 50) / 50;
 			if (player.inte > 100) critChance += 10;
 		}
-		if (monster.isImmuneToCrits() && !player.hasPerk(PerkLib.EnableCriticals)) critChance = 0;
+		if (monster.isImmuneToCrits()) critChance = 0;
 		if (rand(100) < critChance) {
 			crit = true;
 			damage *= 1.75;
@@ -2152,7 +2104,7 @@ public class MagicSpecials extends BaseCombatContent {
 			if (player.inte <= 100) critChance += (player.inte - 50) / 50;
 			if (player.inte > 100) critChance += 10;
 		}
-		if (monster.isImmuneToCrits() && !player.hasPerk(PerkLib.EnableCriticals)) critChance = 0;
+		if (monster.isImmuneToCrits()) critChance = 0;
 		if (rand(100) < critChance) {
 			crit = true;
 			damage *= 1.75;
@@ -2265,7 +2217,7 @@ public class MagicSpecials extends BaseCombatContent {
 			if (player.inte <= 100) critChance += (player.inte - 50) / 50;
 			if (player.inte > 100) critChance += 10;
 		}
-		if (monster.isImmuneToCrits() && !player.hasPerk(PerkLib.EnableCriticals)) critChance = 0;
+		if (monster.isImmuneToCrits()) critChance = 0;
 		if (rand(100) < critChance) {
 			crit = true;
 			damage *= 1.75;
@@ -2539,7 +2491,7 @@ public class MagicSpecials extends BaseCombatContent {
 			if (player.inte <= 100) critChance += (player.inte - 50) / 50;
 			if (player.inte > 100) critChance += 10;
 		}
-		if (monster.isImmuneToCrits() && !player.hasPerk(PerkLib.EnableCriticals)) critChance = 0;
+		if (monster.isImmuneToCrits()) critChance = 0;
 		if (rand(100) < critChance) {
 			crit = true;
 			damage *= 1.75;

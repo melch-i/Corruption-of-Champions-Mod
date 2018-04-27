@@ -637,14 +637,8 @@ public function fightKindra():void {
 		startCombat(new Kindra());
 	}
 	if (flags[kFLAGS.KINDRA_LVL_UP] == 6) {
-		if(!player.hasPerk(PerkLib.SoulApprentice)) {
-			outputText("You attempt to enter but the barrier holds you out. You will likely need to master soulforce in order to pierce this final defence.");
-			doNext(owcaMainScreenOn);
-		}
-		else {
-			outputText("You enter determined to confront the sheep woman. Due to your training the barrier is unable to prevent your intrusion. The sheep bare her teeth in anger and draw her bow for one last stand.");
-			startCombat(new Kindra());
-		}
+		outputText("You enter determined to confront the sheep woman. Due to your training the barrier is unable to prevent your intrusion. The sheep bare her teeth in anger and draw her bow for one last stand.");
+		startCombat(new Kindra());
 	}
 }
 

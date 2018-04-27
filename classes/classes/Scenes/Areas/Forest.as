@@ -124,7 +124,6 @@ use namespace CoC;
 							return flags[kFLAGS.TAMANI_TIME_OUT] == 0
 								   && player.gender > 0
 								   && (player.cockTotal() > 0 || player.hasKeyItem("Deluxe Dildo") < 0)
-								   && flags[kFLAGS.SOUL_SENSE_TAMANI] < 3;
 						}
 					}, {
 						name  : "Jojo",
@@ -280,9 +279,6 @@ use namespace CoC;
 				call  : SceneLib.electraScene.repeatDeepwoodsEnc
 			}, {
 				name: "kitsune",
-				when: function():Boolean {
-					return flags[kFLAGS.SOUL_SENSE_KITSUNE_MANSION] < 3;
-				},
 				call: kitsuneScene.enterTheTrickster
 			},/*{ // [INTERMOD:8chan]
 			 name: "dullahan",
@@ -305,7 +301,6 @@ use namespace CoC;
 					return flags[kFLAGS.TAMANI_TIME_OUT] == 0
 						   && player.gender > 0
 						   && (player.cockTotal() > 0 || player.hasKeyItem("Deluxe Dildo") < 0)
-						   && flags[kFLAGS.SOUL_SENSE_TAMANI] < 3;
 				}
 			}, {
 				name: "faerie",

@@ -147,7 +147,6 @@ public class Vala extends Monster
 			else this.drop = NO_DROP;
 			this.wings.type = Wings.BEE_LIKE_LARGE;
 			this.wings.desc = wingDesc;
-			this.createPerk(PerkLib.InhumanDesireI, 0, 0, 0, 0);
 			checkMonster();
 		}
 		

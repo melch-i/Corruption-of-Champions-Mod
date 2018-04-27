@@ -196,8 +196,6 @@ public class SceneLib {
 
     public static var debugMenu:DebugMenu = new DebugMenu();
 
-    public static var soulforce:Soulforce = new Soulforce();
-
     public static var metamorph:Metamorph = new Metamorph();
 
     public static var crafting:Crafting = new Crafting();

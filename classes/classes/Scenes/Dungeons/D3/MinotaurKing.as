@@ -37,9 +37,6 @@ public class MinotaurKing extends Monster
 			this.gems = 600 + rand(200);
 			this.additionalXP = 2000;
 			this.level = 47;
-			this.createPerk(PerkLib.InhumanDesireI, 0, 0, 0, 0);
-			this.createPerk(PerkLib.DemonicDesireI, 0, 0, 0, 0);
-			this.createPerk(PerkLib.RefinedBodyI, 0, 0, 0, 0);
 			this.createPerk(PerkLib.TankI, 0, 0, 0, 0);
 			this.createPerk(PerkLib.EnemyBeastOrAnimalMorphType, 0, 0, 0, 0);
 			this.drop = NO_DROP;

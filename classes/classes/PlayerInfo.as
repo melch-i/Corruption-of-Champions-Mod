@@ -55,11 +55,7 @@ public class PlayerInfo extends BaseContent {
 		}
 		combatStats += "<b>Arrow/Bolt Cost:</b> " + combat.bowCost(100) + "%\n";
 		combatStats += "<b>Accuracy (1st range attack):</b> " + (combat.arrowsAccuracy() / 2) + "%\n";
-		if (player.hasPerk(PerkLib.DoubleStrike)) combatStats += "<b>Accuracy (2nd range attack):</b> " + ((combat.arrowsAccuracy() / 2) - 15) + "%\n";
-		if (player.hasPerk(PerkLib.TripleStrike)) combatStats += "<b>Accuracy (3rd range attack):</b> " + ((combat.arrowsAccuracy() / 2) - 30) + "%\n";
 		if (player.hasPerk(PerkLib.Manyshot)) combatStats += "<b>Accuracy (4th range attack):</b> " + ((combat.arrowsAccuracy() / 2) - 45) + "%\n";
-		if (player.hasPerk(PerkLib.WildQuiver)) combatStats += "<b>Accuracy (5th range attack):</b> " + ((combat.arrowsAccuracy() / 2) - 60) + "%\n";
-		if (player.hasPerk(PerkLib.Multishot)) combatStats += "<b>Accuracy (6th range attack):</b> " + ((combat.arrowsAccuracy() / 2) - 75) + "%\n";
 
 		combatStats += "<b>Soulskill Effect Multiplier:</b> " + Math.round(100 * combat.soulskillMod()) + "%\n";
 		combatStats += "<b>Physical Soulskill Effect Multiplier:</b> " + Math.round(100 * combat.soulskillPhysicalMod()) + "%\n";
@@ -1001,9 +997,11 @@ if (SceneLib.valeria.valeriaFluidsEnabled()) {
 		//Apply perk here.
 		outputText("<b>" + perk.perkName + "</b> gained!");
 		player.createPerk(perk.ptype, perk.value1, perk.value2, perk.value3, perk.value4);
-		if (perk.ptype == PerkLib.StrongBack2) player.itemSlot5.unlocked = true;
-		if (perk.ptype == PerkLib.StrongBack) player.itemSlot4.unlocked = true;
-		if (perk.ptype == PerkLib.TankI || perk.ptype == PerkLib.TankII || perk.ptype == PerkLib.TankIII || perk.ptype == PerkLib.TankIV || perk.ptype == PerkLib.TankV || perk.ptype == PerkLib.TankVI) {
+		if (perk.ptype == PerkLib.StrongBack){
+			player.itemSlot4.unlocked = true;
+			player.itemSlot5.unlocked = true;
+		}
+		if (perk.ptype == PerkLib.TankI) {
 			HPChange(player.tou, false);
 			statScreenRefresh();
 		}

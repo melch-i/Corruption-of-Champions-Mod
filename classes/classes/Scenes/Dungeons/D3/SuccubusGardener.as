@@ -44,8 +44,6 @@ import classes.StatusEffects.Combat.GardenerSapSpeedDebuff;
 			this.gems = 200 + rand(50);
 			this.level = 40;
 			this.lustVuln = 0;
-			this.createPerk(PerkLib.InhumanDesireI, 0, 0, 0, 0);
-			this.createPerk(PerkLib.DemonicDesireI, 0, 0, 0, 0);
 			this.drop = NO_DROP;
 			this.createPerk(PerkLib.EnemyTrueDemon, 0, 0, 0, 0);
 			checkMonster();

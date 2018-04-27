@@ -13,6 +13,7 @@ import classes.GlobalFlags.kFLAGS;
 import classes.Items.Consumable;
 import classes.Items.Mutations;
 import classes.PerkLib;
+import classes.Race;
 
 public class OnikiriSake extends Consumable {
 	public function OnikiriSake() 
@@ -33,7 +34,6 @@ public class OnikiriSake extends Consumable {
 		var changeLimit:Number = 1;
 		if (rand(3) == 0) changeLimit++;
 		if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.PastLifeAlchemist)) changeLimit++;
-		if (player.hasPerk(PerkLib.EzekielBlessing)) changeLimit++;
 		if (player.hasPerk(PerkLib.TransformationResistance)) changeLimit--;
 		//Temporary storage
 		var temp:Number = 0;
@@ -147,9 +147,9 @@ public class OnikiriSake extends Consumable {
 		}
 		//Eyes
 		if ((player.horns.type == Horns.ONI_X2 || player.horns.type == Horns.ONI)
-		    && (player.eyes.type != Eyes.ONI || !InCollection(player.eyes.colour, Mutations.oniEyeColors)) && changes < changeLimit && rand(3) == 0) {
+		    && (player.eyes.type != Eyes.ONI || !InCollection(player.eyes.colour, Race.OniEyeColors)) && changes < changeLimit && rand(3) == 0) {
 			var colorEyes:String;
-			colorEyes = randomChoice(Mutations.oniEyeColors);
+			colorEyes = randomChoice(Race.OniEyeColors);
 			mutations.setEyeTypeAndColor(Eyes.ONI,colorEyes);
 			outputText("\n\nYou feel something fundamental change in your sight when you go check yourself in a puddle you notice your iris now are <b>[eyecolor] just like that of an Oni with a slit at the center giving them a fiendish outlook.</b>");
 			changes++;

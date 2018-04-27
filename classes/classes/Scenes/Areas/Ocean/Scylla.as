@@ -101,10 +101,8 @@ public class Scylla extends Monster
 			this.level = 70;
 			this.gems = 0;
 			this.drop = new WeightedDrop(consumables.BLACKIN, 1);
-			this.createPerk(PerkLib.RefinedBodyI, 0, 0, 0, 0);
 			this.createPerk(PerkLib.TankI, 0, 0, 0, 0);
 			this.createPerk(PerkLib.Regeneration, 0, 0, 0, 0);
-			this.createPerk(PerkLib.InhumanDesireI, 0, 0, 0, 0);
 			checkMonster();
 		}
 		

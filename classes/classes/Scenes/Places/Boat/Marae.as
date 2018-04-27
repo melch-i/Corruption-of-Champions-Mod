@@ -177,7 +177,6 @@ public class Marae extends Monster
 			this.drop = NO_DROP;
 			this.gems = 1000;
 			this.createPerk(PerkLib.TankI, 0, 0, 0, 0);
-			this.createPerk(PerkLib.RefinedBodyI, 0, 0, 0, 0);
 			this.createPerk(PerkLib.Regeneration, 0, 0, 0, 0);
 			this.createPerk(PerkLib.EnemyBossType, 0, 0, 0, 0);
 			this.createPerk(PerkLib.EnemyGodType, 0, 0, 0, 0);

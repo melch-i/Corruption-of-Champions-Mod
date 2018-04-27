@@ -6,6 +6,25 @@
 ```
 A list of available tags can be found in [ParserTags](ParserTags.as)
 
+## Format Statements
+
+Usage:
+```
+[format: TEXT]
+```
+
+Formats:
+
+| Format | Description                      | Example          | Result           |
+|--------|----------------------------------|------------------|------------------|
+| say    | Italic text with quotation marks | `[say: Hello]`   | “*Hello*”        |
+| b      | Bold text                        | `[b: Bold]`      | **Bold**         |
+| i      | Italic text                      | `[i: Italic]`    | *Italic*         |
+| u      | Underlined text                  | `[u: Underline]` | <u>Underline</u> |
+
+*Note that the space after the `:` is required.* 
+
+
 ## Conditional Statements
 
 ### Simple if statement
