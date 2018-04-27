@@ -685,18 +685,14 @@ if (SceneLib.valeria.valeriaFluidsEnabled()) {
         if (player.XP >= player.requiredXP() && player.level < CoC.instance.levelCap) {
             player.XP -= player.requiredXP();
 			player.level++;
-			player.perkPoints++;
-			//if (player.level % 2 == 0) player.ascensionPerkPoints++;
-			//przerobić aby z asc perk co ?6/3/1? lvl dostawać another perk point?
-			//może też dodać ascension perk aby móc dostawać 6 lub nawet wiecej stat points na lvl up?
-			clearOutput();
-			outputText("<b>You are now level " + num2Text(player.level) + "!</b>");
-			if (flags[kFLAGS.STAT_GAIN_MODE] ==CoC.STAT_GAIN_CLASSIC) {
-				player.statPoints += 5;
-				outputText("\n\nYou have gained five attribute points and one perk point!");
-			} else {
-				outputText("\n\nYou have gained one perk point!");
-			}
+	        outputText("<b>You are now level " + num2Text(player.level) + "!</b>");
+	        if(player.level % 2 == 0){
+		        outputText("\n\nYou have gained five attribute points!");
+		        player.statPoints += 5;
+	        } else {
+		        outputText("\n\nYou have gained one perk point!");
+		        player.perkPoints++;
+	        }
 
 			if (player.statPoints>0) {
 				doNext(attributeMenu);
@@ -715,8 +711,7 @@ if (SceneLib.valeria.valeriaFluidsEnabled()) {
 			perkBuyMenu();
 		}
 		else {
-			outputText("<b>ERROR.  LEVEL UP PUSHED WHEN PC CANNOT LEVEL OR GAIN PERKS.  PLEASE REPORT THE STEPS TO REPRODUCE THIS BUG TO ORMAEL@GMAIL.COM OR THE FENOXO.COM XIANXIA MOD THREAD.</b>");
-			doNext(playerMenu);
+	        playerMenu();
 		}
 	}
 

@@ -441,8 +441,6 @@ public class CoC extends MovieClip
          new CoC(e?e.stage:null);*!/
     }
     */
-    public static const STAT_GAIN_CLASSIC:int = 0;
-    public static const STAT_GAIN_DAILY:int = 1;
     public function flushOutputTextToGUI():void
     {
         var fmt:TextFormat = mainView.mainText.defaultTextFormat;
