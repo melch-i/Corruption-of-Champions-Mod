@@ -917,8 +917,8 @@ import coc.xxc.StoryContext;
 		protected function get context():StoryContext {
 			return CoC.instance.context;
 		}
-		protected function submenu(buttons:ButtonDataList,back:Function=null,page:int=0,sort:Boolean = true):void {
-			EngineCore.submenu(buttons,back,page,sort);
+		protected function submenu(buttons:ButtonDataList,back:Function=null,page:int=0,sort:Boolean = true,pgobj:Object = null):void {
+			EngineCore.submenu(buttons,back,page,sort,pgobj);
 		}
 	}
 

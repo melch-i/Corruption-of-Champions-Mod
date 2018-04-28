@@ -1058,7 +1058,7 @@ public class EngineCore {
         //This literally does nothing.
     }
 
-	public static function submenu(buttons:ButtonDataList,back:Function=null,page:int=0,sort:Boolean = true):void {
+	public static function submenu(buttons:ButtonDataList,back:Function=null,page:int=0,sort:Boolean = true,pgobj:Object = null):void {
 		var list:/*ButtonData*/Array = buttons.list.filter(function(e:ButtonData, i:int, a:Array):Boolean{
 			return e.visible;
 		});
@@ -1076,10 +1076,11 @@ public class EngineCore {
 			list[li].applyTo(button(bi%perPage));
 		}
 		if (page!=0 || total>perPage) {
-			button(12).show("Prev Page", Utils.curry(submenu, buttons, back, page - 1)).disableIf(page == 0);
-			button(13).show("Next Page", Utils.curry(submenu, buttons, back, page + 1)).disableIf(n >= total);
+			button(12).show("Prev Page", Utils.curry(submenu, buttons, back, page - 1, sort, pgobj)).disableIf(page == 0);
+			button(13).show("Next Page", Utils.curry(submenu, buttons, back, page + 1, sort, pgobj)).disableIf(n >= total);
 		}
 		if (back != null) button(14).show("Back",back);
+		if(pgobj){pgobj.page = page;}
 	}
 
     private static function buildFuncLookupDict(object:* = null, prefix:String = ""):void {
