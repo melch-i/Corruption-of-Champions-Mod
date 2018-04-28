@@ -656,8 +656,6 @@ import classes.StatusEffects.VampireThirstEffect;
 		public static const LethicesShell:StatusEffectType         = mkCombat("Lethices Magic Shell");
 		public static const WhipSilence:StatusEffectType           = mkCombat("Whip Silence");
 		public static const PigbysHands:StatusEffectType           = mkCombat("Pigbys Hands");
-		public static const SoulArena:StatusEffectType             = mkCombat("Soul Arena");
-		public static const SoulArenaGaunlet:StatusEffectType      = mkCombat("Soul Arena Gaunlet");
 
 		/**
 		 * Creates status affect

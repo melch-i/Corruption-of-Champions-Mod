@@ -17,10 +17,7 @@ public class DarkElfScout extends Monster
 		
 		override public function defeated(hpVictory:Boolean):void
 		{
-			if (player.hasStatusEffect(StatusEffects.SoulArenaGaunlet)) {
-				SceneLib.telAdre.arena.gaunletchallange1postfight();
-			}
-			else darkelf.wonWithDarkElf();
+			darkelf.wonWithDarkElf();
 		}
 
 		override public function won(hpVictory:Boolean, pcCameWorms:Boolean):void

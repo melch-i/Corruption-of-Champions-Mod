@@ -263,15 +263,11 @@ public function cleanupAfterCombatImpl(nextFunc:Function = null):void {
 			gemsLost *= 1 + (player.newGamePlusMod() * 0.5);
 			//Round gems.
 			gemsLost = Math.round(gemsLost);
-			if (player.hasStatusEffect(StatusEffects.SoulArena) || monster.hasPerk(PerkLib.NoGemsLost)) gemsLost = 0;
 			//Keep gems from going below zero.
 			if (gemsLost > player.gems) gemsLost = player.gems;
 			var timePasses:int = monster.handleCombatLossText(inDungeon, gemsLost); //Allows monsters to customize the loss text and the amount of time lost
-			if (player.hasStatusEffect(StatusEffects.SoulArena)) timePasses = 1;
 			player.gems -= gemsLost;
 			inCombat = false;
-			if (player.hasStatusEffect(StatusEffects.SoulArena)) player.removeStatusEffect(StatusEffects.SoulArena);
-			if (player.hasStatusEffect(StatusEffects.SoulArenaGaunlet)) player.removeStatusEffect(StatusEffects.SoulArenaGaunlet);
 			if (prison.inPrison == false && flags[kFLAGS.PRISON_CAPTURE_CHANCE] > 0 && rand(100) < flags[kFLAGS.PRISON_CAPTURE_CHANCE] && (prison.trainingFeed.prisonCaptorFeedingQuestTrainingIsTimeUp() || !prison.trainingFeed.prisonCaptorFeedingQuestTrainingExists()) && (monster.short == "goblin" || monster.short == "goblin assassin" || monster.short == "imp" || monster.short == "imp lord" || monster.short == "imp warlord" || monster.short == "hellhound" || monster.short == "minotaur" || monster.short == "satyr" || monster.short == "gnoll" || monster.short == "gnoll spear-thrower" || monster.short == "basilisk")) {
 				outputText("  You feel yourself being dragged and carried just before you black out.");
 				doNext(prison.prisonIntro);
@@ -3008,10 +3004,6 @@ public function finishCombat():void
 public function dropItem(monster:Monster, nextFunc:Function = null):void {
 	if (nextFunc == null) nextFunc = camp.returnToCampUseOneHour;
 	if(monster.hasStatusEffect(StatusEffects.NoLoot)) {
-		return;
-	}
-	if(player.hasStatusEffect(StatusEffects.SoulArena)) {
-		player.removeStatusEffect(StatusEffects.SoulArena);
 		return;
 	}
 	var itype:ItemType = monster.dropLoot();

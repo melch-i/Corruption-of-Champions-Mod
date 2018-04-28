@@ -105,34 +105,31 @@ public class HellHound extends Monster
 
 		override public function defeated(hpVictory:Boolean):void
 		{
-			if (player.hasStatusEffect(StatusEffects.SoulArenaGaunlet)) SceneLib.telAdre.arena.gaunletchallange2fight3();
-			else {
-				if (hpVictory) {
-					outputText("The hellhound's flames dim and the heads let out a whine before the creature slumps down, defeated and nearly unconscious.", true);
+			if (hpVictory) {
+				outputText("The hellhound's flames dim and the heads let out a whine before the creature slumps down, defeated and nearly unconscious.", true);
+				//Rape if not naga, turned on, and girl that can fit!
+				if (player.hasVagina() && player.lust >= 33 && !player.isNaga()) {
+					outputText("  You find yourself musing that you could probably take advantage of the poor 'doggy'.  Do you fuck it?");
+					EngineCore.simpleChoices("Fuck it", SceneLib.mountain.hellHoundScene.hellHoundPropahRape, "", null, "", null, "", null, "Leave", SceneLib.combat.cleanupAfterCombatImpl);
+				} else {
+					SceneLib.combat.cleanupAfterCombatImpl();
+				}
+			} else {
+				outputText("Unable to bear hurting you anymore, the hellhound's flames dim as he stops his attack. The two heads look at you, whining plaintively.  The hellhound slowly pads over to you and nudges its noses at your crotch.  It seems he wishes to pleasure you.\n\n", true);
+				var temp2:Function =null;
+				if (player.gender > 0 && player.lust >= 33) {
+					outputText("You realize your desires aren't quite sated.  You could let it please you");
 					//Rape if not naga, turned on, and girl that can fit!
 					if (player.hasVagina() && player.lust >= 33 && !player.isNaga()) {
-						outputText("  You find yourself musing that you could probably take advantage of the poor 'doggy'.  Do you fuck it?");
-						EngineCore.simpleChoices("Fuck it", SceneLib.mountain.hellHoundScene.hellHoundPropahRape, "", null, "", null, "", null, "Leave", SceneLib.combat.cleanupAfterCombatImpl);
-					} else {
-						SceneLib.combat.cleanupAfterCombatImpl();
+						outputText(" or make it fuck you");
+						temp2 = SceneLib.mountain.hellHoundScene.hellHoundPropahRape;
 					}
-				} else {
-					outputText("Unable to bear hurting you anymore, the hellhound's flames dim as he stops his attack. The two heads look at you, whining plaintively.  The hellhound slowly pads over to you and nudges its noses at your crotch.  It seems he wishes to pleasure you.\n\n", true);
-					var temp2:Function =null;
-					if (player.gender > 0 && player.lust >= 33) {
-						outputText("You realize your desires aren't quite sated.  You could let it please you");
-						//Rape if not naga, turned on, and girl that can fit!
-						if (player.hasVagina() && player.lust >= 33 && !player.isNaga()) {
-							outputText(" or make it fuck you");
-							temp2 = SceneLib.mountain.hellHoundScene.hellHoundPropahRape;
-						}
-						outputText(".  What do you do?");
-						EngineCore.simpleChoices("Lick", SceneLib.mountain.hellHoundScene.hellHoundGetsRaped, "Fuck", temp2, "", null, "", null, "Leave", SceneLib.combat.cleanupAfterCombatImpl);
-					}
-					else {
-						outputText("You turn away, not really turned on enough to be interested in such an offer.");
-						SceneLib.combat.cleanupAfterCombatImpl();
-					}
+					outputText(".  What do you do?");
+					EngineCore.simpleChoices("Lick", SceneLib.mountain.hellHoundScene.hellHoundGetsRaped, "Fuck", temp2, "", null, "", null, "Leave", SceneLib.combat.cleanupAfterCombatImpl);
+				}
+				else {
+					outputText("You turn away, not really turned on enough to be interested in such an offer.");
+					SceneLib.combat.cleanupAfterCombatImpl();
 				}
 			}
 		}
