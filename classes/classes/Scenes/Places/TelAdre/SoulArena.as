@@ -23,14 +23,14 @@ package classes.Scenes.Places.TelAdre
 			if (flags[kFLAGS.CHI_CHI_AFFECTION] >= 10 && flags[kFLAGS.CHI_CHI_AFFECTION] < 15) SceneLib.chichiScene.EnterOfTheChiChi();
 			else {
 				outputText("Coming closer to the arena you see two muscular tigersharks standing on each side of the entrance, which only briefly glance at you the moment you pass by them. Inside after few a moment a tall slightly muscular male cat-morph approaches you. Most of its body is covered by armor yet two long tails waves behind him from time to time.");//osoba zarządzająca areną bedzie male nekomanta npc
-				outputText("\n\n\"<i>Greeting to the Soul Arena. Don't pick up fights outside of the proper place or you will be thrown out. If you break any rule here you will be kicked out. Knowing this go pick the area where you want to train or maybe go to the challenges area,</i>\" without wasting time the nekomata overseer of this place explains you all that is needed and walk away.");
+				outputText("\n\n\"<i>Greeting to the Arena. Don't pick up fights outside of the proper place or you will be thrown out. If you break any rule here you will be kicked out. Knowing this go pick the area where you want to train or maybe go to the challenges area,</i>\" without wasting time the nekomata overseer of this place explains you all that is needed and walk away.");
 				outputText("\n\nSo which one of the three possible sub areas you gonna visit this time?");
 				if (flags[kFLAGS.IGNIS_ARENA_SEER] >= 1) outputText("\n\nYou notice Ignis sitting in the stands, a notebook in his paws. The kitsune seems to be watching the fights and taking notes as he does so.");
 				if (flags[kFLAGS.CHI_CHI_AFFECTION] < 1) flags[kFLAGS.CHI_CHI_AFFECTION] = 0;
 				menu();//statuseffect(soulArena) dodać na początku walk co pozwoli dać inne dropy itp. w stosuku do spotkania podobnego wroga w innym miejscu a nawet łatwo pozwoli zrobić wersje soulforce niektórych ras bez tworzenia nowych opisów monsterów - zrobić to dla trybu challenge, w który walka z wrogie da określony drop a nawet można na niej grać aby uzyskać nagro...np. nowego camp member ^^
-				addButton(0, "Solo", soularenaSolo).hint("Go to the section of soul arena for 1 on 1 fights.");
-				addButton(1, "Group", soularenaGroup).hint("Go to the section of soul arena for group fights.");
-				addButton(2, "Challenge", soularenaChallenge).hint("Go to the section of soul arena for challenges. (Who knows what reward you may get after winning any of the challenges there...)");
+				addButton(0, "Solo", soularenaSolo).hint("Go to the section of the arena for 1 on 1 fights.").disable();
+				addButton(1, "Group", soularenaGroup).hint("Go to the section of the arena for group fights.").disable();
+				addButton(2, "Challenge", soularenaChallenge).hint("Go to the section of the arena for challenges. (Who knows what reward you may get after winning any of the challenges there...)");
 				if (flags[kFLAGS.IGNIS_ARENA_SEER] >= 1) addButton(10, "Ignis", ignisarenaseer.mainIgnisMenu);
 				addButton(14, "Back", telAdre.telAdreMenu);
 				statScreenRefresh();
@@ -106,14 +106,17 @@ package classes.Scenes.Places.TelAdre
 			clearOutput();
 			outputText("You exit the arena, victorious, basking in the cheering of the crowd and go to the prize counter for your reward. A woman greets you.\n\n");
 			if (flags[kFLAGS.SOUL_ARENA_FINISHED_GAUNLETS] >= 1) {
-				outputText("\"<i>Good show, champion. As a reward for your performance, please accept these 15 spirit stones. Please do come back again and maybe next time you could even try the harder challenge.</i>\"\n\n");
-				flags[kFLAGS.SPIRIT_STONES] += 15;
+				outputText("\"<i>Good show, champion. As a reward for your performance, please accept these 75 gems. Please do come back again and maybe next time you could even try the harder challenge.</i>\"\n\n");
+				player.gems += 75;
 				cleanupAfterCombat();
 			}
 			else {
 				outputText("\"<i>Good show, champion. As a reward for your performance, please accept this magical bow. Please do come back again and maybe next time you could even try the harder challenge.</i>\"\n\n");
 				flags[kFLAGS.SOUL_ARENA_FINISHED_GAUNLETS] = 1;
 				inventory.takeItem(weaponsrange.BOWGUID, cleanupAfterCombat);
+				if(flags[kFLAGS.CHI_CHI_AFFECTION] < 10){
+					flags[kFLAGS.CHI_CHI_AFFECTION] = 10;
+				}
 			}
 		}
 		public function gaunletchallange2fight1():void {

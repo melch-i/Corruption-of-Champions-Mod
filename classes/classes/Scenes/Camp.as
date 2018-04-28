@@ -1077,7 +1077,7 @@ public function campLoversMenu(descOnly:Boolean = false):void {
 	if (flags[kFLAGS.CHI_CHI_FOLLOWER] > 2) {
 		outputText("You can see Chi Chi not so far from Jojo. She’s busy practicing her many combos on a dummy. Said dummy will more than likely have to be replaced within twenty four hours.\n\n");
 		/*if (player.statusEffectv4(StatusEffects.CampLunaMishaps2) > 0) buttons.disable("Wet.");
-		else */buttons.add( "Chi Chi", SceneLib.chichiScene.ChiChiCampMainMenu2);
+		else */buttons.add( "Chi Chi", curry(SceneLib.chichiScene.ChiChiCampMainMenu,true));
 	}
 	//Etna
 	if (flags[kFLAGS.ETNA_FOLLOWER] > 0) {

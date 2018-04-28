@@ -65,7 +65,6 @@ public class StatsView extends Block {
 	private var levelBar:StatBar;
 	private var xpBar:StatBar;
 	private var gemsBar:StatBar;
-	private var spiritstonesBar:StatBar;
 
 	private var allStats:Array;
 
@@ -175,10 +174,6 @@ public class StatsView extends Block {
 			statName: "Gems:",
 			hasBar: false
 		}));
-		addElement(spiritstonesBar = new StatBar({
-			statName: "Spirit Stones:",
-			hasBar: false
-		}));
 		timeText = addTextField({
 			htmlText: '<u>Day#: 0</u>\nTime: 00:00',
 			defaultTextFormat: TIME_FORMAT
@@ -264,8 +259,6 @@ public class StatsView extends Block {
 				return esteemBar;
 			case 'obey':
 				return obeyBar;
-			case 'spiritstones':
-				return spiritstonesBar;
 		}
 		return null;
 	}
@@ -331,7 +324,6 @@ public class StatsView extends Block {
 		levelBar.visible      		  = !inPrison;
 		xpBar.visible         		  = !inPrison;
 		gemsBar.visible       		  = !inPrison;
-		spiritstonesBar.visible       = !inPrison;
 		if (inPrison) {
 			advancementText.htmlText = "<b>Prison Stats</b>";
 			esteemBar.maxValue       = 100;
@@ -352,7 +344,6 @@ public class StatsView extends Block {
 				xpBar.valueText = 'MAX';
 			}
 			gemsBar.valueText = Utils.addComma(Math.floor(player.gems));
-			spiritstonesBar.valueText = game.flags[kFLAGS.SPIRIT_STONES];
 		}
 
 		var minutesDisplay:String = "" + game.model.time.minutes;

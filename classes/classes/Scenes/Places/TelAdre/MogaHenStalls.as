@@ -79,7 +79,6 @@ package classes.Scenes.Places.TelAdre
 			addButton(3, "4th Stall", buyMenu,tierFour).hint("Check out stall with most expensive TF items.");
 			addButton(5, "5th Stall", buyMenu,tierFive).hint("Check out stall with most exotic TF items.");		//specjalne type TF jak ectoplasm ^^
 			//addButton(10, "Talk", TalkWithMogaHen).hint("Talk with shopkeeper.");
-			addButton(12, "Exchange", exchangeGemsToSpiritStonesorReverse).hint("Exchange gems to spirit stones or spirit stones to gems.");
 			addButton(14, "Back", SceneLib.telAdre.telAdreMenu);
 			statScreenRefresh();
 
@@ -95,49 +94,6 @@ package classes.Scenes.Places.TelAdre
 				submenu(buttons,mogahenmerchant,0,false);
 				statScreenRefresh();
 			}
-		}
-		private function exchangeGemsToSpiritStonesorReverse():void {
-			clearOutput();
-			outputText("When you ask about this exchange that was mentioned on the sign over the entrance Moga  think for a moment before reaching to the desk near him. After handing you over a piece of paper he adds.");
-			outputText("\n\n\"<i>Here are my exchange rates. Pick the one you want and let me know. If you don't like those rates you can go and try to find someone else... not like there is anyone else here that want to deal with those exchanges aside me.</i>\"");
-			menu();
-			if (player.gems >= 20) addButton(0, "20 Gems", exchange,1).hint("Exchange 20 gems to 1 spirit stone.");
-			if (player.gems >= 100) addButton(1, "100 Gems", exchange,5).hint("Exchange 100 gems to 5 spirit stones.");
-			if (player.gems >= 200) addButton(2, "200 Gems", exchange,10).hint("Exchange 200 gems to 10 spirit stones.");
-			if (player.gems >= 1000) addButton(3, "1000 Gems", exchange,50).hint("Exchange 1000 gems to 50 spirit stones.");
-			if (player.gems >= 2000) addButton(4, "2000 Gems", exchange, 100).hint("Exchange 2000 gems to 100 spirit stones.");
-			if (flags[kFLAGS.SPIRIT_STONES] >= 1) addButton(5, "1 SS", exchange,1,false).hint("Exchange 1 spirit stone to 5 gems.");
-			if (flags[kFLAGS.SPIRIT_STONES] >= 5) addButton(6, "5 SS", exchange,5,false).hint("Exchange 5 spirit stones to 25 gems.");
-			if (flags[kFLAGS.SPIRIT_STONES] >= 10) addButton(7, "10 SS", exchange,10,false).hint("Exchange 10 spirit stones to 50 gems.");
-			if (flags[kFLAGS.SPIRIT_STONES] >= 50) addButton(8, "50 SS", exchange,50,false).hint("Exchange 50 spirit stones to 250 gems.");
-			if (flags[kFLAGS.SPIRIT_STONES] >= 100) addButton(9, "100 SS", exchange,100,false).hint("Exchange 100 spirit stones to 500 gems.");
-			addButton(14, "Back", mogahenmerchant);
-		}
-		private function exchange(value:int,toStones:Boolean=true):void{
-			if(toStones){
-				switch(value){
-					case 1:outputText("After picking the lowers one rate for gems to stones you count gems before giving them to the merchant. With noticable mumbling about customer been stingy he without haste finishing transaction by giving you one spirit stone.");break;
-					case 5:outputText("After picking the low one rate for gems to stones you count gems before giving them to the merchant. With barely noticable mumbling about customer been stingy he without haste finishing transaction by giving you five spirit stones.");break;
-					case 10:outputText("After picking the middle one rate for gems to stones you count gems before giving them to merchant. Without haste he finishing transaction by giving you ten spirit stones.");break;
-					case 50:outputText("After picking the high one rate for gems to stones you count gems before giving them to merchant. With slight haste he finishing transaction by giving you fifty spirit stones.");break;
-					case 100:outputText("After picking the highest one rate for gems to stones you count gems before giving them to merchant. With haste he finishing transaction by giving you hundred spirit stones.");break;
-				}
-				player.gems -= 20*value;
-				flags[kFLAGS.SPIRIT_STONES]+=value;
-			} else {
-				switch(value){
-					case 1:outputText("After picking the lowers one rate for stones to gems you hand over one stone to the merchant. With noticable mumbling about customer been stingy he without haste finishing transaction by giving you gems.");break;
-					case 5:outputText("After picking the low one rate for stones to gems you hand over five stones to the merchant. With barely noticable mumbling about customer been stingy he without haste finishing transaction by giving you gems.");break;
-					case 10:outputText("After picking the middle one rate for stones to gems you hand over ten stones to the merchant. Without haste he finishing transaction by giving you gems.");break;
-					case 50:outputText("After picking the high one rate for stones to gems you hand over fifty stones to the merchant. With slight haste he finishing transaction by giving you gems.");break;
-					case 100:outputText("After picking the highest one rate for stones to gems you hand over hundred stones to the merchant. With haste he finishing transaction by giving you gems.");break;
-				}
-				player.gems += 5*value;
-				flags[kFLAGS.SPIRIT_STONES]-=value;
-			}
-			statScreenRefresh();
-			doNext(exchangeGemsToSpiritStonesorReverse);
-
 		}
 	}
 }

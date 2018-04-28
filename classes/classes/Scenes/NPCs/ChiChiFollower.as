@@ -13,8 +13,6 @@ use namespace CoC;
 	
 	public class ChiChiFollower extends NPCAwareContent
 	{
-		//public var backtoHeXinDao:HeXinDao = new HeXinDao();
-		
 		public function ChiChiFollower() 
 		{}
 
@@ -56,7 +54,6 @@ public function LostFirstFight():void {
 	}
 	flags[kFLAGS.CHI_CHI_AFFECTION] = 20;
 	cleanupAfterCombat();
-	return;
 }
 
 public function WonSecondFight():void {
@@ -126,7 +123,6 @@ public function LostSecondFight():void {
 	outputText("You see her leaving, but can’t do much to chase her in your current state. The villagers patch you up and just as you're about to leave for your camp, you find a small scroll on the ground.\n\n");
 	flags[kFLAGS.CHI_CHI_FOLLOWER] = 2;
 	inventory.takeItem(consumables.SOBLMAN, cleanupAfterCombat);
-	return;
 }
 
 public function WonSparringFight():void {
@@ -165,25 +161,29 @@ public function LostSparringFight():void {
 	outputText("\"<i>[name] are you ok!? Oh, I knew I shouldn’t have used that move...</i>\"\n\n");
 	outputText("You will be all right though you need some rest and more practice.\n\n");
 	cleanupAfterCombat();
-	return;
 }
 
-public function MeetingChiChiInHeXinDao():void {
+public function MeetingChiChiInTelAdre(initial:Boolean = false):void {
 	clearOutput();
-	outputText("You spot Chi Chi meditating by the river. There are various scorched wooden dummies next to her and it’s obvious the monk was practicing her techniques. You barely take two steps towards her before the mouse stands up and looks you straight in the eye.\n\n");
-	if (flags[kFLAGS.CHI_CHI_AFFECTION] > 20) {
-		outputText("\"<i>I take it you're here to continue our training. Are you ready?</i>\"\n\n");
-	}
-	else {
-		outputText("\"<i>I knew you would be coming. You're here to learn martial arts and it's my duty as a sensei to teach a prospective student.</i>\"\n\n");
-		outputText("She sizes you up for a moment.\n\n");
-		if (flags[kFLAGS.TIMES_TRAINED_WITH_JOJO] < 16 && !player.hasPerk(PerkLib.Enlightened)) {
-			outputText("\"<i>Sadly, you barely have an understanding of the discipline to begin with. You will need to train with a less experienced master first. I heard a mouse fancying himself a monk wanders the woods, I suggest you seek him out and learn what you can from him first. Once you are done, come back to me.</i>\"\n\n");
-			doNext(camp.returnToCampUseOneHour);
+	if(!initial){
+		outputText("Chi Chi cross her arm impatiently.\n\n");
+		outputText("\"<i>Anything else I can do for you [name]?</i>\"\n\n");
+	} else {
+		outputText("You spot Chi Chi meditating by the river. There are various scorched wooden dummies next to her and it’s obvious the monk was practicing her techniques. You barely take two steps towards her before the mouse stands up and looks you straight in the eye.\n\n");
+		if (flags[kFLAGS.CHI_CHI_AFFECTION] > 20) {
+			outputText("\"<i>I take it you're here to continue our training. Are you ready?</i>\"\n\n");
 		}
 		else {
-			outputText("\"<i>I see you’ve had some novice training in the art of the lotus. Not bad but the lotus were pacifists to begin with, what I’m about to teach you is an entirely new discipline, forged in the fire of the demon war. Are you ready?</i>\"\n\n");
-			flags[kFLAGS.CHI_CHI_AFFECTION] += 10;
+			outputText("\"<i>I knew you would be coming. You're here to learn martial arts and it's my duty as a sensei to teach a prospective student.</i>\"\n\n");
+			outputText("She sizes you up for a moment.\n\n");
+			if (flags[kFLAGS.TIMES_TRAINED_WITH_JOJO] < 16 && !player.hasPerk(PerkLib.Enlightened)) {
+				outputText("\"<i>Sadly, you barely have an understanding of the discipline to begin with. You will need to train with a less experienced master first. I heard a mouse fancying himself a monk wanders the woods, I suggest you seek him out and learn what you can from him first. Once you are done, come back to me.</i>\"\n\n");
+				doNext(camp.returnToCampUseOneHour);
+			}
+			else {
+				outputText("\"<i>I see you’ve had some novice training in the art of the lotus. Not bad but the lotus were pacifists to begin with, what I’m about to teach you is an entirely new discipline, forged in the fire of the demon war. Are you ready?</i>\"\n\n");
+				flags[kFLAGS.CHI_CHI_AFFECTION] += 10;
+			}
 		}
 	}
 	menu();
@@ -191,37 +191,32 @@ public function MeetingChiChiInHeXinDao():void {
 	addButton(1, "No", NotReadyForTheTraining);
 	addButton(2, "Shop", SoulskilsManualsShop);
 	addButton(4, "Leave", SceneLib.telAdre.telAdreMenu);
-}
 
-public function MeetingChiChiInHeXinDao2():void {
-	clearOutput();
-	outputText("Chi Chi cross her arm impatiently.\n\n");
-	outputText("\"<i>Anything else I can do for you [name]?</i>\"\n\n");
-	menu();
-	addButton(0, "Yes", TrainingSoulArtsWithChiChi);
-	addButton(1, "No", NotReadyForTheTraining);
-	addButton(2, "Shop", SoulskilsManualsShop);
-	addButton(4, "Leave", SceneLib.telAdre.telAdreMenu);
-}
-
-public function NotReadyForTheTraining():void {
-	outputText("You tell her you will come back when you are.\n\n");
-	outputText("\"<i>Take your time, there is no shortcut through this.</i>\"\n\n");
-	doNext(camp.returnToCampUseOneHour);
+	function NotReadyForTheTraining():void {
+		outputText("You tell her you will come back when you are.\n\n");
+		outputText("\"<i>Take your time, there is no shortcut through this.</i>\"\n\n");
+		doNext(camp.returnToCampUseOneHour);
+	}
 }
 
 public function TrainingSoulArtsWithChiChi():void {
 	clearOutput();
-	if (flags[kFLAGS.CHI_CHI_DAILY_TRAINING] < 1) {
-		if (flags[kFLAGS.CHI_CHI_SAM_TRAINING] == 2) {
+	if (flags[kFLAGS.CHI_CHI_DAILY_TRAINING] >= 1) {
+		outputText("Chi Chi respond by the negative.\n\n");
+		outputText("\"<i>I meant it as a joke. No not today you are still in a pretty rough shape, pushing training further would compromise your health. Go take a break.</i>\"");
+		doNext(MeetingChiChiInTelAdre);
+		return;
+	}
+	switch(flags[kFLAGS.CHI_CHI_SAM_TRAINING]){
+		case 2:
 			outputText("Chi Chi almost seems to be expecting you today, as she simply stands in the middle of the training grounds, arm crossed. You ask her what is the next step of your training.\n\n");
 			outputText("\"<i>You have successfully finished all possible tests but the final one. Today, we will see if your training will bear fruit. Your final challenge is to defeat me, your sensei, and prove that you have finally mastered the martial arts. Are you ready?</i>\"\n\n");
 			outputText("There is no turning back once you engage her and you know this well. This is a fight you can’t afford to lose, so the question stands. Are you truly ready for it?\n\n");
 			menu();
 			addButton(0, "No", NotReadyForTheFinalTraining);
 			addButton(1, "Yes", VeryReadyForTheFinalTraining);
-		}
-		else if (flags[kFLAGS.CHI_CHI_SAM_TRAINING] >= 1 && flags[kFLAGS.CHI_CHI_SAM_TRAINING] < 2) {
+			break;
+		case 1:
 			outputText("As you head to practice on the dummy, Chi Chi holds you back.\n\n");
 			if (flags[kFLAGS.CHI_CHI_AFFECTION] > 60) {
 				outputText("You go to see Chi Chi, still a little hesitant to continue this particular lesson.\n\n");
@@ -250,8 +245,8 @@ public function TrainingSoulArtsWithChiChi():void {
 			outputText("\n\n");
 			flags[kFLAGS.CHI_CHI_DAILY_TRAINING] = 1;
 			doNext(camp.returnToCampUseFourHours);
-		}
-		else {
+			break;
+		default:
 			outputText("You're ready to begin your training and tell her as such.\n\n");
 			outputText("Chi Chi nods, then proceeds to show you a whole new form of combat, this one much more aggressive than that of the Lotus. Soon you manage to learn a few additional stances, as well as how to control the energy flow in your body to increase the power of an impact. She has you training on the dummies for several hours to increase your stamina. ");
 			outputText("As the flow of your movements and energy starts to become automatic, you discover your kicks and punches have become way stronger.");
@@ -275,17 +270,11 @@ public function TrainingSoulArtsWithChiChi():void {
 			outputText("\n\n");
 			flags[kFLAGS.CHI_CHI_DAILY_TRAINING] = 1;
 			doNext(camp.returnToCampUseFourHours);
-		}
-	}
-	else {
-		outputText("Chi Chi respond by the negative.\n\n");
-		outputText("\"<i>I meant it as a joke. No not today you are still in a pretty rough shape, pushing training further would compromise your health. Go take a break.</i>\"");
-		doNext(MeetingChiChiInHeXinDao2);
 	}
 }
 public function NotReadyForTheFinalTraining():void {
 	outputText("You request a temporary reprieve before your final training and Chi Chi nods, letting you go.\n\n");
-	doNext(MeetingChiChiInHeXinDao2);
+	doNext(MeetingChiChiInTelAdre);
 }
 public function VeryReadyForTheFinalTraining():void {
 	outputText("You are as ready as you can be and will never be more ready than now. It’s time to settle your score with the mouse and you tell her as such.\n\n");
@@ -298,134 +287,47 @@ public function VeryReadyForTheFinalTraining():void {
 public function SoulskilsManualsShop():void {
 	clearOutput();
 	outputText("\"<i>I’m glad you take your training seriously, [name]. There are various scrolls I have that you can learn from.");
-	if (flags[kFLAGS.CHI_CHI_FOLLOWER] < 1) outputText(" but I would need a few spirit stones first");
+	if (flags[kFLAGS.CHI_CHI_FOLLOWER] < 1) outputText(" but I would need a few gems first");
 	outputText(".</i>\"\n\n");
 	menu();
-	addButton(0, "Ice Fist", SoulskilsManualsShopIceFist);
-	addButton(1, "Fire Punch", SoulskilsManualsShopFirePunch);
-	addButton(2, "Hurricane Dance", SoulskilsManualsShopHurricaneDance);
-	addButton(3, "Earth Stance", SoulskilsManualsShopEarthStance);
-	addButton(4, "Punishing Kick", SoulskilsManualsShopPunishingKick);
-	if (flags[kFLAGS.CHI_CHI_FOLLOWER] < 2) addButton(14, "Back", MeetingChiChiInHeXinDao2);
+	addButton(0, "Ice Fist", confirmManual,StatusEffects.KnowsIceFist);
+	addButton(1, "Fire Punch", confirmManual, StatusEffects.KnowsFirePunch);
+	addButton(2, "Hurricane Dance", confirmManual, StatusEffects.KnowsHurricaneDance);
+	addButton(3, "Earth Stance", confirmManual, StatusEffects.KnowsEarthStance);
+	addButton(4, "Punishing Kick", confirmManual, StatusEffects.KnowsPunishingKick);
+	if (flags[kFLAGS.CHI_CHI_FOLLOWER] < 2) addButton(14, "Back", MeetingChiChiInTelAdre);
 	else addButton(14, "Back", ChiChiCampMainMenu);
-}
 
-public function SoulskilsManualsShopIceFist():void {
-	clearOutput();
-	outputText("\"<i>This one? Are you sure about that?</i>\"\n\n");
-	menu();
-	if (player.hasStatusEffect(StatusEffects.KnowsIceFist)) addButtonDisabled(0, "Yes", "You already learned how to use Ice Fist.");
-	else addButton(0, "Yes", SoulskilsManualsShopIceFist2);
-	addButton(1, "No", SoulskilsManualsShop);
-}
-public function SoulskilsManualsShopIceFist2():void {
-	if (flags[kFLAGS.SPIRIT_STONES] < 5 && flags[kFLAGS.CHI_CHI_FOLLOWER] < 4) {
-		outputText("\"<i>Sorry [name], but I don’t teach these for free. Get me spirit stones and then I will show you what you want.</i>\"\n\n");
-		doNext(SoulskilsManualsShop);
-		return;
+	function confirmManual(manual:StatusEffectType):void {
+		clearOutput();
+		outputText("\"<i>This one? Are you sure about that?</i>\"\n\n");
+		menu();
+		addButton(0,"Yes",learnManual,manual).disableIf(player.hasStatusEffect(manual),"You already learned how to use "+manual.id.replace("Knows ",""));
+		addButton(1,"No",SoulskilsManualsShop);
 	}
-	if (flags[kFLAGS.CHI_CHI_FOLLOWER] >= 4) outputText("\"<i>Well since we are together I will gladly teach you this technique for free... let me explain so you don’t mock it up and hurt yourself.</i>\"\n\n");
-	outputText("Chi Chi nods and begins to give you a full lecture of the technique. Once done, you practice on dummies for a few hours until you finally master it.\n\n");
-	outputText("<b>You learned how to use Ice Fist!</b>\n\n");
-	if (!player.hasStatusEffect(StatusEffects.KnowsIceFist)) player.createStatusEffect(StatusEffects.KnowsIceFist, 0, 0, 0, 0);
-	flags[kFLAGS.SPIRIT_STONES] -= 5;
-	doNext(camp.returnToCampUseFourHours);
-}
 
-public function SoulskilsManualsShopFirePunch():void {
-	clearOutput();
-	outputText("\"<i>This one? Are you sure about that?</i>\"\n\n");
-	menu();
-	if (player.hasStatusEffect(StatusEffects.KnowsFirePunch)) addButtonDisabled(0, "Yes", "You already learned how to use Fire Punch.");
-	else addButton(0, "Yes", SoulskilsManualsShopFirePunch2);
-	addButton(1, "No", SoulskilsManualsShop);
-}
-public function SoulskilsManualsShopFirePunch2():void {
-	if (flags[kFLAGS.SPIRIT_STONES] < 5 && flags[kFLAGS.CHI_CHI_FOLLOWER] < 4) {
-		outputText("\"<i>Sorry [name], but I don’t teach these for free. Get me spirit stones and then I will show you what you want.</i>\"\n\n");
-		doNext(SoulskilsManualsShop);
-		return;
+	function learnManual(manual:StatusEffectType):void {
+		if (player.gems < 25 && flags[kFLAGS.CHI_CHI_FOLLOWER] < 4) {
+			outputText("\"<i>Sorry [name], but I don’t teach these for free. Get me gems and then I will show you what you want.</i>\"\n\n");
+			doNext(SoulskilsManualsShop);
+			return;
+		}
+		if (flags[kFLAGS.CHI_CHI_FOLLOWER] >= 4){
+			outputText("\"<i>Well since we are together I will gladly teach you this technique for free... let me explain so you don’t mock it up and hurt yourself.</i>\"\n\n");
+		} else {
+			player.gems -= 25;
+		}
+		outputText("Chi Chi nods and begins to give you a full lecture of the technique. Once done, you practice on dummies for a few hours until you finally master it.\n\n");
+		outputText("<b>You learned how to use "+manual.id.replace("Knows ","")+"!</b>\n\n");
+		if (!player.hasStatusEffect(manual)) player.createStatusEffect(manual, 0, 0, 0, 0);
+		doNext(camp.returnToCampUseFourHours);
 	}
-	if (flags[kFLAGS.CHI_CHI_FOLLOWER] >= 4) outputText("\"<i>Well since we are together I will gladly teach you this technique for free... let me explain so you don’t mock it up and hurt yourself.</i>\"\n\n");
-	outputText("Chi Chi nods and begins to give you a full lecture of the technique. Once done, you practice on dummies for a few hours until you finally master it.\n\n");
-	outputText("<b>You learned how to use Fire Punch!</b>\n\n");
-	if (!player.hasStatusEffect(StatusEffects.KnowsFirePunch)) player.createStatusEffect(StatusEffects.KnowsFirePunch, 0, 0, 0, 0);
-	flags[kFLAGS.SPIRIT_STONES] -= 5;
-	doNext(camp.returnToCampUseFourHours);
 }
 
-public function SoulskilsManualsShopHurricaneDance():void {
-	clearOutput();
-	outputText("\"<i>This one? Are you sure about that?</i>\"\n\n");
-	menu();
-	if (player.hasStatusEffect(StatusEffects.KnowsHurricaneDance)) addButtonDisabled(0, "Yes", "You already learned how to use Hurricane Dance.");
-	else addButton(0, "Yes", SoulskilsManualsShopHurricaneDance2);
-	addButton(1, "No", SoulskilsManualsShop);
-}
-public function SoulskilsManualsShopHurricaneDance2():void {
-	if (flags[kFLAGS.SPIRIT_STONES] < 5 && flags[kFLAGS.CHI_CHI_FOLLOWER] < 4) {
-		outputText("\"<i>Sorry [name], but I don’t teach these for free. Get me spirit stones and then I will show you what you want.</i>\"\n\n");
-		doNext(SoulskilsManualsShop);
-		return;
+public function ChiChiCampMainMenu(initial:Boolean = false):void {
+	if (initial && ((flags[kFLAGS.LUNA_JEALOUSY] > 100 && rand(10) < 4) || (flags[kFLAGS.LUNA_JEALOUSY] > 150 && rand(10) < 8))){
+		return mishapsLunaChiChi();
 	}
-	if (flags[kFLAGS.CHI_CHI_FOLLOWER] >= 4) outputText("\"<i>Well since we are together I will gladly teach you this technique for free... let me explain so you don’t mock it up and hurt yourself.</i>\"\n\n");
-	outputText("Chi Chi nods and begins to give you a full lecture of the technique. Once done, you practice on dummies for a few hours until you finally master it.\n\n");
-	outputText("<b>You learned how to use Hurricane Dance!</b>\n\n");
-	if (!player.hasStatusEffect(StatusEffects.KnowsHurricaneDance)) player.createStatusEffect(StatusEffects.KnowsHurricaneDance, 0, 0, 0, 0);
-	flags[kFLAGS.SPIRIT_STONES] -= 5;
-	doNext(camp.returnToCampUseFourHours);
-}
-
-public function SoulskilsManualsShopEarthStance():void {
-	clearOutput();
-	outputText("\"<i>This one? Are you sure about that?</i>\"\n\n");
-	menu();
-	if (player.hasStatusEffect(StatusEffects.KnowsEarthStance)) addButtonDisabled(0, "Yes", "You already learned how to use Earth Stance");
-	else addButton(0, "Yes", SoulskilsManualsShopEarthStance2);
-	addButton(1, "No", SoulskilsManualsShop);
-}
-public function SoulskilsManualsShopEarthStance2():void {
-	if (flags[kFLAGS.SPIRIT_STONES] < 5 && flags[kFLAGS.CHI_CHI_FOLLOWER] < 4) {
-		outputText("\"<i>Sorry [name], but I don’t teach these for free. Get me spirit stones and then I will show you what you want.</i>\"\n\n");
-		doNext(SoulskilsManualsShop);
-		return;
-	}
-	if (flags[kFLAGS.CHI_CHI_FOLLOWER] >= 4) outputText("\"<i>Well since we are together I will gladly teach you this technique for free... let me explain so you don’t mock it up and hurt yourself.</i>\"\n\n");
-	outputText("Chi Chi nods and begins to give you a full lecture of the technique. Once done, you practice on dummies for a few hours until you finally master it.\n\n");
-	outputText("<b>You learned how to use Earth Stance!</b>\n\n");
-	if (!player.hasStatusEffect(StatusEffects.KnowsEarthStance)) player.createStatusEffect(StatusEffects.KnowsEarthStance, 0, 0, 0, 0);
-	flags[kFLAGS.SPIRIT_STONES] -= 5;
-	doNext(camp.returnToCampUseFourHours);
-}
-
-public function SoulskilsManualsShopPunishingKick():void {
-	clearOutput();
-	outputText("\"<i>This one? Are you sure about that?</i>\"\n\n");
-	menu();
-	if (player.hasStatusEffect(StatusEffects.KnowsPunishingKick)) addButtonDisabled(0, "Yes", "You already learned how to use Punishing Kick.");
-	else addButton(0, "Yes", SoulskilsManualsShopPunishingKick2);
-	addButton(1, "No", SoulskilsManualsShop);
-}
-public function SoulskilsManualsShopPunishingKick2():void {
-	if (flags[kFLAGS.SPIRIT_STONES] < 5 && flags[kFLAGS.CHI_CHI_FOLLOWER] < 4) {
-		outputText("\"<i>Sorry [name], but I don’t teach these for free. Get me spirit stones and then I will show you what you want.</i>\"\n\n");
-		doNext(SoulskilsManualsShop);
-		return;
-	}
-	if (flags[kFLAGS.CHI_CHI_FOLLOWER] >= 4) outputText("\"<i>Well since we are together I will gladly teach you this technique for free... let me explain so you don’t mock it up and hurt yourself.</i>\"\n\n");
-	outputText("Chi Chi nods and begins to give you a full lecture of the technique. Once done, you practice on dummies for a few hours until you finally master it.\n\n");
-	outputText("<b>You learned how to use Punishing Kick!</b>\n\n");
-	if (!player.hasStatusEffect(StatusEffects.KnowsPunishingKick)) player.createStatusEffect(StatusEffects.KnowsPunishingKick, 0, 0, 0, 0);
-	flags[kFLAGS.SPIRIT_STONES] -= 5;
-	doNext(camp.returnToCampUseFourHours);
-}
-
-public function ChiChiCampMainMenu2():void {
-	if ((flags[kFLAGS.LUNA_JEALOUSY] > 100 && rand(10) < 4) || (flags[kFLAGS.LUNA_JEALOUSY] > 150 && rand(10) < 8)) mishapsLunaChiChi();
-	else ChiChiCampMainMenu();
-}
-
-public function ChiChiCampMainMenu():void {
 	clearOutput();
 	outputText("You go over to Chi Chi who pauses her training to head to you once you are close.");
 	if (flags[kFLAGS.CHI_CHI_FOLLOWER] < 4) outputText("\"<i>Oh how are you doing [name]? I just finished a new set of kicks and punches. Did you want us to train together or did you have something else in mind?</i>\" She’s arm crossed waiting on your reply.");
