@@ -1,32 +1,33 @@
 ﻿package classes 
 {
-import classes.BodyParts.Antennae;
-import classes.BodyParts.Arms;
-import classes.BodyParts.Butt;
-import classes.BodyParts.Ears;
-import classes.BodyParts.Eyes;
-import classes.BodyParts.Face;
-import classes.BodyParts.Gills;
-import classes.BodyParts.Hair;
-import classes.BodyParts.Hips;
-import classes.BodyParts.Horns;
-import classes.BodyParts.LowerBody;
-import classes.BodyParts.RearBody;
-import classes.BodyParts.Tail;
-import classes.BodyParts.Tongue;
-import classes.BodyParts.Wings;
-import classes.GlobalFlags.kACHIEVEMENTS;
-import classes.GlobalFlags.kFLAGS;
-import classes.Items.*;
+	import classes.BodyParts.Antennae;
+	import classes.BodyParts.Arms;
+	import classes.BodyParts.Butt;
+	import classes.BodyParts.Ears;
+	import classes.BodyParts.Eyes;
+	import classes.BodyParts.Face;
+	import classes.BodyParts.Gills;
+	import classes.BodyParts.Hair;
+	import classes.BodyParts.Hips;
+	import classes.BodyParts.Horns;
+	import classes.BodyParts.LowerBody;
+	import classes.BodyParts.RearBody;
+	import classes.BodyParts.Tail;
+	import classes.BodyParts.Tongue;
+	import classes.BodyParts.Wings;
+	import classes.GlobalFlags.kACHIEVEMENTS;
+	import classes.GlobalFlags.kFLAGS;
+	import classes.Items.*;
 	import classes.Scenes.Areas.Desert.SandWitchScene;
 	import classes.Scenes.Dungeons.DungeonAbstractContent;
-import classes.Scenes.NPCs.JojoScene;
-import classes.Scenes.NPCs.XXCNPC;
-import classes.Scenes.SceneLib;
-import classes.lists.BreastCup;
-import classes.lists.Gender;
+	import classes.Scenes.NPCs.JojoScene;
+	import classes.Scenes.NPCs.XXCNPC;
+	import classes.Scenes.SceneLib;
+	import classes.lists.BreastCup;
+	import classes.lists.Gender;
 
-import coc.view.MainView;
+	import coc.view.ButtonDataList;
+	import coc.view.MainView;
 
 //import flash.events.MouseEvent;
 
@@ -1275,75 +1276,34 @@ import coc.view.MainView;
 			}
 			outputText("Before you became a champion, you had other plans for your life.  What were you doing before?");
 			menu();
-			if (!player.hasPerk(PerkLib.PastLifeAlchemist)) addButton(0, "Alchemy", confirmHistory, PerkLib.HistoryAlchemist);
-			else addButtonDisabled(0, "Alchemy", "You already have this History as one of Past Lives!");
-			if (!player.hasPerk(PerkLib.PastLifeCultivator)) addButton(1, "Cultivator", confirmHistory, PerkLib.HistoryCultivator);
-			else addButtonDisabled(1, "Cultivator", "You already have this History as one of Past Lives!");
-			if (!player.hasPerk(PerkLib.PastLifeFighter)) addButton(2, "Fighting", confirmHistory, PerkLib.HistoryFighter);
-			else addButtonDisabled(2, "Fighting", "You already have this History as one of Past Lives!");
-			if (!player.hasPerk(PerkLib.PastLifeFortune)) addButton(3, "Fortune", confirmHistory, PerkLib.HistoryFortune);
-			else addButtonDisabled(3, "Fortune", "You already have this History as one of Past Lives!");
-			if (!player.hasPerk(PerkLib.PastLifeHealer)) addButton(4, "Healing", confirmHistory, PerkLib.HistoryHealer);
-			else addButtonDisabled(4, "Healing", "You already have this History as one of Past Lives!");
-			if (!player.hasPerk(PerkLib.PastLifeReligious)) addButton(5, "Religion", confirmHistory, PerkLib.HistoryReligious);
-			else addButtonDisabled(5, "Religion", "You already have this History as one of Past Lives!");
-			if (!player.hasPerk(PerkLib.PastLifeScholar)) addButton(6, "Schooling", confirmHistory, PerkLib.HistoryScholar);
-			else addButtonDisabled(6, "Schooling", "You already have this History as one of Past Lives!");
-			if (!player.hasPerk(PerkLib.PastLifeScout)) addButton(7, "Scout", confirmHistory, PerkLib.HistoryScout);
-			else addButtonDisabled(7, "Scout", "You already have this History as one of Past Lives!");
-			if (!player.hasPerk(PerkLib.PastLifeSlacker)) addButton(8, "Slacking", confirmHistory, PerkLib.HistorySlacker);
-			else addButtonDisabled(8, "Slacking", "You already have this History as one of Past Lives!");
-			if (!player.hasPerk(PerkLib.PastLifeSlut)) addButton(9, "Slutting", confirmHistory, PerkLib.HistorySlut);
-			else addButtonDisabled(9, "Slutting", "You already have this History as one of Past Lives!");
-			if (!player.hasPerk(PerkLib.PastLifeSmith)) addButton(10, "Smithing", confirmHistory, PerkLib.HistorySmith);
-			else addButtonDisabled(10, "Smithing", "You already have this History as one of Past Lives!");
-			if (!player.hasPerk(PerkLib.PastLifeWhore)) addButton(11, "Whoring", confirmHistory, PerkLib.HistoryWhore);
-			else addButtonDisabled(11, "Whoring", "You already have this History as one of Past Lives!");
-			
-		}
-		
-		private function confirmHistory(choice:PerkType):void {
-			clearOutput();
-			switch (choice) {
-				case PerkLib.HistoryAlchemist:
-					outputText("You spent some time as an alchemist's assistant, and alchemical items always seem to be more reactive in your hands.  Is this your history?");
-					break;
-				case PerkLib.HistoryCultivator:
-					outputText("You spent much of your time cultivating your soul, reaching the point where you succesfully took the first step towards spiritual enlightment as well as attaining an uncanny purity of soulforce. You will start with Job: Soul Cultivator perk. Your max soulforce will be roughly 10% higher. Is this your history?");
-					break;
-				case PerkLib.HistoryFighter:
-					outputText("You spent much of your time fighting other children, and you had plans to find work as a guard when you grew up.  You do 10% more damage with physical melee attacks.  You will also start out with 50 gems and Job: Warrior perk.  Is this your history?");
-					break;
-				case PerkLib.HistoryFortune:
-					outputText("You always feel lucky when it comes to fortune.  Because of that, you have always managed to save up gems until whatever's needed and how to make the most out it (+15% gems on victory).  You will also start out with 250 gems.  Is this your history?");
-					break;
-				case PerkLib.HistoryHealer:
-					outputText("You often spent your free time with the village healer, learning how to tend to wounds.  Healing items and effects are 20% more effective.  Is this your history?");
-					break;
-				case PerkLib.HistoryReligious:
-					outputText("You spent a lot of time at the village temple, and learned how to meditate.  The 'masturbation' option is replaced with 'meditate' when corruption is at or below 66.  Is this your history?");
-					break;
-				case PerkLib.HistoryScholar:
-					outputText("You spent much of your time in school, and even begged the richest man in town, Mr. " + (silly() ? "Savin" : "Sellet") + ", to let you read some of his books.  You are much better at focusing, spellcasting uses 20% less fatigue and will start with Job: Sorcerer perk.  Is this your history?");
-					break;
-				case PerkLib.HistoryScout:
-					outputText("You spent much of your time learning use range weapons, and you had plans to find work as a hunter when you grew up.  You do 10% more damage with physical range attacks and +20% accuracy.  You will also start out with 50 gems and Job: Ranger perk.  Is this your history?");
-					break;
-				case PerkLib.HistorySlacker:
-					outputText("You spent a lot of time slacking, avoiding work, and otherwise making a nuisance of yourself.  Your efforts at slacking have made you quite adept at resting, and your fatigue comes back 20% faster.  Is this your history?");
-					break;
-				case PerkLib.HistorySlut:
-					outputText("You managed to spend most of your time having sex.  Quite simply, when it came to sex, you were the village bicycle - everyone got a ride.  Because of this, your body is a bit more resistant to penetrative stretching, and has a higher upper limit on what exactly can be inserted.  Is this your history?");
-					break;
-				case PerkLib.HistorySmith:
-					outputText("You managed to get an apprenticeship with the local blacksmith.  Because of your time spent at the blacksmith's side, you've learned how to fit armor for maximum protection.  You will start with Job: Guardian perk.  Is this your history?");
-					break;
-				default:
-					outputText("You managed to find work as a whore.  Because of your time spent trading seduction for profit, you're more effective at teasing (+15% tease damage).  You will start with Job: Seducer perk.  Is this your history?");
+			var historyPerks:Array = [
+				["Alchemy", PerkLib.HistoryAlchemist, PerkLib.PastLifeAlchemist, "You spent some time as an alchemist's assistant, and alchemical items always seem to be more reactive in your hands."],
+				["Fighting", PerkLib.HistoryFighter, PerkLib.PastLifeFighter, "You spent much of your time fighting other children, and you had plans to find work as a guard when you grew up.  You do 10% more damage with physical melee attacks.  You will also start out with 50 gems."],
+				["Fortune", PerkLib.HistoryFortune, PerkLib.PastLifeFortune, "You always feel lucky when it comes to fortune.  Because of that, you have always managed to save up gems until whatever's needed and how to make the most out it (+15% gems on victory).  You will also start out with 250 gems."],
+				["Healing", PerkLib.HistoryHealer, PerkLib.PastLifeHealer, "You often spent your free time with the village healer, learning how to tend to wounds.  Healing items and effects are 20% more effective."],
+				["Religion", PerkLib.HistoryReligious, PerkLib.PastLifeReligious, "You spent a lot of time at the village temple, and learned how to meditate.  The 'masturbation' option is replaced with 'meditate' when corruption is at or below 66."],
+				["Schooling", PerkLib.HistoryScholar, PerkLib.PastLifeScholar, "You spent much of your time in school, and even begged the richest man in town, Mr. " + (silly() ? "Savin" : "Sellet") + ", to let you read some of his books.  You are much better at focusing, and spellcasting uses 20% less fatigue."],
+				["Scout", PerkLib.HistoryScout, PerkLib.PastLifeScout, "You spent much of your time learning use range weapons, and you had plans to find work as a hunter when you grew up.  You do 10% more damage with physical range attacks and +20% accuracy.  You will also start out with 50 gems."],
+				["Slacking", PerkLib.HistorySlacker, PerkLib.PastLifeSlacker, "You spent a lot of time slacking, avoiding work, and otherwise making a nuisance of yourself.  Your efforts at slacking have made you quite adept at resting, and your fatigue comes back 20% faster."],
+				["Slutting", PerkLib.HistorySlut, PerkLib.PastLifeSlut, "You managed to spend most of your time having sex.  Quite simply, when it came to sex, you were the village bicycle - everyone got a ride.  Because of this, your body is a bit more resistant to penetrative stretching, and has a higher upper limit on what exactly can be inserted."],
+				["Smithing", PerkLib.HistorySmith, PerkLib.PastLifeSmith, "You managed to get an apprenticeship with the local blacksmith.  Because of your time spent at the blacksmith's side, you've learned how to fit armor for maximum protection."],
+				["Whoring", PerkLib.HistoryWhore, PerkLib.PastLifeWhore, "You managed to find work as a whore.  Because of your time spent trading seduction for profit, you're more effective at teasing (+15% tease damage)."]
+			];
+			var buttons:ButtonDataList = new ButtonDataList();
+
+			for each (var hist:Array in historyPerks) {
+				buttons.add(hist[0], curry(confirmHistory, hist[1], hist[3]))
+						.disableIf(player.hasPerk(hist[2]), "You already have this History as one of Past Lives!");
 			}
-			menu();
-			addButton(0, "Yes", setHistory, choice);
-			addButton(1, "No", chooseHistory);
+			submenu(buttons);
+
+			function confirmHistory(choice:PerkType,desc:String):void {
+				clearOutput();
+				outputText(desc);
+				menu();
+				addButton(0, "Yes", setHistory, choice);
+				addButton(1, "No", chooseHistory);
+			}
 		}
 
 		private function setHistory(choice:PerkType):void {
@@ -1361,17 +1321,10 @@ import coc.view.MainView;
 			if (choice == PerkLib.HistoryFortune) {
 				player.gems += 250;
 			}
-			if (flags[kFLAGS.HISTORY_PERK_SELECTED] == 0) {
-				flags[kFLAGS.HISTORY_PERK_SELECTED] = 1;
-				completeCharacterCreation();
-			}
-			else { //Special escape clause for very old saves that do not have a history perk. This is used to allow them the chance to select a perk at camp on load.
-				flags[kFLAGS.HISTORY_PERK_SELECTED] = 1;
-				playerMenu();
-			}
-			
+			flags[kFLAGS.HISTORY_PERK_SELECTED] = 1;
+			jobSelection();
 		}
-		
+
 		private function completeCharacterCreation():void {
 			clearOutput();
 			if (customPlayerProfile != null) {
@@ -1383,7 +1336,7 @@ import coc.view.MainView;
 			if (flags[kFLAGS.NEW_GAME_PLUS_LEVEL] == 0) chooseGameModes();
 			else startTheGame();
 		}
-			
+
 		public function arrival():void {
 			statScreenRefresh();
 			model.time.hours = 11;
@@ -1550,11 +1503,6 @@ import coc.view.MainView;
 			else player.setUndergarment(undergarments.C_LOIN);
 			if (player.biggestTitSize() >= 2) player.setUndergarment(undergarments.C_BRA);
 			else player.setUndergarment(undergarments.C_SHIRT);
-			if (player.hasPerk(PerkLib.HistoryFighter) || player.hasPerk(PerkLib.PastLifeFighter)) player.createPerk(PerkLib.JobWarrior, 0, 0, 0, 0);
-			if (player.hasPerk(PerkLib.HistoryScout) || player.hasPerk(PerkLib.PastLifeScout)) player.createPerk(PerkLib.JobRanger, 0, 0, 0, 0);
-			if (player.hasPerk(PerkLib.HistoryScholar) || player.hasPerk(PerkLib.PastLifeScholar)) player.createPerk(PerkLib.JobSorcerer, 0, 0, 0, 0);
-			if (player.hasPerk(PerkLib.HistorySmith) || player.hasPerk(PerkLib.PastLifeSmith)) player.createPerk(PerkLib.JobGuardian, 0, 0, 0, 0);
-			if (player.hasPerk(PerkLib.HistoryWhore) || player.hasPerk(PerkLib.PastLifeWhore)) player.createPerk(PerkLib.JobSeducer, 0, 0, 0, 0);
 			if (player.hasPerk(PerkLib.HistoryAlchemist) || player.hasPerk(PerkLib.HistoryFortune) || player.hasPerk(PerkLib.HistoryHealer) || player.hasPerk(PerkLib.HistoryReligious) || player.hasPerk(PerkLib.HistorySlacker) || player.hasPerk(PerkLib.HistorySlut)) player.perkPoints += 1;
 			if (player.hasPerk(PerkLib.PastLifeAlchemist)) player.perkPoints += 1;
 			if (player.hasPerk(PerkLib.PastLifeFortune)) player.perkPoints += 1;
@@ -1806,7 +1754,6 @@ import coc.view.MainView;
 		private function historyTopastlife():void {
 			var historyPerks:Array = [
 				[PerkLib.HistoryAlchemist, PerkLib.PastLifeAlchemist],
-				[PerkLib.HistoryCultivator, PerkLib.PastLifeCultivator],
 				[PerkLib.HistoryFighter, PerkLib.PastLifeFighter],
 				[PerkLib.HistoryFortune, PerkLib.PastLifeFortune],
 				[PerkLib.HistoryHealer, PerkLib.PastLifeHealer],
@@ -1815,7 +1762,7 @@ import coc.view.MainView;
 				[PerkLib.HistoryScout, PerkLib.PastLifeScout],
 				[PerkLib.HistorySlacker, PerkLib.PastLifeSlacker],
 				[PerkLib.HistorySlut, PerkLib.PastLifeSlut],
-				[PerkLib.HistorySmith, PerkLib.PastLifeSmith],
+//				[PerkLib.HistorySmith, PerkLib.PastLifeSmith],
 				[PerkLib.HistoryWhore, PerkLib.PastLifeWhore]
 			];
 			clearOutput();
@@ -2080,5 +2027,35 @@ import coc.view.MainView;
 		private function isSpell(statusEffect:* = null):Boolean {	
 			return (statusEffect == StatusEffects.KnowsWereBeast);	//na razie jest tu tylko werebeast
 		}	//ale potem zamienić to naspecialne soulskills z każdego z klanów
+
+		private function jobSelection():void {
+			clearOutput();
+			outputText("You've trained since being chosen as champion. What is your job?");
+
+			var jobs:Array = [
+					PerkLib.JobElementalConjurer, PerkLib.JobGuardian, PerkLib.JobRanger,
+					PerkLib.JobSeducer, PerkLib.JobSorcerer, PerkLib.JobWarrior
+			];
+			var buttons:ButtonDataList = new ButtonDataList();
+
+			for each (var pk:PerkType in jobs){
+				player.removePerk(pk);
+				buttons.add(pk.name,curry(jobSelect,pk),pk.desc(),pk.name).disableIf(player.hasPerk(pk));
+			}
+
+			submenu(buttons);
+
+			function jobSelect(pk:PerkType):void {
+				outputText("\n\n" + pk.longDesc + "\n\nIs this the job you want?");
+				doYesNo(choseYes,jobSelection);
+
+				function choseYes():void {
+					player.createPerk(pk,0,0,0,0);
+					completeCharacterCreation();
+				}
+			}
+		}
+
+
 	}
 }

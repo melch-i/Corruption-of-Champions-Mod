@@ -2210,7 +2210,7 @@ use namespace CoC;
 				prestigeJobs--;
 			if (hasPerk(PerkLib.PrestigeJobSentinel))
 				prestigeJobs--;
-			if (hasPerk(PerkLib.PrestigeJobSoulArtMaster))
+			if (hasPerk(PerkLib.PrestigeJobKiArtMaster))
 				prestigeJobs--;
 		//	if (hasPerk(PerkLib.TrachealSystemEvolved))
 		//		prestigeJobs++;
@@ -3062,7 +3062,7 @@ use namespace CoC;
 				maxStr += (20 * newGamePlusMod);
 				maxTou += (60 * newGamePlusMod);
 			}
-			if (hasPerk(PerkLib.PrestigeJobSoulArtMaster)) {
+			if (hasPerk(PerkLib.PrestigeJobKiArtMaster)) {
 				maxStr += (40 * newGamePlusMod);
 				maxWis += (40 * newGamePlusMod);
 			}

@@ -77,7 +77,7 @@ public class PerkLib
 		public static const AscensionUnlockedPotential:PerkType = mk("Ascension: Unlocked Potential", "Ascension: Unlocked Potential",
 				"Due to reincarnation experience your body becoming strong faster than in previous life (increased passive hp, fatigue, mana gains at lvl-up).");
 		public static const AscensionUnlockedPotential2ndStage:PerkType = mk("Ascension: Unlocked Potential (2nd Stage)", "Ascension: Unlocked Potential (2nd Stage)",
-				"Due to reincarnation experience your body becoming strong faster than in previous life (increased passive lust, wrath, soulforce gains at lvl-up).");
+				"Due to reincarnation experience your body becoming strong faster than in previous life (increased passive lust, wrath, Ki gains at lvl-up).");
 		
 		// History perks
 		public static const HistoryAlchemist:PerkType = mk("History: Alchemist", "History: Alchemist",
@@ -85,9 +85,9 @@ public class PerkLib
 		public static const PastLifeAlchemist:PerkType = mk("Past Life: Alchemist", "Past Life: Alchemist",
 				"Alchemical experience makes items more reactive to your body.", null, true);
 		public static const HistoryCultivator:PerkType = mk("History: Cultivator", "History: Cultivator",
-				"Soulforce is easier to kept giving you 10% increase to it maximum amount.");
+				"Ki is easier to kept giving you 10% increase to it maximum amount.");
 		public static const PastLifeCultivator:PerkType = mk("Past Life: Cultivator", "Past Life: Cultivator",
-				"Soulforce is easier to kept giving you 10% increase to it maximum amount.", null, true);
+				"Ki is easier to kept giving you 10% increase to it maximum amount.", null, true);
 		public static const HistoryFighter:PerkType = mk("History: Fighter", "History: Fighter",
 				"A Past full of conflict increases physical melee damage dealt by 10%.");
 		public static const PastLifeFighter:PerkType = mk("Past Life: Fighter", "Past Life: Fighter",
@@ -467,9 +467,9 @@ public class PerkLib
 		public static const PrestigeJobSentinel:PerkType = mk("Prestige Job: Sentinel", "Prestige Job: Sentinel",
 				"You've trained in prestige art that brings 'tanking' to a whole new level.",
 				"You choose 'Prestige Job: Sentinel' perk, training yourself to became Sentinel.");
-		public static const PrestigeJobSoulArtMaster:PerkType = mk("Prestige Job: Soul Art Master", "Prestige Job: Soul Art Master",
-				"You've trained in prestige art of combine soulforce with physical attacks to various deadly effect.",
-				"You choose 'Prestige Job: Soul Art Master' perk, training yourself to became Soul Art Master.");
+		public static const PrestigeJobKiArtMaster:PerkType = mk("Prestige Job: Ki Art Master", "Prestige Job: Ki Art Master",
+				"You've trained in prestige art of combine Ki with physical attacks to various deadly effect.",
+				"You choose 'Prestige Job: Ki Art Master' perk, training yourself to became Ki Art Master.");
 		public static const PrimalFuryI:PerkType = mk("Primal Fury I", "Primal Fury I",
 				"Raises max Wrath by 10, generates 1 point of Wrath out of combat and double this amount during fight.",
 				"You choose the 'Primal Fury I' perk, increasing passive wrath generation and max Wrath.");
@@ -590,8 +590,8 @@ public class PerkLib
 				"You gain 100% spell effect multiplier while using a staff and either a tome or no ranged weapon.",
 				"You choose the 'Traditional Mage I' perk, boosting your base spell effects while using a staff and either a tome or no ranged weapon.");
 		public static const Trance:PerkType = mk("Trance", "Trance",
-				"Unlocked ability to enter a state in which PC assumes a crystalline form, enhancing physical and mental abilities at constant cost of soulforce.",
-				"You choose the 'Trance' perk, which unlock 'Trance' special. It enhancing physical and mental abilities at constant cost of soulforce.");
+				"Unlocked ability to enter a state in which PC assumes a crystalline form, enhancing physical and mental abilities at constant cost of Ki.",
+				"You choose the 'Trance' perk, which unlock 'Trance' special. It enhancing physical and mental abilities at constant cost of Ki.");
 		public static const Transference:PerkType = mk("Transference", "Transference",
 				"Your mastery of lust and desire allows you to transfer 15% of your current arousal to your opponent.",
 				"You choose the 'Transference' perk, granting ability to transfer your own arousal to your opponent.");
@@ -832,7 +832,7 @@ public class PerkLib
 		public static const GargoyleCorrupted:PerkType = mk("Corrupted Gargoyle", "Corrupted Gargoyle",
 				"You need constant intakes of sexual fluids to stay alive.");
 		public static const GargoylePure:PerkType = mk("Gargoyle", "Gargoyle",
-				"Need to gain sustenance from soulforce to stay alive.");
+				"Need to gain sustenance from Ki to stay alive.");
 		public static const Hellfire:PerkType = mk("Hellfire", "Hellfire",
 				"Grants a corrupted fire breath attack, like the hellhounds in the mountains.");
 		public static const LuststickAdapted:PerkType = mk("Luststick Adapted", "Luststick Adapted",
@@ -912,7 +912,6 @@ public class PerkLib
 			//------------
             // STRENGTH
             //------------
-            JobWarrior.requireStr(10);
             StrongBack.requireStr(25);
             //Tier 1 Strength Perks
             ThunderousStrikes.requireLevel(6)
@@ -954,32 +953,20 @@ public class PerkLib
             //Tier 5 Strength Perks
             //Tier 6 Strength Perks
             //Tier 7 Strength Perks
-            PrestigeJobBerserker.requirePrestigeJobSlot()
-                    .requirePerk(JobGuardian)
-                    .requireAnyPerk(Berzerker, Lustzerker)
-                    .requireStr(200)
-                    .requireLevel(42);
             //Tier 8 Strength Perks
             Rage.requirePerk(PrestigeJobBerserker)
                     .requireLevel(48);
             //------------
             // TOUGHNESS
             //------------
-            JobGuardian.requireTou(10);
             Regeneration.requireTou(50);
             //Tier 1 Toughness Perks
             TankI.requireTou(60)
-                    .requireLevel(6);
-            JobKnight.requirePerk(JobGuardian)
-                    .requireTou(50)
                     .requireLevel(6);
             ShieldMastery.requirePerk(JobKnight)
                     .requireTou(50)
                     .requireLevel(6);
             //Tier 2 Toughness Perks
-            JobDefender.requirePerk(JobGuardian)
-                    .requireTou(75)
-                    .requireLevel(12);
             ImmovableObject.requirePerk(JobDefender)
                     .requireTou(75)
                     .requireLevel(12);
@@ -999,11 +986,6 @@ public class PerkLib
             //Tier 5 Toughness Perks
             //Tier 6 Toughness Perks
             //Tier 7 Toughness Perks
-            PrestigeJobSentinel.requirePrestigeJobSlot()
-                    .requirePerk(JobKnight)
-                    .requirePerk(JobWarrior)
-                    .requireTou(200)
-                    .requireLevel(42);
             //Tier 8 Toughness Perks
             SteelImpact.requirePerk(PrestigeJobSentinel)
                     .requireLevel(48);
@@ -1013,7 +995,6 @@ public class PerkLib
             //------------
             // SPEED
             //------------
-            JobRanger.requireSpe(10);
             Runner.requireSpe(25);
             //slot 3 - speed perk
             Evade.requirePerk(JobRanger)
@@ -1040,11 +1021,6 @@ public class PerkLib
                     .requirePerk(JobRanger)
                     .requirePerk(Precision)
                     .requireLevel(6);
-            JobDervish.requirePerk(JobRanger)
-                    .requireSpe(40)
-                    .requireLevel(6);
-            /*Brawler.requireMinSpe(60)
-					.requireMinStr(60);*/ //Would it be fitting to have Urta teach you?
             //Tier 2 Speed Perks
             LungingAttacks.requirePerk(JobRanger)
                     .requireSpe(75)
@@ -1062,11 +1038,6 @@ public class PerkLib
                     .requirePerk(Unhindered)
                     .requirePerk(JobEromancer)
                     .requireLevel(12);
-            JobHunter.requirePerk(JobRanger)
-                    .requireSpe(80)
-                    .requireLevel(12);
-            //requirePerk(JobMonk).requireMinSpe(50) //perk dajacy 2 ataki kiedy uzywa sie tylko fists -
-            // - cos jak double attack ale bez limitu sily ^^ (ale dodac nowy status aby byl niezalezny od double strike)
             //Tier 3 Speed Perks
             Manyshot.requirePerk(JobHunter)
                     .requireSpe(100)
@@ -1087,18 +1058,6 @@ public class PerkLib
                     .requireSpe(180)
                     .requireLevel(36);
             //Tier 7 Speed Perks
-            /*		PrestigeJobSoulArcher.requirePrestigeJobSlot()
-					 .requirePerk(SoulOverlord)
-					 .requirePerk(JobHunter)
-					 .requireSpe(200)
-					 .requireLevel(42);
-                    */
-            PrestigeJobArcaneArcher.requirePrestigeJobSlot()
-                    .requirePerk(JobSorcerer)
-                    .requirePerk(JobHunter)
-                    .requireSpe(200)
-                    .requireInt(150)
-                    .requireLevel(42);
             //Tier 8 Speed Perks
             ElementalArrows.requireLevel(48)
                     .requirePerk(PrestigeJobArcaneArcher)
@@ -1112,7 +1071,6 @@ public class PerkLib
             //------------
             // INTELLIGENCE
             //------------
-            JobSorcerer.requireInt(10);
             //Slot 4 - precision - -10 enemy toughness for damage calc
             Precision.requireInt(25);
             //Spellpower - boosts spell power
@@ -1124,8 +1082,6 @@ public class PerkLib
             StaffChanneling.requireInt(60)
                     .requireLevel(6);
             //Tier 2 Intelligence perks
-            JobEnchanter.requireInt(75)
-                    .requireLevel(12);
             // Spell-boosting perks
             // Battlemage: auto-use Might
             Battlemage.requireLevel(12)
@@ -1153,7 +1109,6 @@ public class PerkLib
             //------------
             // WISDOM
             //------------
-            JobElementalConjurer.requireWis(10);
             ElementalConjurerResolve.requirePerk(JobElementalConjurer)
                     .requireWis(20);
             ElementalContractRank1.requirePerk(ElementalConjurerResolve)
@@ -1169,12 +1124,7 @@ public class PerkLib
             ElementalBondFlesh.requirePerk(ElementalContractRank1)
                     .requireWis(50)
                     .requireLevel(6);
-            /*.requirePerk(ElementsOfMarethBasics)
-					.requireWis(35)
-					.requireLevel(6);*/
             //Tier 2 Wisdom perks
-            JobMonk.requireWis(60)
-                    .requireLevel(12);
             ElementalContractRank3.requirePerk(ElementalContractRank2)
                     .requireWis(75)
                     .requireLevel(12);
@@ -1222,10 +1172,6 @@ public class PerkLib
                     .requireWis(175)
                     .requireLevel(36);
             //Tier 7 Wisdom perks
-            PrestigeJobSoulArtMaster.requirePrestigeJobSlot()
-                    .requirePerk(JobMonk)
-                    .requireWis(200)
-                    .requireLevel(42);
             ElementalContractRank8.requirePerk(ElementalContractRank7)
                     .requireWis(200)
                     .requireLevel(42);
@@ -1251,7 +1197,6 @@ public class PerkLib
             //slot 5 - libido perks
 
             //Slot 5 - Fertile+ increases cum production and fertility (+15%)
-            JobSeducer.requireLib(10);
             FertilityPlus.requireLib(25);
             FertilityPlus.defaultValue1 = 15;
             FertilityPlus.defaultValue2 = 1.75;
@@ -1274,10 +1219,6 @@ public class PerkLib
             Masochist.requireLib(60)
                     .requireCor(50)
                     .requireLevel(6);
-            JobEromancer.requirePerk(JobSeducer)
-                    .requireLib(30)
-                    .requireInt(60)
-                    .requireLevel(6);
             ArcaneLash.requirePerk(JobEromancer).requireLevel(6);
 
             //Tier 2 Libido Perks
@@ -1285,9 +1226,6 @@ public class PerkLib
                     .requireLevel(12)
                     .requireLib(50)
                     .requireStatusEffect(StatusEffects.KnowsArouse, "Arouse spell");
-            JobCourtesan.requirePerk(JobSeducer)
-                    .requireLib(50)
-                    .requireLevel(12);
             DazzlingDisplay.requirePerk(JobCourtesan)
                     .requireLib(50)
                     .requireLevel(12);

@@ -2034,7 +2034,7 @@ import flash.utils.getQualifiedClassName;
 				str += (60 * (1 + newGamePlusMod()));
 				tou += (20 * (1 + newGamePlusMod()));
 			}
-			if (hasPerk(PerkLib.PrestigeJobSoulArtMaster)) {
+			if (hasPerk(PerkLib.PrestigeJobKiArtMaster)) {
 				str += (40 * (1 + newGamePlusMod()));
 				wis += (40 * (1 + newGamePlusMod()));
 			}

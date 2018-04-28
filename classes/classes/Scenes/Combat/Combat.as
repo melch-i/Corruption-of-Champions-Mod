@@ -517,7 +517,7 @@ public function stopChanneledSpecial():void {
 public function unarmedAttack():Number {
 	var unarmed:Number = 0;
 	if (player.hasPerk(PerkLib.JobMonk) && player.wis >= 60) unarmed += 10 * (1 + player.newGamePlusMod());
-	if (player.hasPerk(PerkLib.PrestigeJobSoulArtMaster) && player.wis >= 200) unarmed += 10 * (1 + player.newGamePlusMod());
+	if (player.hasPerk(PerkLib.PrestigeJobKiArtMaster) && player.wis >= 200) unarmed += 10 * (1 + player.newGamePlusMod());
 	if (player.hasStatusEffect(StatusEffects.MetalSkin)) {
 		if (player.statusEffectv2(StatusEffects.SummonedElementalsMetal) >= 6) unarmed += 4 * player.statusEffectv2(StatusEffects.SummonedElementalsMetal) * (1 + player.newGamePlusMod());
 		else unarmed += 2 * player.statusEffectv2(StatusEffects.SummonedElementalsMetal) * (1 + player.newGamePlusMod());
