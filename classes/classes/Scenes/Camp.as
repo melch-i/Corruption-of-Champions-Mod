@@ -1331,7 +1331,7 @@ public function campLoversMenu(descOnly:Boolean = false):void {
     for each(var npc:XXCNPC in _campFollowers){
 		npc.campDescription(buttons,XXCNPC.LOVER);
     }
-	if(!descOnly){submenu(buttons,playerMenu)}
+	if(!descOnly){buttons.submenu(playerMenu);}
 }
 
 public function campSlavesMenu(descOnly:Boolean = false):void {
@@ -1390,7 +1390,7 @@ public function campSlavesMenu(descOnly:Boolean = false):void {
     for each(var npc:XXCNPC in _campFollowers){
         npc.campDescription(buttons,XXCNPC.SLAVE);
     }
-    if(!descOnly){submenu(buttons,playerMenu);}
+    if(!descOnly){buttons.submenu(playerMenu);}
 }
 
 public function campFollowers(descOnly:Boolean = false):void {
@@ -1578,7 +1578,7 @@ public function campFollowers(descOnly:Boolean = false):void {
     for each(var npc:XXCNPC in _campFollowers){
         npc.campDescription(buttons,XXCNPC.FOLLOWER);
     }
-    if(!descOnly){submenu(buttons,playerMenu);}
+    if(!descOnly){buttons.submenu(playerMenu);}
 }
 
 //-----------------

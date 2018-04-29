@@ -1295,7 +1295,7 @@
 				buttons.add(hist[0], curry(confirmHistory, hist[1], hist[3]))
 						.disableIf(player.hasPerk(hist[2]), "You already have this History as one of Past Lives!");
 			}
-			submenu(buttons);
+			buttons.submenu();
 
 			function confirmHistory(choice:PerkType,desc:String):void {
 				clearOutput();
@@ -1801,8 +1801,7 @@
 						.disableIf(!player.hasPerk(pk))
 						.disableIf(player.perkv4(pk) > 0, "This perk is already made permanent and will carry over in all subsequent ascensions.");
 			}
-			var pg:Object = {page: page};
-			submenu(buttons, ascensionMenu, page, true, pg);
+			buttons.submenu(ascensionMenu,page);
 
 			function permanentizePerk(perk:PerkType):void {
 				//Not enough points or perk already permed? Cancel.
@@ -1812,7 +1811,7 @@
 				player.ascensionPerkPoints -= 5;
 				//Permanentize a perk
 				player.addPerkValue(perk, 4, 1);
-				ascensionPermeryMenu(pg.page);
+				ascensionPermeryMenu(buttons.page);
 			}
 		}
 		
@@ -1942,7 +1941,7 @@
 				buttons.add(pk.name,curry(jobSelect,pk),pk.desc(),pk.name).disableIf(player.hasPerk(pk));
 			}
 
-			submenu(buttons);
+			buttons.submenu();
 
 			function jobSelect(pk:PerkType):void {
 				outputText("\n\n" + pk.longDesc + "\n\nIs this the job you want?");

@@ -295,7 +295,7 @@ public class CombatUI extends BaseCombatContent {
 			enemyAI();
 			return;
 		}
-		submenu(magspButtons,mainMenu);
+		magspButtons.submenu(mainMenu);
 	}
 	internal function submenuPhySpecials():void {
 		if (inCombat && player.hasStatusEffect(StatusEffects.Sealed) && player.statusEffectv2(StatusEffects.Sealed) == 5) {
@@ -308,7 +308,7 @@ public class CombatUI extends BaseCombatContent {
 			(monster as DriderIncubus).taintedMindAttackAttempt();
 			return;
 		}
-		submenu(physpButtons,mainMenu);
+		physpButtons.submenu(mainMenu);
 	}
 	internal function submenuSpells():void {
 		if (inCombat && player.hasStatusEffect(StatusEffects.Sealed) && (player.statusEffectv2(StatusEffects.Sealed) == 2 || player.statusEffectv2(StatusEffects.Sealed) == 10)) {
@@ -318,7 +318,7 @@ public class CombatUI extends BaseCombatContent {
 			enemyAI();
 			return;
 		}
-		submenu(spellButtons,mainMenu);
+		spellButtons.submenu(mainMenu);
 	}
 	internal function submenuSoulforce():void {
 		//if (inCombat && player.hasStatusEffect(StatusEffects.Sealed) && player.statusEffectv2(StatusEffects.Sealed) == 5) {
@@ -327,10 +327,10 @@ public class CombatUI extends BaseCombatContent {
 		//enemyAI();
 		//return;
 		//}
-		submenu(soulforceButtons,mainMenu);
+		soulforceButtons.submenu(mainMenu);
 	}
 	internal function submenuOther():void {
-		submenu(otherButtons,mainMenu);
+		otherButtons.submenu(mainMenu);
 	}
 }
 }

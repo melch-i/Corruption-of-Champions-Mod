@@ -36,7 +36,7 @@ package classes.Scenes.Places.TelAdre
 			for each(var item:ItemType in items){
 				buttons.add(item.shortName,curry(weaponBuy,item),item.description,item.longName);
 			}
-			submenu(buttons,backFunc,0,false);
+			buttons.submenu(backFunc,0,false);
 		}
 
 		private function weaponBuy(itype:ItemType):void {

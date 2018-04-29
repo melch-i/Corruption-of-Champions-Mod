@@ -91,7 +91,7 @@ package classes.Scenes.Places.TelAdre
 				for each(var item:Array in items){
 					buttons.add(item[0].shortName,curry(buyItem,item[0],sayLine(item[0],item[1]),onBuyString),"Buy "+item[0].longName);
 				}
-				submenu(buttons,mogahenmerchant,0,false);
+				buttons.submenu(mogahenmerchant,0,false);
 				statScreenRefresh();
 			}
 		}
