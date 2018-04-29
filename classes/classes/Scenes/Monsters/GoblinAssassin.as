@@ -1,14 +1,26 @@
 ﻿package classes.Scenes.Monsters
 {
-import classes.*;
-import classes.BodyParts.Butt;
-import classes.BodyParts.Hips;
-import classes.GlobalFlags.*;
-import classes.Scenes.SceneLib;
-import classes.internals.*;
 
-public class GoblinAssassin extends Monster
+	import classes.*;
+	import classes.BodyParts.Butt;
+	import classes.BodyParts.Hips;
+	import classes.GlobalFlags.*;
+	import classes.Scenes.SceneLib;
+	import classes.internals.*;
+
+	public class GoblinAssassin extends Monster
 	{
+		public static const ASSASSIN:Object = {
+			short:"goblin assassin",
+			level:10,
+			bonusHP:100
+		};
+		public static const ADENTURER:Object = {
+			short:"goblin adventurer",
+			level:9,
+			bonusHP:70
+		};
+
 		protected function goblinDrugAttack():void {
 			var temp2:Number = rand(5);
 			var color:String = "";
@@ -115,13 +127,14 @@ public class GoblinAssassin extends Monster
 				SceneLib.goblinAssassinScene.gobboAssassinBeatYaUp();
 			}
 		}
-		public function GoblinAssassin(noInit:Boolean=false)
+		public function GoblinAssassin(noInit:Boolean=false, monType:Object = null)
 		{
 			if (noInit) return;
 			this.a = "the ";
-			this.short = "goblin assassin";
-			this.level = 10;
-			this.bonusHP = 100;
+			if(monType == null){monType = ASSASSIN}
+			this.short = monType.short;
+			this.level = monType.level;
+			this.bonusHP = monType.bonusHP;
 			this.imageName = "goblinassassin";
 			this.long = "Her appearance is that of a regular goblin, curvy and pale green, perhaps slightly taller than the norm. Her wavy, untamed hair is a deep shade of blue, covering her pierced ears and reaching just above her shoulders. Her soft curves are accentuated by her choice of wear, a single belt lined with assorted needles strapped across her full chest and a pair of fishnet stockings reaching up to her thick thighs. She bounces on the spot, preparing to dodge anything you might have in store, though your eyes seem to wander towards her bare slit and jiggling ass. Despite her obvious knowledge in combat, she’s a goblin all the same – a hard cock can go a long way.";
 			// this.plural = false;

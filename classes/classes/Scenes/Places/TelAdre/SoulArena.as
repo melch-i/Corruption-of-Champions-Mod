@@ -48,11 +48,11 @@ package classes.Scenes.Places.TelAdre
 			clearOutput();
 			outputText("Picking the one on the left prepared for solo fight you enter there and looking around checking who is currently avialable for sparring session.");
 			menu();
-			addButton(0,"Imp", arenaSelection, Imp);
-			addButton(1,"Tentacle Beast", arenaSelection, TentacleBeast);
-			addButton(2, "Spider Morph", arenaSelection, MaleSpiderMorph);
-			addButton(3, "Naga", arenaSelection, Naga);
-			addButton(4, "Valkyrie", arenaSelection, Valkyrie);
+			addButton(0,"Imp", arenaSelection, new Imp());
+			addButton(1,"Tentacle Beast", arenaSelection, new TentacleBeast());
+			addButton(2, "Spider Morph", arenaSelection, new MaleSpiderMorph());
+			addButton(3, "Naga", arenaSelection, new Naga());
+			addButton(4, "Valkyrie", arenaSelection, new Valkyrie());
 			addButton(14, "Back", soularena);
 		}
 		public function soularenaGroup():void {
@@ -70,10 +70,9 @@ package classes.Scenes.Places.TelAdre
 			addButton(14, "Back", soularena);
 		}
 
-		private function arenaSelection(mon:Class, onVictoryNext:Function = null):void{
+		private function arenaSelection(monster:Monster, onVictoryNext:Function = null):void{
 			if (flags[kFLAGS.CHI_CHI_AFFECTION] < 10) flags[kFLAGS.CHI_CHI_AFFECTION]++;
 
-			var monster:Monster = new mon();
 			monster.onWon = onMonsterWon;
 			monster.onDefeated = onMonsterDefeated;
 			monster.onPcRunAttempt = onPCRunAttempt;
@@ -135,21 +134,21 @@ package classes.Scenes.Places.TelAdre
 					"\"<i>Ah but a contestant is nothing without the trial. You all love him, and he hates you all in return. This pit dog only lives to beat the crap out of our new would-be gladiator. His name…. BRUTUS!</i>\"\n\n" +
 					"A massive dog morph with the face of a pitbull enters the arena. He holds in his hand a chain linked to a spiked ball he pulls around like an anchor, leaving a deep trail in the arena sand. Your opponent examines you and starts to growl, lifting the steel ball like a kids toy."
 			);
-			arenaSelection(ArenaBrutus, gaunletchallange1fight2);
+			arenaSelection(new ArenaBrutus(), gaunletchallange1fight2);
 		}
 		public function gaunletchallange1fight2():void {
 			clearOutput();
 			outputText("The dog morphs defeated, falls over and is escorted out of the arena by a pair of healers. That said the fights are only beginning as the announcer’s voice rings out again.\n\n");
 			outputText("\"<i>This one is straight from the woods. Freshly caught and horny to boot. Can our champion’s strength overcome the beast’s lust? LET'S FIND OUT!!</i>\"\n\n");
 			outputText("A shadow moves out behind the gate, revealing the shape of a fluid starved tentacle beast.\n\n");
-			arenaSelection(TentacleBeast, gaunletchallange1fight3);
+			arenaSelection(new TentacleBeast(), gaunletchallange1fight3);
 		}
 		public function gaunletchallange1fight3():void {
 			clearOutput();
 			outputText("As the tentacle beast whimpers and crawls away, the crowd cheers for you. Here comes the final round.\n\n");
 			outputText("\"<i>This contestant is smaller than the last two... Smarter too, and most of all extremely deadly. She’s paid a handsome sack of gems daily to kick the ass of anyone who reach this stage, yet is by far the deadliest combatant of her division. She’s your favorite and an expert huntress. Here she comes... Merisiel the dark elf!!!</i>\"\n\n");
 			outputText("A woman with dark skin walks by the entrance of the arena with only a bow for a weapon. She sure does look like an elf, however. She’s nothing like the gentle creature from your childhood stories as she observes you with a cruel, calculative gaze. The dark elf readies her bow, smirking.\n\n");
-			arenaSelection(DarkElfScout, gaunletchallange1postfight);
+			arenaSelection(new DarkElfScout(), gaunletchallange1postfight);
 		}
 		public function gaunletchallange1postfight():void {
 			clearOutput();
@@ -174,14 +173,14 @@ package classes.Scenes.Places.TelAdre
 			outputText("The voice of the announcer ring into the stadium.\n\n");
 			outputText("\"<i>Ladies and gentlemans today someone challenged the second ranking gladiatorial test. Can this would be hero defeat all three opponent and earn not only a large sum of gems as well as the right to brag for a full month?! LET'S FIND OUT!</i>\"\n\n");
 			outputText("The gates open and the goblin charge at you weapon at the ready.\n\n");
-			arenaSelection(GoblinAssassin,gaunletchallange2fight2);
+			arenaSelection(new GoblinAssassin(false,GoblinAssassin.ADENTURER),gaunletchallange2fight2);
 		}
 		public function gaunletchallange2fight2():void {
 			clearOutput();
 			outputText("As the goblin falls unconscious to the ground the crowd cheer for you.\n\n");
 			outputText("\"<i>It would seems the hero squashed that midget good but were only beginning. If I may the next contestant has been sex starved for two consecutive month and is desperate to sow his seed hence now we release... THE HOUND!!!</i>\"\n\n");
 			outputText("A massive hellhound of proportion larger than normal rush out of an opening gate. Its eye burns with lust.\n\n");
-			arenaSelection(HellHound,gaunletchallange2fight3);
+			arenaSelection(new HellHound(),gaunletchallange2fight3);
 		}
 		public function gaunletchallange2fight3():void {
 			clearOutput();
@@ -189,7 +188,7 @@ package classes.Scenes.Places.TelAdre
 			outputText("\"<i>The next opponent is a fighter known and loved by the public. You have heard her name told in shallow whispers for the next opponent is an expert of the terrible art known as BDSM. Yes you have all been waiting for her so cheer up for Malady the drider!!!</i>\"\n\n");
 			outputText("A drider in bondage suit comes out of the gate and eyes you amused.\n\n");
 			outputText("\"<i>You are my opponent uh? Doesn’t look like much. Little pet, by the time I’m done binding you, you will seldom call me mistress!</i>\"\n\n");
-			arenaSelection(CorruptedDrider,gaunletchallange2fight4);
+			arenaSelection(new CorruptedDrider(),gaunletchallange2fight4);
 		}
 
 		public function gaunletchallange2fight4():void {
@@ -210,7 +209,7 @@ package classes.Scenes.Places.TelAdre
 				outputText("You never expected you would have to fight with your teacher someday, but so be it. ");
 			}
 			outputText("The fox makes a duel bow, and gets into a fighting stance.");
-			arenaSelection(ArenaRaphael,gaunletchallange2postfight);
+			arenaSelection(new ArenaRaphael(),gaunletchallange2postfight);
 		}
 		public function gaunletchallange2postfight():void {
 			var raphMet:Boolean = flags[kFLAGS.RAPHAEL_MET] == 1;
