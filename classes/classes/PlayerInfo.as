@@ -996,7 +996,7 @@ if (SceneLib.valeria.valeriaFluidsEnabled()) {
 			player.itemSlot4.unlocked = true;
 			player.itemSlot5.unlocked = true;
 		}
-		if (perk.ptype == PerkLib.TankI) {
+		if (perk.ptype == PerkLib.Tank) {
 			HPChange(player.tou, false);
 			statScreenRefresh();
 		}

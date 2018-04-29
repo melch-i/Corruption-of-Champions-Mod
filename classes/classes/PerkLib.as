@@ -341,9 +341,9 @@ public class PerkLib
 		public static const Impale:PerkType = mk("Impale", "Impale",
 				"Damage bonus of spears and lances critical hits is doubled as long speed is high enough.",
 				"You've chosen the 'Impale' perk. Your spear and lance critical hit attacks bonus damages are doubled.");
-		public static const IronFistsI:PerkType = mk("Iron Fists I", "Iron Fists I",
+		public static const IronFists:PerkType = mk("Iron Fists", "Iron Fists",
 				"Hardens your fists to increase attack rating by 10.",
-				"You choose the 'Iron Fists I' perk, hardening your fists. This increases attack power by 10.");
+				"You choose the 'Iron Fists' perk, hardening your fists. This increases attack power by 10.");
 		public static const IronMan:PerkType = mk("Iron Man", "Iron Man",
 				"Reduces the fatigue cost of physical specials by 50%.",
 				"You choose the 'Iron Man' perk, reducing the fatigue cost of physical special attacks by 50%");
@@ -470,14 +470,14 @@ public class PerkLib
 		public static const PrestigeJobKiArtMaster:PerkType = mk("Prestige Job: Ki Art Master", "Prestige Job: Ki Art Master",
 				"You've trained in prestige art of combine Ki with physical attacks to various deadly effect.",
 				"You choose 'Prestige Job: Ki Art Master' perk, training yourself to became Ki Art Master.");
-		public static const PrimalFuryI:PerkType = mk("Primal Fury I", "Primal Fury I",
+		public static const PrimalFury:PerkType = mk("Primal Fury", "Primal Fury",
 				"Raises max Wrath by 10, generates 1 point of Wrath out of combat and double this amount during fight.",
-				"You choose the 'Primal Fury I' perk, increasing passive wrath generation and max Wrath.");
+				"You choose the 'Primal Fury' perk, increasing passive wrath generation and max Wrath.");
 		public static const Rage:PerkType = mk("Rage", "Rage",
 				"Increasing crit chance by up to 50% in berserk state that would reset after succesful crit attack.",
 				"You choose the 'Rage' perk, increasing crit chance by up to 50% in berserk state until next crit attack.");
 		public static const Regeneration :RegenerationPerk = new RegenerationPerk();
-		public static const ResistanceI:PerkType = mk("Resistance I", "Resistance I",
+		public static const Resistance:PerkType = mk("Resistance", "Resistance",
 				"Reduces lust gain by 5%.",
 				"You choose the 'Resistance I' perk, reducing the rate at which your lust increases by 5%.");
 		public static const Resolute:PerkType = mk("Resolute", "Resolute",
@@ -562,9 +562,9 @@ public class PerkLib
 						"<b>You are too dumb to gain benefit from this perk.</b>" +
 						"]",
 				"You choose the 'Tactician' perk, increasing critical hit chance by up to 10% (Intelligence-based).");
-		public static const TankI:PerkType = mk("Tank I", "Tank I",
+		public static const Tank:PerkType = mk("Tank", "Tank",
 				"+3 extra HP per point of toughness.",
-				"You choose the 'Tank I' perk, granting +3 extra maximum HP for each point of toughness.");
+				"You choose the 'Tank' perk, granting +3 extra maximum HP for each point of toughness.");
 		public static const ThirstForBlood:PerkType = mk("Thirst for blood", "Thirst for blood",
 				"Weapon and effect that causes bleed damage have this damage increased by 50%.",
 				"You choose the 'Thirst for blood' perk, increasing damage done by bleed effects.");
@@ -586,7 +586,7 @@ public class PerkLib
 		public static const TrachealSystemEvolved:PerkType = mk("Tracheal System (Evolved)", "Tracheal System (Evolved)",
 				"Your body posses half developed respiratory system of the insects.",
 				"You choose the 'Tracheal System (Evolved)' perk, continuous exposition to insectoidal changes caused your tracheal system evolution into more complete form.");
-		public static const TraditionalMageI:PerkType = mk("Traditional Mage I", "Traditional Mage I",
+		public static const TraditionalMage:PerkType = mk("Traditional Mage", "Traditional Mage",
 				"You gain 100% spell effect multiplier while using a staff and either a tome or no ranged weapon.",
 				"You choose the 'Traditional Mage I' perk, boosting your base spell effects while using a staff and either a tome or no ranged weapon.");
 		public static const Trance:PerkType = mk("Trance", "Trance",
@@ -920,7 +920,7 @@ public class PerkLib
             BrutalBlows.requireLevel(6)
                     .requireStr(75)
                     .requirePerk(JobWarrior);
-            IronFistsI.requireLevel(6)
+            IronFists.requireLevel(6)
                     .requireStr(60);
             Parry.requireLevel(6)
                     .requireStr(50)
@@ -961,7 +961,7 @@ public class PerkLib
             //------------
             Regeneration.requireTou(50);
             //Tier 1 Toughness Perks
-            TankI.requireTou(60)
+            Tank.requireTou(60)
                     .requireLevel(6);
             ShieldMastery.requirePerk(JobKnight)
                     .requireTou(50)
@@ -1104,7 +1104,7 @@ public class PerkLib
                     .requirePerk(Spellsword)
                     .requireInt(90)
                     .requireStatusEffect(StatusEffects.KnowsChargeA, "Charge Armor spell");
-            TraditionalMageI.requireLevel(18)
+            TraditionalMage.requireLevel(18)
                     .requireInt(80);
             //------------
             // WISDOM
@@ -1308,14 +1308,14 @@ public class PerkLib
                 return player.beeScore() >= 4 || player.mantisScore() >= 4 || player.scorpionScore() >= 4 || player.spiderScore() >= 4;
             }, "Any insect race");
 
-	        PrimalFuryI.requireStr(20)
+	        PrimalFury.requireStr(20)
 					.requireTou(20)
 					.requireSpe(20);
 			ToughHide.requireTou(30);
             //Tier 1
             //Speedy Recovery - Regain Fatigue 50% faster.
             SpeedyRecovery.requireLevel(6);
-            ResistanceI.requireLevel(6);
+            Resistance.requireLevel(6);
             Heroism.requireLevel(6);
             ChimericalBodyInitialStage.requireLevel(6)
                     .requireCustomFunction(function (player:Player):Boolean {

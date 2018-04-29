@@ -291,8 +291,8 @@ public function startUrtaQuest():void {
 	player.createPerk(PerkLib.HiddenMomentum,0,0,0,0);
 	player.createPerk(PerkLib.HoldWithBothHands,0,0,0,0);
 	player.createPerk(PerkLib.ColdFury,0,0,0,0);
-	player.createPerk(PerkLib.ResistanceI,0,0,0,0);
-	player.createPerk(PerkLib.TankI,0,0,0,0);
+	player.createPerk(PerkLib.Resistance,0,0,0,0);
+	player.createPerk(PerkLib.Tank,0,0,0,0);
 
 	//GEAR!
 	player.setWeapon(weapons.URTAHLB);

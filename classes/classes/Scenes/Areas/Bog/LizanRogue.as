@@ -116,7 +116,7 @@ public class LizanRogue extends Monster
 					.add(consumables.W_STICK,1);
 			this.createPerk(PerkLib.Evade, 0, 0, 0, 0);
 			this.createPerk(PerkLib.Precision, 0, 0, 0, 0);
-			this.createPerk(PerkLib.ResistanceI, 0, 0, 0, 0);
+			this.createPerk(PerkLib.Resistance, 0, 0, 0, 0);
 			this.createPerk(PerkLib.Tactician, 0, 0, 0, 0);
 			this.createPerk(PerkLib.LizanRegeneration, 0, 0, 0, 0);
 			this.createPerk(PerkLib.LizanMarrow, 0, 0, 0, 0);

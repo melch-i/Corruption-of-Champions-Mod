@@ -80,7 +80,7 @@ package classes.Scenes.Areas.GlacialRift
 			this.weaponAttack = 40;
 			this.armorName = "ice armor";
 			this.armorDef = 40;
-			this.createPerk(PerkLib.TankI, 0, 0, 0, 0);
+			this.createPerk(PerkLib.Tank, 0, 0, 0, 0);
 			this.createPerk(PerkLib.EnemyGroupType, 0, 0, 0, 0);
 			this.createPerk(PerkLib.EnemyConstructType, 0, 0, 0, 0);
 			this.createPerk(PerkLib.FireVulnerability, 0, 0, 0, 0);

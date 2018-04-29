@@ -497,7 +497,7 @@ use namespace CoC;
 				attack += ((tou - 50) * 0.3);
 			}
 			if (isFistOrFistWeapon()) {
-				if (hasPerk(PerkLib.IronFistsI) && str >= 50) {
+				if (hasPerk(PerkLib.IronFists) && str >= 50) {
 					attack += 10;
 				}
 				if (hasPerk(PerkLib.MightyFist)) {
@@ -889,7 +889,7 @@ use namespace CoC;
 			//Purity blessing reduces lust gain
 			if(hasPerk(PerkLib.PurityBlessing)) lust -= 5;
 			//Resistance = 10%
-			if(hasPerk(PerkLib.ResistanceI)) lust -= 5;
+			if(hasPerk(PerkLib.Resistance)) lust -= 5;
 			if((hasPerk(PerkLib.UnicornBlessing) && cor <= 20) || (hasPerk(PerkLib.BicornBlessing) && cor >= 80)) lust -= 10;
 			if(hasPerk(PerkLib.ChiReflowLust)) lust -= UmasShop.NEEDLEWORK_LUST_LUST_RESIST;
 			if(lust < minLustCap) lust = minLustCap;

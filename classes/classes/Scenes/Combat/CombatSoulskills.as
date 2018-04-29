@@ -649,7 +649,7 @@ public class CombatSoulskills extends BaseCombatContent {
 			if (player.hasPerk(PerkLib.JobEnchanter) && player.inte >= 50) TranceBoost += 5;
 			if (player.hasPerk(PerkLib.Battleflash) && player.inte >= 50) TranceBoost += 15;
 			if (player.hasPerk(PerkLib.JobDervish)) TranceBoost -= 10;
-			if (player.hasPerk(PerkLib.IronFistsI)) TranceBoost -= 10;
+			if (player.hasPerk(PerkLib.IronFists)) TranceBoost -= 10;
 			if (player.hasPerk(PerkLib.JobMonk)) TranceBoost -= 15;
 			if (player.hasPerk(PerkLib.Berzerker)) TranceBoost -= 15;
 			if (player.hasPerk(PerkLib.Lustzerker)) TranceBoost -= 15;

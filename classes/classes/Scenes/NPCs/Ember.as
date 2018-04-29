@@ -273,7 +273,7 @@ public class Ember extends Monster
 			if (flags[kFLAGS.EMBER_LVL_UP] >= 2) {
 				this.createPerk(PerkLib.EnemyBossType, 0, 0, 0, 0);
 			}
-			if (flags[kFLAGS.EMBER_LVL_UP] >= 5) this.createPerk(PerkLib.TankI, 0, 0, 0, 0);
+			if (flags[kFLAGS.EMBER_LVL_UP] >= 5) this.createPerk(PerkLib.Tank, 0, 0, 0, 0);
 			checkMonster();
 		}
 		

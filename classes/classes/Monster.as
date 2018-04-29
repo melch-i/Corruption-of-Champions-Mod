@@ -206,7 +206,7 @@ import flash.utils.getQualifiedClassName;
 			//Apply NG+, NG++, NG+++, etc.
 			temp += this.bonusAscMaxHP * newGamePlusMod();
 			//Apply perks
-			if (hasPerk(PerkLib.TankI)) temp += ((this.tou*3) * (1 + newGamePlusMod()));
+			if (hasPerk(PerkLib.Tank)) temp += ((this.tou*3) * (1 + newGamePlusMod()));
 			if (hasPerk(PerkLib.JobGuardian)) temp += 30;
 			return temp;
 		}
@@ -273,7 +273,7 @@ import flash.utils.getQualifiedClassName;
 		{
 			//Base wrath
 			var temp:Number = 250 + this.bonusWrath;
-			if (hasPerk(PerkLib.PrimalFuryI)) temp += (10 * (1 + newGamePlusMod()));
+			if (hasPerk(PerkLib.PrimalFury)) temp += (10 * (1 + newGamePlusMod()));
 			if (hasPerk(PerkLib.FeralArmor)) temp += 20;
 			if (hasPerk(PerkLib.JobDervish)) temp += 20;
 			if (hasPerk(PerkLib.JobWarrior)) temp += 10;

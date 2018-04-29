@@ -4152,7 +4152,7 @@ public function wrathregeneration(combat:Boolean = true):void {
 		EngineCore.WrathChange(gainedwrath, false);
 	}
 	else {
-		if (player.hasPerk(PerkLib.PrimalFuryI)) gainedwrath += 1;
+		if (player.hasPerk(PerkLib.PrimalFury)) gainedwrath += 1;
 		if (player.hasPerk(PerkLib.Berzerker)) gainedwrath += 1;
 		if (player.hasPerk(PerkLib.Lustzerker)) gainedwrath += 1;
 		if (player.hasPerk(PerkLib.Rage)) gainedwrath += 1;

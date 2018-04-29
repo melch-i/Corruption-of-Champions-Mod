@@ -676,7 +676,7 @@ import classes.Items.JewelryLib;
 		public override function maxWrath():Number
 		{
 			var max:Number = 250;
-			if (hasPerk(PerkLib.PrimalFuryI)) max += 10;
+			if (hasPerk(PerkLib.PrimalFury)) max += 10;
 			if (hasPerk(PerkLib.FeralArmor)) max += 20;
 			if (hasPerk(PerkLib.JobDervish)) max += 20;
 			if (hasPerk(PerkLib.JobWarrior)) max += 10;

@@ -234,7 +234,7 @@ public class Creature extends Utils
 			if (tou >= 851) max += Math.round(tou);
 			if (tou >= 901) max += Math.round(tou);
 			if (tou >= 951) max += Math.round(tou);
-			if (hasPerk(PerkLib.TankI)) max += Math.round(tou*3);
+			if (hasPerk(PerkLib.Tank)) max += Math.round(tou*3);
 			if (hasPerk(PerkLib.ElementalBondFlesh)) {
 				if (hasStatusEffect(StatusEffects.SummonedElementalsAir)) max += 25 * statusEffectv2(StatusEffects.SummonedElementalsAir);
 				if (hasStatusEffect(StatusEffects.SummonedElementalsEarth)) max += 25 * statusEffectv2(StatusEffects.SummonedElementalsEarth);

@@ -122,7 +122,7 @@ package classes.Scenes.Camp
 			this.level = 60;
 			this.drop = new ChainedDrop()
 					.add(consumables.JABBERS, 1);
-			this.createPerk(PerkLib.TankI, 0, 0, 0, 0);
+			this.createPerk(PerkLib.Tank, 0, 0, 0, 0);
 			this.createPerk(PerkLib.Regeneration, 0, 0, 0, 0);
 			this.createPerk(PerkLib.FireNature, 0, 0, 0, 0);
 			this.createPerk(PerkLib.EnemyBossType, 0, 0, 0, 0);

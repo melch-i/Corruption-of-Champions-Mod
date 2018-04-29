@@ -299,7 +299,7 @@ public class Kiha extends Monster
 				this.createPerk(PerkLib.Regeneration, 0, 0, 0, 0);
 			}
 			if (flags[kFLAGS.KIHA_LVL_UP] >= 5) {
-				this.createPerk(PerkLib.TankI, 0, 0, 0, 0);
+				this.createPerk(PerkLib.Tank, 0, 0, 0, 0);
 			}
 			if (flags[kFLAGS.KIHA_LVL_UP] >= 6) {
 				this.createPerk(PerkLib.LizanRegeneration, 0, 0, 0, 0);
