@@ -1,4 +1,4 @@
-﻿package classes.Scenes.Combat {
+package classes.Scenes.Combat {
 import classes.BaseContent;
 import classes.BodyParts.Ears;
 import classes.BodyParts.Face;
@@ -48,7 +48,7 @@ public class Combat extends BaseContent {
 	public var mspecials:MagicSpecials     = new MagicSpecials();
 	public var magic:CombatMagic           = new CombatMagic();
 	public var teases:CombatTeases         = new CombatTeases();
-	public var soulskills:CombatSoulskills = new CombatSoulskills();
+	public var kiPowers:CombatKiPowers = new CombatKiPowers();
 	public var ui:CombatUI                 = new CombatUI();
 	
 	public static const AIR:int       = 1;
@@ -667,13 +667,13 @@ public function basemeleeattacks():void {
 				if (player.fatigue + mutlimeleefistattacksCost <= player.maxFatigue()) {
 					if (flags[kFLAGS.FERAL_COMBAT_MODE] == 1 && (player.haveNaturalClaws() || player.haveNaturalClawsTypeWeapon())) fatigue(mutlimeleefistattacksCost);
 					else {
-						if (player.soulforce < mutlimeleefistattacksCost * 5) {
-							outputText("Your current soulforce is too low to attack more than once in this turn!\n\n");
+						if (player.ki < mutlimeleefistattacksCost * 5) {
+							outputText("Your current ki is too low to attack more than once in this turn!\n\n");
 							flags[kFLAGS.MULTIPLE_ATTACKS_STYLE] = 1;
 						}
 						else {
 							fatigue(mutlimeleefistattacksCost);
-							player.soulforce -= mutlimeleefistattacksCost * 5;
+							player.ki -= mutlimeleefistattacksCost * 5;
 						}
 					}
 				}
@@ -814,10 +814,10 @@ public function elementalattacks(elementType:int, summonedElementals:int):void {
 			addButton(0, "Next", combatMenu, false);
 		}
 		else {
-			wrathregeneration();
+			wrathRegeneration();
 			fatigueRecovery();
-			manaregeneration();
-			soulforceregeneration();
+			manaRegeneration();
+			kiRegeneration();
 			enemyAI();
 		}
 	}
@@ -894,9 +894,9 @@ internal function wait():void {
 	//Gain fatigue if not fighting sand tarps
 	if (!monster.hasStatusEffect(StatusEffects.Level)) {
 		fatigue( -5);
-		wrathregeneration();
-		manaregeneration();
-		soulforceregeneration();
+		wrathRegeneration();
+		manaRegeneration();
+		kiRegeneration();
 	}
 	if (monster.hasStatusEffect(StatusEffects.PCTailTangle)) {
 		(monster as Kitsune).kitsuneWait();
@@ -2086,10 +2086,10 @@ public function seconwindGo():void {
 	fatigue((player.maxFatigue() - player.fatigue) / 2);
 	player.createStatusEffect(StatusEffects.SecondWindRegen, 10, 0, 0, 0);
 	player.createStatusEffect(StatusEffects.CooldownSecondWind, 0, 0, 0, 0);
-	wrathregeneration();
+	wrathRegeneration();
 	fatigueRecovery();
-	manaregeneration();
-	soulforceregeneration();
+	manaRegeneration();
+	kiRegeneration();
 	enemyAI();
 }
 public function surrender():void {
@@ -2711,10 +2711,10 @@ public function meleeDamageAcc():void {
 		return;
 	}
 	outputText("\n");
-	wrathregeneration();
+	wrathRegeneration();
 	fatigueRecovery();
-	manaregeneration();
-	soulforceregeneration();
+	manaRegeneration();
+	kiRegeneration();
 	enemyAI();
 }
 
@@ -2986,7 +2986,7 @@ public function enemyAIImpl():void {
 		return;
 	}
 	monster.doAI();
-	if (player.hasStatusEffect(StatusEffects.TranceTransformation)) player.soulforce -= 50;
+	if (player.hasStatusEffect(StatusEffects.TranceTransformation)) player.ki -= 50;
 	if (player.hasStatusEffect(StatusEffects.CrinosShape)) player.wrath -= mspecials.crinosshapeCost();
 	combatRoundOver();
 }
@@ -3734,17 +3734,17 @@ private function combatStatusesUpdate():void {
 	}
 	//Violet Pupil Transformation
 	if (player.hasStatusEffect(StatusEffects.VioletPupilTransformation)) {
-		if (player.soulforce < 100) {
+		if (player.ki < 100) {
 			player.removeStatusEffect(StatusEffects.VioletPupilTransformation);
-			outputText("<b>Your soulforce is too low to continue using Violet Pupil Transformation so soul skill deactivated itself!  As long you can recover some soulforce before end of the fight you could then reactivate this skill.</b>\n\n");
+			outputText("<b>Your ki is too low to continue using Violet Pupil Transformation so ki power deactivated itself!  As long you can recover some ki before end of the fight you could then reactivate this skill.</b>\n\n");
 		}
 		else {
-			var soulforcecost:int = 100;
-			player.soulforce -= soulforcecost;
+			var kicost:int = 100;
+			player.ki -= kicost;
 			var hpChange1:int = 200;
 			if (player.unicornScore() >= 5) hpChange1 += ((player.unicornScore() - 4) * 25);
 			if (player.alicornScore() >= 6) hpChange1 += ((player.alicornScore() - 5) * 25);
-			outputText("<b>As your soulforce is drained you can feel Violet Pupil Transformation regenerative power spreading in your body. (<font color=\"#008000\">+" + hpChange1 + "</font>)</b>\n\n");
+			outputText("<b>As your ki is drained you can feel Violet Pupil Transformation regenerative power spreading in your body. (<font color=\"#008000\">+" + hpChange1 + "</font>)</b>\n\n");
 			HPChange(hpChange1,false);
 		}
 	}
@@ -3768,14 +3768,14 @@ private function combatStatusesUpdate():void {
 	}
 	//Trance Transformation
 	if (player.hasStatusEffect(StatusEffects.TranceTransformation)) {
-		if (player.soulforce < 50) {
+		if (player.ki < 50) {
 			player.dynStats("str", -player.statusEffectv1(StatusEffects.TranceTransformation));
 			player.dynStats("tou", -player.statusEffectv1(StatusEffects.TranceTransformation));
 			player.removeStatusEffect(StatusEffects.TranceTransformation);
 			outputText("<b>The flow of power through you suddenly stops, as you no longer have the soul energy to sustain it.  You drop roughly to the floor, the crystal coating your [skin] cracking and fading to nothing.</b>\n\n");
 		}
 	//	else {
-	//		outputText("<b>As your soulforce is drained you can feel Violet Pupil Transformation regenerative power spreading in your body.</b>\n\n");
+	//		outputText("<b>As your ki is drained you can feel Violet Pupil Transformation regenerative power spreading in your body.</b>\n\n");
 	//	}
 	}
 	//Crinos Shape
@@ -3788,7 +3788,7 @@ private function combatStatusesUpdate():void {
 			outputText("<b>The flow of power through you suddenly stops, as you no longer have the wrath to sustain it.  You drop roughly to the floor, the bestial chanches slowly fading away leaving you in your normal form.</b>\n\n");
 		}
 	//	else {
-	//		outputText("<b>As your soulforce is drained you can feel Violet Pupil Transformation regenerative power spreading in your body.</b>\n\n");
+	//		outputText("<b>As your ki is drained you can feel Violet Pupil Transformation regenerative power spreading in your body.</b>\n\n");
 	//	}
 	}
 	//Everywhere and nowhere
@@ -4110,18 +4110,18 @@ public function regeneration(combat:Boolean = true):void {
 	}
 }
 
-public function soulforceregeneration(combat:Boolean = true):void {
-	var gainedsoulforce:Number = 0;
+public function kiRegeneration(combat:Boolean = true):void {
+	var gainedki:Number = 0;
 	if (combat) {
-		if (flags[kFLAGS.IN_COMBAT_USE_PLAYER_WAITED_FLAG] == 1) gainedsoulforce *= 2;
-		EngineCore.SoulforceChange(gainedsoulforce, false);
+		if (flags[kFLAGS.IN_COMBAT_USE_PLAYER_WAITED_FLAG] == 1) gainedki *= 2;
+		EngineCore.KiChange(gainedki, false);
 	}
 	else {
-		EngineCore.SoulforceChange(gainedsoulforce, false);
+		EngineCore.KiChange(gainedki, false);
 	}
 }
 
-public function manaregeneration(combat:Boolean = true):void {
+public function manaRegeneration(combat:Boolean = true):void {
 	var gainedmana:Number = 0;
 	if (combat) {
 		if (player.hasPerk(PerkLib.JobSorcerer)) gainedmana += 10;
@@ -4136,7 +4136,7 @@ public function manaregeneration(combat:Boolean = true):void {
 	}
 }
 
-public function wrathregeneration(combat:Boolean = true):void {
+public function wrathRegeneration(combat:Boolean = true):void {
 	var gainedwrath:Number = 0;
 	if (combat) {
 		if (player.hasPerk(PerkLib.Berzerker)) gainedwrath += 2;
@@ -4220,7 +4220,7 @@ public function startCombatImpl(monster_:Monster, plotFight_:Boolean = false):vo
 	else if (player.newGamePlusMod() >= 4) monster.lustVuln *= 0.6;
 	monster.HP = monster.maxHP();
 	monster.mana = monster.maxMana();
-	monster.soulforce = monster.maxSoulforce();
+	monster.ki = monster.maxKi();
 	monster.XP = monster.totalXP();
 	if (player.weaponRangeName == "gnoll throwing spear") player.ammo = 20;
 	if (player.weaponRangeName == "gnoll throwing axes") player.ammo = 10;
@@ -4694,10 +4694,10 @@ public function ScyllaTease():void {
 	}
 	//(Otherwise)
 	else {
-		wrathregeneration();
+		wrathRegeneration();
 		fatigueRecovery();
-		manaregeneration();
-		soulforceregeneration();
+		manaRegeneration();
+		kiRegeneration();
 		var damage:Number = 0;
 		var chance:Number= 0;
 		var bimbo:Boolean = false;
@@ -4861,10 +4861,10 @@ public function GooTease():void {
 	}
 	//(Otherwise)
 	else {
-		wrathregeneration();
+		wrathRegeneration();
 		fatigueRecovery();
-		manaregeneration();
-		soulforceregeneration();
+		manaRegeneration();
+		kiRegeneration();
 		var damage:Number = 0;
 		var chance:Number= 0;
 		var bimbo:Boolean = false;
@@ -5452,7 +5452,7 @@ public function greatDive():void {
 	enemyAI();
 }
 
-public function soulskillMod():Number {
+public function kiPowerMod():Number {
 	var modss:Number = 1;
 	if (player.hasPerk(PerkLib.WizardsAndDaoistsFocus)) modss += player.perkv2(PerkLib.WizardsAndDaoistsFocus);
 	if (player.hasPerk(PerkLib.SeersInsight)) modss += player.perkv1(PerkLib.SeersInsight);
@@ -5460,13 +5460,13 @@ public function soulskillMod():Number {
 	if (player.shieldName == "spirit focus") modss += .2;
 	return modss;
 }
-public function soulskillPhysicalMod():Number {
+public function kiPowerPhysicalMod():Number {
 	var modssp:Number = 1;
 	if (player.hasPerk(PerkLib.BodyCultivatorsFocus)) modssp += player.perkv1(PerkLib.BodyCultivatorsFocus);
 	if (player.hasPerk(PerkLib.AscensionSpiritualEnlightenment)) modssp *= 1 + (player.perkv1(PerkLib.AscensionSpiritualEnlightenment) * 0.1);
 	return modssp;
 }
-public function soulskillMagicalMod():Number {
+public function kiPowerMagicalMod():Number {
 	var modssm:Number = 1;
 	if (player.hasPerk(PerkLib.WizardsAndDaoistsFocus)) modssm += player.perkv2(PerkLib.WizardsAndDaoistsFocus);
 	if (player.hasPerk(PerkLib.SeersInsight)) modssm += player.perkv1(PerkLib.SeersInsight);
@@ -5475,28 +5475,17 @@ public function soulskillMagicalMod():Number {
 	return modssm;
 }
 
-public function soulskillcostmulti():Number {
+public function kiPowerCostMulti():Number {
 	var multiss:Number = 1;
-	if (soulskillMod() > 1) multiss += (soulskillMod() - 1) * 0.1;/*
-	if (player.hasPerk(PerkLib.SoulPersonage)) multiss += 1;
-	if (player.hasPerk(PerkLib.SoulWarrior)) multiss += 1;
-	if (player.hasPerk(PerkLib.SoulSprite)) multiss += 1;
-	if (player.hasPerk(PerkLib.SoulScholar)) multiss += 1;
-	if (player.hasPerk(PerkLib.SoulElder)) multiss += 1;
-	if (player.hasPerk(PerkLib.SoulExalt)) multiss += 1;
-	if (player.hasPerk(PerkLib.SoulOverlord)) multiss += 1;
-	if (player.hasPerk(PerkLib.SoulTyrant)) multiss += 1;
-	if (player.hasPerk(PerkLib.SoulKing)) multiss += 1;
-	if (player.hasPerk(PerkLib.SoulEmperor)) multiss += 1;
-	if (player.hasPerk(PerkLib.SoulAncestor)) multiss += 1;*/
-	if (player.level >= 24 && player.wis >= 80) multiss += 1;//początek używania Dao of Elements
-	if (player.level >= 42 && player.wis >= 140) multiss += 1;//początek zdolności latania
-	if (player.level >= 60 && player.wis >= 200) multiss += 1;//początek czegoś tam 1
-	if (player.level >= 78 && player.wis >= 260) multiss += 1;//początek czegoś tam 2
+	if (kiPowerMod() > 1) multiss += (kiPowerMod() - 1) * 0.1;
+	if (player.level >= 24 && player.wis >= 80) multiss += 1;
+	if (player.level >= 42 && player.wis >= 140) multiss += 1;
+	if (player.level >= 60 && player.wis >= 200) multiss += 1;
+	if (player.level >= 78 && player.wis >= 260) multiss += 1;
 	return multiss;
 }
 
-public function soulskillCost():Number {
+public function kiPowerCost():Number {
 	var modssc:Number = 1;
 	if (player.hasPerk(PerkLib.WizardsAndDaoistsEndurance)) modssc -= (0.01 * player.perkv2(PerkLib.WizardsAndDaoistsEndurance));
 	if (player.hasPerk(PerkLib.SeersInsight)) modssc -= player.perkv1(PerkLib.SeersInsight);

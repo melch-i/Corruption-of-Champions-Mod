@@ -173,7 +173,7 @@ public class Creature extends Utils
 		public var cor:Number = 0;
 		public var fatigue:Number = 0;
 		public var mana:Number = 0;
-		public var soulforce:Number = 0;
+		public var ki:Number = 0;
 		
 		//Combat Stats
 		public var HP:Number = 0;
@@ -197,7 +197,7 @@ public class Creature extends Utils
 		public function get hp100():Number { return 100*HP/maxHP(); }
 		public function get wrath100():Number { return 100*wrath/maxWrath(); }
 		public function get mana100():Number { return 100*mana/maxMana(); }
-		public function get soulforce100():Number { return 100*soulforce/maxSoulforce(); }
+		public function get ki100():Number { return 100*ki/maxKi(); }
 		public function get lust100():Number { return 100*lust/maxLust(); }
 		
 		public function minLust():Number {
@@ -297,7 +297,7 @@ public class Creature extends Utils
 		public function maxWrath():Number {
 			return 250;
 		}
-		public function maxSoulforce():Number {
+		public function maxKi():Number {
 			return 0;
 		}
 		public function maxMana():Number {
@@ -416,7 +416,7 @@ public class Creature extends Utils
 			// Keep values in bounds (lust and HP handled above)
 			fatigue = Math.min(fatigue, maxFatigue());
 			mana = Math.min(mana, maxMana());
-			soulforce = Math.min(soulforce, maxSoulforce());
+			ki = Math.min(ki, maxKi());
 			wrath = Math.min(wrath,maxWrath());
 		}
 		// Lust gain, in % (100 = receive as is, 25 = receive one fourth, 0 = immune)
@@ -723,7 +723,7 @@ public class Creature extends Utils
 				// Allow weaponAttack to be negative as a penalty to strength-calculated damage
 				// Same with armorDef, bonusHP, additionalXP
 				"weaponValue", "armorValue",
-				"lust", "fatigue", "soulforce", "mana", "wrath",
+				"lust", "fatigue", "ki", "mana", "wrath",
 				"level", "gems",
 				"tailCount", "tailVenom", "tailRecharge", "horns.type",
 				"HP", "XP"

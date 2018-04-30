@@ -18,7 +18,7 @@ package classes.Scenes.NPCs
 	}
 
 //VARS
-//const TIMES_FUCKED_FLOWER:int = 594; liczenie ilości używania soulforce infused blood
+//const TIMES_FUCKED_FLOWER:int = 594; liczenie ilości używania ki infused blood
 //const TIMES_RIDDEN_FLOWER:int = 595; liczenie ilości podlewań wodą
 //const FLOWER_LEVEL:int = 2348;
 //const FUCK_FLOWER_GROWTH_COUNTER:int = 597;
@@ -153,15 +153,15 @@ private function useSouforceInfusedBlood():void {
 	outputText("For a moment you think what to do with this ");
 	if (flags[kFLAGS.FLOWER_LEVEL] == 3) outputText("tree");
 	else outputText("plant");
-	outputText(".  Bringing water is fine but it seems the plant is growing too slowly.  What else could make it grow faster?  While thinking you casually remember about something you started to develop: soulforce.  After visiting the river village you’ve seen that it can even enhance natural healing.  So maybe if you could use it now it could provide better nourishment to this ");
+	outputText(".  Bringing water is fine but it seems the plant is growing too slowly.  What else could make it grow faster?  While thinking you casually remember about something you started to develop: ki.  After visiting the river village you’ve seen that it can even enhance natural healing.  So maybe if you could use it now it could provide better nourishment to this ");
 	if (flags[kFLAGS.FLOWER_LEVEL] == 3) outputText("tree");
 	else outputText("plant");
-	outputText(" than mere water.  For a moment you ponder if it is actually a good idea to spray it with your own blood.  Probably that it would also give it some of your soulforce.  Preparing mentally to that as you focus on infusing tiny bit of your soulforce into your blood you cut your hand and drip a little bit of your blood at the ");
+	outputText(" than mere water.  For a moment you ponder if it is actually a good idea to spray it with your own blood.  Probably that it would also give it some of your ki.  Preparing mentally to that as you focus on infusing tiny bit of your ki into your blood you cut your hand and drip a little bit of your blood at the ");
 	if (flags[kFLAGS.FLOWER_LEVEL] == 3) outputText("tree");
 	else outputText("plant");
 	outputText(".  It seems to greedily absorb the liquid for a moment turning slightly crimson in place where blood made contact with it, while you go to patch your hand.  Better hope the blood scent doesn't attract something to the camp.");
 	player.HP -= 150;
-	player.soulforce -= 50;
+	player.ki -= 50;
 	if(flags[kFLAGS.FUCK_FLOWER_GROWTH_COUNTER] < 1000) flags[kFLAGS.FUCK_FLOWER_GROWTH_COUNTER] += 4;
 	flags[kFLAGS.TIMES_FUCKED_FLOWER]++;
 	doNext(camp.returnToCampUseOneHour);

@@ -124,18 +124,18 @@ public final class ConsumableLib extends BaseContent
 		public const SPPEARL:SimpleConsumable = mk("SPPearl", "SkyPoisonPearl", "a Sky Poison Pearl", 12000, "Mysterious Pearl.", m.skypoisonpearl);//moze jednak zmniejszyc do 6k tylko - 60 slotow po 200 gems kazdy wart = 12k
 
 		//PILLS
-		public const LG_SFRP:SimpleConsumable = mk("LGSFRP", "LGSFRPill", "a low-grade Soulforce Recovery Pill", 5, "This low-grade recovery pill could help you recover some of the spent soulforce.  Naturaly it won't be much but in tight situation it could make a difference between won or lost fight.", m.lowgradesoulforcerecoverypill);
-		public const MG_SFRP:SimpleConsumable = mk("MGSFRP", "MGSFRPill", "a mid-grade Soulforce Recovery Pill", 30, "This mid-grade recovery pill could help you recover some of the spent soulforce.  It won't be much but still a few more time more than after using low-grade one version of this pill.", m.midgradesoulforcerecoverypill);
-		public const HG_SFRP:SimpleConsumable = mk("HGSFRP", "HGSFRPill", "a high-grade Soulforce Recovery Pill", 180, "This high-grade recovery pill could hep you recover some of the spent soulforce.  It can restore significant amount of soulforce compared to lower grade pills but still it's only an aid not a replacement for regular cultivation.", m.highgradesoulforcerecoverypill);
-		//public const SG_SFRP:SimpleConsumable = mk("SGSFRP", "SuperiorGradeSFRecovPill", "a superior-grade Soulforce Recovery Pill", m.superiorgradesoulforcerecoverypill, "This superior-grade recovery pill could hep you recover some of the spent soulforce.  Best possible to obtain pill to fast recover soulforce in tight situations when you not have time to cultivate.", 1080);
+		public const LG_SFRP:SimpleConsumable = mk("LGSFRP", "LGSFRPill", "a low-grade Ki Recovery Pill", 5, "This low-grade recovery pill could help you recover some of the spent ki.  Naturaly it won't be much but in tight situation it could make a difference between won or lost fight.", m.lowgradekirecoverypill);
+		public const MG_SFRP:SimpleConsumable = mk("MGSFRP", "MGSFRPill", "a mid-grade Ki Recovery Pill", 30, "This mid-grade recovery pill could help you recover some of the spent ki.  It won't be much but still a few more time more than after using low-grade one version of this pill.", m.midgradekirecoverypill);
+		public const HG_SFRP:SimpleConsumable = mk("HGSFRP", "HGSFRPill", "a high-grade Ki Recovery Pill", 180, "This high-grade recovery pill could hep you recover some of the spent ki.  It can restore significant amount of ki compared to lower grade pills but still it's only an aid not a replacement for regular cultivation.", m.highgradekirecoverypill);
+		//public const SG_SFRP:SimpleConsumable = mk("SGSFRP", "SuperiorGradeSFRecovPill", "a superior-grade Ki Recovery Pill", m.superiorgradekirecoverypill, "This superior-grade recovery pill could hep you recover some of the spent ki.  Best possible to obtain pill to fast recover ki in tight situations when you not have time to cultivate.", 1080);
 
 		//SOUL SKILLS MANUALS
-		public const TRITMAN:SimpleConsumable = mk("TRITMAN", "TTManual", "a manual for Triple Thrust Soulskill", 50, "This manual would teach you how to use Triple Thrust soulskill.", m.triplethrustmanual);
-		public const MABIMAN:SimpleConsumable = mk("MABIMAN", "MBManual", "a manual for Many Birds Soulskill", 50, "This manual would teach you how to use Many Birds soulskill.", m.manybirdsmanual);
-		public const DRASMAN:SimpleConsumable = mk("DRASMAN", "DSManual", "a manual for Draco Sweep Soulskill", 50, "This manual would teach you how to use Draco Sweep soulskill.", m.dracosweepmanual);
-		public const COMETMA:SimpleConsumable = mk("COMETMA", "COManual", "a manual for Comet Soulskill", 250, "This manual would teach you how to use Comet soulskill.", m.cometmanual);
-		public const VPTRMAN:SimpleConsumable = mk("VPTRMAN", "VPTManual", "a manual for Violet Pupil Transformation Soulskill", 250, "This manual would teach you how to use Violet Pupil Transformation soulskill.", m.violetpupiltransformationmanual);
-		public const SOBLMAN:SimpleConsumable = mk("SOBLMAN", "SOBLManual", "a manual for Soul Blast Soulskill", 1000, "This manual would teach you how to use Soul Blast soulskill.", m.soulblastmanual);
+		public const TRITMAN:SimpleConsumable = mk("TRITMAN", "TTManual", "a manual for Triple Thrust Ki Power", 50, "This manual would teach you how to use Triple Thrust soulskill.", m.triplethrustmanual);
+		public const MABIMAN:SimpleConsumable = mk("MABIMAN", "MBManual", "a manual for Many Birds Ki Power", 50, "This manual would teach you how to use Many Birds soulskill.", m.manybirdsmanual);
+		public const DRASMAN:SimpleConsumable = mk("DRASMAN", "DSManual", "a manual for Draco Sweep Ki Power", 50, "This manual would teach you how to use Draco Sweep soulskill.", m.dracosweepmanual);
+		public const COMETMA:SimpleConsumable = mk("COMETMA", "COManual", "a manual for Comet Ki Power", 250, "This manual would teach you how to use Comet soulskill.", m.cometmanual);
+		public const VPTRMAN:SimpleConsumable = mk("VPTRMAN", "VPTManual", "a manual for Violet Pupil Transformation Ki Power", 250, "This manual would teach you how to use Violet Pupil Transformation soulskill.", m.violetpupiltransformationmanual);
+		public const SOBLMAN:SimpleConsumable = mk("SOBLMAN", "SOBLManual", "a manual for Soul Blast Ki Power", 1000, "This manual would teach you how to use Soul Blast soulskill.", m.soulblastmanual);
 
 		//RARE ITEMS (Permanent effects, gives perks on consumption.)
 		public const BIMBOLQ:BimboLiqueur = new BimboLiqueur();

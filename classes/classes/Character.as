@@ -621,11 +621,11 @@ import classes.Items.JewelryLib;
 			return max;
 		}
 		
-		public override function maxSoulforce():Number
+		public override function maxKi():Number
 		{
 			var max:Number = 50;
 			var ngMult:int = 1 + game.player.newGamePlusMod();
-			max += racialBonuses()[Race.BonusName_maxsoulforce]*ngMult;
+			max += racialBonuses()[Race.BonusName_maxki]*ngMult;
 			if (flags[kFLAGS.SOUL_CULTIVATION] >= 2) max += 25;
 			if (flags[kFLAGS.SOUL_CULTIVATION] >= 3) max += 25;
 			if (flags[kFLAGS.SOUL_CULTIVATION] >= 4) max += 30;

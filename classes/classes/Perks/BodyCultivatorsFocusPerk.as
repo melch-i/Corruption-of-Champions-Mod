@@ -12,7 +12,7 @@ package classes.Perks
 		
 		override public function desc(params:PerkClass = null):String
 		{
-			return "(+" + params.value1 * 100 + "% Physical Soulskills Power)";
+			return "(+" + params.value1 * 100 + "% Physical Ki Powers Power)";
 		}
 		
 		public function BodyCultivatorsFocusPerk() 

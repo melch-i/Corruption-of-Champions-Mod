@@ -2352,7 +2352,7 @@ public final class Mutations extends MutationsHelper
 		{
 			if (player.hasKeyItem("Bag of Cosmos") < 0) {
 				clearOutput();
-				outputText("You hang your bag of cosmos on your belt and bind using small amount of your soulforce.  ");
+				outputText("You hang your bag of cosmos on your belt and bind using small amount of your ki.  ");
 				player.createKeyItem("Bag of Cosmos", 0, 0, 0, 0);
 				outputText("<b>You now have 12 item slots bag.</b>");
 				return;
@@ -2370,31 +2370,31 @@ public final class Mutations extends MutationsHelper
 			flags[kFLAGS.SKY_POISON_PEARL] = 2;
 		}
 
-		public function lowgradesoulforcerecoverypill(player:Player):void {
-			outputText("You cram the pill in your mouth and swallow it.  Surprisingly there is no discomfort, only a cool calming sensation that springs up from your soul.\n\n(Recovered soulforce: 25)");
-			player.soulforce += 25;
-			if (player.soulforce > player.maxSoulforce()) player.soulforce = player.maxSoulforce();
+		public function lowgradekirecoverypill(player:Player):void {
+			outputText("You cram the pill in your mouth and swallow it.  Surprisingly there is no discomfort, only a cool calming sensation that springs up from your soul.\n\n(Recovered ki: 25)");
+			player.ki += 25;
+			if (player.ki > player.maxKi()) player.ki = player.maxKi();
 			if (player.isGargoyle() && player.hasPerk(PerkLib.GargoylePure)) player.refillGargoyleHunger(5);
 			statScreenRefresh();
 		}
-		public function midgradesoulforcerecoverypill(player:Player):void {
-			outputText("You cram the pill in your mouth and swallow it.  Surprisingly there is no discomfort, only a cool calming sensation that springs up from your soul.\n\n(Recovered soulforce: 150)");
-			player.soulforce += 150;
+		public function midgradekirecoverypill(player:Player):void {
+			outputText("You cram the pill in your mouth and swallow it.  Surprisingly there is no discomfort, only a cool calming sensation that springs up from your soul.\n\n(Recovered ki: 150)");
+			player.ki += 150;
 			if (player.isGargoyle() && player.hasPerk(PerkLib.GargoylePure)) player.refillGargoyleHunger(25);
-			if (player.soulforce > player.maxSoulforce()) player.soulforce = player.maxSoulforce();
+			if (player.ki > player.maxKi()) player.ki = player.maxKi();
 			statScreenRefresh();
 		}
-		public function highgradesoulforcerecoverypill(player:Player):void {
-			outputText("You cram the pill in your mouth and swallow it.  Surprisingly there is no discomfort, only a cool calming sensation that springs up from your soul.\n\n(Recovered soulforce: 900)");
-			player.soulforce += 900;
+		public function highgradekirecoverypill(player:Player):void {
+			outputText("You cram the pill in your mouth and swallow it.  Surprisingly there is no discomfort, only a cool calming sensation that springs up from your soul.\n\n(Recovered ki: 900)");
+			player.ki += 900;
 			if (player.isGargoyle() && player.hasPerk(PerkLib.GargoylePure)) player.refillGargoyleHunger(125);
-			if (player.soulforce > player.maxSoulforce()) player.soulforce = player.maxSoulforce();
+			if (player.ki > player.maxKi()) player.ki = player.maxKi();
 			statScreenRefresh();
 		}
-	//	public function superiorgradesoulforcerecoverypill(player:Player):void {
-	//		outputText("You cram the pill in your mouth and swallow it.  Surprisingly there is no discomfort, only a cool calming sensation that springs up from your soul.\n\n(Recovered soulforce: 5400)");
-	//		player.soulforce += 5400;
-	//		if (player.soulforce > player.maxSoulforce()) player.soulforce = player.maxSoulforce();
+	//	public function superiorgradekirecoverypill(player:Player):void {
+	//		outputText("You cram the pill in your mouth and swallow it.  Surprisingly there is no discomfort, only a cool calming sensation that springs up from your soul.\n\n(Recovered ki: 5400)");
+	//		player.ki += 5400;
+	//		if (player.ki > player.maxKi()) player.ki = player.maxKi();
 	//		if (player.isGargoyle() && player.hasPerk(PerkLib.GargoylePure)) player.refillGargoyleHunger(625);
 	//		statScreenRefresh();
 	//	}
@@ -2402,83 +2402,83 @@ public final class Mutations extends MutationsHelper
 		public function triplethrustmanual(player:Player):void
 		{
 			clearOutput();
-			outputText("You open the manual, and discover it to be an instructional on how the use a soul skill.  Most of it is filled with generic information on poses and channeling soulforce while performing Triple Thrust.  In no time at all you've read the whole thing, but it disappears into thin air before you can put it away.");
+			outputText("You open the manual, and discover it to be an instructional on how the use a ki power.  Most of it is filled with generic information on poses and channeling ki while performing Triple Thrust.  In no time at all you've read the whole thing, but it disappears into thin air before you can put it away.");
 			if (!player.hasStatusEffect(StatusEffects.KnowsTripleThrust)) {
-				outputText("\n\nYou blink in surprise, assaulted by the knowledge of a <b>new soul skill: Triple Thrust.</b>");
+				outputText("\n\nYou blink in surprise, assaulted by the knowledge of a <b>new ki power: Triple Thrust.</b>");
 				player.createStatusEffect(StatusEffects.KnowsTripleThrust, 0, 0, 0, 0);
 				return;
 			}
 			if (player.hasStatusEffect(StatusEffects.KnowsTripleThrust)) {
-				outputText("When you open the manual, it turns out you already know this soul skill.  Having a hunch you read whole manual and when it disappears into thin air you feel it does restored some of your soulforce.");
-				player.soulforce += 20;
-				if (player.soulforce > player.maxSoulforce()) player.soulforce = player.maxSoulforce();
+				outputText("When you open the manual, it turns out you already know this ki power.  Having a hunch you read whole manual and when it disappears into thin air you feel it does restored some of your ki.");
+				player.ki += 20;
+				if (player.ki > player.maxKi()) player.ki = player.maxKi();
 			}
 		}
 		public function dracosweepmanual(player:Player):void
 		{
 			clearOutput();
-			outputText("You open the manual, and discover it to be an instructional on how the use a soul skill.  Most of it is filled with generic information on poses and channeling soulforce while performing Draco Sweep.  In no time at all you've read the whole thing, but it disappears into thin air before you can put it away.");
+			outputText("You open the manual, and discover it to be an instructional on how the use a ki power.  Most of it is filled with generic information on poses and channeling ki while performing Draco Sweep.  In no time at all you've read the whole thing, but it disappears into thin air before you can put it away.");
 			if (!player.hasStatusEffect(StatusEffects.KnowsDracoSweep)) {
-				outputText("\n\nYou blink in surprise, assaulted by the knowledge of a <b>new soul skill: Draco Sweep.</b>");
+				outputText("\n\nYou blink in surprise, assaulted by the knowledge of a <b>new ki power: Draco Sweep.</b>");
 				player.createStatusEffect(StatusEffects.KnowsDracoSweep, 0, 0, 0, 0);
 				return;
 			}
 			if (player.hasStatusEffect(StatusEffects.KnowsDracoSweep)) {
-				outputText("When you open the manual, it turns out you already know this soul skill.  Having a hunch you read whole manual and when it disappears into thin air you feel it does restored some of your soulforce.");
-				player.soulforce += 20;
-				if (player.soulforce > player.maxSoulforce()) player.soulforce = player.maxSoulforce();
+				outputText("When you open the manual, it turns out you already know this ki power.  Having a hunch you read whole manual and when it disappears into thin air you feel it does restored some of your ki.");
+				player.ki += 20;
+				if (player.ki > player.maxKi()) player.ki = player.maxKi();
 			}
 		}
 		public function manybirdsmanual(player:Player):void
 		{
 			clearOutput();
-			outputText("You open the manual, and discover it to be an instructional on how the use a soul skill.  Most of it is filled with generic information on poses and channeling soulforce while performing Many Birds.  In no time at all you've read the whole thing, but it disappears into thin air before you can put it away.");
+			outputText("You open the manual, and discover it to be an instructional on how the use a ki power.  Most of it is filled with generic information on poses and channeling ki while performing Many Birds.  In no time at all you've read the whole thing, but it disappears into thin air before you can put it away.");
 			if (!player.hasStatusEffect(StatusEffects.KnowsManyBirds)) {
-				outputText("\n\nYou blink in surprise, assaulted by the knowledge of a <b>new soul skill: Many Birds.</b>");
+				outputText("\n\nYou blink in surprise, assaulted by the knowledge of a <b>new ki power: Many Birds.</b>");
 				player.createStatusEffect(StatusEffects.KnowsManyBirds, 0, 0, 0, 0);
 				return;
 			}
 			if (player.hasStatusEffect(StatusEffects.KnowsManyBirds)) {
-				outputText("When you open the manual, it turns out you already know this soul skill.  Having a hunch you read whole manual and when it disappears into thin air you feel it does restored some of your soulforce.");
-				player.soulforce += 20;
-				if (player.soulforce > player.maxSoulforce()) player.soulforce = player.maxSoulforce();
+				outputText("When you open the manual, it turns out you already know this ki power.  Having a hunch you read whole manual and when it disappears into thin air you feel it does restored some of your ki.");
+				player.ki += 20;
+				if (player.ki > player.maxKi()) player.ki = player.maxKi();
 			}
 		}
 		public function cometmanual(player:Player):void
 		{
 			clearOutput();
-			outputText("You open the manual, and discover it to be an instructional on how the use a soul skill.  Most of it is filled with generic information on poses and channeling soulforce while performing Comet.  In no time at all you've read the whole thing, but it disappears into thin air before you can put it away.");
+			outputText("You open the manual, and discover it to be an instructional on how the use a ki power.  Most of it is filled with generic information on poses and channeling ki while performing Comet.  In no time at all you've read the whole thing, but it disappears into thin air before you can put it away.");
 			if (!player.hasStatusEffect(StatusEffects.KnowsComet)) {
-				outputText("\n\nYou blink in surprise, assaulted by the knowledge of a <b>new soul skill: Comet.</b>");
+				outputText("\n\nYou blink in surprise, assaulted by the knowledge of a <b>new ki power: Comet.</b>");
 				player.createStatusEffect(StatusEffects.KnowsComet, 0, 0, 0, 0);
 				return;
 			}
 			if (player.hasStatusEffect(StatusEffects.KnowsComet)) {
-				outputText("When you open the manual, it turns out you already know this soul skill.  Having a hunch you read whole manual and when it disappears into thin air you feel it does restored some of your soulforce.");
-				player.soulforce += 100;
-				if (player.soulforce > player.maxSoulforce()) player.soulforce = player.maxSoulforce();
+				outputText("When you open the manual, it turns out you already know this ki power.  Having a hunch you read whole manual and when it disappears into thin air you feel it does restored some of your ki.");
+				player.ki += 100;
+				if (player.ki > player.maxKi()) player.ki = player.maxKi();
 			}
 		}
 		public function violetpupiltransformationmanual(player:Player):void
 		{
 			clearOutput();
-			outputText("You open the manual, and discover it to be an instructional on how the use a soul skill.  Most of it is filled with generic information on poses and channeling soulforce while performing Violet Pupil Transformation.  In no time at all you've read the whole thing, but it disappears into thin air before you can put it away.");
+			outputText("You open the manual, and discover it to be an instructional on how the use a ki power.  Most of it is filled with generic information on poses and channeling ki while performing Violet Pupil Transformation.  In no time at all you've read the whole thing, but it disappears into thin air before you can put it away.");
 			if (!player.hasStatusEffect(StatusEffects.KnowsVioletPupilTransformation)) {
-				outputText("\n\nYou blink in surprise, assaulted by the knowledge of a <b>new soul skill: Violet Pupil Transformation.</b>");
+				outputText("\n\nYou blink in surprise, assaulted by the knowledge of a <b>new ki power: Violet Pupil Transformation.</b>");
 				player.createStatusEffect(StatusEffects.KnowsVioletPupilTransformation, 0, 0, 0, 0);
 				return;
 			}
 			if (player.hasStatusEffect(StatusEffects.KnowsVioletPupilTransformation)) {
-				outputText("When you open the manual, it turns out you already know this soul skill.  Having a hunch you read whole manual and when it disappears into thin air you feel it does restored some of your soulforce.");
-				player.soulforce += 100;
-				if (player.soulforce > player.maxSoulforce()) player.soulforce = player.maxSoulforce();
+				outputText("When you open the manual, it turns out you already know this ki power.  Having a hunch you read whole manual and when it disappears into thin air you feel it does restored some of your ki.");
+				player.ki += 100;
+				if (player.ki > player.maxKi()) player.ki = player.maxKi();
 			}
 		}
 		public function soulblastmanual(player:Player):void
 		{
 			clearOutput();
-			outputText("You open the manual, and discover it to be an instructional on how the use a soul skill.  Most of it is filled with generic information on poses and channeling soulforce while performing Soul Blast.  In no time at all you've read the whole thing, but it disappears into thin air before you can put it away.");
-			outputText("\n\nYou blink in surprise, assaulted by the knowledge of a <b>new soul skill: Soul Blast.</b>");
+			outputText("You open the manual, and discover it to be an instructional on how the use a ki power.  Most of it is filled with generic information on poses and channeling ki while performing Soul Blast.  In no time at all you've read the whole thing, but it disappears into thin air before you can put it away.");
+			outputText("\n\nYou blink in surprise, assaulted by the knowledge of a <b>new ki power: Soul Blast.</b>");
 			player.createStatusEffect(StatusEffects.KnowsSoulBlast, 0, 0, 0, 0);
 		}
 

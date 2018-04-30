@@ -28,14 +28,14 @@ public class CombatUI extends BaseCombatContent {
 	private var magspButtons:ButtonDataList = new ButtonDataList();
 	private var physpButtons:ButtonDataList = new ButtonDataList();
 	private var spellButtons:ButtonDataList = new ButtonDataList();
-	private var soulforceButtons:ButtonDataList = new ButtonDataList();
+	private var kiButtons:ButtonDataList = new ButtonDataList();
 	private var otherButtons:ButtonDataList = new ButtonDataList();
 	public function mainMenu():void {
 		menu();
 		magspButtons.clear();
 		physpButtons.clear();
 		spellButtons.clear();
-		soulforceButtons.clear();
+		kiButtons.clear();
 		otherButtons.clear();
 		
 		var btnMelee:CoCButton      = button(0);
@@ -46,7 +46,7 @@ public class CombatUI extends BaseCombatContent {
 		var btnPSpecials:CoCButton  = button(5);
 		var btnMSpecials:CoCButton  = button(6);
 		var btnMagic:CoCButton      = button(7);
-		var btnSoulskills:CoCButton = button(8);
+		var btnKiPowers:CoCButton = button(8);
 		var btnOther:CoCButton      = button(9);
 		var btnSpecial1:CoCButton   = button(10);
 		var btnSpecial2:CoCButton   = button(11);
@@ -127,9 +127,9 @@ public class CombatUI extends BaseCombatContent {
 		} else if (!combat.canUseMagic()) {
 			btnMagic.disable();
 		}
-		// Submenu - Soulskills
-		combat.soulskills.buildMenu(soulforceButtons);
-		if (soulforceButtons.length > 0) btnSoulskills.show("Soulforce", submenuSoulforce, "Soulforce attacks menu.", "Soulforce Specials");
+		// Submenu - KiPowers
+		combat.kiPowers.buildMenu(kiButtons);
+		if (kiButtons.length > 0) btnKiPowers.show("Ki", submenuKi, "Ki attacks menu.", "Ki Specials");
 		// Submenu - Other
 		combat.buildOtherActions(otherButtons);
 		if (otherButtons.length > 0) btnOther.show("Other", submenuOther, "Combat options and uncategorized actions");
@@ -320,14 +320,14 @@ public class CombatUI extends BaseCombatContent {
 		}
 		spellButtons.submenu(mainMenu);
 	}
-	internal function submenuSoulforce():void {
+	internal function submenuKi():void {
 		//if (inCombat && player.hasStatusEffect(StatusEffects.Sealed) && player.statusEffectv2(StatusEffects.Sealed) == 5) {
 		//clearOutput();
 		//outputText("You try to ready a special attack, but wind up stumbling dizzily instead.  <b>Your ability to use physical special attacks was sealed, and now you've wasted a chance to attack!</b>\n\n");
 		//enemyAI();
 		//return;
 		//}
-		soulforceButtons.submenu(mainMenu);
+		kiButtons.submenu(mainMenu);
 	}
 	internal function submenuOther():void {
 		otherButtons.submenu(mainMenu);

@@ -261,7 +261,7 @@ public function startUrtaQuest():void {
 	player.cor = 30;
 	player.lust = 55;
 	player.hunger = 100;
-	player.soulforce = 50;
+	player.ki = 50;
 	player.wrath = 0;
 	player.gems = 183;
 	player.level = 26;

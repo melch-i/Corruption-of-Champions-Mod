@@ -99,14 +99,14 @@ public class BaseCombatContent extends BaseContent {
 	protected function bowCost(mod:Number):Number {
 		return combat.bowCost(mod);
 	}
-	protected function soulskillCost():Number {
-		return combat.soulskillCost();
+	protected function kiPowerCost():Number {
+		return combat.kiPowerCost();
 	}
-	protected function soulskillcostmulti():Number {
-		return combat.soulskillcostmulti();
+	protected function kiPowercostmulti():Number {
+		return combat.kiPowerCostMulti();
 	}
-	protected function soulskillMod():Number {
-		return combat.soulskillMod();
+	protected function kiPowerMod():Number {
+		return combat.kiPowerMod();
 	}
 	protected function scalingBonusStrength():Number {
 		return combat.scalingBonusStrength();

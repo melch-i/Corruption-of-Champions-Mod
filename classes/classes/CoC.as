@@ -330,7 +330,7 @@ public class CoC extends MovieClip
         oldStats.oldHP   = 0;
         oldStats.oldLust = 0;
         oldStats.oldFatigue = 0;
-        oldStats.oldSoulforce = 0;
+        oldStats.oldKi = 0;
         oldStats.oldHunger = 0;
 
         // ******************************************************************************************

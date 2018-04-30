@@ -62,7 +62,7 @@ package classes.Items
 		public const LANCE  :Lance = new Lance();
 		public const MACE   :Weapon = new Weapon("Mace   ", "Mace", "mace", "a mace", "smash", 9, 360, "This is a mace, designed to be able to crush against various defenses.");
 		public const MASAMUN:Masamune = new Masamune();
-		public const MASTGLO:WeaponWithPerk = new WeaponWithPerk("MastGlo", "MasterGloves", "Master Gloves", "a Master Gloves", "punch", 0, 400, "These gloves belonged to Chi Chi. They seem to naturally strengthen the soulforce techniques of the user.", "Body Cultivator's Focus", PerkLib.BodyCultivatorsFocus, 0.4, 0, 0, 0);
+		public const MASTGLO:WeaponWithPerk = new WeaponWithPerk("MastGlo", "MasterGloves", "Master Gloves", "a Master Gloves", "punch", 0, 400, "These gloves belonged to Chi Chi. They seem to naturally strengthen the ki techniques of the user.", "Body Cultivator's Focus", PerkLib.BodyCultivatorsFocus, 0.4, 0, 0, 0);
 		public const N_STAFF:NocturnusStaff = new NocturnusStaff();
 		public const NTWHIP :NineTailWhip = new NineTailWhip();
 		public const NODACHI:Weapon = new Weapon("Nodachi","Nodachi","nodachi","a nodachi","keen cut",17,680,"A curved over 1,7 m long bladed weapon that cuts through flesh with the greatest of ease.", "Large");
@@ -90,7 +90,7 @@ package classes.Items
 		public const SPEAR  :Spear = new Spear();
 		public const SUCWHIP:SuccubiWhip = new SuccubiWhip();
 		public const TCLAYMO:TopazClaymore = new TopazClaymore();
-		public const TRASAXE:Weapon = new Weapon("TraSAxe","Train.S.Axe", "training soul axe", "a training soul axe", "cleave", 1, 80, "This axe was specialy forged and enhanted to help novice soul cultivatiors to train their soulforce.  Still if situation calls for it it could be used as a normal weapon.");
+		public const TRASAXE:Weapon = new Weapon("TraSAxe","Train.S.Axe", "training soul axe", "a training soul axe", "cleave", 1, 80, "This axe was specialy forged and enhanted to help novice soul cultivatiors to train their ki.  Still if situation calls for it it could be used as a normal weapon.");
 		public const TRIDENT:Trident = new Trident();
 		public const TRSTSWO:Weapon = new Weapon("TrStSwo","TruestrikeSword", "Truestrike sword", "a Truestrike sword", "slash", 5, 400, "Lia will write desc of it...soon.");
 		public const U_STAFF:UnicornStaff = new UnicornStaff();

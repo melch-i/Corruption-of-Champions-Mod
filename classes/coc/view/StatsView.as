@@ -57,7 +57,7 @@ public class StatsView extends Block {
 	private var lustBar:StatBar;
 	private var fatigueBar:StatBar;
 	private var manaBar:StatBar;
-	private var soulforceBar:StatBar;
+	private var kiBar:StatBar;
 	private var hungerBar:StatBar;
 	private var esteemBar:StatBar;
 	private var willBar:StatBar;
@@ -138,8 +138,8 @@ public class StatsView extends Block {
 		//	barColor: '#0000ff',
 			showMax : true
 		}));
-		addElement(soulforceBar = new StatBar({
-			statName: "SF:",
+		addElement(kiBar = new StatBar({
+			statName: "Ki:",
 		//	barColor: '#ffd700',
 			showMax : true
 		}));
@@ -243,8 +243,8 @@ public class StatsView extends Block {
 				return fatigueBar;
 			case 'mana':
 				return manaBar;
-			case 'soulforce':
-				return soulforceBar;
+			case 'ki':
+				return kiBar;
 			case 'hunger':
 				return hungerBar;
 			case 'level':
@@ -307,9 +307,8 @@ public class StatsView extends Block {
 		fatigueBar.value      = player.fatigue;
 		manaBar.maxValue 	  = player.maxMana();
 		manaBar.value    	  = player.mana;
-		soulforceBar.maxValue = player.maxSoulforce();
-		soulforceBar.value    = player.soulforce;
-	//	soulforceBar.valueText= (player.soulforce/player.maxSoulforce()).toFixed(2)+'%';
+		kiBar.maxValue        = player.maxKi();
+		kiBar.value           = player.ki;
 		hungerBar.maxValue    = player.maxHunger();
 		hungerBar.value       = player.hunger;
 		if (player.hunger < 25) {

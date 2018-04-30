@@ -57,10 +57,10 @@ public class PlayerInfo extends BaseContent {
 		combatStats += "<b>Accuracy (1st range attack):</b> " + (combat.arrowsAccuracy() / 2) + "%\n";
 		if (player.hasPerk(PerkLib.Manyshot)) combatStats += "<b>Accuracy (4th range attack):</b> " + ((combat.arrowsAccuracy() / 2) - 45) + "%\n";
 
-		combatStats += "<b>Soulskill Effect Multiplier:</b> " + Math.round(100 * combat.soulskillMod()) + "%\n";
-		combatStats += "<b>Physical Soulskill Effect Multiplier:</b> " + Math.round(100 * combat.soulskillPhysicalMod()) + "%\n";
-		combatStats += "<b>Magical Soulskill Effect Multiplier:</b> " + Math.round(100 * combat.soulskillMagicalMod()) + "%\n";
-		combatStats += "<b>Soulskill Cost:</b> " + Math.round(100 * combat.soulskillCost()) + "%\n";
+		combatStats += "<b>Ki Power Effect Multiplier:</b> " + Math.round(100 * combat.kiPowerMod()) + "%\n";
+		combatStats += "<b>Physical Ki Power Effect Multiplier:</b> " + Math.round(100 * combat.kiPowerPhysicalMod()) + "%\n";
+		combatStats += "<b>Magical Ki Power Effect Multiplier:</b> " + Math.round(100 * combat.kiPowerMagicalMod()) + "%\n";
+		combatStats += "<b>Ki Power Cost:</b> " + Math.round(100 * combat.kiPowerCost()) + "%\n";
 
 		combatStats += "<b>Unarmed:</b> +" + combat.unarmedAttack() + "\n";
 

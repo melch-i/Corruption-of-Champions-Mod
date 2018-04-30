@@ -160,7 +160,7 @@
 			player.sens = 15;
 			player.lib = 15;
 			player.cor = 15;
-			player.soulforce = 50;
+			player.ki = 50;
 			player.wrath = 0;
 			player.mana = 100;
 			player.hunger = 80;
@@ -1677,7 +1677,7 @@
 			else addButtonDisabled(btn, "UnlockPotent", "You already bought this perk.");
 			btn++;
 			if (flags[kFLAGS.NEW_GAME_PLUS_LEVEL] >= 1 && player.hasPerk(PerkLib.AscensionUnlockedPotential)) {
-				if (player.ascensionPerkPoints >= 5 && !player.hasPerk(PerkLib.AscensionUnlockedPotential2ndStage)) addButton(btn, "U.Potent2nd", perkUnlockedPotential2ndStage).hint("Perk allowing to have increase passive gains of max wrath, lust and soulforce at each lvl-up.\n\nCost: 5 point");
+				if (player.ascensionPerkPoints >= 5 && !player.hasPerk(PerkLib.AscensionUnlockedPotential2ndStage)) addButton(btn, "U.Potent2nd", perkUnlockedPotential2ndStage).hint("Perk allowing to have increase passive gains of max wrath, lust and ki at each lvl-up.\n\nCost: 5 point");
 				else if (player.ascensionPerkPoints < 5) addButtonDisabled(btn, "U.Potent2nd", "You not have enough ascension perk points!");
 				else addButtonDisabled(btn, "U.Potent2nd", "You already bought this perk.");
 			}
@@ -1924,7 +1924,7 @@
 
 		private function isSpell(statusEffect:* = null):Boolean {	
 			return (statusEffect == StatusEffects.KnowsWereBeast);	//na razie jest tu tylko werebeast
-		}	//ale potem zamienić to naspecialne soulskills z każdego z klanów
+		}	//ale potem zamienić to naspecialne kiPowers z każdego z klanów
 
 		private function jobSelection():void {
 			clearOutput();

@@ -673,16 +673,16 @@ public class PerkLib
 		public static const Accuracy1:Accuracy1Perk = new Accuracy1Perk();
 		public static const Accuracy2:Accuracy2Perk = new Accuracy2Perk();
 		public static const BladeWarden:PerkType = mk("Blade-Warden", "Blade-Warden",
-				"Enables Resonance Volley soul skill while equipped: Perform a ranged attack where each arrow after the first gets an additional 10% accuracy for every arrow before it.",null,true);
+				"Enables Resonance Volley ki power while equipped: Perform a ranged attack where each arrow after the first gets an additional 10% accuracy for every arrow before it.",null,true);
 		public static const BodyCultivatorsFocus:BodyCultivatorsFocusPerk = new BodyCultivatorsFocusPerk();
 		public static const DaoistsFocus:DaoistsFocusPerk = new DaoistsFocusPerk();
 		public static const MageWarden:PerkType = mk("Mage-Warden", "Mage-Warden",
-				"Enables Resonance Volley soul skill while equipped: Perform a ranged attack where each arrow after the first gets an additional 10% accuracy for every arrow before it.",null,true);
+				"Enables Resonance Volley ki power while equipped: Perform a ranged attack where each arrow after the first gets an additional 10% accuracy for every arrow before it.",null,true);
 		public static const SagesKnowledge:SagesKnowledgePerk = new SagesKnowledgePerk();
 		public static const StrifeWarden:PerkType = mk("Strife-Warden", "Strife-Warden",
-				"Enables Beat of War soul skill while equipped: Attack with low-moderate additional soul damage, gain strength equal to 15% your base strength until end of battle. This effect stacks.",null,true);
+				"Enables Beat of War ki power while equipped: Attack with low-moderate additional soul damage, gain strength equal to 15% your base strength until end of battle. This effect stacks.",null,true);
 		public static const WildWarden:PerkType = mk("Wild-Warden", "Wild-Warden",
-				"Enables Resonance Volley soul skill while equipped: Perform a ranged attack where each arrow after the first gets an additional 10% accuracy for every arrow before it.",null,true);
+				"Enables Resonance Volley ki power while equipped: Perform a ranged attack where each arrow after the first gets an additional 10% accuracy for every arrow before it.",null,true);
 		public static const WizardsAndDaoistsFocus:WizardsAndDaoistsFocusPerk = new WizardsAndDaoistsFocusPerk();
 		public static const WizardsFocus:WizardsFocusPerk = new WizardsFocusPerk();
 

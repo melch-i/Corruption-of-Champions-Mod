@@ -3878,7 +3878,7 @@ use namespace CoC;
 				game.oldStats.oldHP = HP;
 				game.oldStats.oldLust = lust;
 				game.oldStats.oldFatigue = fatigue;
-				game.oldStats.oldSoulforce = soulforce;
+				game.oldStats.oldKi = ki;
 				game.oldStats.oldHunger = hunger;
 			}
 			if (scale) {

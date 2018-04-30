@@ -442,7 +442,7 @@ public class ParserTags {
         "libido"        : function ():* { return CoC.instance.player.lib; },
         "sensitivity"   : function ():* { return CoC.instance.player.sens; },
         "corruption"    : function ():* { return CoC.instance.player.cor; },
-        "soulforce"     : function ():* { return CoC.instance.player.soulforce; },
+        "ki"     : function ():* { return CoC.instance.player.ki; },
         "mana"          : function ():* { return CoC.instance.player.mana; },
         "fatigue"       : function ():* { return CoC.instance.player.fatigue; },
         "wrath"         : function ():* { return CoC.instance.player.wrath; },

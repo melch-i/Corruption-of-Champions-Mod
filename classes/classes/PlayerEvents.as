@@ -572,10 +572,10 @@ if (CoC.instance.model.time.hours > 23) { //Once per day
 					if (flags[kFLAGS.IZMA_FOLLOWER_STATUS] == 1) flags[kFLAGS.FISHES_STORED_AT_FISHERY] += 5;
 					if (flags[kFLAGS.CEANI_FOLLOWER] > 0) flags[kFLAGS.FISHES_STORED_AT_FISHERY] -= 5;
 				}
-				//Daily regeneration of soulforce for non soul cultivators
-				if ((player.soulforce < player.maxSoulforce())) {
-					player.soulforce += 50;
-					if (player.soulforce > player.maxSoulforce()) player.soulforce = player.maxSoulforce();
+				//Daily regeneration of ki for non soul cultivators
+				if ((player.ki < player.maxKi())) {
+					player.ki += 50;
+					if (player.ki > player.maxKi()) player.ki = player.maxKi();
 				}
 				//Daily regeneration of mana for non mages
 				if (!player.hasPerk(PerkLib.JobSorcerer) && (player.mana < player.maxMana())) {

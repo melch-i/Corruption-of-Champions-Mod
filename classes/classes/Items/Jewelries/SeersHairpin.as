@@ -13,7 +13,7 @@ package classes.Items.Jewelries
 		
 		public function SeersHairpin() 
 		{
-			super("SeerPin", "Seer’s Hairpin", "seer’s hairpin", "a seer’s hairpin", 0, 0, 1600, "This hairpin is made from silver, the tip twisted into the shape of an eye and fitted with a crystal lens. Both an ornament and a tool, this pin will empower sorcery and soulforce. \n\nType: Accesory (Hairpin) \nBase value: 800","Ring");
+			super("SeerPin", "Seer’s Hairpin", "seer’s hairpin", "a seer’s hairpin", 0, 0, 1600, "This hairpin is made from silver, the tip twisted into the shape of an eye and fitted with a crystal lens. Both an ornament and a tool, this pin will empower sorcery and ki. \n\nType: Accesory (Hairpin) \nBase value: 800","Ring");
 		}
 		
 		override public function get description():String {
@@ -23,7 +23,7 @@ package classes.Items.Jewelries
 			//Value
 			desc += "\nBase value: " + String(value);
 			//Perk
-			desc += "\nSpecial: Seer’s Insight (+20% spell effect/magical soulspell power multiplier, 20% fatigue/soulforce costs reduction)";
+			desc += "\nSpecial: Seer’s Insight (+20% spell effect/magical soulspell power multiplier, 20% fatigue/ki costs reduction)";
 			return desc;
 		}
 		

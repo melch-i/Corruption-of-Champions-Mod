@@ -25,9 +25,9 @@ package classes.Items.Weapons
 			//Value
 			desc += "\nBase value: " + String(value);
 			//Perk
-			desc += "\nSpecial: Daoist's Focus (+40% Magical Soulskill Power)";
-			desc += "\nSpecial: Body Cultivator's Focus (+40% Physical Soulskill Power)";
-			desc += "\nSpecial: Strife-Warden (enables Beat of War soul skill)";
+			desc += "\nSpecial: Daoist's Focus (+40% Magical Ki Power Power)";
+			desc += "\nSpecial: Body Cultivator's Focus (+40% Physical Ki Power Power)";
+			desc += "\nSpecial: Strife-Warden (enables Beat of War ki power)";
 			return desc;
 		}
 		

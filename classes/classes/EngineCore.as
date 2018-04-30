@@ -26,8 +26,8 @@ public class EngineCore {
         return CoC.instance.player.maxHP();
     }
 
-    public static function maxSoulforce():Number {
-        return CoC.instance.player.maxSoulforce();
+    public static function maxKi():Number {
+        return CoC.instance.player.maxKi();
     }
 
     public static function maxWrath():Number {
@@ -106,26 +106,26 @@ public class EngineCore {
         }
     }
 
-    public static function SoulforceChange(changeNum:Number, display:Boolean):Number {
-        var before:Number = CoC.instance.player.soulforce;
+    public static function KiChange(changeNum:Number, display:Boolean):Number {
+        var before:Number = CoC.instance.player.ki;
         if (changeNum == 0) return 0;
         if (changeNum > 0) {
-            if (CoC.instance.player.soulforce + int(changeNum) > maxSoulforce()) {
+            if (CoC.instance.player.ki + int(changeNum) > maxKi()) {
                 //	if(CoC.instance.player.HP >= maxHP()) {
                 //	if (display) HPChangeNotify(changeNum);
                 //		return CoC.instance.player.HP - before;
                 //	}
                 //	if (display) HPChangeNotify(changeNum);
-                CoC.instance.player.soulforce = maxSoulforce();
+                CoC.instance.player.ki = maxKi();
             }
             else {
                 //	if (display) HPChangeNotify(changeNum);
-                CoC.instance.player.soulforce += int(changeNum);
+                CoC.instance.player.ki += int(changeNum);
                 //	CoC.instance.mainView.statsView.showStatUp( 'hp' );
                 // hpUp.visible = true;
             }
         }
-        //Negative Soulforce
+        //Negative Ki
         /*	else
             {
                 if(CoC.instance.player.HP + changeNum <= 0) {
@@ -142,7 +142,7 @@ public class EngineCore {
             dynStats("lust", 0, "scale", false) //Workaround to showing the arrow.
         */
         statScreenRefresh();
-        return CoC.instance.player.soulforce - before;
+        return CoC.instance.player.ki - before;
     }
 
     public static function ManaChange(changeNum:Number, display:Boolean):Number {
@@ -896,7 +896,7 @@ public class EngineCore {
         CoC.instance.oldStats.oldWrath = 0;
         CoC.instance.oldStats.oldFatigue = 0;
         CoC.instance.oldStats.oldMana = 0;
-        CoC.instance.oldStats.oldSoulforce = 0;
+        CoC.instance.oldStats.oldKi = 0;
         CoC.instance.oldStats.oldHunger = 0;
     }
 
@@ -981,7 +981,7 @@ public class EngineCore {
 
 //	CoC.instance.mainView.statsView.upDownsContainer.visible = true;
 
-        allStats = ["str", "tou", "spe", "inte", "wis", "lib", "sens", "cor", "HP", "lust", "wrath", "fatigue", "mana", "soulforce", "hunger"];
+        allStats = ["str", "tou", "spe", "inte", "wis", "lib", "sens", "cor", "HP", "lust", "wrath", "fatigue", "mana", "ki", "hunger"];
 
         for each(statName in allStats) {
             oldStatName = _oldStatNameFor(statName);

@@ -166,7 +166,7 @@ public class Race {
 	public static const BonusName_maxlust:String      = 'maxlust';
 	public static const BonusName_maxhp:String        = 'maxhp';
 	public static const BonusName_maxfatigue:String   = 'maxfatigue';
-	public static const BonusName_maxsoulforce:String = 'maxsoulforce';
+	public static const BonusName_maxki:String        = 'maxki';
 	public static const BonusName_defense:String      = 'defense';
 	public static const BonusNames:/*String*/Array    = [
 		BonusName_maxstr,
@@ -180,7 +180,7 @@ public class Race {
 		BonusName_maxlust,
 		BonusName_maxhp,
 		BonusName_maxfatigue,
-		BonusName_maxsoulforce,
+		BonusName_maxki,
 		BonusName_defense
 	];
 
@@ -411,10 +411,10 @@ public class Race {
 					}
 			).withBonusTier(6, {
 				'maxfatigue'  : +50,
-				'maxsoulforce': +150
+				'maxki': +150
 			}).withBonusTier(11, {
 				'maxfatigue'  : 50,
-				'maxsoulforce': +150,
+				'maxki': +150,
 				'maxhp'       : +150,
 				'maxtou'      : +25,
 				'maxspe'      : +50,
@@ -2529,13 +2529,13 @@ public class Race {
 					}
 			).withBonusTier(5, {
 				'maxfatigue'  : +20,
-				'maxsoulforce': +50
+				'maxki': +50
 			}).withBonusTier(9, {
 				'maxtou'      : +20,
 				'maxspe'      : +40,
 				'maxint'      : +75,
 				'maxfatigue'  : +20,
-				'maxsoulforce': +50,
+				'maxki': +50,
 				'maxhp'       : +120
 			});
 

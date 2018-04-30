@@ -26,9 +26,9 @@ package classes.Items.WeaponsRange
 			desc += "\nBase value: " + String(value);
 			//Perk
 			desc += "\nSpecial: Accuracy (+5% Accuracy)";
-			desc += "\nSpecial: Daoist's Focus (+40% Magical Soulskill Power)";
-			desc += "\nSpecial: Body Cultivator's Focus (+40% Physical Soulskill Power)";
-			desc += "\nSpecial: Wild-Warden (enables Resonance Volley soul skill)";
+			desc += "\nSpecial: Daoist's Focus (+40% Magical Ki Power Power)";
+			desc += "\nSpecial: Body Cultivator's Focus (+40% Physical Ki Power Power)";
+			desc += "\nSpecial: Wild-Warden (enables Resonance Volley ki power)";
 			return desc;
 		}
 		

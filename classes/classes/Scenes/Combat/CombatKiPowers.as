@@ -13,8 +13,8 @@ import classes.StatusEffects;
 import coc.view.ButtonData;
 import coc.view.ButtonDataList;
 
-public class CombatSoulskills extends BaseCombatContent {
-	public function CombatSoulskills() {
+public class CombatKiPowers extends BaseCombatContent {
+	public function CombatKiPowers() {
 	}
 	//------------
 	// S. SPECIALS
@@ -22,19 +22,19 @@ public class CombatSoulskills extends BaseCombatContent {
 	internal function buildMenu(buttons:ButtonDataList):void {
 		var bd:ButtonData;
 		if (player.hasStatusEffect(StatusEffects.KnowsIceFist)) {
-			bd = buttons.add("Ice Fist", IceFist).hint("A chilling strike that can freeze an opponent solid, leaving it vulnerable to shattering soul art and hindering its movement.  \n\nSoulforce cost: " + 30 * soulskillCost() * soulskillcostmulti());
+			bd = buttons.add("Ice Fist", IceFist).hint("A chilling strike that can freeze an opponent solid, leaving it vulnerable to shattering soul art and hindering its movement.  \n\nKi cost: " + 30 * kiPowerCost() * kiPowercostmulti());
 			if (player.hasPerk(PerkLib.FireAffinity)) {
 				bd.disable("Try as you want, you can’t call on the power of this technique due to your close affinity to fire.");
 			} else if (!player.isFistOrFistWeapon()) {
 				bd.disable("<b>Your current used weapon not allow to use this technique.</b>");
-			} else if (player.soulforce < 30 * soulskillCost() * soulskillcostmulti()) {
-				bd.disable("<b>Your current soulforce is too low.</b>");
+			} else if (player.ki < 30 * kiPowerCost() * kiPowercostmulti()) {
+				bd.disable("<b>Your current ki is too low.</b>");
 			}
 		}
 		if (player.hasStatusEffect(StatusEffects.KnowsFirePunch)) {
-			bd = buttons.add("Fire Punch", FirePunch).hint("Ignite your opponents dealing fire damage and setting them ablaze.  \n\nSoulforce cost: " + 30 * soulskillCost() * soulskillcostmulti());
-			if (player.soulforce < 30 * soulskillCost() * soulskillcostmulti()) {
-				bd.disable("Your current soulforce is too low.");
+			bd = buttons.add("Fire Punch", FirePunch).hint("Ignite your opponents dealing fire damage and setting them ablaze.  \n\nKi cost: " + 30 * kiPowerCost() * kiPowercostmulti());
+			if (player.ki < 30 * kiPowerCost() * kiPowercostmulti()) {
+				bd.disable("Your current ki is too low.");
 			} else if (!player.isFistOrFistWeapon()) {
 				bd.disable("<b>Your current used weapon not allow to use this technique.</b>");
 			} else if (player.hasPerk(PerkLib.ColdAffinity)) {
@@ -42,37 +42,37 @@ public class CombatSoulskills extends BaseCombatContent {
 			}
 		}
 		if (player.hasStatusEffect(StatusEffects.KnowsHurricaneDance)) {
-			bd = buttons.add("Hurricane Dance", HurricaneDance).hint("Take on the aspect of the wind dodging attacks with aerial graces for a time.  \n\nWould go into cooldown after use for: 10 rounds  \n\nSoulforce cost: " + 30 * soulskillCost() * soulskillcostmulti());
+			bd = buttons.add("Hurricane Dance", HurricaneDance).hint("Take on the aspect of the wind dodging attacks with aerial graces for a time.  \n\nWould go into cooldown after use for: 10 rounds  \n\nKi cost: " + 30 * kiPowerCost() * kiPowercostmulti());
 			if (player.hasStatusEffect(StatusEffects.CooldownHurricaneDance)) {
 				bd.disable("You need more time before you can use Hurricane Dance again.");
-			} else if (player.soulforce < 30 * soulskillCost() * soulskillcostmulti()) {
-				bd.disable("Your current soulforce is too low.");
+			} else if (player.ki < 30 * kiPowerCost() * kiPowercostmulti()) {
+				bd.disable("Your current ki is too low.");
 			}
 		}
 		if (player.hasStatusEffect(StatusEffects.KnowsEarthStance)) {
-			buttons.add("Earth Stance", EarthStance).hint("Take on the stability and strength of the earth gaining 30% damage reduction for the next 3 rounds.  \n\nWould go into cooldown after use for: 10 rounds  \n\nSoulforce cost: " + 30 * soulskillCost() * soulskillcostmulti());
+			buttons.add("Earth Stance", EarthStance).hint("Take on the stability and strength of the earth gaining 30% damage reduction for the next 3 rounds.  \n\nWould go into cooldown after use for: 10 rounds  \n\nKi cost: " + 30 * kiPowerCost() * kiPowercostmulti());
 			if (player.hasStatusEffect(StatusEffects.CooldownEarthStance)) {
 				bd.disable("You need more time before you can use Earth Stance again.");
-			} else if (player.soulforce < 30 * soulskillCost() * soulskillcostmulti()) {
-				bd.disable("Your current soulforce is too low.");
+			} else if (player.ki < 30 * kiPowerCost() * kiPowercostmulti()) {
+				bd.disable("Your current ki is too low.");
 			}
 		}
 		if (player.hasStatusEffect(StatusEffects.KnowsPunishingKick)) {
-			buttons.add("Punishing Kick", PunishingKick).hint("A vicious kick that can daze an opponent, reducing its damage for a while.  \n\nWould go into cooldown after use for: 10 rounds  \n\nSoulforce cost: " + 30 * soulskillCost() * soulskillcostmulti());
+			buttons.add("Punishing Kick", PunishingKick).hint("A vicious kick that can daze an opponent, reducing its damage for a while.  \n\nWould go into cooldown after use for: 10 rounds  \n\nKi cost: " + 30 * kiPowerCost() * kiPowercostmulti());
 			if (player.hasStatusEffect(StatusEffects.CooldownPunishingKick)) {
 				bd.disable("You need more time before you can use Punishing Kick again.");
 			} else if (!player.isBiped() || !player.isTaur()) {
 				bd.disable("<b>Your legs not allow to use this technique.</b>");
-			} else if (player.soulforce < 30 * soulskillCost() * soulskillcostmulti()) {
-				bd.disable("Your current soulforce is too low.");
+			} else if (player.ki < 30 * kiPowerCost() * kiPowercostmulti()) {
+				bd.disable("Your current ki is too low.");
 			}
 		}
 		if (player.hasStatusEffect(StatusEffects.KnowsSoulBlast)) {
-			buttons.add("Soul Blast", SoulBlast).hint("Take in your reserve of soul force to unleash a torrent of devastating energy and obliterate your opponent.  \n\nWould go into cooldown after use for: 15 rounds  \n\nSoulforce cost: " + 100 * soulskillCost() * soulskillcostmulti());
+			buttons.add("Soul Blast", SoulBlast).hint("Take in your reserve of soul force to unleash a torrent of devastating energy and obliterate your opponent.  \n\nWould go into cooldown after use for: 15 rounds  \n\nKi cost: " + 100 * kiPowerCost() * kiPowercostmulti());
 			if (player.hasStatusEffect(StatusEffects.CooldownSoulBlast)) {
 				bd.disable("You need more time before you can use Soul Blast again.");
-			} else if (player.soulforce < 100 * soulskillCost() * soulskillcostmulti()) {
-				bd.disable("Your current soulforce is too low.");
+			} else if (player.ki < 100 * kiPowerCost() * kiPowercostmulti()) {
+				bd.disable("Your current ki is too low.");
 			}
 		}
 		if (player.hasStatusEffect(StatusEffects.KnowsOverlimit)) {
@@ -83,56 +83,56 @@ public class CombatSoulskills extends BaseCombatContent {
 			}
 		}
 		if (player.hasStatusEffect(StatusEffects.KnowsTripleThrust)) {
-			bd = buttons.add("Triple Thrust", TripleThrust).hint("Use a little bit of soulforce to infuse your weapon and thrust three times toward your enemy.\n\nSoulforce cost: " + 30 * soulskillCost() * soulskillcostmulti());
-			if (player.soulforce < 30 * soulskillCost() * soulskillcostmulti()) {
-				bd.disable("Your current soulforce is too low.");
+			bd = buttons.add("Triple Thrust", TripleThrust).hint("Use a little bit of ki to infuse your weapon and thrust three times toward your enemy.\n\nKi cost: " + 30 * kiPowerCost() * kiPowercostmulti());
+			if (player.ki < 30 * kiPowerCost() * kiPowercostmulti()) {
+				bd.disable("Your current ki is too low.");
 			}
 		}
 		if (player.hasStatusEffect(StatusEffects.KnowsDracoSweep)) {
-			bd = buttons.add("Draco Sweep", DracoSweep).hint("Use a little bit of soulforce to infuse your weapon and then sweep ahead hitting as many enemies as possible.\n\nSoulforce cost: " + 50 * soulskillCost() * soulskillcostmulti());
-			if (player.soulforce < 50 * soulskillCost() * soulskillcostmulti()) {
-				bd.disable("Your current soulforce is too low.");
+			bd = buttons.add("Draco Sweep", DracoSweep).hint("Use a little bit of ki to infuse your weapon and then sweep ahead hitting as many enemies as possible.\n\nKi cost: " + 50 * kiPowerCost() * kiPowercostmulti());
+			if (player.ki < 50 * kiPowerCost() * kiPowercostmulti()) {
+				bd.disable("Your current ki is too low.");
 			}
 		}
 		if (player.weapon == weapons.WGSWORD) {
-			bd = buttons.add("Beat of War", BeatOfWar).hint("Attack with low-moderate additional soul damage, gain strength equal to 15% your base strength until end of battle. This effect stacks.\n\nSoulforce cost: " + 50 * soulskillCost() * soulskillcostmulti());
-			if (player.soulforce < 50 * soulskillCost() * soulskillcostmulti()) {
-				bd.disable("Your current soulforce is too low.");
+			bd = buttons.add("Beat of War", BeatOfWar).hint("Attack with low-moderate additional soul damage, gain strength equal to 15% your base strength until end of battle. This effect stacks.\n\nKi cost: " + 50 * kiPowerCost() * kiPowercostmulti());
+			if (player.ki < 50 * kiPowerCost() * kiPowercostmulti()) {
+				bd.disable("Your current ki is too low.");
 			}
 		}
 		if (player.weapon == weapons.WDBLADE) {
-			buttons.add("Blade Dance", BladeDance).hint("Attack twice (four times if double attack is active, six times if triple attack is active and etc.).\n\nSoulforce cost: " + 50 * soulskillCost() * (1 + flags[kFLAGS.DOUBLE_ATTACK_STYLE]));
-			if (player.soulforce < 50 * soulskillCost() * (1 + flags[kFLAGS.DOUBLE_ATTACK_STYLE])) {
-				bd.disable("Your current soulforce is too low.");
+			buttons.add("Blade Dance", BladeDance).hint("Attack twice (four times if double attack is active, six times if triple attack is active and etc.).\n\nKi cost: " + 50 * kiPowerCost() * (1 + flags[kFLAGS.DOUBLE_ATTACK_STYLE]));
+			if (player.ki < 50 * kiPowerCost() * (1 + flags[kFLAGS.DOUBLE_ATTACK_STYLE])) {
+				bd.disable("Your current ki is too low.");
 			}
 		}
 		if (player.weapon == weapons.WDSTAFF) {
-			bd = buttons.add("AvatarOfTheSong", AvatarOfTheSong).hint("Doublecast Charged Weapon and Might. Casts blind if charged weapon is already active. Casts Heal if Might is already active.\n\nSoulforce cost: 200");
-			if (player.soulforce < 200) {
-				bd.disable("Your current soulforce is too low.");
+			bd = buttons.add("AvatarOfTheSong", AvatarOfTheSong).hint("Doublecast Charged Weapon and Might. Casts blind if charged weapon is already active. Casts Heal if Might is already active.\n\nKi cost: 200");
+			if (player.ki < 200) {
+				bd.disable("Your current ki is too low.");
 			} else if (player.hasStatusEffect(StatusEffects.OniRampage)) {
 				bd.disable("You are too angry to think straight. Smash your puny opponents first and think later.");
 			}
 		}
 		if (player.weaponRangeName == "Warden’s bow") {
-			bd = buttons.add("ResonanceVolley", ResonanceVolley).hint("Perform a ranged attack where each arrow after the first gets an additional 10% accuracy for every arrow before it.\n\nSoulforce cost: 150");
-			if (player.soulforce < 150) {
-				bd.disable("Your current soulforce is too low.");
+			bd = buttons.add("ResonanceVolley", ResonanceVolley).hint("Perform a ranged attack where each arrow after the first gets an additional 10% accuracy for every arrow before it.\n\nKi cost: 150");
+			if (player.ki < 150) {
+				bd.disable("Your current ki is too low.");
 			}
 		}
 		if (player.hasStatusEffect(StatusEffects.KnowsManyBirds)) {
-			bd = buttons.add("Many Birds", ManyBirds).hint("Project a figment of your soulforce as a crystal traveling at extreme speeds.\n\nSoulforce cost: " + 10 * soulskillCost() * soulskillcostmulti());
-			if (player.soulforce < 10 * soulskillCost() * soulskillcostmulti()) {
-				bd.disable("Your current soulforce is too low.");
+			bd = buttons.add("Many Birds", ManyBirds).hint("Project a figment of your ki as a crystal traveling at extreme speeds.\n\nKi cost: " + 10 * kiPowerCost() * kiPowercostmulti());
+			if (player.ki < 10 * kiPowerCost() * kiPowercostmulti()) {
+				bd.disable("Your current ki is too low.");
 			} else if (player.hasStatusEffect(StatusEffects.OniRampage)) {
 				bd.disable("You are too angry to think straight. Smash your puny opponents first and think later.");
 			}
 			
 		}
 		if (player.hasStatusEffect(StatusEffects.KnowsComet)) {
-			bd = buttons.add("Comet", Comet).hint("Project a shard of soulforce, which will come crashing down upon your opponent as a crystalline comet.\n\nSoulforce cost: " + 60 * soulskillCost() * soulskillcostmulti());
-			if (player.soulforce < 60 * soulskillCost() * soulskillcostmulti()) {
-				bd.disable("Your current soulforce is too low.");
+			bd = buttons.add("Comet", Comet).hint("Project a shard of ki, which will come crashing down upon your opponent as a crystalline comet.\n\nKi cost: " + 60 * kiPowerCost() * kiPowercostmulti());
+			if (player.ki < 60 * kiPowerCost() * kiPowercostmulti()) {
+				bd.disable("Your current ki is too low.");
 			} else if (player.hasStatusEffect(StatusEffects.OniRampage)) {
 				bd.disable("You are too angry to think straight. Smash your puny opponents first and think later.");
 			}
@@ -146,20 +146,20 @@ public class CombatSoulskills extends BaseCombatContent {
 				
 				var unicornScore:Number = player.unicornScore();
 				var alicornScore:Number = player.alicornScore();
-				if (unicornScore >= 5 && alicornScore >= 6) bd.hint("Violet Pupil Transformation is a regenerating oriented soul art that at the cost of constant using fixed amount of soulforce would be healing user.  Usualy it would ends when caster run out of soulforce to substain it or situation that casused it activation is over.\n\nSoulforce cost: <i>100 soulforce</i> regenerating <b>" + (200 + ((unicornScore - 4) * 25) + ((alicornScore - 5) * 25)) + " HP</b> per turn.");
-				else if (unicornScore >= 5) bd.hint("Violet Pupil Transformation is a regenerating oriented soul art that at the cost of constant using fixed amount of soulforce would be healing user.  Usualy it would ends when caster run out of soulforce to substain it or situation that casused it activation is over.\n\nSoulforce cost: <i>100 soulforce</i> regenerating <b>" + (200 + ((unicornScore - 4) * 25)) + " HP</b> per turn.");
-				else bd.hint("Violet Pupil Transformation is a regenerating oriented soul art that at the cost of constant using fixed amount of soulforce would be healing user.  Usualy it would ends when caster run out of soulforce to substain it or situation that casused it activation is over.\n\nSoulforce cost: <i>100 soulforce</i> regenerating <b>200 HP</b> per turn.");
+				if (unicornScore >= 5 && alicornScore >= 6) bd.hint("Violet Pupil Transformation is a regenerating oriented soul art that at the cost of constant using fixed amount of ki would be healing user.  Usualy it would ends when caster run out of ki to substain it or situation that casused it activation is over.\n\nKi cost: <i>100 ki</i> regenerating <b>" + (200 + ((unicornScore - 4) * 25) + ((alicornScore - 5) * 25)) + " HP</b> per turn.");
+				else if (unicornScore >= 5) bd.hint("Violet Pupil Transformation is a regenerating oriented soul art that at the cost of constant using fixed amount of ki would be healing user.  Usualy it would ends when caster run out of ki to substain it or situation that casused it activation is over.\n\nKi cost: <i>100 ki</i> regenerating <b>" + (200 + ((unicornScore - 4) * 25)) + " HP</b> per turn.");
+				else bd.hint("Violet Pupil Transformation is a regenerating oriented soul art that at the cost of constant using fixed amount of ki would be healing user.  Usualy it would ends when caster run out of ki to substain it or situation that casused it activation is over.\n\nKi cost: <i>100 ki</i> regenerating <b>200 HP</b> per turn.");
 				
-				if (player.soulforce < 100) {
-					bd.disable("<b>Your current soulforce is too low.</b>");
+				if (player.ki < 100) {
+					bd.disable("<b>Your current ki is too low.</b>");
 				}
 			}
 		}
 		if (player.hasPerk(PerkLib.Trance)) {
 			if (!player.hasStatusEffect(StatusEffects.TranceTransformation)) {
-				buttons.add("Trance", TranceTransformation).hint("Activate Trance state, whcih enhancing physical and mental abilities at constant cost of soulforce.\n\nCost: 100 soulforce on activation and 50 soulforce per turn)");
-				if (player.soulforce < 100) {
-					bd.disable("Your current soulforce is too low.");
+				buttons.add("Trance", TranceTransformation).hint("Activate Trance state, whcih enhancing physical and mental abilities at constant cost of ki.\n\nCost: 100 ki on activation and 50 ki per turn)");
+				if (player.ki < 100) {
+					bd.disable("Your current ki is too low.");
 				} else if (player.hasStatusEffect(StatusEffects.OniRampage)) {
 					bd.disable("You are too angry to think straight. Smash your puny opponents first and think later.");
 				}
@@ -180,8 +180,8 @@ public class CombatSoulskills extends BaseCombatContent {
 			enemyAI();
 			return;
 		}
-		var soulforcecost:int = 30 * soulskillCost() * soulskillcostmulti();
-		player.soulforce -= soulforcecost;
+		var kicost:int = 30 * kiPowerCost() * kiPowercostmulti();
+		player.ki -= kicost;
 		var damage:Number = player.str;
 		damage += scalingBonusStrength() * 0.5;
 		if (damage < 10) damage = 10;
@@ -191,8 +191,8 @@ public class CombatSoulskills extends BaseCombatContent {
 		else if (player.weaponAttack >= 101 && player.weaponAttack < 151) damage *= (4.75 + ((player.weaponAttack - 100) * 0.03));
 		else if (player.weaponAttack >= 151 && player.weaponAttack < 201) damage *= (6.25 + ((player.weaponAttack - 150) * 0.025));
 		else damage *= (7.5 + ((player.weaponAttack - 200) * 0.02));
-		//soulskill mod effect
-		damage *= combat.soulskillPhysicalMod();
+		//kiPower mod effect
+		damage *= combat.kiPowerPhysicalMod();
 		//other bonuses
 		if (player.hasPerk(PerkLib.HoldWithBothHands) && player.weapon != WeaponLib.FISTS && player.shield == ShieldLib.NOTHING && !isWieldingRangedWeapon()) damage *= 1.2;
 		if (player.hasPerk(PerkLib.ThunderousStrikes) && player.str >= 80) damage *= 1.2;
@@ -251,8 +251,8 @@ public class CombatSoulskills extends BaseCombatContent {
 			enemyAI();
 			return;
 		}
-		var soulforcecost:int = 50 * soulskillCost() * soulskillcostmulti();
-		player.soulforce -= soulforcecost;
+		var kicost:int = 50 * kiPowerCost() * kiPowercostmulti();
+		player.ki -= kicost;
 		var damage:Number = player.str;
 		damage += scalingBonusStrength() * 0.5;
 		if (damage < 10) damage = 10;
@@ -262,8 +262,8 @@ public class CombatSoulskills extends BaseCombatContent {
 		else if (player.weaponAttack >= 101 && player.weaponAttack < 151) damage *= (4.75 + ((player.weaponAttack - 100) * 0.03));
 		else if (player.weaponAttack >= 151 && player.weaponAttack < 201) damage *= (6.25 + ((player.weaponAttack - 150) * 0.025));
 		else damage *= (7.5 + ((player.weaponAttack - 200) * 0.02));
-		//soulskill mod effect
-		damage *= combat.soulskillPhysicalMod();
+		//kiPower mod effect
+		damage *= combat.kiPowerPhysicalMod();
 		//group enemies bonus
 		if (monster.plural == true) damage *= 5;
 		//other bonuses
@@ -308,7 +308,7 @@ public class CombatSoulskills extends BaseCombatContent {
 	public function ManyBirds():void {
 		flags[kFLAGS.LAST_ATTACK_TYPE] = 2;
 		clearOutput();
-		if (silly ()) outputText("You focus your soulforce, projecting it as an aura around you.  As you concentrate, dozens, hundreds, thousands of tiny, ethereal birds shimmer into existence.  As you raise your hand up, more and more appear, until the area around you and " + monster.a + monster.short + "  is drowned in spectral flappy shapes.  ");
+		if (silly ()) outputText("You focus your ki, projecting it as an aura around you.  As you concentrate, dozens, hundreds, thousands of tiny, ethereal birds shimmer into existence.  As you raise your hand up, more and more appear, until the area around you and " + monster.a + monster.short + "  is drowned in spectral flappy shapes.  ");
 		else {
 			outputText("You thrust your hand outwards with deadly intent, and in the blink of an eye a crystal shoots towards " + monster.a + monster.short + ".  ");
 			if ((player.hasStatusEffect(StatusEffects.Blind) && rand(2) == 0) || (monster.spe - player.spe > 0 && int(Math.random() * (((monster.spe - player.spe) / 4) + 80)) > 80)) {
@@ -319,13 +319,13 @@ public class CombatSoulskills extends BaseCombatContent {
 				return;
 			}
 		}
-		var soulforcecost:int = 10 * soulskillCost() * soulskillcostmulti();
-		player.soulforce -= soulforcecost;
+		var kicost:int = 10 * kiPowerCost() * kiPowercostmulti();
+		player.ki -= kicost;
 		var damage:Number = scalingBonusIntelligence();
 		if (damage < 10) damage = 10;
 		damage *= spellMod();
-		//soulskill mod effect
-		damage *= combat.soulskillMagicalMod();
+		//kiPower mod effect
+		damage *= combat.kiPowerMagicalMod();
 		//other bonuses
 		if (player.hasPerk(PerkLib.Heroism) && (monster.hasPerk(PerkLib.EnemyBossType) || monster.hasPerk(PerkLib.EnemyGigantType))) damage *= 2;
 		//Determine if critical hit!
@@ -359,7 +359,7 @@ public class CombatSoulskills extends BaseCombatContent {
 	public function Comet():void {
 		flags[kFLAGS.LAST_ATTACK_TYPE] = 2;
 		clearOutput();
-		outputText("You focus for a moment, projecting a fragment of your soulforce above you.  A moment later, a prismatic comet crashes down on your opponents " + monster.a + monster.short + ".  ");
+		outputText("You focus for a moment, projecting a fragment of your ki above you.  A moment later, a prismatic comet crashes down on your opponents " + monster.a + monster.short + ".  ");
 		if (monster.plural == true) outputText("Shattering into thousands of fragments that shower anything and everything around you.  ");
 		if ((player.hasStatusEffect(StatusEffects.Blind) && rand(2) == 0) || (monster.spe - player.spe > 0 && int(Math.random() * (((monster.spe - player.spe) / 4) + 80)) > 80)) {
 			if (monster.spe - player.spe < 8) outputText(monster.capitalA + monster.short + " narrowly avoids comet fragments!");
@@ -368,13 +368,13 @@ public class CombatSoulskills extends BaseCombatContent {
 			enemyAI();
 			return;
 		}
-		var soulforcecost:int = 60 * soulskillCost() * soulskillcostmulti();
-		player.soulforce -= soulforcecost;
+		var kicost:int = 60 * kiPowerCost() * kiPowercostmulti();
+		player.ki -= kicost;
 		var damage:Number = scalingBonusIntelligence();
 		if (damage < 10) damage = 10;
 		damage *= spellMod();
-		//soulskill mod effect
-		damage *= combat.soulskillMagicalMod();
+		//kiPower mod effect
+		damage *= combat.kiPowerMagicalMod();
 		//group enemies bonus
 		if (monster.plural == true) damage *= 5;
 		//other bonuses
@@ -405,8 +405,8 @@ public class CombatSoulskills extends BaseCombatContent {
 	public function IceFist():void {
 		flags[kFLAGS.LAST_ATTACK_TYPE] = 2;
 		clearOutput();
-		var soulforcecost:int = 30 * soulskillCost() * soulskillcostmulti();
-		player.soulforce -= soulforcecost;
+		var kicost:int = 30 * kiPowerCost() * kiPowercostmulti();
+		player.ki -= kicost;
 		var damage:Number = unarmedAttack();
 		damage += player.str;
 		damage += scalingBonusStrength();
@@ -469,8 +469,8 @@ public class CombatSoulskills extends BaseCombatContent {
 	public function FirePunch():void {
 		flags[kFLAGS.LAST_ATTACK_TYPE] = 2;
 		clearOutput();
-		var soulforcecost:int = 30 * soulskillCost() * soulskillcostmulti();
-		player.soulforce -= soulforcecost;
+		var kicost:int = 30 * kiPowerCost() * kiPowercostmulti();
+		player.ki -= kicost;
 		var damage:Number = unarmedAttack();
 		damage += player.str;
 		damage += scalingBonusStrength();
@@ -504,8 +504,8 @@ public class CombatSoulskills extends BaseCombatContent {
 
 	public function HurricaneDance():void {
 		clearOutput();
-		var soulforcecost:int = 30 * soulskillCost() * soulskillcostmulti();
-		player.soulforce -= soulforcecost;
+		var kicost:int = 30 * kiPowerCost() * kiPowercostmulti();
+		player.ki -= kicost;
 		outputText("Your movement becomes more fluid and precise, increasing your speed and evasion.\n\n");
 		player.createStatusEffect(StatusEffects.HurricaneDance, 5, 0, 0, 0);
 		player.createStatusEffect(StatusEffects.CooldownHurricaneDance, 10, 0, 0, 0);
@@ -514,8 +514,8 @@ public class CombatSoulskills extends BaseCombatContent {
 
 	public function EarthStance():void {
 		clearOutput();
-		var soulforcecost:int = 30 * soulskillCost() * soulskillcostmulti();
-		player.soulforce -= soulforcecost;
+		var kicost:int = 30 * kiPowerCost() * kiPowercostmulti();
+		player.ki -= kicost;
 		outputText("Your body suddenly hardens like rock. You will be way harder to damage for a while.\n\n");
 		player.createStatusEffect(StatusEffects.EarthStance, 3, 0, 0, 0);
 		player.createStatusEffect(StatusEffects.CooldownEarthStance, 10, 0, 0, 0);
@@ -525,8 +525,8 @@ public class CombatSoulskills extends BaseCombatContent {
 	public function PunishingKick():void {
 		flags[kFLAGS.LAST_ATTACK_TYPE] = 4;
 		clearOutput();
-		var soulforcecost:int = 30 * soulskillCost() * soulskillcostmulti();
-		player.soulforce -= soulforcecost;
+		var kicost:int = 30 * kiPowerCost() * kiPowercostmulti();
+		player.ki -= kicost;
 		var damage:Number = unarmedAttack();
 		damage += player.str;
 		damage += scalingBonusStrength();
@@ -562,8 +562,8 @@ public class CombatSoulskills extends BaseCombatContent {
 	public function SoulBlast():void {
 		flags[kFLAGS.LAST_ATTACK_TYPE] = 2;
 		clearOutput();
-		var soulforcecost:int = 100 * soulskillCost() * soulskillcostmulti();
-		player.soulforce -= soulforcecost;
+		var kicost:int = 100 * kiPowerCost() * kiPowercostmulti();
+		player.ki -= kicost;
 		var damage:Number = player.str;
 		damage += scalingBonusStrength() * 1.8;
 		damage += player.inte;
@@ -572,8 +572,8 @@ public class CombatSoulskills extends BaseCombatContent {
 		damage += scalingBonusWisdom() * 1.8;
 		if (damage < 10) damage = 10;
 		damage *= spellMod();
-		//soulskill mod effect
-		damage *= combat.soulskillMagicalMod();
+		//kiPower mod effect
+		damage *= combat.kiPowerMagicalMod();
 		//other bonuses
 		if (player.hasPerk(PerkLib.Heroism) && (monster.hasPerk(PerkLib.EnemyBossType) || monster.hasPerk(PerkLib.EnemyGigantType))) damage *= 2;
 		var crit:Boolean = false;
@@ -591,7 +591,7 @@ public class CombatSoulskills extends BaseCombatContent {
 		damage *= (monster.damagePercent() / 100);
 		damage = doDamage(damage);
 		player.createStatusEffect(StatusEffects.CooldownSoulBlast, 15, 0, 0, 0);
-		outputText("You wave the sign of the gate, tiger and serpent as you unlock all of your soulforce for an attack. " + monster.capitalA + monster.short + " can’t figure out what you are doing until a small sphere of energy explodes at the end of your fist in a massive beam of condensed soulforce. <b><font color=\"#800000\">" + damage + "</font></b> damage!");
+		outputText("You wave the sign of the gate, tiger and serpent as you unlock all of your ki for an attack. " + monster.capitalA + monster.short + " can’t figure out what you are doing until a small sphere of energy explodes at the end of your fist in a massive beam of condensed ki. <b><font color=\"#800000\">" + damage + "</font></b> damage!");
 		if (crit == true) outputText(" <b>*Critical Hit!*</b>");
 		if (!monster.hasPerk(PerkLib.Resolute)) monster.createStatusEffect(StatusEffects.Stunned, 3, 0, 0, 0);
 		else {
@@ -695,8 +695,8 @@ public class CombatSoulskills extends BaseCombatContent {
 	public function BeatOfWar():void {
 		clearOutput();
 		var tempStr:Number = 0;
-		var soulforcecost:int = 50 * soulskillCost() * soulskillcostmulti();
-		player.soulforce -= soulforcecost;
+		var kicost:int = 50 * kiPowerCost() * kiPowercostmulti();
+		player.ki -= kicost;
 		var BeatOfWarBoost:Number = (player.str - player.statusEffectv1(StatusEffects.BeatOfWar)) * 0.15;
 		if (BeatOfWarBoost < 1) BeatOfWarBoost = 1;
 		BeatOfWarBoost = Math.round(BeatOfWarBoost);
@@ -717,7 +717,7 @@ public class CombatSoulskills extends BaseCombatContent {
 	}
 	public function ResonanceVolley():void {
 		clearOutput();
-		outputText("You ready your bow, infusing it with a figment of soulforce. The energy awakens the wood’s connection to the world tree, causing the bow to pulse beneath your fingers.\n\n");
+		outputText("You ready your bow, infusing it with a figment of ki. The energy awakens the wood’s connection to the world tree, causing the bow to pulse beneath your fingers.\n\n");
 		player.createStatusEffect(StatusEffects.ResonanceVolley,0,0,0,0);
 		combat.fireBow();
 	}
@@ -760,7 +760,7 @@ public class CombatSoulskills extends BaseCombatContent {
 		enemyAI();
 	}
 	/*
-	 //Mantis Omni Slash (AoE attack) - przerobić to na soulskilla zużywającego jak inne soulforce z rosnącym kosztem im wyższy lvl postaci ^^ owinno wciąż jakoś być powiązane z posiadaniem mantis arms czy też ulepszonych mantis arms (czyt. versji 2.0 tych ramion z TF bdącego soul evolution of Mantis) ^^
+	 //Mantis Omni Slash (AoE attack) - przerobić to na kiPowera zużywającego jak inne ki z rosnącym kosztem im wyższy lvl postaci ^^ owinno wciąż jakoś być powiązane z posiadaniem mantis arms czy też ulepszonych mantis arms (czyt. versji 2.0 tych ramion z TF bdącego soul evolution of Mantis) ^^
 	 public function mantisOmniSlash():void {
 	 flags[kFLAGS.LAST_ATTACK_TYPE] = 4;
 	 clearOutput();
@@ -889,8 +889,8 @@ public class CombatSoulskills extends BaseCombatContent {
 	 public function tripleThrust():void {
 	 flags[kFLAGS.LAST_ATTACK_TYPE] = 4;//fizyczny atak
 	 clearOutput();
-	 if (player.soulforce < 10 * soulskillCost() * soulskillcostmulti()) {
-	 outputText("<b>Your current soulforce is too low.</b>");
+	 if (player.ki < 10 * kiPowerCost() * kiPowercostmulti()) {
+	 outputText("<b>Your current ki is too low.</b>");
 	 doNext(combatMenu);
 	 return;
 	 }
@@ -902,8 +902,8 @@ public class CombatSoulskills extends BaseCombatContent {
 	 enemyAI();
 	 return;
 	 }
-	 var soulforcecost:int = 10 * soulskillCost() * soulskillcostmulti();
-	 player.soulforce -= soulforcecost;
+	 var kicost:int = 10 * kiPowerCost() * kiPowercostmulti();
+	 player.ki -= kicost;
 	 var damage:Number = player.str;
 	 damage += strenghtscalingbonus() * 0.5;
 	 if (damage < 10) damage = 10;
@@ -921,8 +921,8 @@ public class CombatSoulskills extends BaseCombatContent {
 	 if (player.hasPerk(PerkLib.Heroism) && (monster.hasPerk(PerkLib.EnemyBossType) || monster.hasPerk(PerkLib.EnemyGigantType))) damage *= 2;
 	 //triple strike bonus
 	 damage *= 3;
-	 //soulskill mod effect
-	 damage *= combat.soulskillPhysicalMod();
+	 //kiPower mod effect
+	 damage *= combat.kiPowerPhysicalMod();
 	 //final touches
 	 damage *= (monster.damagePercent() / 100);
 	 damage = doDamage(damage);

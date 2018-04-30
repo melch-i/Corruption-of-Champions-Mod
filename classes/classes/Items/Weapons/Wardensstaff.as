@@ -25,9 +25,9 @@ package classes.Items.Weapons
 			//Value
 			desc += "\nBase value: " + String(value);
 			//Perk
-			desc += "\nSpecial: Wizard's and Daoists's Focus (+60% Spell Power and +40% Magical Soulskill Power)";
-			desc += "\nSpecial: Body Cultivator's Focus (+40% Physical Soulskill Power)";
-			desc += "\nSpecial: Mage-Warden (enables Avatar of the Song soul skill)";
+			desc += "\nSpecial: Wizard's and Daoists's Focus (+60% Spell Power and +40% Magical Ki Power Power)";
+			desc += "\nSpecial: Body Cultivator's Focus (+40% Physical Ki Power Power)";
+			desc += "\nSpecial: Mage-Warden (enables Avatar of the Song ki power)";
 			return desc;
 		}
 		

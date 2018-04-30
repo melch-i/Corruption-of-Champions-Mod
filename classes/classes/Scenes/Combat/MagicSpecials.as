@@ -54,7 +54,7 @@ public class MagicSpecials extends BaseCombatContent {
 		}
 		if (player.hasPerk(PerkLib.NinetailsKitsuneOfBalance) && player.tailType == Tail.FOX && player.tailCount >= 7) {
 			bd = buttons.add("F.FoxFire", fusedFoxFire, "Unleash fused ethereal blue and corrupted purple flame at your opponent for high damage. \n");
-			bd.requireSoulforce(100 * soulskillCost() * soulskillcostmulti());
+			bd.requireKi(100 * kiPowerCost() * kiPowercostmulti());
 			bd.requireFatigue(spellCost(250) * kitsuneskillCost());
 			if(player.hasStatusEffect(StatusEffects.ThroatPunch) || player.hasStatusEffect(StatusEffects.WebSilence)) {
 				bd.disable("You cannot focus to use this ability while you're having so much difficult breathing.");
@@ -63,7 +63,7 @@ public class MagicSpecials extends BaseCombatContent {
 		if (player.hasPerk(PerkLib.CorruptedKitsune) && player.tailType == Tail.FOX && player.tailCount >= 7) {
 			// Corrupt Fox Fire
 			bd = buttons.add("C.FoxFire", corruptedFoxFire,"Unleash a corrupted purple flame at your opponent for high damage. Less effective against corrupted enemies. \n");
-			bd.requireSoulforce(40*soulskillCost() * soulskillcostmulti());
+			bd.requireKi(40*kiPowerCost() * kiPowercostmulti());
 			bd.requireFatigue(spellCost(100) * kitsuneskillCost(),true);
 			if(player.hasStatusEffect(StatusEffects.ThroatPunch) || player.hasStatusEffect(StatusEffects.WebSilence)) {
 				bd.disable("You cannot focus to use this ability while you're having so much difficult breathing.");
@@ -72,15 +72,15 @@ public class MagicSpecials extends BaseCombatContent {
 			bd = buttons.add("Terror", kitsuneTerror,"Instill fear into your opponent with eldritch horrors. The more you cast this in a battle, the lesser effective it becomes.  ");
 			if (player.tailCount == 9 && player.hasPerk(PerkLib.KitsuneThyroidGland)) {
 				bd.toolTipText += "\nWould go into cooldown after use for: " + 3 + " rounds\n";
-				bd.requireSoulforce(20* soulskillCost() * soulskillcostmulti());
+				bd.requireKi(20* kiPowerCost() * kiPowercostmulti());
 				bd.requireFatigue(200);
 			} else if (player.tailCount == 9 || player.hasPerk(PerkLib.KitsuneThyroidGland)) {
 				bd.toolTipText += "\nWould go into cooldown after use for: " + 6 + " rounds\n";
-				bd.requireSoulforce(20* soulskillCost() * soulskillcostmulti());
+				bd.requireKi(20* kiPowerCost() * kiPowercostmulti());
 				bd.requireFatigue(100);
 			} else {
 				bd.toolTipText += "\nWould go into cooldown after use for: " + 9 + " rounds\n";
-				bd.requireSoulforce(20* soulskillCost() * soulskillcostmulti());
+				bd.requireKi(20* kiPowerCost() * kiPowercostmulti());
 				bd.requireFatigue(50);
 			}
 			if (player.hasStatusEffect(StatusEffects.CooldownTerror)) {
@@ -93,7 +93,7 @@ public class MagicSpecials extends BaseCombatContent {
 			// Pure Fox Fire
 			bd = buttons.add("P.FoxFire", pureFoxFire, "Unleash an ethereal blue flame at your opponent for high damage. More effective against corrupted enemies. \n");
 			bd.requireFatigue(spellCost(100),true);
-			bd.requireSoulforce(40 * soulskillCost() * soulskillcostmulti());
+			bd.requireKi(40 * kiPowerCost() * kiPowercostmulti());
 			if(player.hasStatusEffect(StatusEffects.ThroatPunch) || player.hasStatusEffect(StatusEffects.WebSilence)) {
 				bd.disable("You cannot focus to use this ability while you're having so much difficult breathing.");
 			}
@@ -101,15 +101,15 @@ public class MagicSpecials extends BaseCombatContent {
 			bd = buttons.add("Illusion",kitsuneIllusion,"Warp the reality around your opponent to temporary boost your evasion for 3 rounds and arouse target slightly.");
 			if (player.tailCount == 9 && player.hasPerk(PerkLib.KitsuneThyroidGland)) {
 				bd.toolTipText += "\nWould go into cooldown after use for: " + 3 + " rounds\n";
-				bd.requireSoulforce(20* soulskillCost() * soulskillcostmulti());
+				bd.requireKi(20* kiPowerCost() * kiPowercostmulti());
 				bd.requireFatigue(200);
 			} else if (player.tailCount == 9 || player.hasPerk(PerkLib.KitsuneThyroidGland)) {
 				bd.toolTipText += "\nWould go into cooldown after use for: " + 6 + " rounds\n";
-				bd.requireSoulforce(20* soulskillCost() * soulskillcostmulti());
+				bd.requireKi(20* kiPowerCost() * kiPowercostmulti());
 				bd.requireFatigue(100);
 			} else {
 				bd.toolTipText += "\nWould go into cooldown after use for: " + 9 + " rounds\n";
-				bd.requireSoulforce(20* soulskillCost() * soulskillcostmulti());
+				bd.requireKi(20* kiPowerCost() * kiPowercostmulti());
 				bd.requireFatigue(50);
 			}
 			if (player.hasStatusEffect(StatusEffects.CooldownIllusion)) {
@@ -119,7 +119,7 @@ public class MagicSpecials extends BaseCombatContent {
 			}
 		}
 	/*	if (player.tailType == CAT && player.tailCount == 2) {
-			ui.addMagicButton("FoxFire", foxFire).hint("Unleash a fox flame at your opponent for high damage. \n\nFatigue Cost: " + spellCost(60) + "\nSoulforce cost: " + 30 * soulskillCost() * soulskillcostmulti() + "");
+			ui.addMagicButton("FoxFire", foxFire).hint("Unleash a fox flame at your opponent for high damage. \n\nFatigue Cost: " + spellCost(60) + "\nKi cost: " + 30 * kiPowerCost() * kiPowercostmulti() + "");
 		}	//przerobic potem na ghost fire dla nekomata race special also combining fatigue and soulfroce
 	*/
 		if (player.hasPerk(PerkLib.DarkCharm)) {
@@ -1845,7 +1845,7 @@ public class MagicSpecials extends BaseCombatContent {
 	 public function foxFire():void {
 	 flags[kFLAGS.LAST_ATTACK_TYPE] = 2;
 	 clearOutput();
-	 if ((!player.hasPerk(PerkLib.BloodMage) && player.fatigue + spellCost(60) > player.maxFatigue()) || (player.soulforce < 30 * soulskillCost() * soulskillcostmulti())) {
+	 if ((!player.hasPerk(PerkLib.BloodMage) && player.fatigue + spellCost(60) > player.maxFatigue()) || (player.ki < 30 * kiPowerCost() * kiPowercostmulti())) {
 	 outputText("You lacking enough magical energies to use this ability.", true);
 	 doNext(msMenu);
 	 return;
@@ -1855,8 +1855,8 @@ public class MagicSpecials extends BaseCombatContent {
 	 doNext(msMenu);
 	 return;
 	 }
-	 var soulforcecost:int = 30 * soulskillCost() * soulskillcostmulti();
-	 player.soulforce -= soulforcecost;
+	 var kicost:int = 30 * kiPowerCost() * kiPowercostmulti();
+	 player.ki -= kicost;
 	 foxFire2();
 	 }
 	 public function foxFire2():void {
@@ -1968,8 +1968,8 @@ public class MagicSpecials extends BaseCombatContent {
 	public function corruptedFoxFire():void {
 		flags[kFLAGS.LAST_ATTACK_TYPE] = 2;
 		clearOutput();
-		var soulforcecost:int = 40 * soulskillCost() * soulskillcostmulti();
-		player.soulforce -= soulforcecost;
+		var kicost:int = 40 * kiPowerCost() * kiPowercostmulti();
+		player.ki -= kicost;
 		corruptedFoxFire2();
 	}
 	public function corruptedFoxFire2():void {
@@ -1994,7 +1994,7 @@ public class MagicSpecials extends BaseCombatContent {
 		if (player.hasPerk(PerkLib.CorruptedNinetails) && player.tailType == Tail.FOX && player.tailCount == 9) damage *= 0.5;
 		var corruptedfoxfiredmgmulti:Number = 1;
 		corruptedfoxfiredmgmulti += spellMod() - 1;
-		corruptedfoxfiredmgmulti += soulskillMod() - 1;
+		corruptedfoxfiredmgmulti += kiPowerMod() - 1;
 		if (player.shieldName == "spirit focus") corruptedfoxfiredmgmulti += .2;
 		if (player.armorName == "white kimono" || player.armorName == "red kimono" || player.armorName == "blue kimono" || player.armorName == "purple kimono") corruptedfoxfiredmgmulti += .2;
 		if (player.jewelryName == "fox hairpin") corruptedfoxfiredmgmulti += .2;
@@ -2026,7 +2026,7 @@ public class MagicSpecials extends BaseCombatContent {
 		if (monster.lustVuln == 0) {
 			outputText("  It has no effect!  Your foe clearly does not experience lust in the same way as you.");
 		}
-		var lustDmg:Number = monster.lustVuln * ((player.inte / 10 + player.wis / 10) * ((spellMod() + soulskillMod()) / 2) + rand(monster.lib + monster.cor) / 5);
+		var lustDmg:Number = monster.lustVuln * ((player.inte / 10 + player.wis / 10) * ((spellMod() + kiPowerMod()) / 2) + rand(monster.lib + monster.cor) / 5);
 		if (monster.lust < (monster.maxLust() * 0.3)) outputText(monster.capitalA + monster.short + " squirms as the magic affects " + monster.pronoun2 + ".  ");
 		if (monster.lust >= (monster.maxLust() * 0.3) && monster.lust < (monster.maxLust() * 0.6)) {
 			if(monster.plural) outputText(monster.capitalA + monster.short + " stagger, suddenly weak and having trouble focusing on staying upright.  ");
@@ -2084,8 +2084,8 @@ public class MagicSpecials extends BaseCombatContent {
 	public function fusedFoxFire():void {
 		flags[kFLAGS.LAST_ATTACK_TYPE] = 2;
 		clearOutput();
-		var soulforcecost:int = 100 * soulskillCost() * soulskillcostmulti();
-		player.soulforce -= soulforcecost;
+		var kicost:int = 100 * kiPowerCost() * kiPowercostmulti();
+		player.ki -= kicost;
 		fusedFoxFire2();
 	}
 	public function fusedFoxFire2():void {
@@ -2114,7 +2114,7 @@ public class MagicSpecials extends BaseCombatContent {
 		if (player.tailType == Tail.FOX && player.tailCount == 9) damage *= 2;
 		var fusedfoxfiredmgmulti:Number = 1;
 		fusedfoxfiredmgmulti += spellMod() - 1;
-		fusedfoxfiredmgmulti += soulskillMod() - 1;
+		fusedfoxfiredmgmulti += kiPowerMod() - 1;
 		if (player.shieldName == "spirit focus") fusedfoxfiredmgmulti += .2;
 		if (player.armorName == "white kimono" || player.armorName == "red kimono" || player.armorName == "blue kimono" || player.armorName == "purple kimono") fusedfoxfiredmgmulti += .2;
 		if (player.jewelryName == "fox hairpin") fusedfoxfiredmgmulti += .2;
@@ -2140,7 +2140,7 @@ public class MagicSpecials extends BaseCombatContent {
 		if (monster.lustVuln == 0) {
 			outputText("  It has no effect!  Your foe clearly does not experience lust in the same way as you.");
 		}
-		var lustDmg:Number = monster.lustVuln * ((player.inte / 10 + player.wis / 10) * ((spellMod() + soulskillMod()) / 2) + rand(monster.lib + monster.cor) / 5);
+		var lustDmg:Number = monster.lustVuln * ((player.inte / 10 + player.wis / 10) * ((spellMod() + kiPowerMod()) / 2) + rand(monster.lib + monster.cor) / 5);
 		if (monster.lust < (monster.maxLust() * 0.3)) outputText(monster.capitalA + monster.short + " squirms as the magic affects " + monster.pronoun2 + ".  ");
 		if (monster.lust >= (monster.maxLust() * 0.3) && monster.lust < (monster.maxLust() * 0.6)) {
 			if(monster.plural) outputText(monster.capitalA + monster.short + " stagger, suddenly weak and having trouble focusing on staying upright.  ");
@@ -2197,8 +2197,8 @@ public class MagicSpecials extends BaseCombatContent {
 	public function pureFoxFire():void {
 		flags[kFLAGS.LAST_ATTACK_TYPE] = 2;
 		clearOutput();
-		var soulforcecost:int = 40 * soulskillCost() * soulskillcostmulti();
-		player.soulforce -= soulforcecost;
+		var kicost:int = 40 * kiPowerCost() * kiPowercostmulti();
+		player.ki -= kicost;
 		pureFoxFire2();
 	}
 	public function pureFoxFire2():void {
@@ -2227,7 +2227,7 @@ public class MagicSpecials extends BaseCombatContent {
 		if (player.hasPerk(PerkLib.EnlightenedNinetails) && player.tailType == Tail.FOX && player.tailCount == 9) damage *= 2;
 		var purefoxfiredmgmulti:Number = 1;
 		purefoxfiredmgmulti += spellMod() - 1;
-		purefoxfiredmgmulti += soulskillMod() - 1;
+		purefoxfiredmgmulti += kiPowerMod() - 1;
 		if (player.shieldName == "spirit focus") purefoxfiredmgmulti += .2;
 		if (player.armorName == "white kimono" || player.armorName == "red kimono" || player.armorName == "blue kimono" || player.armorName == "purple kimono") purefoxfiredmgmulti += .2;
 		if (player.jewelryName == "fox hairpin") purefoxfiredmgmulti += .2;
@@ -2258,7 +2258,7 @@ public class MagicSpecials extends BaseCombatContent {
 		if (monster.lustVuln == 0) {
 			outputText("  It has no effect!  Your foe clearly does not experience lust in the same way as you.");
 		}
-		var lustDmg:Number = monster.lustVuln * ((player.inte / 10 + player.wis / 10) * ((spellMod() + soulskillMod()) / 2) + rand(monster.lib + monster.cor) / 5);
+		var lustDmg:Number = monster.lustVuln * ((player.inte / 10 + player.wis / 10) * ((spellMod() + kiPowerMod()) / 2) + rand(monster.lib + monster.cor) / 5);
 		if (monster.lust < (monster.maxLust() * 0.3)) outputText(monster.capitalA + monster.short + " squirms as the magic affects " + monster.pronoun2 + ".  ");
 		if (monster.lust >= (monster.maxLust() * 0.3) && monster.lust < (monster.maxLust() * 0.6)) {
 			if(monster.plural) outputText(monster.capitalA + monster.short + " stagger, suddenly weak and having trouble focusing on staying upright.  ");
@@ -2336,8 +2336,8 @@ public class MagicSpecials extends BaseCombatContent {
 			enemyAI();
 			return;
 		}
-		var soulforcecost:int = 20 * soulskillCost() * soulskillcostmulti();
-		player.soulforce -= soulforcecost;
+		var kicost:int = 20 * kiPowerCost() * kiPowercostmulti();
+		player.ki -= kicost;
 		kitsuneTerror2();
 	}
 	public function kitsuneTerror2():void {
@@ -2369,8 +2369,8 @@ public class MagicSpecials extends BaseCombatContent {
 			enemyAI();
 			return;
 		}
-		var soulforcecost:int = 20 * soulskillCost() * soulskillcostmulti();
-		player.soulforce -= soulforcecost;
+		var kicost:int = 20 * kiPowerCost() * kiPowercostmulti();
+		player.ki -= kicost;
 		kitsuneIllusion2();
 	}
 	public function kitsuneIllusion2():void {

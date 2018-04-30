@@ -27,33 +27,33 @@ package classes.Scenes.Places.TelAdre
 				return introText+desc+costText+itype.value+endText;
 			}
 			addButton(0, "LGSFRecovPill", buyItem,consumables.LG_SFRP,
-					sayLine(consumables.LG_SFRP,"It's quite useful item for all soul cultivators, this little pill can help you restore some of used up soulforce.")).hint("Low-grade Soulforce Recovery Pill.");
+					sayLine(consumables.LG_SFRP,"It's quite useful item for all soul cultivators, this little pill can help you restore some of used up ki.")).hint("Low-grade Ki Recovery Pill.");
 			addButton(1, "Bag of Cosmos", buyItem,consumables.BAGOCOS,
 					sayLine(consumables.BAGOCOS,"It's quintessential item for all soul cultivators, this little bag can hold much more things inside that it own size.")).hint("Bag of Cosmos.");
 			addButton(2, "Triple Thrust", buyItem,consumables.TRITMAN,
 					sayLine(consumables.TRITMAN,"It's manual for Triple Thrust, this simple technique allows to unleash three thrusts that will became stronger and stronger as you train your body and soul."),
-					"\n\nWherever you gonna try to go deeper into all that 'soulforce' stuff or not at least you now got something to begin.  Although seems even name of the manual mentioning thrusting seems like it could have been influenced by this realm nature...or it's just a coincidence.  "
+					"\n\nWherever you gonna try to go deeper into all that 'ki' stuff or not at least you now got something to begin.  Although seems even name of the manual mentioning thrusting seems like it could have been influenced by this realm nature...or it's just a coincidence.  "
 			).hint("Triple Thrust Manual.");
 			addButton(3, "Draco Sweep", buyItem,consumables.DRASMAN,
 					sayLine(consumables.DRASMAN,"It's manual for Draco Sweep, this simple technique allows to unleash attack that would strike in wide arc before you.  Perfect when you fight group of enemies and it also becoming more powerful as long you would train your body and soul."),
-					"\n\nWherever you gonna try to go deeper into all that 'soulforce' stuff or not at least you now got something to use when figthing group of enemies.  Although you not meet often so far more than singular enemy at once you're sure that deeper in this forsaken realm you will face groups or maybe even hordes of demons at once and would need something to deal with them.  "
+					"\n\nWherever you gonna try to go deeper into all that 'ki' stuff or not at least you now got something to use when figthing group of enemies.  Although you not meet often so far more than singular enemy at once you're sure that deeper in this forsaken realm you will face groups or maybe even hordes of demons at once and would need something to deal with them.  "
 			).hint("Draco Sweep Manual.");
 			addButton(4, "Many Birds", buyItem,consumables.MABIMAN,
-					sayLine(consumables.MABIMAN,"It's manual for Many Birds, this simple technique allows to project a figment of your soulforce as a crystal traveling at extreme speeds that will became stronger and stronger as you train your body and soul."),
-					"\n\nWherever you gonna try to go deeper into all that 'soulforce' stuff or not at least you now got something to begin.  Although seems name of the manual is odd but it makes you remember something...but what and from where you not certain.  "
+					sayLine(consumables.MABIMAN,"It's manual for Many Birds, this simple technique allows to project a figment of your ki as a crystal traveling at extreme speeds that will became stronger and stronger as you train your body and soul."),
+					"\n\nWherever you gonna try to go deeper into all that 'ki' stuff or not at least you now got something to begin.  Although seems name of the manual is odd but it makes you remember something...but what and from where you not certain.  "
 			).hint("Many Birds Manual.");
 			addButton(5, "MGSFRecovPill", buyItem,consumables.MG_SFRP,
-					sayLine(consumables.MG_SFRP,"It's quite useful item for all cultivators at Soul Personage or above stage, this small pill can help you restore some of used up soulforce and it would be much more than the low-grade one.")).hint("Mid-grade Soulforce Recovery Pill.");
+					sayLine(consumables.MG_SFRP,"It's quite useful item for all cultivators at Soul Personage or above stage, this small pill can help you restore some of used up ki and it would be much more than the low-grade one.")).hint("Mid-grade Ki Recovery Pill.");
 			addButton(6, "Comet", buyItem,consumables.COMETMA,
-					sayLine(consumables.COMETMA,"It's manual for Comet, this technique allows to project a shard of soulforce, which will come crashing down upon your opponent as a crystalline comet.  Perfect when you fight group of enemies and it also becoming more powerful as long you would train your body and soul."),
-					"\n\nWherever you gonna try to go deeper into all that 'soulforce' stuff or not at least you now got something to use when figthing group of enemies.  Although you not meet often so far more than singular enemy at once you're sure that deeper in this forsaken realm you will face groups or maybe even hordes of demons at once and would need something to deal with them.  "
+					sayLine(consumables.COMETMA,"It's manual for Comet, this technique allows to project a shard of ki, which will come crashing down upon your opponent as a crystalline comet.  Perfect when you fight group of enemies and it also becoming more powerful as long you would train your body and soul."),
+					"\n\nWherever you gonna try to go deeper into all that 'ki' stuff or not at least you now got something to use when figthing group of enemies.  Although you not meet often so far more than singular enemy at once you're sure that deeper in this forsaken realm you will face groups or maybe even hordes of demons at once and would need something to deal with them.  "
 			).hint("Comet Manual.");
 			addButton(7, "V P Trans", buyItem,consumables.VPTRMAN,
-					sayLine(consumables.VPTRMAN,"It's manual for Violet Pupil Transformation, this advanced technique allows to channel soulforce into regenerative power that would fill whole body allowing recovering even from a brink of a death.  It only flaw is that it constantly drain cultivator soulforce so you could end in a tight situation without enough soulforce to use other skills."),
-					"\n\nSeems like it's similar to healing spell soul skill and on top of that the one which isn't one time used one time healed but with enough soulforce could be kept active for very long period of time.  It should give you another edge during your crusade against demons.  Additionaly ability to healing from brink of death could prove to be usefull in future fights.  "
+					sayLine(consumables.VPTRMAN,"It's manual for Violet Pupil Transformation, this advanced technique allows to channel ki into regenerative power that would fill whole body allowing recovering even from a brink of a death.  It only flaw is that it constantly drain cultivator ki so you could end in a tight situation without enough ki to use other skills."),
+					"\n\nSeems like it's similar to healing spell ki power and on top of that the one which isn't one time used one time healed but with enough ki could be kept active for very long period of time.  It should give you another edge during your crusade against demons.  Additionaly ability to healing from brink of death could prove to be usefull in future fights.  "
 			).hint("Violet Pupil Transformation Manual.");
 			addButton(10, "HGSFRecovPill", buyItem,consumables.HG_SFRP,
-					sayLine(consumables.HG_SFRP,"It's quite useful item for all cultivators at Soul Personage or above stage, this small pill can help you restore some of used up soulforce and it would be much more than the low-grade one.")).hint("High-grade Soulforce Recovery Pill.");
+					sayLine(consumables.HG_SFRP,"It's quite useful item for all cultivators at Soul Personage or above stage, this small pill can help you restore some of used up ki and it would be much more than the low-grade one.")).hint("High-grade Ki Recovery Pill.");
 			addButton(13, "IncenOfInsig", buyItem,consumables.INCOINS,
 					sayLine(consumables.INCOINS,"These incenses are quite special. They will grant you visions if only for a moment while meditating. This should help you find the wisdom and insight you need.")).hint("Incense of Insight.");
 			addButton(14, "Back", telAdre.telAdreMenu);

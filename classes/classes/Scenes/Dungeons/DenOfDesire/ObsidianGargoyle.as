@@ -58,13 +58,13 @@ public class ObsidianGargoyle extends AbstractGargoyle
 						devour += 200;
 						player.mana -= 200;
 					}
-					if (player.soulforce < 200) {
-						devour += player.soulforce;
-						player.soulforce = 0;
+					if (player.ki < 200) {
+						devour += player.ki;
+						player.ki = 0;
 					}
 					else {
 						devour += 200;
-						player.soulforce -= 200;
+						player.ki -= 200;
 					}
 					devour *= 2.5;
 					HP += devour;

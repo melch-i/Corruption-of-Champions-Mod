@@ -897,11 +897,11 @@ private function growLethiciteDefenseGuessNot():void {
 		addButton(1, "Vouivre Oil", alchemyBuy,alchemyCosts[1]).hint("Ask to brew a special potion that could aid in becoming a vouivre. \n\nCost: 15 Gems \nNeeds 1 Snake Oil and 1 Drake Heart.");
 		addButton(2, "Couatl Oil", alchemyBuy,alchemyCosts[2]).hint("Ask to brew a special potion that could aid in becoming a couatl. \n\nCost: 10 Gems \nNeeds 1 Snake Oil and 1 Golden Seed.");
 		addButton(3, "Centaurinum", alchemyBuy,alchemyCosts[3]).hint("Ask to brew a special potion that could aid in becoming a centaur. \n\nCost: 10 Gems \nNeeds 1 Equinum and 1 Minotaur Blood.");
-		addButton(4, "Unicornum", alchemyBuy,alchemyCosts[4]).hint("Ask to brew a special potion that could aid in becoming a unicorn. \n\nCost: 20 Gems \nNeeds 1 Equinum and 4 Low-grade Soulforce Recovery Pills.");//1st stage Soul evolution race TF
+		addButton(4, "Unicornum", alchemyBuy,alchemyCosts[4]).hint("Ask to brew a special potion that could aid in becoming a unicorn. \n\nCost: 20 Gems \nNeeds 1 Equinum and 4 Low-grade Ki Recovery Pills.");//1st stage Soul evolution race TF
 
 		addButton(6, "Nocello Liq", alchemyBuy,alchemyCosts[5]).hint("Ask to brew a special potion that could aid in becoming a phoenix. \n\nCost: 10 Gems \nNeeds 1 Golden Seed and 1 Salamander Firewater.");//Hybryd race TF
 
-		addButton(10, "Alicornum", alchemyBuy,alchemyCosts[6]).hint("Ask to brew a special potion that could aid in becoming a unicorn. \n\nCost: 50 Gems \nNeeds 1 Unicornum and 4 Mid-grade Soulforce Recovery Pills.");//2nd stage Soul evolution race TF
+		addButton(10, "Alicornum", alchemyBuy,alchemyCosts[6]).hint("Ask to brew a special potion that could aid in becoming a unicorn. \n\nCost: 50 Gems \nNeeds 1 Unicornum and 4 Mid-grade Ki Recovery Pills.");//2nd stage Soul evolution race TF
 		addButton(11, "Scylla Ink", MakingScyllaInkPotion).hint("Ask to brew a special potion based on Black Ink.");
 
 		addButton(13, "InferWine", alchemyBuy,alchemyCosts[9]).hint("Aske to brew a special potion that could aid in becoming a infernal goat/devil. \n\nCost: 480 Gems \nNeeds 1 Satyr Wine, 1 Succubi milk and 1 Incubi draft.");
