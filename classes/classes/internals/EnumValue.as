@@ -1,4 +1,24 @@
 package classes.internals {
+/**
+ * Usage:
+ *
+ * public static var Types:/!*EnumValue*!/Array = [];
+ * public static var FOO:int = EnumValue.add(Types, 0, 'FOO', {param:"something"});
+ * public static var BAR:int = EnumValue.add(Types, 1, 'BAR', {param:"anything"});
+ *
+ * This, however, causes error "%s is not a compile-time constant" when you use it
+ * as a function default value, for example.
+ *
+ * Solution A:
+ *
+ * public static var BAZ:int = 2;
+ * EnumValue.add(Types, BAZ, 'BAZ', {param:"everything"});
+ *
+ * Solution B:
+ *
+ * //noinspection CommaExpressionJS
+ * public static var BAZ:int = (EnumValue.add(Types, 2, 'BAZ', {param:"everything"}), 2);
+ */
 public dynamic class EnumValue {
 	public var list:/*EnumValue*/Array;
 	public var value:int;

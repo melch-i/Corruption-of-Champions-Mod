@@ -69,14 +69,24 @@ package classes.internals
 			return r;
 		}
 		/**
-		 * @return src.map(el => mapping.map(prop => el[prop]) )
+		 * @return src.filter(el=>el).map( el => mapping.map(prop => el[prop]) )
+		 * if keepNulls = true: src.map( el => el ? mapping.map(prop => el[prop]) : null )
 		 */
-		public static function mapToArrays(src:Array,mapping:Array):Array {
-			return src.map(function(el:*,i:int,arr:Array):* {
-				return mapping.map(function(prop:String,i2:int,arr2:Array):*{
-					return el[prop];
-				})
-			})
+		public static function mapToArrays(src:Array,mapping:/*String*/Array,keepNulls:Boolean=false):Array {
+			var result:/*Array*/Array = [];
+			for (var i:int=0; i<src.length; i++) {
+				var el:* = src[i];
+				if (el) {
+					var mapped:Array = [];
+					for each (var prop:String in mapping) {
+						mapped.push(el[prop]);
+					}
+					result.push(mapped);
+				} else if (keepNulls) {
+					result.push(null);
+				}
+			}
+			return result;
 		}
 		/**
 		 * Deleting obj[key] with default.
