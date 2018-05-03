@@ -13,6 +13,7 @@ public class Anemone extends Monster
 		private static const STAT_DOWN_FLAT:int = 4;
 		private static const STAT_DOWN_MULT:int = 4;
 
+		private var venomMod:int = 1;
 		override public function eAttack():void
 		{
 			outputText("Giggling playfully, the anemone launches several tentacles at you.  Most are aimed for your crotch, but a few attempt to caress your chest and face.\n");
@@ -29,7 +30,7 @@ public class Anemone extends Monster
 		public function applyVenom(amt:Number = 1):void
 		{
 			var ave:AnemoneVenomDebuff = player.createOrFindStatusEffect(StatusEffects.AnemoneVenom) as AnemoneVenomDebuff;
-			ave.applyEffect(amt);
+			ave.applyEffect(amt * venomMod);
 		}
 
 
@@ -53,12 +54,12 @@ public class Anemone extends Monster
 			outputText("You jink and dodge valiantly but the tentacles are too numerous and coming from too many directions.  A few get past your guard and caress your skin, leaving a tingling, warm sensation that arouses you further.");
 		}
 
-		public function Anemone()
+		public function Anemone(sea:Boolean = false)
 		{
 			this.a = "the ";
-			this.short = "anemone";
+			this.short = sea? "sea anemone" : "anemone";
 			this.imageName = "anemone";
-			this.long = "The anemone is a blue androgyne humanoid of medium height and slender build, with colorful tentacles sprouting on her head where hair would otherwise be.  Her feminine face contains two eyes of solid color, lighter than her skin.  Two feathery gills sprout from the middle of her chest, along the line of her spine and below her collarbone, and drape over her pair of small B-cup breasts.  Though you wouldn't describe her curves as generous, she sways her girly hips back and forth in a way that contrasts them to her slim waist quite attractively.  Protruding from her groin is a blue shaft with its head flanged by diminutive tentacles, and below that is a dark-blue pussy ringed by small feelers.  Further down are a pair of legs ending in flat sticky feet; proof of her aquatic heritage.  She smiles broadly and innocently as she regards you from her deep eyes.";
+			this.long = "The "+short+" is a blue androgyne humanoid of medium height and slender build, with colorful tentacles sprouting on her head where hair would otherwise be.  Her feminine face contains two eyes of solid color, lighter than her skin.  Two feathery gills sprout from the middle of her chest, along the line of her spine and below her collarbone, and drape over her pair of small B-cup breasts.  Though you wouldn't describe her curves as generous, she sways her girly hips back and forth in a way that contrasts them to her slim waist quite attractively.  Protruding from her groin is a blue shaft with its head flanged by diminutive tentacles, and below that is a dark-blue pussy ringed by small feelers.  Further down are a pair of legs ending in flat sticky feet; proof of her aquatic heritage.  She smiles broadly and innocently as she regards you from her deep eyes.";
 			// this.plural = false;
 			this.createCock(7,1,CockTypesEnum.ANEMONE);
 			this.createVagina(false, VaginaClass.WETNESS_SLICK, VaginaClass.LOOSENESS_LOOSE);
@@ -78,18 +79,30 @@ public class Anemone extends Monster
 			initWisLibSensCor(50, 55, 35, 50);
 			this.weaponName = "tendrils";
 			this.weaponVerb="tentacle";
-			this.weaponAttack = 16;
+			this.weaponAttack = sea? 46 : 16;
 			this.armorName = "clammy skin";
-			this.armorDef = 10;
-			this.bonusHP = 120;
+			this.armorDef = sea? 30 : 10;
+			this.bonusHP = sea? 500 : 120;
 			this.bonusLust = 20;
 			this.lust = 30;
-			this.lustVuln = .9;
+			this.lustVuln = sea? 0.8 : 0.9;
 			this.temperment = TEMPERMENT_RANDOM_GRAPPLES;
-			this.level = 12;
-			this.gems = rand(20) + 20;
+			this.level = sea? 50 : 12;
+			this.gems = rand(sea? 50 : 20) + (sea? 70:20);
 			this.drop = new WeightedDrop(consumables.DRYTENT, 1);
+			if(sea){venomMod = 3;}
+			this.onPcRunAttempt = onPCRun;
 			checkMonster();
+		}
+
+		private function onPCRun():void {
+			if(player.lust < (player.maxLust() * 0.6) || SceneLib.combat.runCheckEscaped()) {
+				SceneLib.combat.runSucceed("Marshalling your thoughts, you frown at the strange girl and turn to march up the beach.  After twenty paces inshore you turn back to look at her again.  The anemone is clearly crestfallen by your departure, pouting heavily as she sinks beneath the water's surface.");
+				return;
+			}
+			outputText("You try to shake off the fog and run but the anemone slinks over to you and her tentacles wrap around your waist.  <i>\"Stay?\"</i> she asks, pressing her small breasts into you as a tentacle slides inside your [armor] and down to your nethers.  The combined stimulation of the rubbing and the tingling venom causes your knees to buckle, hampering your resolve and ending your escape attempt.");
+			applyVenom(4+player.sens/20);
+			SceneLib.combat.combatRoundOver();
 		}
 		
 	}

@@ -161,6 +161,24 @@ public class Ember extends Monster
 			SceneLib.emberScene.loseToEmberSpar();
 		}
 
+		private function onPCRun():void {
+			var text:String = "You take off";
+			text += player.canFly()? ", flapping as hard as you can" : " running";
+			text += ", and Ember, caught up in the moment, gives chase. ";
+
+			//GET AWAY
+			if(SceneLib.combat.runCheckEscaped() || (player.hasPerk(PerkLib.Runner) && rand(100) < 50)) {
+				player.hasPerk(PerkLib.Runner) ? text += "Using your skill at running, y" : text += "Y";
+				text += "ou easily outpace the dragon, who begins hurling imprecations at you.  \"What the hell, [name], you weenie; are you so scared that you can't even stick out your punishment?\"";
+				text += "\n\nNot to be outdone, you call back, \"Sucks to you!  If even the mighty Last Ember of Hope can't catch me, why do I need to train?  Later, little bird!\"";
+				SceneLib.combat.runSucceed(text);
+			}
+			//Fail:
+			else {
+				SceneLib.combat.runFail(text + "Despite some impressive jinking, " + SceneLib.emberScene.emberMF("he","she") + " catches you, tackling you to the ground.\n\n",true);
+			}
+		}
+
 		public function Ember()
 		{
 			this.a = " ";
@@ -187,70 +205,22 @@ public class Ember extends Monster
 			} else {
 				createBreastRow(Appearance.breastCupInverse("flat"));
 			}
-			if (flags[kFLAGS.EMBER_LVL_UP] < 1) {
-				initStrTouSpeInte(120, 90, 100, 90);
-				initWisLibSensCor(90, 50, 35, game.flags[kFLAGS.EMBER_COR]);
-				this.weaponAttack = 36;
-				this.armorDef = 54;
-				this.bonusHP = 800;
-				this.level = 20;
-			}
-			if (flags[kFLAGS.EMBER_LVL_UP] == 1) {
-				initStrTouSpeInte(140, 110, 115, 105);
-				initWisLibSensCor(105, 60, 40, game.flags[kFLAGS.EMBER_COR]);
-				this.weaponAttack = 43;
-				this.armorDef = 73;
-				this.bonusHP = 900;
-				this.level = 26;
-			}
-			if (flags[kFLAGS.EMBER_LVL_UP] == 2) {
-				initStrTouSpeInte(165, 135, 130, 120);
-				initWisLibSensCor(120, 70, 45, game.flags[kFLAGS.EMBER_COR]);
-				this.weaponAttack = 50;
-				this.armorDef = 92;
-				this.bonusHP = 1000;
-				this.level = 32;
-			}
-			if (flags[kFLAGS.EMBER_LVL_UP] == 3) {
-				initStrTouSpeInte(190, 160, 145, 135);
-				initWisLibSensCor(135, 80, 50, game.flags[kFLAGS.EMBER_COR]);
-				this.weaponAttack = 57;
-				this.armorDef = 111;
-				this.bonusHP = 1200;
-				this.level = 38;
-			}
-			if (flags[kFLAGS.EMBER_LVL_UP] == 4) {
-				initStrTouSpeInte(220, 190, 160, 150);
-				initWisLibSensCor(150, 90, 55, game.flags[kFLAGS.EMBER_COR]);
-				this.weaponAttack = 64;
-				this.armorDef = 130;
-				this.bonusHP = 1400;
-				this.level = 44;
-			}
-			if (flags[kFLAGS.EMBER_LVL_UP] == 5) {
-				initStrTouSpeInte(250, 220, 175, 165);
-				initWisLibSensCor(165, 100, 60, game.flags[kFLAGS.EMBER_COR]);
-				this.weaponAttack = 71;
-				this.armorDef = 150;
-				this.bonusHP = 1600;
-				this.level = 50;
-			}
-			if (flags[kFLAGS.EMBER_LVL_UP] == 6) {
-				initStrTouSpeInte(280, 250, 190, 180);
-				initWisLibSensCor(180, 110, 65, game.flags[kFLAGS.EMBER_COR]);
-				this.weaponAttack = 78;
-				this.armorDef = 170;
-				this.bonusHP = 1800;
-				this.level = 56;
-			}
-			if (flags[kFLAGS.EMBER_LVL_UP] == 7) {
-				initStrTouSpeInte(310, 280, 205, 195);
-				initWisLibSensCor(195, 120, 70, game.flags[kFLAGS.EMBER_COR]);
-				this.weaponAttack = 85;
-				this.armorDef = 190;
-				this.bonusHP = 2000;
-				this.level = 62;
-			}
+			var levelUp:int = Math.max(flags[kFLAGS.EMBER_LVL_UP],0);
+			initStrTouSpeInte(
+				120 + (25 * levelUp),
+				90 + (25 * levelUp),
+				100 + (15 * levelUp),
+				90 + (15 * levelUp)
+			);
+			initWisLibSensCor(
+				90 + (15 * levelUp),
+				50 + (10 * levelUp),
+				35 + (5 * levelUp),
+				flags[kFLAGS.EMBER_COR]
+			);
+			this.weaponAttack = 36 + (7 * levelUp);
+			this.armorDef = 800 + (100 * levelUp);
+			this.level = 20 + (6 * levelUp);
 			this.ass.analLooseness = AssClass.LOOSENESS_NORMAL;
 			this.ass.analWetness = AssClass.WETNESS_DRY;
 			this.tallness = rand(8) + 70;
@@ -274,6 +244,7 @@ public class Ember extends Monster
 				this.createPerk(PerkLib.EnemyBossType, 0, 0, 0, 0);
 			}
 			if (flags[kFLAGS.EMBER_LVL_UP] >= 5) this.createPerk(PerkLib.Tank, 0, 0, 0, 0);
+			this.onPcRunAttempt = onPCRun;
 			checkMonster();
 		}
 		

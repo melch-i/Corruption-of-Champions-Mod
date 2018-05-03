@@ -190,7 +190,7 @@ public class Alraune extends Monster
 			this.createPerk(PerkLib.Regeneration, 0, 0, 0, 0);
 			this.createPerk(PerkLib.FireVulnerability, 0, 0, 0, 0);
 			this.createPerk(PerkLib.EnemyPlantType, 0, 0, 0, 0);
-			this.createStatusEffect(StatusEffects.GenericRunDisabled, 0, 0, 0, 0);
+			this.onPcRunAttempt = genericPcRunDisabled;
 			createStatusEffect(StatusEffects.Level,4,0,0,0);
 			checkMonster();
 		}

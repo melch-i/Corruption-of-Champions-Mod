@@ -2216,7 +2216,26 @@ public class Prison extends BaseContent implements TimeAwareInterface
 			doNext(camp.returnToCampUseOneHour);
 			return;
 		}
-		
+
+		protected function onPCRun():void {
+			if(!prisonCanEscapeRun()){
+				return combat.runFail();
+			}
+			outputText("You make a quick dash for the door and attempt to escape! ");
+			if(combat.runCheckEscaped()){
+				outputText("You quickly bolt out of the main entrance and after hiding for a good while, there's no sign of [monster a] [monster name]. You sneak back inside to retrieve whatever you had before you were captured. ");
+				combat.inCombat = false;
+				clearStatuses(false);
+				prisonEscapeSuccessText();
+				doNext(prisonEscapeFinalePart1);
+			} else {
+				combat.runFailDefault();
+			}
+		}
+		override protected function startCombat(mons:Monster, plotFight:Boolean = false):void{
+			mons.onPcRunAttempt = onPCRun;
+			SceneLib.combat.startCombatImpl(mons,plotFight);
+		}
 		public function prisonEscapeFightStart(combatID:Monster = null):void
 		{
 			if(!combatID)

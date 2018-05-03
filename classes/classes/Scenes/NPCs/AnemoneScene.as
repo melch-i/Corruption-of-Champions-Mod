@@ -8,7 +8,6 @@ import classes.BodyParts.Antennae;
 import classes.GlobalFlags.kFLAGS;
 import classes.Items.Armors.LustyMaidensArmor;
 import classes.Items.Weapon;
-import classes.Scenes.Areas.Ocean.SeaAnemone;
 
 public class AnemoneScene extends BaseContent implements TimeAwareInterface
 	{
@@ -145,7 +144,7 @@ public class AnemoneScene extends BaseContent implements TimeAwareInterface
 				anemone.applyVenom(1);
 			}
 			if (flags[kFLAGS.ANEMONE_OR_SEA_ANEMONE] == 2) {
-				var seaanemone:SeaAnemone = new SeaAnemone();
+				var seaanemone:Anemone = new Anemone(true);
 				startCombat(seaanemone);
 				//(gain lust, temp lose spd/str)
 				dynStats("lus", 8);

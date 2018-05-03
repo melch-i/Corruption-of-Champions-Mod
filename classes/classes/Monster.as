@@ -1417,6 +1417,9 @@ import flash.utils.getQualifiedClassName;
 		 */
 		public var onPcRunAttempt:Function = null;
 
+		public function genericPcRunDisabled():void {
+			SceneLib.combat.runFail("You can't escape from this fight!");
+		}
 		/**
 		 * Final method to handle hooks before calling overriden method
 		 */

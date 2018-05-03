@@ -135,7 +135,7 @@ public class WinterWolf extends Monster
 			this.drop = new WeightedDrop()
 					.add(consumables.CHILLYP, 1)
 					.add(null, 2);
-			this.createStatusEffect(StatusEffects.GenericRunDisabled, 0, 0, 0, 0);
+			this.onPcRunAttempt = genericPcRunDisabled;
 			this.createPerk(PerkLib.Tank, 0, 0, 0, 0);
 			this.createPerk(PerkLib.IceNature, 0, 0, 0, 0);
 			this.createPerk(PerkLib.EnemyBeastOrAnimalMorphType, 0, 0, 0, 0);

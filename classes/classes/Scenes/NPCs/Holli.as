@@ -215,6 +215,16 @@ public class Holli extends Monster
 			SceneLib.holliScene.enjoyYourBadEndBIYAAAATCH();
 		}
 
+		private function onPCRun():void {
+			if (SceneLib.combat.runCheckEscaped()) {
+				SceneLib.combat.runSucceedDefault()
+			} else if(SceneLib.combat.runCheckRunner()) {
+				SceneLib.combat.runSucceedDefault(true)
+			} else {
+				escapeFailWithHolli();
+			}
+		}
+
 
 		override public function teased(lustDelta:Number):void
 		{
@@ -265,6 +275,7 @@ public class Holli extends Monster
 			this.drop = NO_DROP;
 			this.createPerk(PerkLib.FireVulnerability, 0, 0, 0, 0);
 			this.createPerk(PerkLib.EnemyPlantType, 0, 0, 0, 0);
+			this.onPcRunAttempt = onPCRun;
 			checkMonster();
 		}
 		

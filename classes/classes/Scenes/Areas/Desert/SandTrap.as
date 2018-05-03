@@ -151,8 +151,16 @@ public class SandTrap extends Monster
 			this.tailType = Tail.DEMONIC;
 			createStatusEffect(StatusEffects.Level,4,0,0,0);
 			checkMonster();
+			this.onPcRunAttempt = onPCRun;
 		}
-		
-	}
 
+		private function onPCRun():void{
+			if(player.canFly()){
+				SceneLib.combat.runSucceed("You flex the muscles in your back and, shaking clear of the sand, burst into the air!  Wasting no time you fly free of the sandtrap and its treacherous pit.  \"One day your wings will fall off, little ant,\" the snarling voice of the thwarted androgyne carries up to you as you make your escape.  \"And I will be waiting for you when they do!\"");
+			} else if(statusEffectv1(StatusEffects.Level) < 4){
+				SceneLib.combat.runFail("You're too deeply mired to escape!  You'll have to <b>climb</b> some first!");
+			}
+			SceneLib.combat.runAway(false);
+		}
+	}
 }

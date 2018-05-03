@@ -334,7 +334,7 @@ public static const UNKNOWN_FLAG_NUMBER_00325:int                               
 public static const UNKNOWN_FLAG_NUMBER_00326:int                                   =  326; // Number of grown up minotaur offspring - TRIBE SIZE
 public static const UNKNOWN_FLAG_NUMBER_00327:int                                   =  327; // Number of minotaur sons pending growing up
 public static const UNKNOWN_FLAG_NUMBER_00328:int                                   =  328; // Grow up countdown
-public static const UNKNOWN_FLAG_NUMBER_00329:int                                   =  329; // Minos wasting a turn? (1 = yes)
+public static const UNKNOWN_FLAG_NUMBER_00329:int                                   =  329; // No longer used. Previously: Minos wasting a turn? (1 = yes)
 public static const UNKNOWN_FLAG_NUMBER_00330:int                                   =  330; // Cooldown on minotaur cum repeat messages
 public static const UNKNOWN_FLAG_NUMBER_00331:int                                   =  331; // Times Jojo Milked
 public static const JOJO_COCK_MILKING_COOLDOWN:int                                  =  332; // Jojo milk cooldown 4 hours

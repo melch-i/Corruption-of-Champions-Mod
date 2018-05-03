@@ -124,6 +124,7 @@ public class LizanRogue extends Monster
 			this.special1 = chooseBlowpipe;
 			this.special2 = wingstickThrow;
 			this.special3 = tongueAttack;
+			this.onPcRunAttempt = curry(SceneLib.combat.runSucceed,"As you retreat the lizan doesn't even attempt to stop you. When you look back to see if he's still there you find nothing but the empty bog around you.");
 			checkMonster();
 		}
 		

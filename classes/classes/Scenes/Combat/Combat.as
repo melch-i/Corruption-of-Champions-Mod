@@ -28,7 +28,6 @@ import classes.Scenes.Areas.GlacialRift.WinterWolf;
 import classes.Scenes.Areas.HighMountains.Basilisk;
 import classes.Scenes.Areas.HighMountains.Harpy;
 import classes.Scenes.Areas.Mountain.Minotaur;
-import classes.Scenes.Areas.Ocean.SeaAnemone;
 import classes.Scenes.Dungeons.D3.*;
 import classes.Scenes.Dungeons.HelDungeon.HarpyMob;
 import classes.Scenes.Dungeons.HelDungeon.HarpyQueen;
@@ -2528,15 +2527,10 @@ public function meleeDamageAcc():void {
 	}
 	if(damage > 0) {
 		//Lust raised by anemone contact!
-		if(monster.short == "anemone" && !isWieldingRangedWeapon()) {
-			outputText("\nThough you managed to hit the anemone, several of the tentacles surrounding her body sent home jolts of venom when your swing brushed past them.");
+		if((monster.short == "sea anemone" || monster.short == "anemone") && !isWieldingRangedWeapon()) {
+			outputText("\nThough you managed to hit the "+monster.short+", several of the tentacles surrounding her body sent home jolts of venom when your swing brushed past them.");
 			//(gain lust, temp lose str/spd)
 			(monster as Anemone).applyVenom((1 + rand(2)));
-		}
-		if(monster.short == "sea anemone" && !isWieldingRangedWeapon()) {
-			outputText("\nThough you managed to hit the sea anemone, several of the tentacles surrounding her body sent home jolts of venom when your swing brushed past them.");
-			//(gain lust, temp lose str/spd)
-			(monster as SeaAnemone).applyVenom((1+rand(2)));
 		}
 		
 		//Lust raising weapon bonuses
@@ -4767,329 +4761,202 @@ public function PussyLeggoMyEggo():void {
 	enemyAI();
 }
 
+	//Todo @Oxdeception move the run methods?
+	/**
+	 * Handles a successful run attempt: Shows text, and a next button that returns to camp
+	 * Also stops combat and clears combat statuses from the player
+	 * @param text The text to display
+	 */
+	public function runSucceed(text:String = ""):void {
+		outputText(text);
+		inCombat = false;
+		clearStatuses(false);
+		doNext(camp.returnToCampUseOneHour);
+	}
+
+	/**
+	 * Handles a failed run attempt: Shows text, and a next button that returns to combat
+	 * @param text The text to display
+	 * @param doAi True to have the monster take its turn, false to return to menu without finishing the round
+	 */
+	public function runFail(text:String = "", doAi:Boolean = false):void {
+		outputText(text);
+		if(doAi){
+			return enemyAI();
+		}
+		doNext(curry(combatMenu,false));
+	}
+
+	/**
+	 * Checks if a basic run attempt has been successful
+	 * Does NOT check the Runner perk
+	 * @return true if successful
+	 */
+	public function runCheckEscaped():Boolean{
+		//Calculations
+		var escapeMod:Number = 20 + monster.level * 3;
+		if(debug) escapeMod -= 300;
+		if(player.canFly()) escapeMod -= 20;
+		if(player.tailType == Tail.RACCOON && player.ears.type == Ears.RACCOON && player.hasPerk(PerkLib.Runner)) escapeMod -= 25;
+		if(monster.hasStatusEffect(StatusEffects.Stunned)) escapeMod -= 50;
+
+		//Big tits doesn't matter as much if ya can fly!
+		else {
+			if(player.biggestTitSize() >= 35) escapeMod += 5;
+			if(player.biggestTitSize() >= 66) escapeMod += 10;
+			if(player.hips.type >= 20) escapeMod += 5;
+			if(player.butt.type >= 20) escapeMod += 5;
+			if(player.balls > 0){
+				if(player.ballSize >= 24) escapeMod += 5;
+				if(player.ballSize >= 48) escapeMod += 10;
+				if(player.ballSize >= 120) escapeMod += 10;
+			}
+		}
+		return player.spe > rand(monster.spe + escapeMod);
+	}
+
+	/**
+	 * Checks if the player made a successful run attempt using the Runner Perk
+	 * @return true if successful
+	 */
+	public function runCheckRunner():Boolean {
+		return player.hasPerk(PerkLib.Runner) && rand(100) < 50;
+	}
+
+	/**
+	 *  The default run failure display.
+	 *  This function is for monsters overriding runAway that don't need to change failure texts
+	 */
+	public function runFailDefault():void {
+		var text:String = "";
+		//Flyers get special failure message.
+		if(player.canFly()) {
+			text = (monster.capitalA + monster.short + " manage"+(monster.plural? "s":"")+" to grab your [legs] and drag you back to the ground before you can fly away!");
+		} else if(player.tailType == Tail.RACCOON && player.ears.type == Ears.RACCOON && player.hasPerk(PerkLib.Runner)){
+			text = "Using your running skill, you build up a head of steam and jump, but before you can clear the ground more than a foot, your opponent latches onto you and drags you back down with a thud!";
+		} else {
+			//Huge balls messages
+			if(player.balls > 0 && player.ballSize >= 24) {
+				text += "With your [balls] " + (player.ballSize < 48 ? "swinging ponderously beneath you" : "dragging along the ground") + ", getting away is far harder than it should be.  ";
+			}
+			//FATASS BODY MESSAGES
+			var largeButt: Boolean = player.butt.type >= 20;
+			var largeHips: Boolean = player.hips.type >= 20;
+			var largeTits: Boolean = player.biggestTitSize() >= 35;
+			var hugeTits : Boolean = player.biggestTitSize() >= 66;
+
+			if (hugeTits) { //FOR PLAYERS WITH MASSIVE BREASTS
+				text += "Your [chest] nearly drag along the ground";
+				if (largeHips) {
+					text += " while your [hips] swing side to side";
+					if (largeButt) {
+						text += " causing the fat of your [skintone][butt] to wobble heavily,";
+					}
+				} else {
+					text += largeButt? " while the fat of your [skintone][butt] wobbles heavily from side to side," : ",";
+				}
+				text += " forcing your body off balance and preventing you from moving quick enough to escape."
+			}
+			else if (largeTits) { //FOR PLAYERS WITH GIANT BREASTS
+				if (largeHips) {
+					text += "Your [hips] forces your gait to lurch slightly side to side, which causes the fat of your [skintone] ";
+					if (largeButt) {
+						text += "[butt] and ";
+					}
+					text += "[chest] to wobble immensely, throwing you off balance and preventing you from moving quick enough to escape.";
+				} else if (largeButt) {
+					text += "Your [skintone][butt] and [chest] wobble and bounce heavily, throwing you off balance and preventing you from moving quick enough to escape.";
+				} else {
+					text += "Your [chest] jiggle and wobble side to side like the [skintone] sacks of milky fat they are, with such force as to constantly throw you off balance, preventing you from moving quick enough to escape.";
+				}
+			}
+			else if (largeHips) { //FOR PLAYERS WITH EITHER GIANT HIPS OR BUTT BUT NOT THE BREASTS
+				text += "Your [hips] swing heavily from side to side ";
+				if (largeButt) {
+					text += "causing your [skintone][butt] to wobble obscenely ";
+				}
+				text += "forcing your body into an awkward gait that slows you down, preventing you from escaping.";
+			}
+			else if (largeButt) { //JUST DA BOOTAH
+				text += ("Your [skintone][butt] wobbles so heavily that you're unable to move quick enough to escape.");
+			}
+			else { //NORMAL RUN FAIL MESSAGE
+				text += (monster.capitalA + monster.short + " stay"+(monster.plural? "s" : "")+" hot on your heels, denying you a chance at escape!");
+			}
+		}
+		runFail(text,true);
+	}
+
+	/**
+	 * The default run success display
+	 * This function for monsters overriding runAway that don't need to change success texts
+	 * @param runner if the runner perk caused the run success
+	 */
+	public function runSucceedDefault(runner:Boolean = false):void{
+		var text:String = "";
+		if(runner) {
+			if(player.tailType == Tail.RACCOON && player.ears.type == Ears.RACCOON) { //sekrit benefit: if you have coon ears, coon tail, and Runner perk, change normal Runner escape to flight-type escape
+				text += "Using your running skill, you build up a head of steam and jump, then spread your arms and flail your tail wildly; your opponent dogs you as best [monster he] can, but stops and stares dumbly as your spastic tail slowly propels you several meters into the air!  You leave [monster him] behind with your clumsy, jerky, short-range flight.";
+			} else {
+				text += "Thanks to your talent for running, you manage to escape.";
+			}
+		} else {
+			if(player.canFly()) {
+				text += monster.capitalA + monster.short + " can't catch you.";
+			}
+			else {
+				text += (monster.capitalA + monster.short + " rapidly disappears into the shifting landscape behind you.");
+			}
+		}
+		//fixme @Oxdeception Izma specific run text should be moved to Izma
+		if(monster.short == "Izma") {
+			text += "\n\nAs you leave the tigershark behind, her taunting voice rings out after you.  \"<i>Oooh, look at that fine backside!  Are you running or trying to entice me?  Haha, looks like we know who's the superior specimen now!  Remember: next time we meet, you owe me that ass!</i>\"  Your cheek tingles in shame at her catcalls.";
+		}
+		runSucceed(text);
+	}
+
+/**
+ * The player [run] option
+ * @param callHook set false to bypass monster overrides
+ */
 public function runAway(callHook:Boolean = true):void {
+	clearOutput();
 	if (callHook && monster.onPcRunAttempt != null){
 		monster.onPcRunAttempt();
 		return;
 	}
-	clearOutput();
 	if (inCombat && player.hasStatusEffect(StatusEffects.Sealed) && player.statusEffectv2(StatusEffects.Sealed) == 4) {
-		clearOutput();
-		outputText("You try to run, but you just can't seem to escape.  <b>Your ability to run was sealed, and now you've wasted a chance to attack!</b>\n\n");
-		enemyAI();
-		return;
+		return runFail("You try to run, but you just can't seem to escape.  <b>Your ability to run was sealed, and now you've wasted a chance to attack!</b>\n\n",true);
 	}
 	//Rut doesnt let you run from dicks.
 	if(player.inRut && monster.cockTotal() > 0) {
-		clearOutput();
-		outputText("The thought of another male in your area competing for all the pussy infuriates you!  No way will you run!");
-//Pass false to combatMenu instead:		menuLoc = 3;
-//		doNext(combatMenu);
-		menu();
-		addButton(0, "Next", combatMenu, false);
-		return;
+		return runFail("The thought of another male in your area competing for all the pussy infuriates you!  No way will you run!");
 	}
-	if(monster.hasStatusEffect(StatusEffects.Level) && player.canFly() && monster is SandTrap) {
-		clearOutput();
-		outputText("You flex the muscles in your back and, shaking clear of the sand, burst into the air!  Wasting no time you fly free of the sandtrap and its treacherous pit.  \"One day your wings will fall off, little ant,\" the snarling voice of the thwarted androgyne carries up to you as you make your escape.  \"And I will be waiting for you when they do!\"");
-		inCombat = false;
-		clearStatuses(false);
-		doNext(camp.returnToCampUseOneHour);
-		return;
-	}
-	if(monster.hasStatusEffect(StatusEffects.GenericRunDisabled) || SceneLib.urtaQuest.isUrta()) {
-		outputText("You can't escape from this fight!");
-//Pass false to combatMenu instead:		menuLoc = 3;
-//		doNext(combatMenu);
-		menu();
-		addButton(0, "Next", combatMenu, false);
-		return;
-	}
-	if(monster.hasStatusEffect(StatusEffects.Level) && monster.statusEffectv1(StatusEffects.Level) < 4 && monster is SandTrap) {
-		outputText("You're too deeply mired to escape!  You'll have to <b>climb</b> some first!");
-//Pass false to combatMenu instead:		menuLoc = 3;
-//		doNext(combatMenu);
-		menu();
-		addButton(0, "Next", combatMenu, false);
-		return;
-	}
-	if(monster.hasStatusEffect(StatusEffects.RunDisabled)) {
-		outputText("You'd like to run, but you can't scale the walls of the pit with so many demonic hands pulling you down!");
-//Pass false to combatMenu instead:		menuLoc = 3;
-//		doNext(combatMenu);
-		menu();
-		addButton(0, "Next", combatMenu, false);
-		return;
-	}
-	if(flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00329] == 1 && (monster.short == "minotaur gang" || monster.short == "minotaur tribe")) {
-		flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00329] = 0;
-		//(Free run away) 
-		clearOutput();
-		outputText("You slink away while the pack of brutes is arguing.  Once they finish that argument, they'll be sorely disappointed!");
-		inCombat = false;
-		clearStatuses(false);
-		doNext(camp.returnToCampUseOneHour);
-		return;
-	}
-	else if(monster.short == "minotaur tribe" && monster.HPRatio() >= 0.75) {
-		clearOutput();
-		outputText("There's too many of them surrounding you to run!");
-//Pass false to combatMenu instead:		menuLoc = 3;
-//		doNext(combatMenu);
-		menu();
-		addButton(0, "Next", combatMenu, false);
-		return;
+	if(SceneLib.urtaQuest.isUrta()) {
+		return runFail("You can't escape from this fight!");
 	}
 	if(inDungeon || inRoomedDungeon) {
-		clearOutput();
-		outputText("You're trapped in your foe's home turf - there is nowhere to run!\n\n");
-		enemyAI();
-		return;
-	}
-	if (prison.inPrison && !prison.prisonCanEscapeRun()) {
-		addButton(0, "Next", combatMenu, false);
-		return;
+		return runFail("You're trapped in your foe's home turf - there is nowhere to run!\n\n",true);
 	}
 	//Attempt texts!
-	if(monster.short == "Marae") {
-		outputText("Your boat is blocked by tentacles! ");
-		if(!player.canFly()) outputText("You may not be able to swim fast enough. ");
-		else outputText("You grit your teeth with effort as you try to fly away but the tentacles suddenly grab your [legs] and pull you down. ");
-		outputText("It looks like you cannot escape. ");
-		enemyAI();
-		return;
-	}
-	if(monster.short == "Ember") {
-		outputText("You take off");
-		if(!player.canFly()) outputText(" running");
-		else outputText(", flapping as hard as you can");
-		outputText(", and Ember, caught up in the moment, gives chase.  ");
-	}
-	if (monster.short == "lizan rogue") {
-		outputText("As you retreat the lizan doesn't even attempt to stop you. When you look back to see if he's still there you find nothing but the empty bog around you.");
-		CoC.instance.inCombat = false;
-		clearStatuses(false);
-		doNext(camp.returnToCampUseOneHour);
-		return;
-	}
-	else if(player.canFly()) outputText("Gritting your teeth with effort, you beat your wings quickly and lift off!  ");
-	//Nonflying PCs
+	if(player.canFly()) outputText("Gritting your teeth with effort, you beat your wings quickly and lift off!  ");
 	else {
-		//In prison!
-		if (prison.inPrison) {
-			outputText("You make a quick dash for the door and attempt to escape! ");
-		}
 		//Stuck!
-		else if(player.hasStatusEffect(StatusEffects.NoFlee)) {
-			clearOutput();
+		if(player.hasStatusEffect(StatusEffects.NoFlee)) {
 			if(monster.short == "goblin") outputText("You try to flee but get stuck in the sticky white goop surrounding you.\n\n");
-			else outputText("You put all your skills at running to work and make a supreme effort to escape, but are unable to get away!\n\n");
-			enemyAI();
-			return;
+			return runFail("You put all your skills at running to work and make a supreme effort to escape, but are unable to get away!\n\n", true);
 		}
 		//Nonstuck!
-		else outputText("You turn tail and attempt to flee!  ");
+		outputText("You turn tail and attempt to flee!  ");
 	}
-		
-	//Calculations
-	var escapeMod:Number = 20 + monster.level * 3;
-	if(debug) escapeMod -= 300;
-	if(player.canFly()) escapeMod -= 20;
-	if(player.tailType == Tail.RACCOON && player.ears.type == Ears.RACCOON && player.hasPerk(PerkLib.Runner)) escapeMod -= 25;
-	if(monster.hasStatusEffect(StatusEffects.Stunned)) escapeMod -= 50;
-	
-	//Big tits doesn't matter as much if ya can fly!
-	else {
-		if(player.biggestTitSize() >= 35) escapeMod += 5;
-		if(player.biggestTitSize() >= 66) escapeMod += 10;
-		if(player.hips.type >= 20) escapeMod += 5;
-		if(player.butt.type >= 20) escapeMod += 5;
-		if(player.ballSize >= 24 && player.balls > 0) escapeMod += 5;
-		if(player.ballSize >= 48 && player.balls > 0) escapeMod += 10;
-		if(player.ballSize >= 120 && player.balls > 0) escapeMod += 10;
+
+	if (runCheckEscaped()) { //SUCCESSFUL FLEE
+		runSucceedDefault()
+	} else if(runCheckRunner()) { //Runner Perk Chance
+		runSucceedDefault(true)
+	} else {
+		runFailDefault();
 	}
-	//ANEMONE OVERRULES NORMAL RUN
-	if(monster.short == "anemone") {
-		//Autosuccess - less than 60 lust
-		if(player.lust < (player.maxLust() * 0.6)) {
-			clearOutput();
-			outputText("Marshalling your thoughts, you frown at the strange girl and turn to march up the beach.  After twenty paces inshore you turn back to look at her again.  The anemone is clearly crestfallen by your departure, pouting heavily as she sinks beneath the water's surface.");
-			inCombat = false;
-			clearStatuses(false);
-			doNext(camp.returnToCampUseOneHour);
-			return;
-		}
-		//Speed dependent
-		else {
-			//Success
-			if(player.spe > rand(monster.spe+escapeMod)) {
-				inCombat = false;
-				clearStatuses(false);
-				clearOutput();
-				outputText("Marshalling your thoughts, you frown at the strange girl and turn to march up the beach.  After twenty paces inshore you turn back to look at her again.  The anemone is clearly crestfallen by your departure, pouting heavily as she sinks beneath the water's surface.");
-				doNext(camp.returnToCampUseOneHour);
-				return;
-			}
-			//Run failed:
-			else {
-				outputText("You try to shake off the fog and run but the anemone slinks over to you and her tentacles wrap around your waist.  <i>\"Stay?\"</i> she asks, pressing her small breasts into you as a tentacle slides inside your [armor] and down to your nethers.  The combined stimulation of the rubbing and the tingling venom causes your knees to buckle, hampering your resolve and ending your escape attempt.");
-				//(gain lust, temp lose spd/str)
-				(monster as Anemone).applyVenom((4+player.sens/20));
-				combatRoundOver();
-				return;
-			}
-		}
-	}
-	//SEA ANEMONE OVERRULES NORMAL RUN
-	if(monster.short == "sea anemone") {
-		//Autosuccess - less than 60 lust
-		if(player.lust < (player.maxLust() * 0.6)) {
-			clearOutput();
-			outputText("Marshalling your thoughts, you frown at the strange girl and turn to march up the beach.  After twenty paces inshore you turn back to look at her again.  The anemone is clearly crestfallen by your departure, pouting heavily as she sinks beneath the water's surface.");
-			inCombat = false;
-			clearStatuses(false);
-			doNext(camp.returnToCampUseOneHour);
-			return;
-		}
-		//Speed dependent
-		else {
-			//Success
-			if(player.spe > rand(monster.spe+escapeMod)) {
-				inCombat = false;
-				clearStatuses(false);
-				clearOutput();
-				outputText("Marshalling your thoughts, you frown at the strange girl and turn to march up the beach.  After twenty paces inshore you turn back to look at her again.  The anemone is clearly crestfallen by your departure, pouting heavily as she sinks beneath the water's surface.");
-				doNext(camp.returnToCampUseOneHour);
-				return;
-			}
-			//Run failed:
-			else {
-				outputText("You try to shake off the fog and run but the anemone slinks over to you and her tentacles wrap around your waist.  <i>\"Stay?\"</i> she asks, pressing her small breasts into you as a tentacle slides inside your [armor] and down to your nethers.  The combined stimulation of the rubbing and the tingling venom causes your knees to buckle, hampering your resolve and ending your escape attempt.");
-				//(gain lust, temp lose spd/str)
-				(monster as SeaAnemone).applyVenom((4+player.sens/20));
-				combatRoundOver();
-				return;
-			}
-		}
-	}
-	//Ember is SPUCIAL
-	if(monster.short == "Ember") {
-		//GET AWAY
-		if(player.spe > rand(monster.spe + escapeMod) || (player.hasPerk(PerkLib.Runner) && rand(100) < 50)) {
-			if(player.hasPerk(PerkLib.Runner)) outputText("Using your skill at running, y");
-			else outputText("Y");
-			outputText("ou easily outpace the dragon, who begins hurling imprecations at you.  \"What the hell, [name], you weenie; are you so scared that you can't even stick out your punishment?\"");
-			outputText("\n\nNot to be outdone, you call back, \"Sucks to you!  If even the mighty Last Ember of Hope can't catch me, why do I need to train?  Later, little bird!\"");
-			inCombat = false;
-			clearStatuses(false);
-			doNext(camp.returnToCampUseOneHour);
-		}
-		//Fail: 
-		else {
-			outputText("Despite some impressive jinking, " + SceneLib.emberScene.emberMF("he","she") + " catches you, tackling you to the ground.\n\n");
-			enemyAI();
-		}
-		return;
-	}
-	//SUCCESSFUL FLEE
-	if (player.spe > rand(monster.spe + escapeMod)) {
-		//Escape prison
-		if (prison.inPrison) {
-			outputText("You quickly bolt out of the main entrance and after hiding for a good while, there's no sign of [monster a] [monster name]. You sneak back inside to retrieve whatever you had before you were captured. ");
-			inCombat = false;
-			clearStatuses(false);
-			prison.prisonEscapeSuccessText();
-			doNext(prison.prisonEscapeFinalePart1);
-			return;
-		}
-		//Fliers flee!
-		else if(player.canFly()) outputText(monster.capitalA + monster.short + " can't catch you.");
-		//sekrit benefit: if you have coon ears, coon tail, and Runner perk, change normal Runner escape to flight-type escape
-		else if(player.tailType == Tail.RACCOON && player.ears.type == Ears.RACCOON && player.hasPerk(PerkLib.Runner)) {
-			outputText("Using your running skill, you build up a head of steam and jump, then spread your arms and flail your tail wildly; your opponent dogs you as best [monster he] can, but stops and stares dumbly as your spastic tail slowly propels you several meters into the air!  You leave [monster him] behind with your clumsy, jerky, short-range flight.");
-		}
-		//Non-fliers flee
-		else outputText(monster.capitalA + monster.short + " rapidly disappears into the shifting landscape behind you.");
-		if(monster.short == "Izma") {
-			outputText("\n\nAs you leave the tigershark behind, her taunting voice rings out after you.  \"<i>Oooh, look at that fine backside!  Are you running or trying to entice me?  Haha, looks like we know who's the superior specimen now!  Remember: next time we meet, you owe me that ass!</i>\"  Your cheek tingles in shame at her catcalls.");
-		}
-		inCombat = false;
-		clearStatuses(false);
-		doNext(camp.returnToCampUseOneHour);
-		return;
-	}
-	//Runner perk chance
-	else if(player.hasPerk(PerkLib.Runner) && rand(100) < 50) {
-		inCombat = false;
-		outputText("Thanks to your talent for running, you manage to escape.");
-		if(monster.short == "Izma") {
-			outputText("\n\nAs you leave the tigershark behind, her taunting voice rings out after you.  \"<i>Oooh, look at that fine backside!  Are you running or trying to entice me?  Haha, looks like we know who's the superior specimen now!  Remember: next time we meet, you owe me that ass!</i>\"  Your cheek tingles in shame at her catcalls.");
-		}
-		clearStatuses(false);
-		doNext(camp.returnToCampUseOneHour);
-		return;
-	}
-	//FAIL FLEE
-	else {
-		if(monster.short == "Holli") {
-			(monster as Holli).escapeFailWithHolli();
-			return;
-		}
-		//Flyers get special failure message.
-		if(player.canFly()) {
-			if(monster.plural) outputText(monster.capitalA + monster.short + " manage to grab your [legs] and drag you back to the ground before you can fly away!");
-			else outputText(monster.capitalA + monster.short + " manages to grab your [legs] and drag you back to the ground before you can fly away!");
-		}
-		//fail
-		else if(player.tailType == Tail.RACCOON && player.ears.type == Ears.RACCOON && player.hasPerk(PerkLib.Runner)) outputText("Using your running skill, you build up a head of steam and jump, but before you can clear the ground more than a foot, your opponent latches onto you and drags you back down with a thud!");
-		//Nonflyer messages
-		else {
-			//Huge balls messages
-			if(player.balls > 0 && player.ballSize >= 24) {
-				if(player.ballSize < 48) outputText("With your [balls] swinging ponderously beneath you, getting away is far harder than it should be.  ");
-				else outputText("With your [balls] dragging along the ground, getting away is far harder than it should be.  ");
-			}
-			//FATASS BODY MESSAGES
-			if(player.biggestTitSize() >= 35 || player.butt.type >= 20 || player.hips.type >= 20)
-			{
-				//FOR PLAYERS WITH GIANT BREASTS
-				if(player.biggestTitSize() >= 35 && player.biggestTitSize() < 66)
-				{
-					if(player.hips.type >= 20)
-					{
-						outputText("Your " + hipDescript() + " forces your gait to lurch slightly side to side, which causes the fat of your " + player.skinTone + " ");
-						if(player.butt.type >= 20) outputText(buttDescript() + " and ");
-						outputText(chestDesc() + " to wobble immensely, throwing you off balance and preventing you from moving quick enough to escape.");
-					}
-					else if(player.butt.type >= 20) outputText("Your " + player.skinTone + buttDescript() + " and " + chestDesc() + " wobble and bounce heavily, throwing you off balance and preventing you from moving quick enough to escape.");
-					else outputText("Your " + chestDesc() + " jiggle and wobble side to side like the " + player.skinTone + " sacks of milky fat they are, with such force as to constantly throw you off balance, preventing you from moving quick enough to escape.");
-				}
-				//FOR PLAYERS WITH MASSIVE BREASTS
-				else if(player.biggestTitSize() >= 66) {
-					if(player.hips.type >= 20) {
-						outputText("Your " + chestDesc() + " nearly drag along the ground while your " + hipDescript() + " swing side to side ");
-						if(player.butt.type >= 20) outputText("causing the fat of your " + player.skinTone + buttDescript() + " to wobble heavily, ");
-						outputText("forcing your body off balance and preventing you from moving quick enough to get escape.");
-					}
-					else if(player.butt.type >= 20) outputText("Your " + chestDesc() + " nearly drag along the ground while the fat of your " + player.skinTone + buttDescript() + " wobbles heavily from side to side, forcing your body off balance and preventing you from moving quick enough to escape.");
-					else outputText("Your " + chestDesc() + " nearly drag along the ground, preventing you from moving quick enough to get escape.");
-				}
-				//FOR PLAYERS WITH EITHER GIANT HIPS OR BUTT BUT NOT THE BREASTS
-				else if(player.hips.type >= 20) {
-					outputText("Your " + hipDescript() + " swing heavily from side to side ");
-					if(player.butt.type >= 20) outputText("causing your " + player.skinTone + buttDescript() + " to wobble obscenely ");
-					outputText("and forcing your body into an awkward gait that slows you down, preventing you from escaping.");
-				}
-				//JUST DA BOOTAH
-				else if(player.butt.type >= 20) outputText("Your " + player.skinTone + buttDescript() + " wobbles so heavily that you're unable to move quick enough to escape.");
-			}
-			//NORMAL RUN FAIL MESSAGES
-			else if(monster.plural) outputText(monster.capitalA + monster.short + " stay hot on your heels, denying you a chance at escape!");
-			else outputText(monster.capitalA + monster.short + " stays hot on your heels, denying you a chance at escape!");
-		}
-	}
-	outputText("\n\n");
-	enemyAI();
 }
 
 public function takeFlight():void {

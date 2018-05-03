@@ -136,7 +136,7 @@ public class Yeti extends Monster
 			this.drop = new WeightedDrop()
 					.add(consumables.YETICUM, 1)
 					.add(null, 2);
-			this.createStatusEffect(StatusEffects.GenericRunDisabled, 0, 0, 0, 0);
+			this.onPcRunAttempt = genericPcRunDisabled;
 			this.createPerk(PerkLib.Tank, 0, 0, 0, 0);
 			this.createPerk(PerkLib.FireVulnerability, 0, 0, 0, 0);
 			this.createPerk(PerkLib.EnemyBeastOrAnimalMorphType, 0, 0, 0, 0);
