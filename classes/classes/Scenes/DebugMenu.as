@@ -23,6 +23,7 @@ import classes.Items.Consumable;
 import classes.Items.ConsumableLib;
 import classes.Parser.Parser;
 import classes.Scenes.NPCs.JojoScene;
+import classes.internals.EnumValue;
 
 import coc.view.Color;
 
@@ -921,20 +922,7 @@ public class DebugMenu extends BaseContent
 				[Skin.COVERAGE_HIGH, "HIGH (3, full)"],
 				[Skin.COVERAGE_COMPLETE, "COMPLETE (4, full+face)"]
 		];
-		private static const HAIR_TYPE_CONSTANTS:Array = [
-			[Hair.NORMAL, "0 NORMAL"],
-			[Hair.FEATHER, "1 FEATHER"],
-			[Hair.GHOST, "2 GHOST"],
-			[Hair.GOO, "3 GOO"],
-			[Hair.ANEMONE, "4 ANEMONE"],
-			[Hair.QUILL, "5 QUILL"],
-			[Hair.GORGON, "6 GORGON"],
-			[Hair.LEAF, "7 LEAF"],
-			[Hair.FLUFFY, "8 FLUFFY"],
-			[Hair.GRASS, "9 GRASS"],
-			[Hair.SILKEN, "10 SILKEN"],
-			[Hair.STORM, "11 STORM"],
-		];
+		private static const HAIR_TYPE_CONSTANTS:Array = mapToArrays(Hair.Types, ['value', 'id']);
 		/*
 		private static const HAIR_COLOR_CONSTANTS:Array = [
 			"blond", "brown", "black", "red", "white",
@@ -1052,139 +1040,19 @@ public class DebugMenu extends BaseContent
 			addButton(10,"BeardLength",changeBeardLength);
 			addButton(14, "Back", bodyPartEditorRoot);
 		}
-		private static const FACE_TYPE_CONSTANTS:Array = [
-			[Face.HUMAN, "0 HUMAN"],
-			[Face.HORSE, "1 HORSE"],
-			[Face.DOG, "2 DOG"],
-			[Face.COW_MINOTAUR, "3 COW_MINOTAUR"],
-			[Face.SHARK_TEETH, "4 SHARK_TEETH"],
-			[Face.SNAKE_FANGS, "5 SNAKE_FANGS"],
-			[Face.CAT, "6 CAT"],
-			[Face.LIZARD, "7 LIZARD"],
-			[Face.BUNNY, "8 BUNNY"],
-			[Face.KANGAROO, "9 KANGAROO"],
-			[Face.SPIDER_FANGS, "10 SPIDER_FANGS"],
-			[Face.FOX, "11 FOX"],
-			[Face.DRAGON, "12 DRAGON"],
-			[Face.RACCOON_MASK, "13 RACCOON_MASK"],
-			[Face.RACCOON, "14 RACCOON"],
-			[Face.BUCKTEETH, "15 BUCKTEETH"],
-			[Face.MOUSE, "16 MOUSE"],
-			[Face.FERRET_MASK, "17 FERRET_MASK"],
-			[Face.FERRET, "18 FERRET"],
-			[Face.PIG, "19 PIG"],
-			[Face.BOAR, "20 BOAR"],
-			[Face.RHINO, "21 RHINO"],
-			[Face.ECHIDNA, "22 ECHIDNA"],
-			[Face.DEER, "23 DEER"],
-			[Face.WOLF, "24 WOLF"],
-			[Face.MANTICORE, "25 MANTICORE"],
-			[Face.SALAMANDER_FANGS, "26 SALAMANDER_FANGS"],
-			[Face.YETI_FANGS, "27 YETI_FANGS"],
-			[Face.ORCA, "28 ORCA"],
-			[Face.PLANT_DRAGON, "29 PLANT_DRAGON"],
-			[Face.DRAGON_FANGS, "30 DRAGON_FANGS"],
-			[Face.DEVIL_FANGS, "31 DEVIL_FANGS"],
-			[Face.ONI_TEETH, "32 ONI_TEETH"],
-			[Face.RAIJU_FANGS, "33 RAIJU_FANGS"],
-			[Face.VAMPIRE, "34 VAMPIRE"],
+		private static const FACE_TYPE_CONSTANTS:Array    = mapToArrays(Face.Types, ['value', 'id']);
+		private static const TONGUE_TYPE_CONSTANTS:Array  = mapToArrays(Tongue.Types, ['value', 'id']);
+		private static const EYE_TYPE_CONSTANTS:Array     = mapToArrays(Eyes.Types, ['value', 'id']);
+		private static const EAR_TYPE_CONSTANTS:Array     = mapToArrays(Ears.Types, ['value', 'id']);
+		private static const HORN_TYPE_CONSTANTS:Array    = mapToArrays(Horns.Types, ['value', 'id']);
+		private static const HORN_COUNT_CONSTANTS:Array   = [
+			0, 1, 2, 3, 4,
+			5, 6, 8, 10, 12,
+			16, 20
 		];
-		private static const TONGUE_TYPE_CONSTANTS:Array = [
-			[Tongue.HUMAN, "0 HUMAN"],
-			[Tongue.SNAKE, "1 SNAKE"],
-			[Tongue.DEMONIC, "2 DEMONIC"],
-			[Tongue.DRACONIC, "3 DRACONIC"],
-			[Tongue.ECHIDNA, "4 ECHIDNA"],
-			[Tongue.CAT, "5 CAT"],
-			[Tongue.ELF, "6 ELF"],
-		];
-		private static const EYE_TYPE_CONSTANTS:Array = [
-			[Eyes.HUMAN, "0 HUMAN"],
-			[Eyes.FOUR_SPIDER_EYES, "1 FOUR_SPIDER_EYES"],
-			[Eyes.BLACK_EYES_SAND_TRAP, "2 BLACK_EYES_SAND_TRAP"],
-			[Eyes.CAT_SLITS, "3 CAT_SLITS"],
-			[Eyes.GORGON, "4 GORGON"],
-			[Eyes.FENRIR, "5 FENRIR"],
-			[Eyes.MANTICORE, "6 MANTICORE"],
-			[Eyes.FOX, "7 FOX"],
-			[Eyes.REPTILIAN, "8 REPTILIAN"],
-			[Eyes.SNAKE, "9 SNAKE"],
-			[Eyes.DRAGON, "10 DRAGON"],
-			[Eyes.DEVIL, "11 DEVIL"],
-			[Eyes.ONI, "12 ONI"],
-			[Eyes.ELF, "13 ELF"],
-			[Eyes.RAIJU, "14 RAIJU"],
-			[Eyes.VAMPIRE, "15 VAMPIRE"],
-		];
-		private static const EAR_TYPE_CONSTANTS:Array    = [
-			[Ears.HUMAN, "0 HUMAN"],
-			[Ears.HORSE, "1 HORSE"],
-			[Ears.DOG, "2 DOG"],
-			[Ears.COW, "3 COW"],
-			[Ears.ELFIN, "4 ELFIN"],
-			[Ears.CAT, "5 CAT"],
-			[Ears.LIZARD, "6 LIZARD"],
-			[Ears.BUNNY, "7 BUNNY"],
-			[Ears.KANGAROO, "8 KANGAROO"],
-			[Ears.FOX, "9 FOX"],
-			[Ears.DRAGON, "10 DRAGON"],
-			[Ears.RACCOON, "11 RACCOON"],
-			[Ears.MOUSE, "12 MOUSE"],
-			[Ears.FERRET, "13 FERRET"],
-			[Ears.PIG, "14 PIG"],
-			[Ears.RHINO, "15 RHINO"],
-			[Ears.ECHIDNA, "16 ECHIDNA"],
-			[Ears.DEER, "17 DEER"],
-			[Ears.WOLF, "18 WOLF"],
-			[Ears.LION, "19 LION"],
-			[Ears.YETI, "20 YETI"],
-			[Ears.ORCA, "21 ORCA"],
-			[Ears.SNAKE, "22 SNAKE"],
-			[Ears.GOAT, "23 GOAT"],
-			[Ears.ONI, "24 ONI"],
-			[Ears.ELVEN, "25 ELVEN"],
-			[Ears.WEASEL, "26 WEASEL"],
-			[Ears.BAT, "27 BAT"],
-			[Ears.VAMPIRE, "28 VAMPIRE"],
-		];
-		private static const HORN_TYPE_CONSTANTS:Array    = [
-			[Horns.NONE, "0 NONE"],
-			[Horns.DEMON, "1 DEMON"],
-			[Horns.COW_MINOTAUR, "2 COW_MINOTAUR"],
-			[Horns.DRACONIC_X2, "3 DRACONIC_X2"],
-			[Horns.DRACONIC_X4_12_INCH_LONG, "4 DRACONIC_X4_12_INCH_LONG"],
-			[Horns.ANTLERS, "5 ANTLERS"],
-			[Horns.GOAT, "6 GOAT"],
-			[Horns.UNICORN, "7 UNICORN"],
-			[Horns.RHINO, "8 RHINO"],
-			[Horns.OAK, "9 OAK"],
-			[Horns.GARGOYLE, "10 GARGOYLE"],
-			[Horns.ORCHID, "11 ORCHID"],
-			[Horns.ONI_X2, "12 ONI_X2"],
-			[Horns.ONI, "13 ONI"],
-		];
-		private static const HORN_COUNT_CONSTANTS:Array = [
-				0,1,2,3,4,
-				5,6,8,10,12,
-				16,20
-		];
-		private static const ANTENNA_TYPE_CONSTANTS:Array = [
-			[Antennae.NONE, "0 NONE"],
-			[Antennae.MANTIS, "1 MANTIS"],
-			[Antennae.BEE, "2 BEE"],
-		];
-		private static const GILLS_TYPE_CONSTANTS:Array   = [
-			[Gills.NONE, "0 NONE"],
-			[Gills.ANEMONE, "1 ANEMONE"],
-			[Gills.FISH, "2 FISH"],
-			[Gills.GILLS_IN_TENTACLE_LEGS, "3 IN_TENTACLE_LEGS"],
-		];
-		private static const BEARD_STYLE_CONSTANTS:Array = [
-			[Beard.NORMAL, "0 NORMAL"],
-			[Beard.GOATEE, "1 GOATEE"],
-			[Beard.CLEANCUT, "2 CLEANCUT"],
-			[Beard.MOUNTAINMAN, "3 MOUNTAINMAN"],
-		];
+		private static const ANTENNA_TYPE_CONSTANTS:Array = mapToArrays(Antennae.Types, ['value', 'id']);
+		private static const GILLS_TYPE_CONSTANTS:Array   = mapToArrays(Gills.Types, ['value', 'id']);
+		private static const BEARD_STYLE_CONSTANTS:Array  = mapToArrays(Beard.Types, ['value', 'id']);
 		private static const BEARD_LENGTH_CONSTANTS:Array = [
 			0,0.1,0.3,2,4,
 			8,12,16,32,64,
@@ -1272,109 +1140,15 @@ public class DebugMenu extends BaseContent
 			addButton(9,"ReadBodyType",changeRearBodyType);
 			addButton(14, "Back", bodyPartEditorRoot);
 		}
-		private static const ARM_TYPE_CONSTANTS:Array   = [
-			[Arms.HUMAN, "0 HUMAN"],
-			[Arms.HARPY, "1 HARPY"],
-			[Arms.SPIDER, "2 SPIDER"],
-			[Arms.MANTIS, "3 MANTIS"],
-			[Arms.BEE, "4 BEE"],
-			[Arms.SALAMANDER, "5 SALAMANDER"],
-			[Arms.PHOENIX, "6 PHOENIX"],
-			[Arms.PLANT, "7 PLANT"],
-			[Arms.SHARK, "8 SHARK"],
-			[Arms.GARGOYLE, "9 GARGOYLE"],
-			[Arms.WOLF, "10 WOLF"],
-			[Arms.LION, "11 LION"],
-			[Arms.KITSUNE, "12 KITSUNE"],
-			[Arms.FOX, "13 FOX"],
-			[Arms.LIZARD, "14 LIZARD"],
-			[Arms.DRAGON, "15 DRAGON"],
-			[Arms.YETI, "16 YETI"],
-			[Arms.ORCA, "17 ORCA"],
-			[Arms.PLANT2, "18 PLANT2"],
-			[Arms.DEVIL, "19 DEVIL"],
-		];
-		private static const CLAW_TYPE_CONSTANTS:Array = [
-			[Claws.NORMAL, "0 NORMAL"],
-			[Claws.LIZARD, "1 LIZARD"],
-			[Claws.DRAGON, "2 DRAGON"],
-			[Claws.SALAMANDER, "3 SALAMANDER"],
-			[Claws.CAT, "4 CAT"],
-			[Claws.DOG, "5 DOG"],
-			[Claws.RAPTOR, "6 RAPTOR"],
-			[Claws.MANTIS, "7 MANTIS"],
-		];
-		private static const TAIL_TYPE_CONSTANTS:Array  = [
-			[Tail.NONE, "0 NONE"],
-			[Tail.HORSE, "1 HORSE"],
-			[Tail.DOG, "2 DOG"],
-			[Tail.DEMONIC, "3 DEMONIC"],
-			[Tail.COW, "4 COW"],
-			[Tail.SPIDER_ADBOMEN, "5 SPIDER_ADBOMEN"],
-			[Tail.BEE_ABDOMEN, "6 BEE_ABDOMEN"],
-			[Tail.SHARK, "7 SHARK"],
-			[Tail.CAT, "8 CAT"],
-			[Tail.LIZARD, "9 LIZARD"],
-			[Tail.RABBIT, "10 RABBIT"],
-			[Tail.HARPY, "11 HARPY"],
-			[Tail.KANGAROO, "12 KANGAROO"],
-			[Tail.FOX, "13 FOX"],
-			[Tail.DRACONIC, "14 DRACONIC"],
-			[Tail.RACCOON, "15 RACCOON"],
-			[Tail.MOUSE, "16 MOUSE"],
-			[Tail.FERRET, "17 FERRET"],
-			[Tail.BEHEMOTH, "18 BEHEMOTH"],
-			[Tail.PIG, "19 PIG"],
-			[Tail.SCORPION, "20 SCORPION"],
-			[Tail.GOAT, "21 GOAT"],
-			[Tail.RHINO, "22 RHINO"],
-			[Tail.ECHIDNA, "23 ECHIDNA"],
-			[Tail.DEER, "24 DEER"],
-			[Tail.SALAMANDER, "25 SALAMANDER"],
-			[Tail.KITSHOO, "26 KITSHOO"],
-			[Tail.MANTIS_ABDOMEN, "27 MANTIS_ABDOMEN"],
-			[Tail.MANTICORE_PUSSYTAIL, "28 MANTICORE_PUSSYTAIL"],
-			[Tail.WOLF, "29 WOLF"],
-			[Tail.GARGOYLE, "30 GARGOYLE"],
-			[Tail.ORCA, "31 ORCA"],
-			[Tail.YGGDRASIL, "32 YGGDRASIL"],
-		];
+		private static const ARM_TYPE_CONSTANTS:Array   = mapToArrays(Arms.Types, ['value','id']);
+		private static const CLAW_TYPE_CONSTANTS:Array  = mapToArrays(Claws.Types, ['value','id']);
+		private static const TAIL_TYPE_CONSTANTS:Array  = mapToArrays(Tail.Types, ['value','id']);
 		private static const TAIL_COUNT_CONSTANTS:Array = [
 			[0,"0"],1,2,3,4,
 			5,6,7,8,9,
 			10,16
 		];
-		private static const WING_TYPE_CONSTANTS:Array  = [
-			[Wings.NONE, "0 NONE"],
-			[Wings.BEE_LIKE_SMALL, "1 BEE_LIKE_SMALL"],
-			[Wings.BEE_LIKE_LARGE, "2 BEE_LIKE_LARGE"],
-			[Wings.HARPY, "4 HARPY"],
-			[Wings.IMP, "5 IMP"],
-			[Wings.BAT_LIKE_TINY, "6 BAT_LIKE_TINY"],
-			[Wings.BAT_LIKE_LARGE, "7 BAT_LIKE_LARGE"],
-			[Wings.SHARK_FIN, "8 SHARK_FIN"],
-			[Wings.FEATHERED_LARGE, "9 FEATHERED_LARGE"],
-			[Wings.DRACONIC_SMALL, "10 DRACONIC_SMALL"],
-			[Wings.DRACONIC_LARGE, "11 DRACONIC_LARGE"],
-			[Wings.GIANT_DRAGONFLY, "12 GIANT_DRAGONFLY"],
-			[Wings.BAT_LIKE_LARGE_2, "13 BAT_LIKE_LARGE_2"],
-			[Wings.DRACONIC_HUGE, "14 DRACONIC_HUGE"],
-			[Wings.FEATHERED_PHOENIX, "15 FEATHERED_PHOENIX"],
-			[Wings.FEATHERED_ALICORN, "16 FEATHERED_ALICORN"],
-			[Wings.MANTIS_LIKE_SMALL, "17 MANTIS_LIKE_SMALL"],
-			[Wings.MANTIS_LIKE_LARGE, "18 MANTIS_LIKE_LARGE"],
-			[Wings.MANTIS_LIKE_LARGE_2, "19 MANTIS_LIKE_LARGE_2"],
-			[Wings.GARGOYLE_LIKE_LARGE, "20 GARGOYLE_LIKE_LARGE"],
-			[Wings.PLANT, "21 PLANT"],
-			[Wings.MANTICORE_LIKE_SMALL, "22 MANTICORE_LIKE_SMALL"],
-			[Wings.MANTICORE_LIKE_LARGE, "23 MANTICORE_LIKE_LARGE"],
-			[Wings.BAT_ARM, "24 BAT_ARM"],
-			[Wings.VAMPIRE, "25 VAMPIRE"],
-			[Wings.FEY_DRAGON_WINGS, "26 FEY_DRAGON_WINGS"],
-			[Wings.FEATHERED_AVIAN, "27 FEATHERED_AVIAN"],
-			[Wings.NIGHTMARE, "28 NIGHTMARE"],
-			[Wings.FEATHERED_SPHINX, "29 FEATHERED_SPHINX"],
-		];
+		private static const WING_TYPE_CONSTANTS:Array  = mapToArrays(Wings.Types,['value','id']);
 		private static const WING_DESC_CONSTANTS:Array = [
 			"(none)","non-existant","tiny hidden","huge","small",
 			"giant gragonfly","large bee-like","small bee-like",
@@ -1385,67 +1159,12 @@ public class DebugMenu extends BaseContent
 			"large manticore-like","small manticore-like",
 			"large mantis-like","small mantis-like",
 		];
-		private static const LOWER_TYPE_CONSTANTS:Array = [
-			[LowerBody.HUMAN, "0 HUMAN"],
-			[LowerBody.HOOFED, "1 HOOFED"],
-			[LowerBody.DOG, "2 DOG"],
-			[LowerBody.NAGA, "3 NAGA"],
-			[LowerBody.DEMONIC_HIGH_HEELS, "5 DEMONIC_HIGH_HEELS"],
-			[LowerBody.DEMONIC_CLAWS, "6 DEMONIC_CLAWS"],
-			[LowerBody.BEE, "7 BEE"],
-			[LowerBody.GOO, "8 GOO"],
-			[LowerBody.CAT, "9 CAT"],
-			[LowerBody.LIZARD, "10 LIZARD"],
-			[LowerBody.PONY, "11 PONY"],
-			[LowerBody.BUNNY, "12 BUNNY"],
-			[LowerBody.HARPY, "13 HARPY"],
-			[LowerBody.KANGAROO, "14 KANGAROO"],
-			[LowerBody.CHITINOUS_SPIDER_LEGS, "15 CHITINOUS_SPIDER_LEGS"],
-			[LowerBody.DRIDER, "16 DRIDER"],
-			[LowerBody.FOX, "17 FOX"],
-			[LowerBody.DRAGON, "18 DRAGON"],
-			[LowerBody.RACCOON, "19 RACCOON"],
-			[LowerBody.FERRET, "20 FERRET"],
-			[LowerBody.CLOVEN_HOOFED, "21 CLOVEN_HOOFED"],
-			[LowerBody.ECHIDNA, "23 ECHIDNA"],
-			[LowerBody.SALAMANDER, "25 SALAMANDER"],
-			[LowerBody.SCYLLA, "26 SCYLLA"],
-			[LowerBody.MANTIS, "27 MANTIS"],
-			[LowerBody.SHARK, "29 SHARK"],
-			[LowerBody.GARGOYLE, "30 GARGOYLE"],
-			[LowerBody.PLANT_HIGH_HEELS, "31 PLANT_HIGH_HEELS"],
-			[LowerBody.PLANT_ROOT_CLAWS, "32 PLANT_ROOT_CLAWS"],
-			[LowerBody.WOLF, "33 WOLF"],
-			[LowerBody.PLANT_FLOWER, "34 PLANT_FLOWER"],
-			[LowerBody.LION, "35 LION"],
-			[LowerBody.YETI, "36 YETI"],
-			[LowerBody.ORCA, "37 ORCA"],
-			[LowerBody.YGG_ROOT_CLAWS, "38 YGG_ROOT_CLAWS"],
-			[LowerBody.ONI, "39 ONI"],
-			[LowerBody.ELF, "40 ELF"],
-			[LowerBody.RAIJU, "41 RAIJU"],
-			[LowerBody.RED_PANDA, "42 RED_PANDA"],
-			[LowerBody.GARGOYLE_2, "43 GARGOYLE_2"],
-			[LowerBody.AVIAN, "44 AVIAN"],
-			[LowerBody.GRYPHON, "45 GRYPHON"]
-		];
+		private static const LOWER_TYPE_CONSTANTS:Array = mapToArrays(LowerBody.Types,['value','id']);
 		private static const LEG_COUNT_CONSTANTS:Array = [
 			1,2,4,6,8,
 			10,12,16
 		];
-		private static const REAR_TYPE_CONSTANTS:Array  = [
-			[RearBody.NONE, "0 NONE"],
-			[RearBody.DRACONIC_MANE, "1 DRACONIC_MANE"],
-			[RearBody.DRACONIC_SPIKES, "2 DRACONIC_SPIKES"],
-			[RearBody.FENRIR_ICE_SPIKES, "3 FENRIR_ICE_SPIKES"],
-			[RearBody.LION_MANE, "4 LION_MANE"],
-			[RearBody.BEHEMOTH, "5 BEHEMOTH"],
-			[RearBody.SHARK_FIN, "6 SHARK_FIN"],
-			[RearBody.ORCA_BLOWHOLE, "7 ORCA_BLOWHOLE"],
-			[RearBody.RAIJU_MANE, "8 RAIJU_MANE"],
-			[RearBody.BAT_COLLAR, "9 BAT_COLLAR"],
-			[RearBody.WOLF_COLLAR, "10 WOLF_COLLAR"]
-		];
+		private static const REAR_TYPE_CONSTANTS:Array  = mapToArrays(RearBody.Types,['valye','id']);
 		private function changeArmType(page:int=0,setIdx:int=-1):void {
 			if (setIdx>=0) player.arms.type = setIdx;
 			menu();

@@ -1,36 +1,39 @@
 package classes.BodyParts {
+import classes.internals.EnumValue;
 
 public class Arms extends BodyPart {
-	public static const HUMAN:int = 0;
-	public static const HARPY:int = 1;
-	public static const SPIDER:int = 2;
-	public static const MANTIS:int = 3;
-	public static const BEE:int = 4;
-	public static const SALAMANDER:int = 5;
-	public static const PHOENIX:int = 6;
-	public static const PLANT:int = 7;
-	public static const SHARK:int = 8;
-	public static const GARGOYLE:int = 9;
-	public static const WOLF:int = 10;
-	public static const LION:int = 11;
-	public static const KITSUNE:int = 12;
-	public static const FOX:int = 13;
-	public static const LIZARD:int = 14;
-	public static const DRAGON:int = 15;
-	public static const YETI:int = 16;
-	public static const ORCA:int = 17;
-	public static const PLANT2:int = 18;
-	public static const DEVIL:int = 19;
-	public static const ONI:int = 20;
-	public static const ELF:int = 21;
-	public static const RAIJU:int = 22;
-	public static const RED_PANDA:int = 23;
-	public static const GARGOYLE_2:int = 24;
-	public static const CAT:int = 25;
-	public static const AVIAN:int = 26;
-	public static const GRYPHON:int = 27;
-	public static const SPHINX:int = 28;
-
+	public static const Types:/*EnumValue*/Array = [];
+	
+	public static const HUMAN:int      = EnumValue.add(Types, 0, "HUMAN", {name: "human"});
+	public static const HARPY:int      = EnumValue.add(Types, 1, "HARPY", {name: "harpy"});
+	public static const SPIDER:int     = EnumValue.add(Types, 2, "SPIDER", {name: "spider"});
+	public static const MANTIS:int     = EnumValue.add(Types, 3, "MANTIS", {name: "mantis"});
+	public static const BEE:int        = EnumValue.add(Types, 4, "BEE", {name: "bee"});
+	public static const SALAMANDER:int = EnumValue.add(Types, 5, "SALAMANDER", {name: "salamander"});
+	public static const PHOENIX:int    = EnumValue.add(Types, 6, "PHOENIX", {name: "phoenix"});
+	public static const PLANT:int      = EnumValue.add(Types, 7, "PLANT", {name: "vine-covered"});
+	public static const SHARK:int      = EnumValue.add(Types, 8, "SHARK", {name: "shark"});
+	public static const GARGOYLE:int   = EnumValue.add(Types, 9, "GARGOYLE", {name: "gargoyle"});
+	public static const WOLF:int       = EnumValue.add(Types, 10, "WOLF", {name: "wolf"});
+	public static const LION:int       = EnumValue.add(Types, 11, "LION", {name: "lion"});
+	public static const KITSUNE:int    = EnumValue.add(Types, 12, "KITSUNE", {name: "kitsune"});
+	public static const FOX:int        = EnumValue.add(Types, 13, "FOX", {name: "fox"});
+	public static const LIZARD:int     = EnumValue.add(Types, 14, "LIZARD", {name: "lizard"});
+	public static const DRAGON:int     = EnumValue.add(Types, 15, "DRAGON", {name: "dragon"});
+	public static const YETI:int       = EnumValue.add(Types, 16, "YETI", {name: "yeti"});
+	public static const ORCA:int       = EnumValue.add(Types, 17, "ORCA", {name: "orca"});
+	public static const PLANT2:int     = EnumValue.add(Types, 18, "PLANT2", {name: "tentacle-covered"});
+	public static const DEVIL:int      = EnumValue.add(Types, 19, "DEVIL", {name: "devil"});
+	public static const ONI:int        = EnumValue.add(Types, 20, "ONI", {name: "oni"});
+	public static const ELF:int        = EnumValue.add(Types, 21, "ELF", {name: "elf"});
+	public static const RAIJU:int      = EnumValue.add(Types, 22, "RAIJU", {name: "raiju"});
+	public static const RED_PANDA:int  = EnumValue.add(Types, 23, "RED_PANDA", {name: "red-panda"});
+	public static const GARGOYLE_2:int = EnumValue.add(Types, 24, "GARGOYLE_2", {name: "gargoyle"});
+	public static const CAT:int        = EnumValue.add(Types, 25, "CAT", {name: "cat"});
+	public static const AVIAN:int      = EnumValue.add(Types, 26, "AVIAN", {name: "avian"});
+	public static const GRYPHON:int    = EnumValue.add(Types, 27, "GRYPHON", {name: "gryphon"});
+	public static const SPHINX:int     = EnumValue.add(Types, 28, "SPHINX", {name: "sphinx"});
+	
 	public function Arms() {
 		super(null, null);
 	}
