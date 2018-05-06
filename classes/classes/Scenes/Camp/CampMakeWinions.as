@@ -72,7 +72,7 @@ package classes.Scenes.Camp {
 			outputText(text);
 			var buttons: ButtonDataList = new ButtonDataList();
 			buttons.add("Summon", summoningSubmenu)
-				.disableIf(player.statusEffectv1(StatusEffects.SummonedElementals) < maxSizeOfElementalsArmy(), "You have too many elementals summoned!")
+				.disableIf(player.statusEffectv1(StatusEffects.SummonedElementals) >= maxSizeOfElementalsArmy(), "You have too many elementals summoned!")
 				.disableIf(!player.hasPerk(PerkLib.JobElementalConjurer), "You're not quite sure how to summon anything yet.");
 			buttons.add("Rank Up", rankUpSubmenu)
 				.disableIf(!player.hasPerk(PerkLib.ElementalContractRank1));
@@ -111,8 +111,7 @@ package classes.Scenes.Camp {
 					.requireMana(100)
 					.requireFatigue(50);
 			}
-
-			addButton(14, "Back", accessSummonElementalsMainMenu);
+			buttons.submenu(accessSummonElementalsMainMenu);
 		}
 
 
