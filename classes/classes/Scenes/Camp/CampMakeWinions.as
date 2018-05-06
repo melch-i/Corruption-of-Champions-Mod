@@ -2,736 +2,196 @@
  * ...
  * @author Ormael / Liadri
  */
-package classes.Scenes.Camp 
-{
-	import classes.*;
-	import classes.BaseContent;
-	import classes.GlobalFlags.kFLAGS;
-	
-	public class CampMakeWinions extends BaseContent
-	{
-		
-		public function CampMakeWinions() 
-		{}
+package classes.Scenes.Camp {
 
-		
-		public function maxSizeOfElementalsArmy():Number {
-			var maxSizeOfElementalsArmyCounter:Number = 0;
-			if (player.hasPerk(PerkLib.JobElementalConjurer)) maxSizeOfElementalsArmyCounter += 1;
-			if (player.hasPerk(PerkLib.ElementalContractRank1)) maxSizeOfElementalsArmyCounter += 1;
-			if (player.hasPerk(PerkLib.ElementalContractRank2)) maxSizeOfElementalsArmyCounter += 1;
-			if (player.hasPerk(PerkLib.ElementalContractRank3)) maxSizeOfElementalsArmyCounter += 1;
-			if (player.hasPerk(PerkLib.ElementalContractRank4)) maxSizeOfElementalsArmyCounter += 1;
-			if (player.hasPerk(PerkLib.ElementalContractRank5)) maxSizeOfElementalsArmyCounter += 1;
-			if (player.hasPerk(PerkLib.ElementalContractRank6)) maxSizeOfElementalsArmyCounter += 1;
-			if (player.hasPerk(PerkLib.ElementalContractRank7)) maxSizeOfElementalsArmyCounter += 1;
-			if (player.hasPerk(PerkLib.ElementalContractRank8)) maxSizeOfElementalsArmyCounter += 2;
-			if (player.hasPerk(PerkLib.ElementalContractRank9)) maxSizeOfElementalsArmyCounter += 2;
-			if (player.hasPerk(PerkLib.ElementalContractRank10)) maxSizeOfElementalsArmyCounter += 2;
-			if (player.hasPerk(PerkLib.ElementalContractRank11)) maxSizeOfElementalsArmyCounter += 2;
-			if (player.hasPerk(PerkLib.ElementsOfTheOrtodoxPath)) maxSizeOfElementalsArmyCounter += 1;
-			if (player.hasPerk(PerkLib.ElementsOfMarethBasics)) maxSizeOfElementalsArmyCounter += 1;
-			return maxSizeOfElementalsArmyCounter;
+	import classes.*;
+	import classes.GlobalFlags.kFLAGS;
+
+	import coc.view.ButtonDataList;
+
+	public class CampMakeWinions extends BaseContent {
+
+		public static var summon_statuses: Array = [
+			StatusEffects.SummonedElementalsAir,
+			StatusEffects.SummonedElementalsEarth,
+			StatusEffects.SummonedElementalsFire,
+			StatusEffects.SummonedElementalsWater,
+			StatusEffects.SummonedElementalsEther,
+			StatusEffects.SummonedElementalsWood,
+			StatusEffects.SummonedElementalsMetal,
+			StatusEffects.SummonedElementalsIce,
+			StatusEffects.SummonedElementalsLightning,
+			StatusEffects.SummonedElementalsDarkness
+		];
+
+		public function CampMakeWinions() {}
+
+		public function maxSizeOfElementalsArmy(): int {
+			if (!player.hasPerk(PerkLib.JobElementalConjurer)) {
+				return 0;
+			}
+			var max: int = 1;
+			var perks: Array = [
+				[PerkLib.ElementalContractRank1, 1],
+				[PerkLib.ElementalContractRank2, 1],
+				[PerkLib.ElementalContractRank3, 1],
+				[PerkLib.ElementalContractRank4, 1],
+				[PerkLib.ElementalContractRank5, 1],
+				[PerkLib.ElementalContractRank6, 1],
+				[PerkLib.ElementalContractRank7, 1],
+				[PerkLib.ElementalContractRank8, 2],
+				[PerkLib.ElementalContractRank9, 2],
+				[PerkLib.ElementalContractRank10, 2],
+				[PerkLib.ElementalContractRank11, 2],
+				[PerkLib.ElementsOfTheOrtodoxPath, 1],
+				[PerkLib.ElementsOfMarethBasics, 1]
+			];
+			for each(var pk: Array in perks) {
+				if (player.hasPerk(pk[0])) {
+					max += pk[1];
+				}
+			}
+			return max;
 		}
-		
-		public function accessSummonElementalsMainMenu():void {
+
+		public function accessSummonElementalsMainMenu(): void {
 			clearOutput();
 			menu();
-			outputText("Which one elemental would you like to summon or promote to higher rank?\n\n");
-			if (player.hasPerk(PerkLib.JobElementalConjurer)) outputText("Current limit for elemental summons: " + maxSizeOfElementalsArmy() + " different types of elementals\n\n");
-			outputText("<b>Currently summoned elementals:</b><i>");
-			if (player.hasStatusEffect(StatusEffects.SummonedElementalsAir)) {
-				outputText("\nAir");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsAir) == 1) outputText(" (Rank 0)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsAir) == 2) outputText(" (Rank 1)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsAir) == 3) outputText(" (Rank 2)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsAir) == 4) outputText(" (Rank 3)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsAir) == 5) outputText(" (Rank 4)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsAir) == 6) outputText(" (Rank 5)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsAir) == 7) outputText(" (Rank 6)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsAir) == 8) outputText(" (Rank 7)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsAir) == 9) outputText(" (3rd Elder Rank)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsAir) == 10) outputText(" (2nd Elder Rank)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsAir) == 11) outputText(" (1st Elder Rank)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsAir) == 12) outputText(" (Grand Elder Rank)");
+			var text: String = "Which one elemental would you like to summon or promote to higher rank?\n\n";
+			text += ("Which one elemental would you like to summon or promote to higher rank?\n\n");
+			if (player.hasPerk(PerkLib.JobElementalConjurer)) {
+				text += ("Current limit for elemental summons: " + maxSizeOfElementalsArmy() + " different types of elementals\n\n");
 			}
-			if (player.hasStatusEffect(StatusEffects.SummonedElementalsEarth)) {
-				outputText("\nEarth");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEarth) == 1) outputText(" (Rank 0)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEarth) == 2) outputText(" (Rank 1)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEarth) == 3) outputText(" (Rank 2)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEarth) == 4) outputText(" (Rank 3)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEarth) == 5) outputText(" (Rank 4)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEarth) == 6) outputText(" (Rank 5)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEarth) == 7) outputText(" (Rank 6)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEarth) == 8) outputText(" (Rank 7)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEarth) == 9) outputText(" (3rd Elder Rank)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEarth) == 10) outputText(" (2nd Elder Rank)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEarth) == 11) outputText(" (1st Elder Rank)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEarth) == 12) outputText(" (Grand Elder Rank)");
+			text += ("[b: Currently summoned elementals:][i: ");
+			for each (var summon: StatusEffectType in summon_statuses) {
+				if (player.hasStatusEffect(summon)) {
+					text += "\n" + elementName(summon) + " (Rank " + (player.statusEffectv2(summon) - 1) + ")";
+				}
 			}
-			if (player.hasStatusEffect(StatusEffects.SummonedElementalsFire)) {
-				outputText("\nFire");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsFire) == 1) outputText(" (Rank 0)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsFire) == 2) outputText(" (Rank 1)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsFire) == 3) outputText(" (Rank 2)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsFire) == 4) outputText(" (Rank 3)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsFire) == 5) outputText(" (Rank 4)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsFire) == 6) outputText(" (Rank 5)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsFire) == 7) outputText(" (Rank 6)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsFire) == 8) outputText(" (Rank 7)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsFire) == 9) outputText(" (3rd Elder Rank)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsFire) == 10) outputText(" (2nd Elder Rank)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsFire) == 11) outputText(" (1st Elder Rank)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsFire) == 12) outputText(" (Grand Elder Rank)");
-			}
-			if (player.hasStatusEffect(StatusEffects.SummonedElementalsWater)) {
-				outputText("\nWater");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWater) == 1) outputText(" (Rank 0)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWater) == 2) outputText(" (Rank 1)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWater) == 3) outputText(" (Rank 2)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWater) == 4) outputText(" (Rank 3)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWater) == 5) outputText(" (Rank 4)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWater) == 6) outputText(" (Rank 5)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWater) == 7) outputText(" (Rank 6)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWater) == 8) outputText(" (Rank 7)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWater) == 9) outputText(" (3rd Elder Rank)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWater) == 10) outputText(" (2nd Elder Rank)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWater) == 11) outputText(" (1st Elder Rank)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWater) == 12) outputText(" (Grand Elder Rank)");
-			}
-			if (player.hasStatusEffect(StatusEffects.SummonedElementalsEther)) {
-				outputText("\nEther");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEther) == 1) outputText(" (Rank 0)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEther) == 2) outputText(" (Rank 1)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEther) == 3) outputText(" (Rank 2)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEther) == 4) outputText(" (Rank 3)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEther) == 5) outputText(" (Rank 4)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEther) == 6) outputText(" (Rank 5)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEther) == 7) outputText(" (Rank 6)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEther) == 8) outputText(" (Rank 7)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEther) == 9) outputText(" (3rd Elder Rank)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEther) == 10) outputText(" (2nd Elder Rank)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEther) == 11) outputText(" (1st Elder Rank)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEther) == 12) outputText(" (Grand Elder Rank)");
-			}
-			if (player.hasStatusEffect(StatusEffects.SummonedElementalsWood)) {
-				outputText("\nWood");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWood) == 1) outputText(" (Rank 0)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWood) == 2) outputText(" (Rank 1)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWood) == 3) outputText(" (Rank 2)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWood) == 4) outputText(" (Rank 3)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWood) == 5) outputText(" (Rank 4)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWood) == 6) outputText(" (Rank 5)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWood) == 7) outputText(" (Rank 6)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWood) == 8) outputText(" (Rank 7)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWood) == 9) outputText(" (3rd Elder Rank)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWood) == 10) outputText(" (2nd Elder Rank)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWood) == 11) outputText(" (1st Elder Rank)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWood) == 12) outputText(" (Grand Elder Rank)");
-			}
-			if (player.hasStatusEffect(StatusEffects.SummonedElementalsMetal)) {
-				outputText("\nMetal");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsMetal) == 1) outputText(" (Rank 0)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsMetal) == 2) outputText(" (Rank 1)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsMetal) == 3) outputText(" (Rank 2)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsMetal) == 4) outputText(" (Rank 3)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsMetal) == 5) outputText(" (Rank 4)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsMetal) == 6) outputText(" (Rank 5)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsMetal) == 7) outputText(" (Rank 6)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsMetal) == 8) outputText(" (Rank 7)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsMetal) == 9) outputText(" (3rd Elder Rank)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsMetal) == 10) outputText(" (2nd Elder Rank)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsMetal) == 11) outputText(" (1st Elder Rank)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsMetal) == 12) outputText(" (Grand Elder Rank)");
-			}
-			if (player.hasStatusEffect(StatusEffects.SummonedElementalsIce)) {
-				outputText("\nIce");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsIce) == 1) outputText(" (Rank 0)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsIce) == 2) outputText(" (Rank 1)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsIce) == 3) outputText(" (Rank 2)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsIce) == 4) outputText(" (Rank 3)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsIce) == 5) outputText(" (Rank 4)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsIce) == 6) outputText(" (Rank 5)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsIce) == 7) outputText(" (Rank 6)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsIce) == 8) outputText(" (Rank 7)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsIce) == 9) outputText(" (3rd Elder Rank)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsIce) == 10) outputText(" (2nd Elder Rank)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsIce) == 11) outputText(" (1st Elder Rank)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsIce) == 12) outputText(" (Grand Elder Rank)");
-			}
-			if (player.hasStatusEffect(StatusEffects.SummonedElementalsLightning)) {
-				outputText("\nLightning");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsLightning) == 1) outputText(" (Rank 0)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsLightning) == 2) outputText(" (Rank 1)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsLightning) == 3) outputText(" (Rank 2)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsLightning) == 4) outputText(" (Rank 3)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsLightning) == 5) outputText(" (Rank 4)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsLightning) == 6) outputText(" (Rank 5)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsLightning) == 7) outputText(" (Rank 6)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsLightning) == 8) outputText(" (Rank 7)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsLightning) == 9) outputText(" (3rd Elder Rank)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsLightning) == 10) outputText(" (2nd Elder Rank)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsLightning) == 11) outputText(" (1st Elder Rank)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsLightning) == 12) outputText(" (Grand Elder Rank)");
-			}
-			if (player.hasStatusEffect(StatusEffects.SummonedElementalsDarkness)) {
-				outputText("\nDarkness");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsDarkness) == 1) outputText(" (Rank 0)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsDarkness) == 2) outputText(" (Rank 1)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsDarkness) == 3) outputText(" (Rank 2)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsDarkness) == 4) outputText(" (Rank 3)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsDarkness) == 5) outputText(" (Rank 4)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsDarkness) == 6) outputText(" (Rank 5)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsDarkness) == 7) outputText(" (Rank 6)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsDarkness) == 8) outputText(" (Rank 7)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsDarkness) == 9) outputText(" (3rd Elder Rank)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsDarkness) == 10) outputText(" (2nd Elder Rank)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsDarkness) == 11) outputText(" (1st Elder Rank)");
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsDarkness) == 12) outputText(" (Grand Elder Rank)");
-			}
-			outputText("</i>");
-			if (player.hasPerk(PerkLib.JobElementalConjurer) && (player.statusEffectv1(StatusEffects.SummonedElementals) < maxSizeOfElementalsArmy())) addButton(0, "Summon", summoningElementalsSubmenu);
-			if (player.hasPerk(PerkLib.ElementalContractRank1)) addButton(1, "RankUp(1)", rankUpSubmenu1st);
-			if (player.hasPerk(PerkLib.ElementalContractRank2)) addButton(2, "RankUp(2)", rankUpSubmenu2nd);
-			if (player.hasPerk(PerkLib.ElementalContractRank3)) addButton(3, "RankUp(3)", rankUpSubmenu3rd);
-			if (flags[kFLAGS.CAMP_UPGRADES_ARCANE_CIRCLE] >= 2) {
-				if (player.hasPerk(PerkLib.ElementalContractRank4)) addButton(4, "RankUp(4)", rankUpSubmenu4th);
-				if (player.hasPerk(PerkLib.ElementalContractRank5)) addButton(5, "RankUp(5)", rankUpSubmenu5th);
-				if (player.hasPerk(PerkLib.ElementalContractRank6)) addButton(6, "RankUp(6)", rankUpSubmenu6th);
-				if (player.hasPerk(PerkLib.ElementalContractRank7)) addButton(7, "RankUp(7)", rankUpSubmenu7th);
-			}
-			if (flags[kFLAGS.CAMP_UPGRADES_ARCANE_CIRCLE] >= 3) {
-				if (player.hasPerk(PerkLib.ElementalContractRank8)) addButton(8, "RankUp(8)", rankUpSubmenu8th);
-				if (player.hasPerk(PerkLib.ElementalContractRank9)) addButton(9, "RankUp(9)", rankUpSubmenu9th);
-				if (player.hasPerk(PerkLib.ElementalContractRank10)) addButton(10, "RankUp(10)", rankUpSubmenu10th);
-				if (player.hasPerk(PerkLib.ElementalContractRank11)) addButton(11, "RankUp(11)", rankUpSubmenu11th);
-			}
-			addButton(14, "Back", playerMenu);
+			text += "]";
+			outputText(text);
+			var buttons: ButtonDataList = new ButtonDataList();
+			buttons.add("Summon", summoningSubmenu)
+				.disableIf(player.statusEffectv1(StatusEffects.SummonedElementals) < maxSizeOfElementalsArmy(), "You have too many elementals summoned!")
+				.disableIf(!player.hasPerk(PerkLib.JobElementalConjurer), "You're not quite sure how to summon anything yet.");
+			buttons.add("Rank Up", rankUpSubmenu)
+				.disableIf(!player.hasPerk(PerkLib.ElementalContractRank1));
+			buttons.submenu(playerMenu, 0, false);
 		}
-		private function summoningElementalsSubmenu():void {
+
+		private function elementName(status: StatusEffectType): String {
+			return status.id.replace("Summoned Elementals ", "");
+		}
+
+		private function summoningSubmenu(): void {
 			outputText("\n\nIf you not have enough mana and fatigue it will be impossible to summon any elementals.\n\n");
 			menu();
-			if (player.mana >= 100 && (player.fatigue + 50 <= player.maxFatigue())) {
-				if (player.statusEffectv1(StatusEffects.SummonedElementalsAir) < 1) addButton(0, "Air", summonElementalAir);
-				if (player.statusEffectv1(StatusEffects.SummonedElementalsEarth) < 1) addButton(1, "Earth", summonElementalEarth);
-				if (player.statusEffectv1(StatusEffects.SummonedElementalsFire) < 1) addButton(2, "Fire", summonElementalFire);
-				if (player.statusEffectv1(StatusEffects.SummonedElementalsWater) < 1) addButton(3, "Water", summonElementalWater);
-				if (player.hasPerk(PerkLib.ElementsOfTheOrtodoxPath)) {
-					if (player.statusEffectv1(StatusEffects.SummonedElementalsEther) < 1) addButton(4, "Ether", summonElementalEther);
-					if (player.statusEffectv1(StatusEffects.SummonedElementalsWood) < 1) addButton(5, "Wood", summonElementalWood);
-					if (player.statusEffectv1(StatusEffects.SummonedElementalsMetal) < 1) addButton(6, "Metal", summonElementalMetal);
+			var buttons: ButtonDataList = new ButtonDataList();
+			var reg: Array = [StatusEffects.SummonedElementalsAir, StatusEffects.SummonedElementalsEarth, StatusEffects.SummonedElementalsFire, StatusEffects.SummonedElementalsWater];
+			var ort: Array = [StatusEffects.SummonedElementalsEther, StatusEffects.SummonedElementalsWood, StatusEffects.SummonedElementalsMetal];
+			var bas: Array = [StatusEffects.SummonedElementalsIce, StatusEffects.SummonedElementalsLightning, StatusEffects.SummonedElementalsDarkness];
+
+			addButtons(reg);
+			if (player.hasPerk(PerkLib.ElementsOfTheOrtodoxPath)) {
+				addButtons(ort);
+			}
+			if (player.hasPerk(PerkLib.ElementsOfMarethBasics)) {
+				addButtons(bas);
+			}
+
+			function addButtons(statuses: Array): void {
+				for each (var status: StatusEffectType in statuses) {
+					newButton(status);
 				}
-				if (player.hasPerk(PerkLib.ElementsOfMarethBasics)) {
-					if (player.statusEffectv1(StatusEffects.SummonedElementalsIce) < 1) addButton(7, "Ice", summonElementalIce);
-					if (player.statusEffectv1(StatusEffects.SummonedElementalsLightning) < 1) addButton(8, "Lightning", summonElementalLightning);
-					if (player.statusEffectv1(StatusEffects.SummonedElementalsDarkness) < 1) addButton(9, "Darkness", summonElementalDarkness);
-				}
 			}
-			addButton(14, "Back", accessSummonElementalsMainMenu);
-		}
-		private function rankUpSubmenu1st():void {
-			outputText("\n\nIf you not have enough mana and fatigue it will be impossible to rank up any of your elementals. And even if you got it whole process can end in failure.\n\n");
-			menu();
-			if (player.mana >= 100 && (player.fatigue + 50 <= player.maxFatigue())) {
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsAir) == 1) addButton(0, "Air", rankUpElementalAir);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEarth) == 1) addButton(1, "Earth", rankUpElementalEarth);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsFire) == 1) addButton(2, "Fire", rankUpElementalFire);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWater) == 1) addButton(3, "Water", rankUpElementalWater);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEther) == 1) addButton(4, "Ether", rankUpElementalEther);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWood) == 1) addButton(5, "Wood", rankUpElementalWood);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsMetal) == 1) addButton(6, "Metal", rankUpElementalMetal);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsIce) == 1) addButton(7, "Ice", rankUpElementalIce);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsLightning) == 1) addButton(8, "Lightning", rankUpElementalLightning);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsDarkness) == 1) addButton(9, "Darkness", rankUpElementalDarkness);
+
+			function newButton(status: StatusEffectType): void {
+				buttons.add(elementName(status), curry(summonElemental, status))
+					.disableIf(player.statusEffectv1(status) >= 1, "You already have this elemental summoned")
+					.requireMana(100)
+					.requireFatigue(50);
 			}
-			addButton(14, "Back", accessSummonElementalsMainMenu);
-		}
-		private function rankUpSubmenu2nd():void {
-			outputText("\n\nIf you not have enough mana and fatigue it will be impossible to rank up any of your elementals. And even if you got it whole process can end in failure.\n\n");
-			menu();
-			if (player.mana >= 200 && (player.fatigue + 100 <= player.maxFatigue())) {
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsAir) == 2) addButton(0, "Air", rankUpElementalAir);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEarth) == 2) addButton(1, "Earth", rankUpElementalEarth);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsFire) == 2) addButton(2, "Fire", rankUpElementalFire);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWater) == 2) addButton(3, "Water", rankUpElementalWater);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEther) == 2) addButton(4, "Ether", rankUpElementalEther);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWood) == 2) addButton(5, "Wood", rankUpElementalWood);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsMetal) == 2) addButton(6, "Metal", rankUpElementalMetal);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsIce) == 2) addButton(7, "Ice", rankUpElementalIce);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsLightning) == 2) addButton(8, "Lightning", rankUpElementalLightning);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsDarkness) == 2) addButton(9, "Darkness", rankUpElementalDarkness);
-			}
-			addButton(14, "Back", accessSummonElementalsMainMenu);
-		}
-		private function rankUpSubmenu3rd():void {
-			outputText("\n\nIf you not have enough mana and fatigue it will be impossible to rank up any of your elementals. And even if you got it whole process can end in failure.\n\n");
-			menu();
-			if (player.mana >= 300 && (player.fatigue + 150 <= player.maxFatigue())) {
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsAir) == 3) addButton(0, "Air", rankUpElementalAir);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEarth) == 3) addButton(1, "Earth", rankUpElementalEarth);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsFire) == 3) addButton(2, "Fire", rankUpElementalFire);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWater) == 3) addButton(3, "Water", rankUpElementalWater);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEther) == 3) addButton(4, "Ether", rankUpElementalEther);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWood) == 3) addButton(5, "Wood", rankUpElementalWood);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsMetal) == 3) addButton(6, "Metal", rankUpElementalMetal);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsIce) == 3) addButton(7, "Ice", rankUpElementalIce);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsLightning) == 3) addButton(8, "Lightning", rankUpElementalLightning);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsDarkness) == 3) addButton(9, "Darkness", rankUpElementalDarkness);
-			}
-			addButton(14, "Back", accessSummonElementalsMainMenu);
-		}
-		private function rankUpSubmenu4th():void {
-			outputText("\n\nIf you not have enough mana and fatigue it will be impossible to rank up any of your elementals. And even if you got it whole process can end in failure.\n\n");
-			menu();
-			if (player.mana >= 400 && (player.fatigue + 200 <= player.maxFatigue())) {
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsAir) == 4) addButton(0, "Air", rankUpElementalAir);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEarth) == 4) addButton(1, "Earth", rankUpElementalEarth);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsFire) == 4) addButton(2, "Fire", rankUpElementalFire);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWater) == 4) addButton(3, "Water", rankUpElementalWater);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEther) == 4) addButton(4, "Ether", rankUpElementalEther);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWood) == 4) addButton(5, "Wood", rankUpElementalWood);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsMetal) == 4) addButton(6, "Metal", rankUpElementalMetal);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsIce) == 4) addButton(7, "Ice", rankUpElementalIce);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsLightning) == 4) addButton(8, "Lightning", rankUpElementalLightning);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsDarkness) == 4) addButton(9, "Darkness", rankUpElementalDarkness);
-			}
-			addButton(14, "Back", accessSummonElementalsMainMenu);
-		}
-		private function rankUpSubmenu5th():void {
-			outputText("\n\nIf you not have enough mana and fatigue it will be impossible to rank up any of your elementals. And even if you got it whole process can end in failure.\n\n");
-			menu();
-			if (player.mana >= 500 && (player.fatigue + 250 <= player.maxFatigue())) {
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsAir) == 5) addButton(0, "Air", rankUpElementalAir);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEarth) == 5) addButton(1, "Earth", rankUpElementalEarth);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsFire) == 5) addButton(2, "Fire", rankUpElementalFire);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWater) == 5) addButton(3, "Water", rankUpElementalWater);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEther) == 5) addButton(4, "Ether", rankUpElementalEther);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWood) == 5) addButton(5, "Wood", rankUpElementalWood);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsMetal) == 5) addButton(6, "Metal", rankUpElementalMetal);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsIce) == 5) addButton(7, "Ice", rankUpElementalIce);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsLightning) == 5) addButton(8, "Lightning", rankUpElementalLightning);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsDarkness) == 5) addButton(9, "Darkness", rankUpElementalDarkness);
-			}
-			addButton(14, "Back", accessSummonElementalsMainMenu);
-		}
-		private function rankUpSubmenu6th():void {
-			outputText("\n\nIf you not have enough mana and fatigue it will be impossible to rank up any of your elementals. And even if you got it whole process can end in failure.\n\n");
-			menu();
-			if (player.mana >= 600 && (player.fatigue + 300 <= player.maxFatigue())) {
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsAir) == 6) addButton(0, "Air", rankUpElementalAir);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEarth) == 6) addButton(1, "Earth", rankUpElementalEarth);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsFire) == 6) addButton(2, "Fire", rankUpElementalFire);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWater) == 6) addButton(3, "Water", rankUpElementalWater);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEther) == 6) addButton(4, "Ether", rankUpElementalEther);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWood) == 6) addButton(5, "Wood", rankUpElementalWood);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsMetal) == 6) addButton(6, "Metal", rankUpElementalMetal);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsIce) == 6) addButton(7, "Ice", rankUpElementalIce);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsLightning) == 6) addButton(8, "Lightning", rankUpElementalLightning);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsDarkness) == 6) addButton(9, "Darkness", rankUpElementalDarkness);
-			}
-			addButton(14, "Back", accessSummonElementalsMainMenu);
-		}
-		private function rankUpSubmenu7th():void {
-			outputText("\n\nIf you not have enough mana and fatigue it will be impossible to rank up any of your elementals. And even if you got it whole process can end in failure.\n\n");
-			menu();
-			if (player.mana >= 700 && (player.fatigue + 350 <= player.maxFatigue())) {
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsAir) == 7) addButton(0, "Air", rankUpElementalAir);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEarth) == 7) addButton(1, "Earth", rankUpElementalEarth);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsFire) == 7) addButton(2, "Fire", rankUpElementalFire);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWater) == 7) addButton(3, "Water", rankUpElementalWater);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEther) == 7) addButton(4, "Ether", rankUpElementalEther);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWood) == 7) addButton(5, "Wood", rankUpElementalWood);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsMetal) == 7) addButton(6, "Metal", rankUpElementalMetal);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsIce) == 7) addButton(7, "Ice", rankUpElementalIce);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsLightning) == 7) addButton(8, "Lightning", rankUpElementalLightning);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsDarkness) == 7) addButton(9, "Darkness", rankUpElementalDarkness);
-			}
-			addButton(14, "Back", accessSummonElementalsMainMenu);
-		}
-		private function rankUpSubmenu8th():void {
-			outputText("\n\nIf you not have enough mana and fatigue it will be impossible to rank up any of your elementals. And even if you got it whole process can end in failure.\n\n");
-			menu();
-			if (player.mana >= 800 && (player.fatigue + 400 <= player.maxFatigue())) {
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsAir) == 8) addButton(0, "Air", rankUpElementalAir);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEarth) == 8) addButton(1, "Earth", rankUpElementalEarth);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsFire) == 8) addButton(2, "Fire", rankUpElementalFire);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWater) == 8) addButton(3, "Water", rankUpElementalWater);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEther) == 8) addButton(4, "Ether", rankUpElementalEther);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWood) == 8) addButton(5, "Wood", rankUpElementalWood);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsMetal) == 8) addButton(6, "Metal", rankUpElementalMetal);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsIce) == 8) addButton(7, "Ice", rankUpElementalIce);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsLightning) == 8) addButton(8, "Lightning", rankUpElementalLightning);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsDarkness) == 8) addButton(9, "Darkness", rankUpElementalDarkness);
-			}
-			addButton(14, "Back", accessSummonElementalsMainMenu);
-		}
-		private function rankUpSubmenu9th():void {
-			outputText("\n\nIf you not have enough mana and fatigue it will be impossible to rank up any of your elementals. And even if you got it whole process can end in failure.\n\n");
-			menu();
-			if (player.mana >= 900 && (player.fatigue + 450 <= player.maxFatigue())) {
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsAir) == 9) addButton(0, "Air", rankUpElementalAir);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEarth) == 9) addButton(1, "Earth", rankUpElementalEarth);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsFire) == 9) addButton(2, "Fire", rankUpElementalFire);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWater) == 9) addButton(3, "Water", rankUpElementalWater);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEther) == 9) addButton(4, "Ether", rankUpElementalEther);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWood) == 9) addButton(5, "Wood", rankUpElementalWood);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsMetal) == 9) addButton(6, "Metal", rankUpElementalMetal);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsIce) == 9) addButton(7, "Ice", rankUpElementalIce);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsLightning) == 9) addButton(8, "Lightning", rankUpElementalLightning);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsDarkness) == 9) addButton(9, "Darkness", rankUpElementalDarkness);
-			}
-			addButton(14, "Back", accessSummonElementalsMainMenu);
-		}
-		private function rankUpSubmenu10th():void {
-			outputText("\n\nIf you not have enough mana and fatigue it will be impossible to rank up any of your elementals. And even if you got it whole process can end in failure.\n\n");
-			menu();
-			if (player.mana >= 1000 && (player.fatigue + 500 <= player.maxFatigue())) {
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsAir) == 10) addButton(0, "Air", rankUpElementalAir);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEarth) == 10) addButton(1, "Earth", rankUpElementalEarth);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsFire) == 10) addButton(2, "Fire", rankUpElementalFire);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWater) == 10) addButton(3, "Water", rankUpElementalWater);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEther) == 10) addButton(4, "Ether", rankUpElementalEther);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWood) == 10) addButton(5, "Wood", rankUpElementalWood);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsMetal) == 10) addButton(6, "Metal", rankUpElementalMetal);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsIce) == 10) addButton(7, "Ice", rankUpElementalIce);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsLightning) == 10) addButton(8, "Lightning", rankUpElementalLightning);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsDarkness) == 10) addButton(9, "Darkness", rankUpElementalDarkness);
-			}
-			addButton(14, "Back", accessSummonElementalsMainMenu);
-		}
-		private function rankUpSubmenu11th():void {
-			outputText("\n\nIf you not have enough mana and fatigue it will be impossible to rank up any of your elementals. And even if you got it whole process can end in failure.\n\n");
-			menu();
-			if (player.mana >= 1100 && (player.fatigue + 550 <= player.maxFatigue())) {
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsAir) == 11) addButton(0, "Air", rankUpElementalAir);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEarth) == 11) addButton(1, "Earth", rankUpElementalEarth);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsFire) == 11) addButton(2, "Fire", rankUpElementalFire);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWater) == 11) addButton(3, "Water", rankUpElementalWater);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsEther) == 11) addButton(4, "Ether", rankUpElementalEther);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsWood) == 11) addButton(5, "Wood", rankUpElementalWood);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsMetal) == 11) addButton(6, "Metal", rankUpElementalMetal);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsIce) == 11) addButton(7, "Ice", rankUpElementalIce);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsLightning) == 11) addButton(8, "Lightning", rankUpElementalLightning);
-				if (player.statusEffectv2(StatusEffects.SummonedElementalsDarkness) == 11) addButton(9, "Darkness", rankUpElementalDarkness);
-			}
+
 			addButton(14, "Back", accessSummonElementalsMainMenu);
 		}
 
-		private function summonElementalAir():void {
+
+		private function summonElemental(elemental: StatusEffectType): void {
+			var name: String = elementName(elemental).toLowerCase();
 			clearOutput();
 			useMana(100);
 			fatigue(50);
 			statScreenRefresh();
-			outputText("As it will be your first time summoning an air elemental, you begin the ritual by drawing a small circle of rune inside the larger arcane circle you already built, including runes for binding, and directive. That done you initiate the most dangerous part of the ritual, invoking the primal might of the elemental. The air elemental appear within the circle. At first huge and terrifying, it fight against its binding trying to break through. ");
-			outputText("The binding circle holds however acting as a mighty barrier the creature cannot breach. As the restraint rune takes hold it slowly shrink in size to something you can properly control. Their duty fulfilled the binding runes fades disappearing into the elemental until you call upon them again. \"<b>The ritual is finally complete congratulation is in order as you bound your very own air elemental!</b>\"");
-			if (player.hasStatusEffect(StatusEffects.SummonedElementals)) player.addStatusValue(StatusEffects.SummonedElementals, 1, 1);
-			else player.createStatusEffect(StatusEffects.SummonedElementals, 1, 0, 0, 0);
-			player.createStatusEffect(StatusEffects.SummonedElementalsAir, 1, 1, 0, 0);
+			outputText("As it will be your first time summoning an " + name + " elemental, you begin the ritual by drawing a small circle of runes inside the larger arcane circle you have already built, including runes for binding, and directive. That done you initiate the most dangerous part of the ritual, invoking the primal might of the elemental. The " + name + " elemental appears within the circle, at first huge and terrifying, it fights against its binding trying to break through. ");
+			outputText("The binding circle holds however acting as a mighty barrier the creature cannot breach. As the restraint rune takes hold it slowly shrink in size to something you can properly control. Their duty fulfilled the binding runes fades disappearing into the elemental until you call upon them again.");
+			outputText("\n\n[b: The ritual is finally complete congratulation is in order as you bound your very own " + name + " elemental!]");
+			player.createOrFindStatusEffect(StatusEffects.SummonedElementals).value1 += 1;
+			player.createStatusEffect(elemental, 1, 1, 0, 0);
 			doNext(accessSummonElementalsMainMenu);
-			cheatTime(1/2);
+			cheatTime(1 / 2);
 		}
-		private function summonElementalEarth():void {
-			clearOutput();
-			useMana(100);
-			fatigue(50);
-			statScreenRefresh();
-			outputText("As it will be your first time summoning an earth elemental, you begin the ritual by drawing a small circle of rune inside the larger arcane circle you already built, including runes for binding, and directive. That done you initiate the most dangerous part of the ritual, invoking the primal might of the elemental. The earth elemental appear within the circle. At first huge and terrifying, it fight against its binding trying to break through. ");
-			outputText("The binding circle holds however acting as a mighty barrier the creature cannot breach. As the restraint rune takes hold it slowly shrink in size to something you can properly control. Their duty fulfilled the binding runes fades disappearing into the elemental until you call upon them again. \"<b>The ritual is finally complete congratulation is in order as you bound your very own earth elemental!</b>\"");
-			if (player.hasStatusEffect(StatusEffects.SummonedElementals)) player.addStatusValue(StatusEffects.SummonedElementals, 1, 1);
-			else player.createStatusEffect(StatusEffects.SummonedElementals, 1, 0, 0, 0);
-			player.createStatusEffect(StatusEffects.SummonedElementalsEarth, 1, 1, 0, 0);
-			doNext(accessSummonElementalsMainMenu);
-			cheatTime(1/2);
-		}
-		private function summonElementalFire():void {
-			clearOutput();
-			useMana(100);
-			fatigue(50);
-			statScreenRefresh();
-			outputText("As it will be your first time summoning an fire elemental, you begin the ritual by drawing a small circle of rune inside the larger arcane circle you already built, including runes for binding, and directive. That done you initiate the most dangerous part of the ritual, invoking the primal might of the elemental. The fire elemental appear within the circle. At first huge and terrifying, it fight against its binding trying to break through. ");
-			outputText("The binding circle holds however acting as a mighty barrier the creature cannot breach. As the restraint rune takes hold it slowly shrink in size to something you can properly control. Their duty fulfilled the binding runes fades disappearing into the elemental until you call upon them again. \"<b>The ritual is finally complete congratulation is in order as you bound your very own fire elemental!</b>\"");
-			if (player.hasStatusEffect(StatusEffects.SummonedElementals)) player.addStatusValue(StatusEffects.SummonedElementals, 1, 1);
-			else player.createStatusEffect(StatusEffects.SummonedElementals, 1, 0, 0, 0);
-			player.createStatusEffect(StatusEffects.SummonedElementalsFire, 1, 1, 0, 0);
-			doNext(accessSummonElementalsMainMenu);
-			cheatTime(1/2);
-		}
-		private function summonElementalWater():void {
-			clearOutput();
-			useMana(100);
-			fatigue(50);
-			statScreenRefresh();
-			outputText("As it will be your first time summoning an water elemental, you begin the ritual by drawing a small circle of rune inside the larger arcane circle you already built, including runes for binding, and directive. That done you initiate the most dangerous part of the ritual, invoking the primal might of the elemental. The water elemental appear within the circle. At first huge and terrifying, it fight against its binding trying to break through. ");
-			outputText("The binding circle holds however acting as a mighty barrier the creature cannot breach. As the restraint rune takes hold it slowly shrink in size to something you can properly control. Their duty fulfilled the binding runes fades disappearing into the elemental until you call upon them again. \"<b>The ritual is finally complete congratulation is in order as you bound your very own water elemental!</b>\"");
-			if (player.hasStatusEffect(StatusEffects.SummonedElementals)) player.addStatusValue(StatusEffects.SummonedElementals, 1, 1);
-			else player.createStatusEffect(StatusEffects.SummonedElementals, 1, 0, 0, 0);
-			player.createStatusEffect(StatusEffects.SummonedElementalsWater, 1, 1, 0, 0);
-			doNext(accessSummonElementalsMainMenu);
-			cheatTime(1/2);
-		}
-		private function summonElementalIce():void {
-			clearOutput();
-			useMana(100);
-			fatigue(50);
-			statScreenRefresh();
-			outputText("As it will be your first time summoning an ice elemental, you begin the ritual by drawing a small circle of rune inside the larger arcane circle you already built, including runes for binding, and directive. That done you initiate the most dangerous part of the ritual, invoking the primal might of the elemental. The ice elemental appear within the circle. At first huge and terrifying, it fight against its binding trying to break through. ");
-			outputText("The binding circle holds however acting as a mighty barrier the creature cannot breach. As the restraint rune takes hold it slowly shrink in size to something you can properly control. Their duty fulfilled the binding runes fades disappearing into the elemental until you call upon them again. \"<b>The ritual is finally complete congratulation is in order as you bound your very own ice elemental!</b>\"");
-			if (player.hasStatusEffect(StatusEffects.SummonedElementals)) player.addStatusValue(StatusEffects.SummonedElementals, 1, 1);
-			else player.createStatusEffect(StatusEffects.SummonedElementals, 1, 0, 0, 0);
-			player.createStatusEffect(StatusEffects.SummonedElementalsIce, 1, 1, 0, 0);
-			doNext(accessSummonElementalsMainMenu);
-			cheatTime(1/2);
-		}
-		private function summonElementalLightning():void {
-			clearOutput();
-			useMana(100);
-			fatigue(50);
-			statScreenRefresh();
-			outputText("As it will be your first time summoning an lightning elemental, you begin the ritual by drawing a small circle of rune inside the larger arcane circle you already built, including runes for binding, and directive. That done you initiate the most dangerous part of the ritual, invoking the primal might of the elemental. The lightning elemental appear within the circle. At first huge and terrifying, it fight against its binding trying to break through. ");
-			outputText("The binding circle holds however acting as a mighty barrier the creature cannot breach. As the restraint rune takes hold it slowly shrink in size to something you can properly control. Their duty fulfilled the binding runes fades disappearing into the elemental until you call upon them again. \"<b>The ritual is finally complete congratulation is in order as you bound your very own lightning elemental!</b>\"");
-			if (player.hasStatusEffect(StatusEffects.SummonedElementals)) player.addStatusValue(StatusEffects.SummonedElementals, 1, 1);
-			else player.createStatusEffect(StatusEffects.SummonedElementals, 1, 0, 0, 0);
-			player.createStatusEffect(StatusEffects.SummonedElementalsLightning, 1, 1, 0, 0);
-			doNext(accessSummonElementalsMainMenu);
-			cheatTime(1/2);
-		}
-		private function summonElementalDarkness():void {
-			clearOutput();
-			useMana(100);
-			fatigue(50);
-			statScreenRefresh();
-			outputText("As it will be your first time summoning an darkness elemental, you begin the ritual by drawing a small circle of rune inside the larger arcane circle you already built, including runes for binding, and directive. That done you initiate the most dangerous part of the ritual, invoking the primal might of the elemental. The darkness elemental appear within the circle. At first huge and terrifying, it fight against its binding trying to break through. ");
-			outputText("The binding circle holds however acting as a mighty barrier the creature cannot breach. As the restraint rune takes hold it slowly shrink in size to something you can properly control. Their duty fulfilled the binding runes fades disappearing into the elemental until you call upon them again. \"<b>The ritual is finally complete congratulation is in order as you bound your very own darkness elemental!</b>\"");
-			if (player.hasStatusEffect(StatusEffects.SummonedElementals)) player.addStatusValue(StatusEffects.SummonedElementals, 1, 1);
-			else player.createStatusEffect(StatusEffects.SummonedElementals, 1, 0, 0, 0);
-			player.createStatusEffect(StatusEffects.SummonedElementalsDarkness, 1, 1, 0, 0);
-			doNext(accessSummonElementalsMainMenu);
-			cheatTime(1/2);
-		}
-		private function summonElementalWood():void {
-			clearOutput();
-			useMana(100);
-			fatigue(50);
-			statScreenRefresh();
-			outputText("As it will be your first time summoning an wood elemental, you begin the ritual by drawing a small circle of rune inside the larger arcane circle you already built, including runes for binding, and directive. That done you initiate the most dangerous part of the ritual, invoking the primal might of the elemental. The wood elemental appear within the circle. At first huge and terrifying, it fight against its binding trying to break through. ");
-			outputText("The binding circle holds however acting as a mighty barrier the creature cannot breach. As the restraint rune takes hold it slowly shrink in size to something you can properly control. Their duty fulfilled the binding runes fades disappearing into the elemental until you call upon them again. \"<b>The ritual is finally complete congratulation is in order as you bound your very own wood elemental!</b>\"");
-			if (player.hasStatusEffect(StatusEffects.SummonedElementals)) player.addStatusValue(StatusEffects.SummonedElementals, 1, 1);
-			else player.createStatusEffect(StatusEffects.SummonedElementals, 1, 0, 0, 0);
-			player.createStatusEffect(StatusEffects.SummonedElementalsWood, 1, 1, 0, 0);
-			doNext(accessSummonElementalsMainMenu);
-			cheatTime(1/2);
-		}
-		private function summonElementalMetal():void {
-			clearOutput();
-			useMana(100);
-			fatigue(50);
-			statScreenRefresh();
-			outputText("As it will be your first time summoning an metal elemental, you begin the ritual by drawing a small circle of rune inside the larger arcane circle you already built, including runes for binding, and directive. That done you initiate the most dangerous part of the ritual, invoking the primal might of the elemental. The metal elemental appear within the circle. At first huge and terrifying, it fight against its binding trying to break through. ");
-			outputText("The binding circle holds however acting as a mighty barrier the creature cannot breach. As the restraint rune takes hold it slowly shrink in size to something you can properly control. Their duty fulfilled the binding runes fades disappearing into the elemental until you call upon them again. \"<b>The ritual is finally complete congratulation is in order as you bound your very own metal elemental!</b>\"");
-			if (player.hasStatusEffect(StatusEffects.SummonedElementals)) player.addStatusValue(StatusEffects.SummonedElementals, 1, 1);
-			else player.createStatusEffect(StatusEffects.SummonedElementals, 1, 0, 0, 0);
-			player.createStatusEffect(StatusEffects.SummonedElementalsMetal, 1, 1, 0, 0);
-			doNext(accessSummonElementalsMainMenu);
-			cheatTime(1/2);
-		}
-		private function summonElementalEther():void {
-			clearOutput();
-			useMana(100);
-			fatigue(50);
-			statScreenRefresh();
-			outputText("As it will be your first time summoning an ether elemental, you begin the ritual by drawing a small circle of rune inside the larger arcane circle you already built, including runes for binding, and directive. That done you initiate the most dangerous part of the ritual, invoking the primal might of the elemental. The ether elemental appear within the circle. At first huge and terrifying, it fight against its binding trying to break through. ");
-			outputText("The binding circle holds however acting as a mighty barrier the creature cannot breach. As the restraint rune takes hold it slowly shrink in size to something you can properly control. Their duty fulfilled the binding runes fades disappearing into the elemental until you call upon them again. \"<b>The ritual is finally complete congratulation is in order as you bound your very own ether elemental!</b>\"");
-			if (player.hasStatusEffect(StatusEffects.SummonedElementals)) player.addStatusValue(StatusEffects.SummonedElementals, 1, 1);
-			else player.createStatusEffect(StatusEffects.SummonedElementals, 1, 0, 0, 0);
-			player.createStatusEffect(StatusEffects.SummonedElementalsEther, 1, 1, 0, 0);
-			doNext(accessSummonElementalsMainMenu);
-			cheatTime(1/2);
-		}
-		
-		private function rankUpElementalAir():void {
-			clearOutput();
-			useMana(100 * player.statusEffectv2(StatusEffects.SummonedElementalsAir));
-			fatigue(50 * player.statusEffectv2(StatusEffects.SummonedElementalsAir));
-			statScreenRefresh();
-			rankUpElementalPart1();
-			var summmast:Number = 0;
-			if (player.wis > player.statusEffectv2(StatusEffects.SummonedElementalsAir) * 25) summmast += 25;
-			else summmast += player.wis / player.statusEffectv2(StatusEffects.SummonedElementalsAir);
-			if (rand(summmast) > 5) {
-				outputText("The outraged elemental start by struggling but unable to defeat its binding let go and stand still awaiting your commands. Their duty fulfilled, the binding runes fades disappearing into the elemental until you call upon them again. \"<b>The ritual is complete and your elemental empowered as such!</b>\"");
-				player.addStatusValue(StatusEffects.SummonedElementalsAir, 2, 1);
+
+		private function rankUpSubmenu(): void {
+			var buttons: ButtonDataList = new ButtonDataList();
+			var circleLevel: int = flags[kFLAGS.CAMP_UPGRADES_ARCANE_CIRCLE];
+			for each(var summon: StatusEffectType in summon_statuses) {
+				var level: int = player.statusEffectv2(summon);
+				var reqMana: int = 100 * level;
+				var reqFatigue: int = 50 * level;
+				var needUpgrade: Boolean = (level >= 8 && circleLevel < 3) || (level >= 4 && circleLevel < 2);
+				buttons.add(elementName(summon), curry(rankUpElemental, summon, level, reqMana, reqFatigue))
+					.disableIf(level <= 0, "You don't have any elementals of this type summoned.")
+					.disableIf(level > 11, "This elemental can't be leveled further.")
+					.disableIf(needUpgrade, "You need a better arcane circle to upgrade this elemental.")
+					.disableIf(!player.hasPerk(PerkLib["ElementalContractRank" + level]), "You need to advance your elemental contract to rank up this elemental further.")
+					.requireFatigue(reqFatigue)
+					.requireMana(reqMana);
 			}
-			else failToRankUpElemental();
-			doNext(accessSummonElementalsMainMenu);
-			cheatTime(1/2);
+			buttons.submenu(accessSummonElementalsMainMenu);
 		}
-		private function rankUpElementalEarth():void {
+
+		private function rankUpElemental(elemental: StatusEffectType, level: int, manaCost: int, fatigueCost: int): void {
 			clearOutput();
-			useMana(100 * player.statusEffectv2(StatusEffects.SummonedElementalsEarth));
-			fatigue(50 * player.statusEffectv2(StatusEffects.SummonedElementalsEarth));
+			useMana(manaCost);
+			fatigue(fatigueCost);
 			statScreenRefresh();
-			rankUpElementalPart1();
-			var summmast:Number = 0;
-			if (player.wis > player.statusEffectv2(StatusEffects.SummonedElementalsEarth) * 25) summmast += 25;
-			else summmast += player.wis / player.statusEffectv2(StatusEffects.SummonedElementalsEarth);
-			if (rand(summmast) > 5) {
-				outputText("The outraged elemental start by struggling but unable to defeat its binding let go and stand still awaiting your commands. Their duty fulfilled, the binding runes fades disappearing into the elemental until you call upon them again. \"<b>The ritual is complete and your elemental empowered as such!</b>\"");
-				player.addStatusValue(StatusEffects.SummonedElementalsEarth, 2, 1);
+			showRankUpIntroText();
+			var summmast: Number = 0;
+			if (player.wis > level * 25) {
+				summmast += 25;
+			} else {
+				summmast += player.wis / level;
 			}
-			else failToRankUpElemental();
-			doNext(accessSummonElementalsMainMenu);
-			cheatTime(1/2);
-		}
-		private function rankUpElementalFire():void {
-			clearOutput();
-			useMana(100 * player.statusEffectv2(StatusEffects.SummonedElementalsFire));
-			fatigue(50 * player.statusEffectv2(StatusEffects.SummonedElementalsFire));
-			statScreenRefresh();
-			rankUpElementalPart1();
-			var summmast:Number = 0;
-			if (player.wis > player.statusEffectv2(StatusEffects.SummonedElementalsFire) * 25) summmast += 25;
-			else summmast += player.wis / player.statusEffectv2(StatusEffects.SummonedElementalsFire);
 			if (rand(summmast) > 5) {
-				outputText("The outraged elemental start by struggling but unable to defeat its binding let go and stand still awaiting your commands. Their duty fulfilled, the binding runes fades disappearing into the elemental until you call upon them again. \"<b>The ritual is complete and your elemental empowered as such!</b>\"");
-				player.addStatusValue(StatusEffects.SummonedElementalsFire, 2, 1);
+				outputText("\n\nThe outraged elemental starts struggling but as it is unable to defeat its binding it lets go and stands still awaiting your commands. Their duty fulfilled, the binding runes fade, disappearing into the elemental until you call upon them again.");
+				outputText("\n\n[b: The ritual is complete and your elemental empowered as such!]");
+				player.addStatusValue(elemental, 2, 1);
 			}
-			else failToRankUpElemental();
-			doNext(accessSummonElementalsMainMenu);
-			cheatTime(1/2);
-		}
-		private function rankUpElementalWater():void {
-			clearOutput();
-			useMana(100 * player.statusEffectv2(StatusEffects.SummonedElementalsWater));
-			fatigue(50 * player.statusEffectv2(StatusEffects.SummonedElementalsWater));
-			statScreenRefresh();
-			rankUpElementalPart1();
-			var summmast:Number = 0;
-			if (player.wis > player.statusEffectv2(StatusEffects.SummonedElementalsWater) * 25) summmast += 25;
-			else summmast += player.wis / player.statusEffectv2(StatusEffects.SummonedElementalsWater);
-			if (rand(summmast) > 5) {
-				outputText("The outraged elemental start by struggling but unable to defeat its binding let go and stand still awaiting your commands. Their duty fulfilled, the binding runes fades disappearing into the elemental until you call upon them again. \"<b>The ritual is complete and your elemental empowered as such!</b>\"");
-				player.addStatusValue(StatusEffects.SummonedElementalsWater, 2, 1);
+			else {
+				failToRankUpElemental();
 			}
-			else failToRankUpElemental();
 			doNext(accessSummonElementalsMainMenu);
-			cheatTime(1/2);
+			cheatTime(1 / 2);
 		}
-		private function rankUpElementalIce():void {
-			clearOutput();
-			useMana(100 * player.statusEffectv2(StatusEffects.SummonedElementalsIce));
-			fatigue(50 * player.statusEffectv2(StatusEffects.SummonedElementalsIce));
-			statScreenRefresh();
-			rankUpElementalPart1();
-			var summmast:Number = 0;
-			if (player.wis > player.statusEffectv2(StatusEffects.SummonedElementalsIce) * 25) summmast += 25;
-			else summmast += player.wis / player.statusEffectv2(StatusEffects.SummonedElementalsIce);
-			if (rand(summmast) > 5) {
-				outputText("The outraged elemental start by struggling but unable to defeat its binding let go and stand still awaiting your commands. Their duty fulfilled, the binding runes fades disappearing into the elemental until you call upon them again. \"<b>The ritual is complete and your elemental empowered as such!</b>\"");
-				player.addStatusValue(StatusEffects.SummonedElementalsIce, 2, 1);
-			}
-			else failToRankUpElemental();
-			doNext(accessSummonElementalsMainMenu);
-			cheatTime(1/2);
-		}
-		private function rankUpElementalLightning():void {
-			clearOutput();
-			useMana(100 * player.statusEffectv2(StatusEffects.SummonedElementalsLightning));
-			fatigue(50 * player.statusEffectv2(StatusEffects.SummonedElementalsLightning));
-			statScreenRefresh();
-			rankUpElementalPart1();
-			var summmast:Number = 0;
-			if (player.wis > player.statusEffectv2(StatusEffects.SummonedElementalsLightning) * 25) summmast += 25;
-			else summmast += player.wis / player.statusEffectv2(StatusEffects.SummonedElementalsLightning);
-			if (rand(summmast) > 5) {
-				outputText("The outraged elemental start by struggling but unable to defeat its binding let go and stand still awaiting your commands. Their duty fulfilled, the binding runes fades disappearing into the elemental until you call upon them again. \"<b>The ritual is complete and your elemental empowered as such!</b>\"");
-				player.addStatusValue(StatusEffects.SummonedElementalsLightning, 2, 1);
-			}
-			else failToRankUpElemental();
-			doNext(accessSummonElementalsMainMenu);
-			cheatTime(1/2);
-		}
-		private function rankUpElementalDarkness():void {
-			clearOutput();
-			useMana(100 * player.statusEffectv2(StatusEffects.SummonedElementalsDarkness));
-			fatigue(50 * player.statusEffectv2(StatusEffects.SummonedElementalsDarkness));
-			statScreenRefresh();
-			rankUpElementalPart1();
-			var summmast:Number = 0;
-			if (player.wis > player.statusEffectv2(StatusEffects.SummonedElementalsDarkness) * 25) summmast += 25;
-			else summmast += player.wis / player.statusEffectv2(StatusEffects.SummonedElementalsDarkness);
-			if (rand(summmast) > 5) {
-				outputText("The outraged elemental start by struggling but unable to defeat its binding let go and stand still awaiting your commands. Their duty fulfilled, the binding runes fades disappearing into the elemental until you call upon them again. \"<b>The ritual is complete and your elemental empowered as such!</b>\"");
-				player.addStatusValue(StatusEffects.SummonedElementalsDarkness, 2, 1);
-			}
-			else failToRankUpElemental();
-			doNext(accessSummonElementalsMainMenu);
-			cheatTime(1/2);
-		}
-		private function rankUpElementalWood():void {
-			clearOutput();
-			useMana(100 * player.statusEffectv2(StatusEffects.SummonedElementalsWood));
-			fatigue(50 * player.statusEffectv2(StatusEffects.SummonedElementalsWood));
-			statScreenRefresh();
-			rankUpElementalPart1();
-			var summmast:Number = 0;
-			if (player.wis > player.statusEffectv2(StatusEffects.SummonedElementalsWood) * 25) summmast += 25;
-			else summmast += player.wis / player.statusEffectv2(StatusEffects.SummonedElementalsWood);
-			if (rand(summmast) > 5) {
-				outputText("The outraged elemental start by struggling but unable to defeat its binding let go and stand still awaiting your commands. Their duty fulfilled, the binding runes fades disappearing into the elemental until you call upon them again. \"<b>The ritual is complete and your elemental empowered as such!</b>\"");
-				player.addStatusValue(StatusEffects.SummonedElementalsWood, 2, 1);
-			}
-			else failToRankUpElemental();
-			doNext(accessSummonElementalsMainMenu);
-			cheatTime(1/2);
-		}
-		private function rankUpElementalMetal():void {
-			clearOutput();
-			useMana(100 * player.statusEffectv2(StatusEffects.SummonedElementalsMetal));
-			fatigue(50 * player.statusEffectv2(StatusEffects.SummonedElementalsMetal));
-			statScreenRefresh();
-			rankUpElementalPart1();
-			var summmast:Number = 0;
-			if (player.wis > player.statusEffectv2(StatusEffects.SummonedElementalsMetal) * 25) summmast += 25;
-			else summmast += player.wis / player.statusEffectv2(StatusEffects.SummonedElementalsMetal);
-			if (rand(summmast) > 5) {
-				outputText("The outraged elemental start by struggling but unable to defeat its binding let go and stand still awaiting your commands. Their duty fulfilled, the binding runes fades disappearing into the elemental until you call upon them again. \"<b>The ritual is complete and your elemental empowered as such!</b>\"");
-				player.addStatusValue(StatusEffects.SummonedElementalsMetal, 2, 1);
-			}
-			else failToRankUpElemental();
-			doNext(accessSummonElementalsMainMenu);
-			cheatTime(1/2);
-		}
-		private function rankUpElementalEther():void {
-			clearOutput();
-			useMana(100 * player.statusEffectv2(StatusEffects.SummonedElementalsEther));
-			fatigue(50 * player.statusEffectv2(StatusEffects.SummonedElementalsEther));
-			statScreenRefresh();
-			rankUpElementalPart1();
-			var summmast:Number = 0;
-			if (player.wis > player.statusEffectv2(StatusEffects.SummonedElementalsEther) * 25) summmast += 25;
-			else summmast += player.wis / player.statusEffectv2(StatusEffects.SummonedElementalsEther);
-			if (rand(summmast) > 5) {
-				outputText("The outraged elemental start by struggling but unable to defeat its binding let go and stand still awaiting your commands. Their duty fulfilled, the binding runes fades disappearing into the elemental until you call upon them again. \"<b>The ritual is complete and your elemental empowered as such!</b>\"");
-				player.addStatusValue(StatusEffects.SummonedElementalsEther, 2, 1);
-			}
-			else failToRankUpElemental();
-			doNext(accessSummonElementalsMainMenu);
-			cheatTime(1/2);
-		}
-		private function rankUpElementalPart1():void {
+
+		private function showRankUpIntroText(): void {
 			outputText("It has been a while and your mastery of summoning has increased as a consequence. Now confident that you can contain it you head to the arcane circle and set up the ritual to release some of your servant restraints. You order your pet to stand still as you release the binding rune containing it. ");
-			outputText("At first it trash in its prison with the clear intention to break free, kill and consume you but the ward holds. You write an additional arcane circle ");
-			if (flags[kFLAGS.CAMP_UPGRADES_ARCANE_CIRCLE] == 2)outputText("around the first ");
-			if (flags[kFLAGS.CAMP_UPGRADES_ARCANE_CIRCLE] == 3)outputText("around the previous one ");
+			outputText("At first it trashes in its prison with the clear intention to break free, kill and consume you but the ward holds. You write an additional arcane circle ");
+			if (flags[kFLAGS.CAMP_UPGRADES_ARCANE_CIRCLE] == 2) {
+				outputText("around the first ");
+			}
+			if (flags[kFLAGS.CAMP_UPGRADES_ARCANE_CIRCLE] == 3) {
+				outputText("around the previous one ");
+			}
 			outputText("and add new directive and containment runes to the formula. Satisfied with the result you incant a final word of power.");
 		}
-		private function failToRankUpElemental():void {
-			outputText("The enraged elemental struggle against its containment and to your horror find a breach beginning to grow to its full power and striking you in the process with a powerful barrage of energy.\n\n");
-			outputText("\"<i>You pitiful mortal... you though you could contain me forever! I’m going to make you regret ever summoning me by...</i>\"");
-			outputText("The elemental screams in dismay as your larger arcane circle unleash the full might of its last resort rune. Powerful discharge of energy strikes the wayward servants buying you enough time to rewrite its seal and force it back into servitude.\n\n");
-			outputText("\"<i>Someday you will attempt this ritual again and when you do I will..</i>\"");
-			outputText("Its final curse is silenced as its power are sealed again reducing it back to its former size. \"<b>Well this ritual is a failure you will have to try again when you achieved better control.</b>\"");
+
+		private function failToRankUpElemental(): void {
+			outputText("\n\nThe enraged elemental struggles against its containment and to your horror finds a breach, beginning to grow to its full power and striking you in the process with a powerful barrage of energy!");
+			outputText("\n\n[say: You pitiful mortal... you thought you could contain me forever! I'm going to make you regret ever summoning me...]");
+			outputText("\n\nThe elemental screams in dismay as your larger arcane circle unleashes the full might of its last resort rune. A powerful discharge of energy strikes the wayward servant buying you enough time to rewrite its seal and force it back into servitude.");
+			outputText("\n\n[say: Someday you will attempt this ritual again and when you do I will..]");
+			outputText("\n\nIts final curse is silenced as its power are sealed again reducing it back to its former size.\n\n [b: This ritual was a failure you will have to try again when you have achieved better control.]");
 			HPChange(-(Math.round(player.HP * 0.5)), true);
 		}
 	}
