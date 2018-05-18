@@ -601,7 +601,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 	}
 
 	public function whirlwind():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 4;
+		SceneLib.combat.lastAttack = Combat.PHYSICAL;
 		clearOutput();
 		if (player.fatigue + physicalCost(50) > player.maxFatigue()) {
 			outputText("You are too tired to attack " + monster.a + " " + monster.short + ".");
@@ -671,8 +671,8 @@ public class PhysicalSpecials extends BaseCombatContent {
 	}
 
 	public function whipping():void {
-		if (player.weapon == weapons.L_WHIP) flags[kFLAGS.LAST_ATTACK_TYPE] = 4;
-		else flags[kFLAGS.LAST_ATTACK_TYPE] = 4;
+		if (player.weapon == weapons.L_WHIP) SceneLib.combat.lastAttack = Combat.PHYSICAL;
+		else SceneLib.combat.lastAttack = Combat.PHYSICAL;
 		clearOutput();
 		if (player.fatigue + physicalCost(50) > player.maxFatigue()) {
 			outputText("You are too tired to attack " + monster.a + " " + monster.short + ".");
@@ -749,7 +749,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 	}
 
 	public function whirlwindClaws():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 4;
+		SceneLib.combat.lastAttack = Combat.PHYSICAL;
 		clearOutput();
 		if (player.fatigue + physicalCost(50) > player.maxFatigue()) {
 			outputText("You are too tired to attack " + monster.a + " " + monster.short + ".");
@@ -815,7 +815,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 	}
 
 	public function anemoneSting():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 4;
+		SceneLib.combat.lastAttack = Combat.PHYSICAL;
 		clearOutput();
 		//-sting with hair (combines both bee-sting effects, but weaker than either one separately):
 		//Fail!
@@ -866,7 +866,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 //tiny damage and lower monster armor by ~75% for one turn
 //hit
 	public function tailWhipAttack():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 4;
+		SceneLib.combat.lastAttack = Combat.PHYSICAL;
 		clearOutput();
 		//miss
 		if((player.hasStatusEffect(StatusEffects.Blind) && rand(2) == 0) || (monster.spe - player.spe > 0 && int(Math.random() * (((monster.spe - player.spe) / 4) + 80)) > 80)) {
@@ -890,7 +890,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 	}
 
 	public function tailSlapAttack():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 2;
+		SceneLib.combat.lastAttack = Combat.HPSPELL;
 		clearOutput();
 		fatigue(40, USEFATG_PHYSICAL);
 		outputText("With a simple thought you set your tail ablaze.");
@@ -926,7 +926,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 	}
 
 	public function tailSmackAttack():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 2;
+		SceneLib.combat.lastAttack = Combat.HPSPELL;
 		clearOutput();
 		fatigue(40, USEFATG_PHYSICAL);
 		player.createStatusEffect(StatusEffects.CooldownTailSmack,5,0,0,0);
@@ -950,7 +950,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 	}
 
 	public function inkSpray():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 2;
+		SceneLib.combat.lastAttack = Combat.HPSPELL;
 		clearOutput();
 		fatigue(30, USEFATG_PHYSICAL);
 		if (player.hasPerk(PerkLib.ScyllaInkGlands)) {
@@ -988,7 +988,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 		if (monster.lustVuln > 0) {
 			outputText(" ");
 			var MilkLustDmg:Number = 0;
-			MilkLustDmg += combat.scalingBonusLibido() * 0.2;
+			MilkLustDmg += player.scalingBonusLibido() * 0.2;
 			monster.teased(MilkLustDmg);
 		}
 		if (!monster.hasPerk(PerkLib.Resolute)) monster.createStatusEffect(StatusEffects.Stunned, 1, 0, 0, 0);
@@ -1011,7 +1011,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 		if (monster.lustVuln > 0) {
 			outputText(" ");
 			var CumLustDmg:Number = 0;
-			CumLustDmg += combat.scalingBonusLibido() * 0.2;
+			CumLustDmg += player.scalingBonusLibido() * 0.2;
 			monster.teased(CumLustDmg);
 		}
 		if (!monster.hasPerk(PerkLib.Resolute)) monster.createStatusEffect(StatusEffects.Stunned, 1, 0, 0, 0);
@@ -1033,7 +1033,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 	}
 
 	public function AlraunePollen():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 2;
+		SceneLib.combat.lastAttack = Combat.HPSPELL;
 		clearOutput();
 		var pollen:Number = monster.lustVuln * (2 + rand(4));
 		monster.lust += pollen;
@@ -1043,7 +1043,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 	}
 
 	public function AlrauneEntangle():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 2;
+		SceneLib.combat.lastAttack = Combat.HPSPELL;
 		clearOutput();
 		outputText("You coil your vines around " + monster.a + monster.short + "'s body, slowing them down and hindering ");
 		if(!monster.plural) outputText("its");
@@ -1062,7 +1062,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 	}
 
 	public function AlrauneStrangulate():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 2;
+		SceneLib.combat.lastAttack = Combat.HPSPELL;
 		clearOutput();
 //This is now automatic - newRound arg defaults to true:	menuLoc = 0;
 		fatigue(60, USEFATG_PHYSICAL);
@@ -1076,7 +1076,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 	}
 
 	public function StoneClawAttack():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 2;
+		SceneLib.combat.lastAttack = Combat.HPSPELL;
 		clearOutput();
 //This is now automatic - newRound arg defaults to true:	menuLoc = 0;
 		fatigue(60, USEFATG_PHYSICAL);
@@ -1131,7 +1131,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 	}
 
 	public function TailSlamAttack():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 2;
+		SceneLib.combat.lastAttack = Combat.HPSPELL;
 		clearOutput();
 //This is now automatic - newRound arg defaults to true:	menuLoc = 0;
 		fatigue(30, USEFATG_PHYSICAL);
@@ -1192,7 +1192,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 	}
 
 	public function WingBuffetAttack():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 2;
+		SceneLib.combat.lastAttack = Combat.HPSPELL;
 		clearOutput();
 //This is now automatic - newRound arg defaults to true:	menuLoc = 0;
 		fatigue(30, USEFATG_PHYSICAL);
@@ -1239,7 +1239,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 	}
 	
 	public function TornadoStrike():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 2;
+		SceneLib.combat.lastAttack = Combat.HPSPELL;
 		clearOutput();
 //This is now automatic - newRound arg defaults to true:	menuLoc = 0;
 		fatigue(60, USEFATG_PHYSICAL);
@@ -1277,7 +1277,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 	}
 
 	public function PCWebAttack():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 4;
+		SceneLib.combat.lastAttack = Combat.PHYSICAL;
 		clearOutput();
 		//Keep logic sane if this attack brings victory
 		player.tailVenom -= 30;
@@ -1324,7 +1324,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 		if(!combatIsOver()) enemyAI();
 	}
 	public function scyllaGrapple():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 4;
+		SceneLib.combat.lastAttack = Combat.PHYSICAL;
 		clearOutput();
 		if(player.fatigue + physicalCost(10) > player.maxFatigue()) {
 			clearOutput();
@@ -1375,7 +1375,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 	}
 
 	public function gooEngulf():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 4;
+		SceneLib.combat.lastAttack = Combat.PHYSICAL;
 		clearOutput();
 		if(player.fatigue + physicalCost(10) > player.maxFatigue()) {
 			clearOutput();
@@ -1422,7 +1422,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 	}
 	
 	public function vampireEmbrace():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 4;
+		SceneLib.combat.lastAttack = Combat.PHYSICAL;
 		clearOutput();
 		if(player.fatigue + physicalCost(10) > player.maxFatigue()) {
 			clearOutput();
@@ -1455,7 +1455,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 		enemyAI();
 	}
 	public function catPounce():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 4;
+		SceneLib.combat.lastAttack = Combat.PHYSICAL;
 		clearOutput();
 		if(player.fatigue + physicalCost(10) > player.maxFatigue()) {
 			clearOutput();
@@ -1502,7 +1502,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 
 
 	public function skyPounce():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 4;
+		SceneLib.combat.lastAttack = Combat.PHYSICAL;
 		clearOutput();
 		if(player.fatigue + physicalCost(10) > player.maxFatigue()) {
 			clearOutput();
@@ -1598,7 +1598,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 	}
 
 	public function nagaBiteAttack():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 4;
+		SceneLib.combat.lastAttack = Combat.PHYSICAL;
 		clearOutput();
 		//Amily!
 		if(monster.hasStatusEffect(StatusEffects.Concentration)) {
@@ -1640,7 +1640,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 		if (!combatIsOver()) enemyAI();
 	}
 	public function spiderBiteAttack():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 4;
+		SceneLib.combat.lastAttack = Combat.PHYSICAL;
 		clearOutput();
 		//Amily!
 		if(monster.hasStatusEffect(StatusEffects.Concentration)) {
@@ -1686,7 +1686,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 		if (!combatIsOver()) enemyAI();
 	}
 	public function fenrirFrostbite():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 4;
+		SceneLib.combat.lastAttack = Combat.PHYSICAL;
 		clearOutput();
 		//FATIIIIGUE
 		if(player.fatigue + physicalCost(10) > player.maxFatigue()) {
@@ -1737,7 +1737,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 	}
 //Mantis Omni Slash (AoE attack)
 	public function mantisMultiSlash():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 4;
+		SceneLib.combat.lastAttack = Combat.PHYSICAL;
 		clearOutput();
 		if (monster.plural) {
 			if (player.fatigue + physicalCost(60) > player.maxFatigue()) {
@@ -1838,7 +1838,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 	}
 //Gore Attack - uses 15 fatigue!
 	public function goreAttack():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 4;
+		SceneLib.combat.lastAttack = Combat.PHYSICAL;
 		clearOutput();
 //This is now automatic - newRound arg defaults to true:	menuLoc = 0;
 		if (monster.short == "worms") {
@@ -2059,7 +2059,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 	}
 //Player sting attack
 	public function playerStinger():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 4;
+		SceneLib.combat.lastAttack = Combat.PHYSICAL;
 		clearOutput();
 		//Keep logic sane if this attack brings victory
 		//Worms are immune!
@@ -2136,7 +2136,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 	}
 //Player tail spike attack
 	public function playerTailSpike():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 4;
+		SceneLib.combat.lastAttack = Combat.PHYSICAL;
 		clearOutput();
 		
 		//Worms are immune!
@@ -2213,7 +2213,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 
 
 	public function kissAttack():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 3;
+		SceneLib.combat.lastAttack = Combat.LUSTSPELL;
 		clearOutput();
 		var attack:Number = rand(6);
 		switch(attack) {
@@ -2311,7 +2311,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 //Mouf Attack
 // (Similar to the bow attack, high damage but it raises your fatigue).
 	public function bite():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 2;
+		SceneLib.combat.lastAttack = Combat.HPSPELL;
 		if(player.fatigue + physicalCost(25) > player.maxFatigue()) {
 			clearOutput();
 			if (player.faceType == Face.SHARK_TEETH) outputText("You're too fatigued to use your shark-like jaws!");
@@ -2405,7 +2405,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 	}
 	
 	public function kick():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 4;
+		SceneLib.combat.lastAttack = Combat.PHYSICAL;
 		clearOutput();
 		if(player.fatigue + physicalCost(20) > player.maxFatigue()) {
 			clearOutput();
@@ -2567,7 +2567,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 		enemyAI();
 	}
 	public function archerSidewinder():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 4;
+		SceneLib.combat.lastAttack = Combat.PHYSICAL;
 		clearOutput();
 		if (player.fatigue + bowCost(300) > player.maxFatigue()) {
 			outputText("You are too tired to attack " + monster.a + " " + monster.short + ".");
@@ -2647,7 +2647,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 	}
 
 	public function archerBarrage():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 4;
+		SceneLib.combat.lastAttack = Combat.PHYSICAL;
 		clearOutput();
 		if (player.fatigue + bowCost(300) > player.maxFatigue()) {
 			outputText("You are too tired to attack " + monster.a + " " + monster.short + ".");

@@ -100,31 +100,28 @@ public class BaseCombatContent extends BaseContent {
 		return combat.bowCost(mod);
 	}
 	protected function kiPowerCost():Number {
-		return combat.kiPowerCost();
-	}
-	protected function kiPowercostmulti():Number {
-		return combat.kiPowerCostMulti();
+		return player.kiPowerCostMod();
 	}
 	protected function kiPowerMod():Number {
-		return combat.kiPowerMod();
+		return player.kiPowerMod();
 	}
 	protected function scalingBonusStrength():Number {
-		return combat.scalingBonusStrength();
+		return player.scalingBonusStrength();
 	}
 	protected function scalingBonusToughness():Number {
-		return combat.scalingBonusToughness();
+		return player.scalingBonusToughness();
 	}
 	protected function scalingBonusSpeed():Number {
-		return combat.scalingBonusSpeed();
+		return player.scalingBonusSpeed();
 	}
 	protected function scalingBonusIntelligence():Number {
-		return combat.scalingBonusIntelligence();
+		return player.scalingBonusIntelligence();
 	}
 	protected function scalingBonusWisdom():Number {
-		return combat.scalingBonusWisdom();
+		return player.scalingBonusWisdom();
 	}
 	protected function scalingBonusLibido():Number {
-		return combat.scalingBonusLibido();
+		return player.scalingBonusLibido();
 	}
 	protected function spellCost(mod:Number):Number {
 		return combat.magic.spellCostImpl(mod);

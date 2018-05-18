@@ -1,4 +1,4 @@
-package classes
+﻿package classes
 {
 import classes.BodyParts.Antennae;
 import classes.BodyParts.Arms;
@@ -2033,7 +2033,7 @@ import flash.utils.getQualifiedClassName;
 				}
 				//Deal damage if still wounded.
 				else {
-					var store6:Number = (player.spe + player.inte) * SceneLib.combat.kiPowerMod() * 0.5;
+					var store6:Number = (player.spe + player.inte) * player.kiPowerMod() * 0.5;
 					store6 = SceneLib.combat.doDamage(store6);
 					if(plural) outputText(capitalA + short + " burn from lingering Fire Punch after-effect. <b>(<font color=\"#800000\">" + store6 + "</font>)</b>\n\n");
 					else outputText(capitalA + short + " burns from lingering Fire Punch after-effect. <b>(<font color=\"#800000\">" + store6 + "</font>)</b>\n\n");

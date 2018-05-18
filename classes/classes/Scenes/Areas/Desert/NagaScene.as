@@ -4,6 +4,7 @@ import classes.BodyParts.Face;
 import classes.BodyParts.LowerBody;
 import classes.BodyParts.Skin;
 import classes.GlobalFlags.kFLAGS;
+import classes.Scenes.Combat.Combat;
 import classes.Scenes.SceneLib;
 
 public class NagaScene extends BaseContent{
@@ -892,7 +893,7 @@ public function nagaRapeChoice():void {
 }
 
 public function nagaPlayerConstrict():void {
-	flags[kFLAGS.LAST_ATTACK_TYPE] = 4;
+	combat.lastAttack = Combat.PHYSICAL;
 	clearOutput();
 	clearOutput();
 	if(player.fatigue + combat.physicalCost(10) > player.maxFatigue()) {

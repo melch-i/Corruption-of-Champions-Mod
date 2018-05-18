@@ -6,6 +6,7 @@ import classes.EngineCore;
 import classes.GlobalFlags.kFLAGS;
 import classes.Monster;
 import classes.PerkLib;
+import classes.Scenes.Combat.Combat;
 import classes.Scenes.SceneLib;
 import classes.StatusEffects;
 import classes.internals.WeightedDrop;
@@ -302,12 +303,12 @@ public class Lethice extends Monster
 					outputText("Even held aloft by her sprawling dragon wings, Lethice can’t hide from your righteous wrath.");
 					outputText(" Taking wing yourself, you slam into the demoness, striking a final blow that sends her toppling to the ground. She shrieks and spirals, crashing into the hard stone floor just before her throne.");
 				}
-				else if (flags[kFLAGS.LAST_ATTACK_TYPE] == 1)
+				else if (SceneLib.combat.lastAttack == Combat.ARROW)
 				{
 					outputText("Even held aloft by her sprawling dragon wings, Lethice can’t hide from your righteous wrath.");
 					outputText(" You draw your bowstring and let loose one last arrow, sending the missile hurtling through the air - and right into Lethice’s wing! The Demon Queen lets out an ear-piercing shriek of pain and, with her wing flopping weakly beside her, goes tumbling to the earth! She’s down!");
 				}
-				else if (flags[kFLAGS.LAST_ATTACK_TYPE] == 2)
+				else if (SceneLib.combat.lastAttack == Combat.HPSPELL)
 				{
 					outputText("Unable to resist your arcane assault, Lethice lets loose a howl of frustration and swoops back to the earth, mounting her throne once again.");
 				}
@@ -633,7 +634,7 @@ public class Lethice extends Monster
 			
 			// If you hit her with a lusty-damaging attack, she will become immune to lust damage for one turn. Might also have other special resistances too. Will detail in text in the “Reactions” section.
 			
-			if (flags[kFLAGS.LAST_ATTACK_TYPE] == 1 || flags[kFLAGS.LAST_ATTACK_TYPE] == 2 || flags[kFLAGS.LAST_ATTACK_TYPE] == 4) _defMode = 1;
+			if (SceneLib.combat.lastAttack != Combat.LUSTSPELL) _defMode = 1;
 			else _defMode = 2;
 
 			if (_defMode == 1)

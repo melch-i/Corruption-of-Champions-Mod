@@ -7,7 +7,8 @@ package classes.Scenes.Places.TelAdre
 	import classes.CockTypesEnum;
 	import classes.GlobalFlags.kFLAGS;
 	import classes.Monster;
-	import classes.Scenes.SceneLib;
+import classes.Scenes.Combat.Combat;
+import classes.Scenes.SceneLib;
 	import classes.StatusEffects;
 	import classes.internals.WeightedDrop;
 
@@ -84,7 +85,7 @@ package classes.Scenes.Places.TelAdre
 		{
 			if(riposteWait) {
 				riposte();
-			} else if(!flags[kFLAGS.IN_COMBAT_USE_PLAYER_WAITED_FLAG]==1 && flags[kFLAGS.LAST_ATTACK_TYPE] == 2){
+			} else if(!flags[kFLAGS.IN_COMBAT_USE_PLAYER_WAITED_FLAG]==1 && SceneLib.combat.lastAttack == Combat.HPSPELL){
 				spellbreaker();
 			} else {
 				super.performCombatAction();

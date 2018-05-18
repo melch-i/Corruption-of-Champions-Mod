@@ -1,4 +1,4 @@
-package classes
+﻿package classes
 {
 
 	import classes.BodyParts.Arms;
@@ -300,7 +300,7 @@ package classes
 			return weapon == game.weapons.DBFSWO;
 		}
 		//Fists and fist weapons
-		public function isFistOrFistWeapon():Boolean
+		override public function isFistOrFistWeapon():Boolean
 		{
 			return weaponName == "fists" || weapon == game.weapons.S_GAUNT || weapon == game.weapons.H_GAUNT || weapon == game.weapons.MASTGLO || weapon == game.weapons.KARMTOU || weapon == game.weapons.YAMARG || weapon == game.weapons.CLAWS;
 		}

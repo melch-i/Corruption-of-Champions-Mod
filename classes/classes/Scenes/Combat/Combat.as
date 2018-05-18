@@ -64,13 +64,28 @@ public class Combat extends BaseContent {
 	//Used to display image of the enemy while fighting
 	//Set once during startCombat() to prevent it from changing every combat turn
 	private var imageText:String = "";
-	
+
+
+	public static const ARROW:int = 1;
+	public static const HPSPELL:int = 2;
+	public static const LUSTSPELL:int = 3;
+	public static const PHYSICAL:int = 4;
+	private var _lastAttack:int = 0;
+
 	public function get inCombat():Boolean {
         return CoC.instance.inCombat;
     }
 	public function set inCombat(value:Boolean):void {
         CoC.instance.inCombat = value;
     }
+
+	public function set lastAttack(value:int):void {
+		_lastAttack = value;
+	}
+
+	public function get lastAttack():int {
+		return _lastAttack;
+	}
 
 	public function physicalCost(mod:Number):Number {
 		var costPercent:Number = 100;
@@ -137,11 +152,7 @@ public class Combat extends BaseContent {
 		return 1;
 	}
 	public function maxCurrentAttacks():int {
-		if (player.weaponPerk == "Dual Large" || player.weaponPerk == "Dual" || player.weaponPerk == "Staff") return 1;
-		else if (player.weaponPerk == "Large") return maxLargeAttacks();
-		else if (flags[kFLAGS.FERAL_COMBAT_MODE] != 1 && player.isFistOrFistWeapon()) return maxFistAttacks();
-		else if (flags[kFLAGS.FERAL_COMBAT_MODE] == 1 && ((player.weaponName == "fists" && player.haveNaturalClaws()) || player.haveNaturalClawsTypeWeapon())) return maxClawsAttacks();
-		else return maxCommonAttacks();
+		return 1;
 	}
 	public function maxBowAttacks():int {
 		if (player.hasPerk(PerkLib.Manyshot)) return 4;
@@ -305,21 +316,6 @@ public function checkAchievementDamage(damage:Number):void
 	if (damage >= 2500) EngineCore.awardAchievement("Pulverize", kACHIEVEMENTS.COMBAT_PULVERIZE);
 	if (damage >= 5000) EngineCore.awardAchievement("Erase", kACHIEVEMENTS.COMBAT_ERASE);
 }
-/*public function checkMinionsAchievementDamage(damage:Number):void
-{
-	flags[kFLAGS.ACHIEVEMENT_PROGRESS_TOTAL_DAMAGE] += damage;
-	if (flags[kFLAGS.ACHIEVEMENT_PROGRESS_TOTAL_DAMAGE] >= 50000) CoC.instance.awardAchievement("Bloodletter", kACHIEVEMENTS.COMBAT_BLOOD_LETTER);
-	if (flags[kFLAGS.ACHIEVEMENT_PROGRESS_TOTAL_DAMAGE] >= 200000) CoC.instance.awardAchievement("Reiterpallasch", kACHIEVEMENTS.COMBAT_REITERPALLASCH);
-	if (flags[kFLAGS.ACHIEVEMENT_PROGRESS_TOTAL_DAMAGE] >= 1000000) CoC.instance.awardAchievement("Uncanny Bloodletter", kACHIEVEMENTS.COMBAT_UNCANNY_BLOOD_LETTER);
-	if (flags[kFLAGS.ACHIEVEMENT_PROGRESS_TOTAL_DAMAGE] >= 5000000) CoC.instance.awardAchievement("Uncanny Reiterpallasch", kACHIEVEMENTS.COMBAT_UNCANNY_REITERPALLASCH);
-	if (damage >= 50) CoC.instance.awardAchievement("Pain", kACHIEVEMENTS.COMBAT_PAIN);
-	if (damage >= 100) CoC.instance.awardAchievement("Fractured Limbs", kACHIEVEMENTS.COMBAT_FRACTURED_LIMBS);
-	if (damage >= 250) CoC.instance.awardAchievement("Broken Bones", kACHIEVEMENTS.COMBAT_BROKEN_BONES);
-	if (damage >= 500) CoC.instance.awardAchievement("Overkill", kACHIEVEMENTS.COMBAT_OVERKILL);
-	if (damage >= 1000) CoC.instance.awardAchievement("Meat Pasty", kACHIEVEMENTS.COMBAT_MEAT_PASTY);
-	if (damage >= 2500) CoC.instance.awardAchievement("Pulverize", kACHIEVEMENTS.COMBAT_PULVERIZE);
-	if (damage >= 5000) CoC.instance.awardAchievement("Erase", kACHIEVEMENTS.COMBAT_ERASE);
-}*/
 public function approachAfterKnockback1():void
 {
 	clearOutput();
@@ -442,20 +438,6 @@ public function combatMenu(newRound:Boolean = true):void { //If returning from a
 	if (player.statusEffectv1(StatusEffects.ChanneledAttack) >= 1 && (isPlayerBound() || isPlayerSilenced() || isPlayerStunned())) {
 		addButton(1, "Stop", stopChanneledSpecial);
 	}
-	/*
-	if (player.statusEffectv1(StatusEffects.ChanneledAttack) == 1) {
-		if (player.statusEffectv1(StatusEffects.ChanneledAttackType) == 3) {
-			addButton(0, "Continue", mspecials.OrgasmicLightningStrike).hint("Continue charging Orgasmic Lightning Strike.");
-			addButton(1, "Stop", stopChanneledSpecial).hint("Stop charging Orgasmic Lightning Strike.");
-		}
-	}
-	if (player.statusEffectv1(StatusEffects.ChanneledAttack) == 2) {
-		if (player.statusEffectv1(StatusEffects.ChanneledAttackType) == 3) {
-			addButton(0, "Continue", mspecials.OrgasmicLightningStrike).hint("Continue charging Orgasmic Lightning Strike.");
-			addButton(1, "Stop", stopChanneledSpecial).hint("Stop charging Orgasmic Lightning Strike.");
-		}
-	}
-	*/
 	if (monster.hasStatusEffect(StatusEffects.AttackDisabled))
 	{
 		if (monster is Lethice)
@@ -522,11 +504,6 @@ public function unarmedAttack():Number {
 //	if (player.jewelryName == "fox hairpin") unarmed += .2;
 	unarmed = Math.round(unarmed);
 	return unarmed;
-}
-
-private function normalAttack():void {
-	clearOutput();
-	attack();
 }
 public function basemeleeattacks():void {
 	if (monster is DriderIncubus) {
@@ -724,15 +701,10 @@ public function baseelementalattacks(elementType:int = -1):void {
 		elementalattacks(elementType,summonedElementals);
 	}
 }
-public function intwisscaling():Number {
-	var intwisscalingvar:Number = 0;
-	intwisscalingvar += scalingBonusIntelligence();
-	intwisscalingvar += scalingBonusWisdom();
-	return intwisscalingvar;
-}
+
 public function elementalattacks(elementType:int, summonedElementals:int):void {
 	var elementalDamage:Number = 0;
-	var baseDamage:Number = summonedElementals * intwisscaling() * 0.02;
+	var baseDamage:Number = summonedElementals * (player.scalingBonusIntelligence() + player.scalingBonusWisdom()) * 0.02;
 	if (summonedElementals >= 1) elementalDamage += baseDamage;
 	if (summonedElementals >= 5) elementalDamage += baseDamage;
 	if (summonedElementals >= 9) elementalDamage += baseDamage;
@@ -866,7 +838,7 @@ public function packAttack():void {
 }
 
 public function lustAttack():void {
-	flags[kFLAGS.LAST_ATTACK_TYPE] = 3;
+	lastAttack = LUSTSPELL;
 	if (player.lust < (player.maxLust() * 0.35)) {
 		outputText("The [monster name] press in close against you and although they fail to hit you with an attack, the sensation of their skin rubbing against yours feels highly erotic.");
 	}
@@ -1227,7 +1199,7 @@ public function fireBow():void {
 		addButton(0, "Next", combatMenu, false);
 		return;
 	}
-	flags[kFLAGS.LAST_ATTACK_TYPE] = 1;
+	lastAttack = ARROW;
 	if (player.weaponRangePerk == "Bow" || player.weaponRangePerk == "Crossbow") {
 		if (flags[kFLAGS.DOUBLE_STRIKE_STYLE] == 5) {
 			if (player.weaponRangePerk == "Crossbow") flags[kFLAGS.MULTIPLE_ARROWS_STYLE] = 3;
@@ -1402,7 +1374,7 @@ public function multiArrowsStrike():void {
 		var damage:Number = 0;
 		if (weaponRangePerk == "Bow") {
 			damage += player.spe;
-			damage += scalingBonusSpeed() * 0.2;
+			damage += player.scalingBonusSpeed() * 0.2;
 			if (damage < 10) damage = 10;
 		}
 		if (weaponRangePerk == "Crossbow") damage += player.weaponRangeAttack * 10;
@@ -1695,7 +1667,7 @@ public function throwWeapon():void {
 	if (rand(100) < accRange) {
 		var damage:Number = 0;
 		damage += player.str;
-		damage += scalingBonusStrength() * 0.2;
+		damage += player.scalingBonusStrength() * 0.2;
 		if (damage < 10) damage = 10;
 		//Weapon addition!
 		if (player.weaponRangeAttack < 51) damage *= (1 + (player.weaponRangeAttack * 0.03));
@@ -1786,29 +1758,7 @@ public function throwWeapon():void {
 				else damage *= 2;
 			}
 		}
-/*		if (flags[kFLAGS.ELEMENTAL_ARROWS] == 1) {
-			damage += player.inte * 0.2;
-			if (player.inte >= 50) damage += player.inte * 0.1;
-			if (player.inte >= 100) damage += player.inte * 0.1;
-			if (player.inte >= 150) damage += player.inte * 0.1;
-			if (player.inte >= 200) damage += player.inte * 0.1;
-			if (monster.hasPerk(PerkLib.IceNature)) damage *= 5;
-			if (monster.hasPerk(PerkLib.FireVulnerability)) damage *= 2;
-			if (monster.hasPerk(PerkLib.IceVulnerability)) damage *= 0.5;
-			if (monster.hasPerk(PerkLib.FireNature)) damage *= 0.2;
-		}
-		if (flags[kFLAGS.ELEMENTAL_ARROWS] == 2) {
-			damage += player.inte * 0.2;
-			if (player.inte >= 50) damage += player.inte * 0.1;
-			if (player.inte >= 100) damage += player.inte * 0.1;
-			if (player.inte >= 150) damage += player.inte * 0.1;
-			if (player.inte >= 200) damage += player.inte * 0.1;
-			if (monster.hasPerk(PerkLib.IceNature)) damage *= 0.5;
-			if (monster.hasPerk(PerkLib.FireVulnerability)) damage *= 0.2;
-			if (monster.hasPerk(PerkLib.IceVulnerability)) damage *= 5;
-			if (monster.hasPerk(PerkLib.FireNature)) damage *= 2;
-		}zachowane jeśli potem dodam elemental dmg do ataków innych broni dystansowych też
-*/		damage = Math.round(damage);
+		damage = Math.round(damage);
 		damage = doDamage(damage);
 		if (monster.HP <= 0) {
 			if (monster.short == "pod")
@@ -1858,16 +1808,27 @@ public function throwWeapon():void {
 public function shootWeapon():void {
 	var accRange:Number = 0;
 	accRange += (arrowsAccuracy() / 2);
-	if (rand(100) < accRange) {
-		var damage:Number = 0;
-		if (player.weaponRangePerk == "Pistol" || player.weaponRangePerk == "Rifle") damage += player.weaponRangeAttack * 20;
-		if (!player.hasPerk(PerkLib.DeadlyAim)) damage *= (monster.damagePercent() / 100);//jak ten perk o ignorowaniu armora bedzie czy coś to tu dać jak nie ma tego perku to sie dolicza
+	if (rand(100) >= accRange) {
+		outputText("The bullet goes wide, disappearing behind your foe");
+		if (monster.plural) {
+			outputText("s");
+		}
+		outputText(".\n\n");
+	} else {
+		var damage: Number = 0;
+		if (player.weaponRangePerk == "Pistol" || player.weaponRangePerk == "Rifle") {
+			damage += player.weaponRangeAttack * 20;
+		}
+		if (!player.hasPerk(PerkLib.DeadlyAim)) {
+			damage *= (monster.damagePercent() / 100);
+		}
 		//Weapon addition!
-		if (player.weaponRangeAttack < 51) damage *= (1 + (player.weaponRangeAttack * 0.03));
-		else if (player.weaponRangeAttack >= 51 && player.weaponRangeAttack < 101) damage *= (2.5 + ((player.weaponRangeAttack - 50) * 0.025));
-		else if (player.weaponRangeAttack >= 101 && player.weaponRangeAttack < 151) damage *= (3.75 + ((player.weaponRangeAttack - 100) * 0.02));
-		else if (player.weaponRangeAttack >= 151 && player.weaponRangeAttack < 201) damage *= (4.75 + ((player.weaponRangeAttack - 150) * 0.015));
-		else damage *= (5.5 + ((player.weaponRangeAttack - 200) * 0.01));
+		if (player.weaponRangeAttack < 51) {damage *= (1 + (player.weaponRangeAttack * 0.03));}
+		else if (player.weaponRangeAttack >= 51 && player.weaponRangeAttack < 101) {damage *= (2.5 + ((player.weaponRangeAttack - 50) * 0.025));}
+		else if (player.weaponRangeAttack >= 101 && player.weaponRangeAttack < 151) {damage *= (3.75 + ((player.weaponRangeAttack - 100) * 0.02));}
+		else if (player.weaponRangeAttack >= 151 && player.weaponRangeAttack < 201) {damage *= (4.75 + ((player.weaponRangeAttack - 150) * 0.015));}
+		else {damage *= (5.5 + ((player.weaponRangeAttack - 200) * 0.01));}
+
 		if (damage == 0) {
 			if (monster.inte > 0) {
 				outputText(monster.capitalA + monster.short + " shrugs as the bullet bounces off them harmlessly.\n\n");
@@ -1880,118 +1841,93 @@ public function shootWeapon():void {
 			outputText("The bullet lodges deep into the pod's fleshy wall");
 		}
 		else if (monster.plural) {
-			var textChooser1:int = rand(12);
-			if (textChooser1 >= 9) {
-				outputText(monster.capitalA + monster.short + " look down at the mark left by the bullet on one of their bodies");
-			}
-			else if (textChooser1 >= 6 && textChooser1 < 9) {
-				outputText("You pull the trigger and fire the bullet at one of [monster a] [monster name]");
-			}
-			else if (textChooser1 >= 3 && textChooser1 < 6) {
-				outputText("With one smooth motion you aim and fire your deadly bullet at one of your opponents");
-			}
-			else {
-				outputText("You casually fire an bullet at one of [monster a] [monster name] with supreme skill");
-			}
+			outputText(randomChoice(
+				monster.capitalA + monster.short + " look down at the mark left by the bullet on one of their bodies",
+				"You pull the trigger and fire the bullet at one of [monster a] [monster name]",
+				"With one smooth motion you aim and fire your deadly bullet at one of your opponents",
+				"You casually fire an bullet at one of [monster a] [monster name] with supreme skill"
+			));
 		}
 		else {
-			var textChooser2:int = rand(12);
-			if (textChooser2 >= 9) {
-				outputText(monster.capitalA + monster.short + " looks down at the mark left by the bullet on it body");
-			}
-			else if (textChooser2 >= 6) {
-				outputText("You pull the trigger and fire the bullet at [monster a] [monster name]");
-			}
-			else if (textChooser2 >= 3) {
-				outputText("With one smooth motion you aim and fire your deadly bullet at your opponent");
-			}
-			else {
-				outputText("You casually fire an bullet at [monster a] [monster name] with supreme skill");
-			}
+			outputText(randomChoice(
+				monster.capitalA + monster.short + " looks down at the mark left by the bullet on it body",
+				"You pull the trigger and fire the bullet at [monster a] [monster name]",
+				"With one smooth motion you aim and fire your deadly bullet at your opponent",
+				"You casually fire an bullet at [monster a] [monster name] with supreme skill"
+			));
 		}
 		//Determine if critical hit!
-		var crit:Boolean = false;
-		var critChance:int = 5;
+		var crit: Boolean = false;
+		var critChance: int = 5;
 		if (player.hasPerk(PerkLib.Tactician) && player.inte >= 50) {
-			if (player.inte <= 100) critChance += (player.inte - 50) / 5;
-			if (player.inte > 100) critChance += 10;
+			if (player.inte <= 100) {
+				critChance += (player.inte - 50) / 5;
+			}
+			if (player.inte > 100) {
+				critChance += 10;
+			}
 		}
-		if (player.hasPerk(PerkLib.VitalShot) && player.inte >= 50) critChance += 10;
-		if (monster.isImmuneToCrits()) critChance = 0;
+		if (player.hasPerk(PerkLib.VitalShot) && player.inte >= 50) {
+			critChance += 10;
+		}
+		if (monster.isImmuneToCrits()) {
+			critChance = 0;
+		}
 		if (rand(100) < critChance) {
 			crit = true;
 			damage *= 1.75;
 		}
-		if (player.hasPerk(PerkLib.HistoryScout) || player.hasPerk(PerkLib.PastLifeScout)) damage *= 1.1;
-		if (player.hasPerk(PerkLib.JobRanger)) damage *= 1.05;
+		if (player.hasPerk(PerkLib.HistoryScout) || player.hasPerk(PerkLib.PastLifeScout)) {
+			damage *= 1.1;
+		}
+		if (player.hasPerk(PerkLib.JobRanger)) {
+			damage *= 1.05;
+		}
 		if (player.statusEffectv1(StatusEffects.Kelt) > 0) {
-			if (player.statusEffectv1(StatusEffects.Kelt) < 100) damage *= 1 + (0.01 * player.statusEffectv1(StatusEffects.Kelt));
-			else {
+			if (player.statusEffectv1(StatusEffects.Kelt) < 100) {
+				damage *= 1 + (0.01 * player.statusEffectv1(StatusEffects.Kelt));
+			} else {
 				if (player.statusEffectv1(StatusEffects.Kindra) > 0) {
-					if (player.statusEffectv1(StatusEffects.Kindra) < 150) damage *= 2 + (0.01 * player.statusEffectv1(StatusEffects.Kindra));
-					else damage *= 3.5;
+					damage *= Math.min(3.5, 2 + (0.01 * player.statusEffectv1(StatusEffects.Kindra)));
+				} else {
+					damage *= 2;
 				}
-				else damage *= 2;
 			}
 		}
-/*		if (flags[kFLAGS.ELEMENTAL_ARROWS] == 1) {
-			damage += player.inte * 0.2;
-			if (player.inte >= 50) damage += player.inte * 0.1;
-			if (player.inte >= 100) damage += player.inte * 0.1;
-			if (player.inte >= 150) damage += player.inte * 0.1;
-			if (player.inte >= 200) damage += player.inte * 0.1;
-			if (monster.hasPerk(PerkLib.IceNature)) damage *= 5;
-			if (monster.hasPerk(PerkLib.FireVulnerability)) damage *= 2;
-			if (monster.hasPerk(PerkLib.IceVulnerability)) damage *= 0.5;
-			if (monster.hasPerk(PerkLib.FireNature)) damage *= 0.2;
-		}
-		if (flags[kFLAGS.ELEMENTAL_ARROWS] == 2) {
-			damage += player.inte * 0.2;
-			if (player.inte >= 50) damage += player.inte * 0.1;
-			if (player.inte >= 100) damage += player.inte * 0.1;
-			if (player.inte >= 150) damage += player.inte * 0.1;
-			if (player.inte >= 200) damage += player.inte * 0.1;
-			if (monster.hasPerk(PerkLib.IceNature)) damage *= 0.5;
-			if (monster.hasPerk(PerkLib.FireVulnerability)) damage *= 0.2;
-			if (monster.hasPerk(PerkLib.IceVulnerability)) damage *= 5;
-			if (monster.hasPerk(PerkLib.FireNature)) damage *= 2;
-		}zachowane jeśli potem dodam elemental dmg do ataków innych broni dystansowych też
-*/		damage = Math.round(damage);
+		damage = Math.round(damage);
 		damage = doDamage(damage);
 
-		if (monster.HP <= 0) {
-			if (monster.short == "pod")
+		if (monster.HP > 0) {
+			outputText(".  It's clearly very painful. <b>(<font color=\"#800000\">" + String(damage) + "</font>)</b>");
+			if (crit == true) {
+				outputText(" <b>*Critical Hit!*</b>");
+			}
+			outputText("\n\n");
+			heroBaneProc(damage);
+		} else {
+			if (monster.short == "pod") {
 				outputText(". ");
-			else if (monster.plural)
+			} else if (monster.plural) {
 				outputText(" and [monster he] stagger, collapsing onto each other from the wounds you've inflicted on [monster him]. ");
-			else outputText(" and [monster he] staggers, collapsing from the wounds you've inflicted on [monster him]. ");
+			} else {
+				outputText(" and [monster he] staggers, collapsing from the wounds you've inflicted on [monster him]. ");
+			}
 			outputText("<b>(<font color=\"#800000\">" + String(damage) + "</font>)</b>");
-			if (crit == true) outputText(" <b>*Critical Hit!*</b>");
+			if (crit == true) {
+				outputText(" <b>*Critical Hit!*</b>");
+			}
 			outputText("\n\n");
 			checkAchievementDamage(damage);
 			doNext(endHpVictory);
 			return;
 		}
-		else {
-		outputText(".  It's clearly very painful. <b>(<font color=\"#800000\">" + String(damage) + "</font>)</b>");
-		if (crit == true) outputText(" <b>*Critical Hit!*</b>");
-	//	if (flaga dla efektu arouse arrow) outputText(" tekst dla arouse arrow effect.");
-	//	if (flaga dla efektu poison arrow) outputText(" tekst dla poison arrow effect.");
-		outputText("\n\n");
-			heroBaneProc(damage);
-		}
 		checkAchievementDamage(damage);
 	}
-	else {
-		outputText("The bullet goes wide, disappearing behind your foe");
-		if (monster.plural) outputText("s");
-		outputText(".\n\n");
-	}
 	if (monster is Lethice && (monster as Lethice).fightPhase == 3)
-		{
-			outputText("\n\n<i>“Ouch. Such a cowardly weapon,”</i> Lethice growls. With a snap of her fingers, a pearlescent dome surrounds her. <i>“How will you beat me without your pathetic weapon?”</i>\n\n");
-			monster.createStatusEffect(StatusEffects.Shell, 2, 0, 0, 0);
-		}
+	{
+		outputText("\n\n<i>“Ouch. Such a cowardly weapon,”</i> Lethice growls. With a snap of her fingers, a pearlescent dome surrounds her. <i>“How will you beat me without your pathetic weapon?”</i>\n\n");
+		monster.createStatusEffect(StatusEffects.Shell, 2, 0, 0, 0);
+	}
 	enemyAI();
 }
 
@@ -2113,30 +2049,9 @@ public function fatigueRecovery():void {
 	fatigue(-(1 + fatiguecombatrecovery));
 }
 
-public function attacksAccuracy():Number {
-	var atkmod:Number = 100;
-/*	if (player.hasPerk(PerkLib.HistoryScout) || player.hasPerk(PerkLib.PastLifeScout)) accmod += 40;
-	if (player.hasPerk(PerkLib.Accuracy1)) {
-		accmod += player.perkv1(PerkLib.Accuracy1);
-	}
-	if (player.hasPerk(PerkLib.Accuracy2)) {
-		accmod -= player.perkv1(PerkLib.Accuracy2);
-	}
-	if (player.inte > 50 && player.hasPerk(PerkLib.JobHunter)) {
-		if (player.inte <= 150) atkmod += (player.inte - 50);
-		else atkmod += 100;
-	}
-	if (player.hasPerk(PerkLib.CarefulButRecklessAimAndShooting)) atkmod += 60;
-*/	return atkmod;
-}
-
 //ATTACK
 public function attack():void {
-	flags[kFLAGS.LAST_ATTACK_TYPE] = 4;
-//	if(!player.hasStatusEffect(StatusEffects.FirstAttack)) {
-//		clearOutput();
-//		fatigueRecovery();
-//	}
+	lastAttack = PHYSICAL;
 	if(player.hasStatusEffect(StatusEffects.Sealed) && player.statusEffectv2(StatusEffects.Sealed) == 0 && !isWieldingRangedWeapon()) {
 		outputText("You attempt to attack, but at the last moment your body wrenches away, preventing you from even coming close to landing a blow!  The kitsune's seals have made normal melee attack impossible!  Maybe you could try something else?\n\n");
 		enemyAI();
@@ -2296,7 +2211,7 @@ public function meleeDamageAcc():void {
 	//BASIC DAMAGE STUFF
 	
 	damage += player.str;
-	damage += scalingBonusStrength() * 0.25;
+	damage += player.scalingBonusStrength() * 0.25;
 	if (player.hasPerk(PerkLib.HoldWithBothHands) && player.weapon != WeaponLib.FISTS && player.shield == ShieldLib.NOTHING && !isWieldingRangedWeapon()) damage *= 1.2;
 	if (damage < 10) damage = 10;
 	if (flags[kFLAGS.DOUBLE_ATTACK_STYLE] == 1 && flags[kFLAGS.MULTIPLE_ATTACKS_STYLE] >= 2) damage *= 0.95;
@@ -3043,18 +2958,20 @@ public function dropItem(monster:Monster, nextFunc:Function = null):void {
 		else if(rand(3) == 0 && player.hasPerk(PerkLib.LuststickAdapted)) itype = consumables.LUSTSTK;
 		else itype = consumables.GLDSEED;
 	}
-	//Chance of armor if at level 1 pierce fetish
-	if(!CoC.instance.plotFight && !(monster is Ember) && !(monster is Kiha) && !(monster is Hel) && !(monster is Isabella)
-	   && flags[kFLAGS.PC_FETISH] == 1 && rand(10) == 0 && !player.hasItem(armors.SEDUCTA, 1) && !SceneLib.ceraphFollowerScene.ceraphIsFollower()) {
-		itype = armors.SEDUCTA;
-	}
-	
-	if(!CoC.instance.plotFight && rand(200) == 0 && player.level >= 7) itype = consumables.BROBREW;
-	if(!CoC.instance.plotFight && rand(200) == 0 && player.level >= 7) itype = consumables.BIMBOLQ;
-	if(!CoC.instance.plotFight && rand(1000) == 0 && player.level >= 7) itype = consumables.RAINDYE;
-	//Chance of eggs if Easter!
-	if(!CoC.instance.plotFight && rand(6) == 0 && isEaster()) {
-		itype = randomChoice(
+	if(!CoC.instance.plotFight){
+
+		//Chance of armor if at level 1 pierce fetish
+		if(!(monster is Ember) && !(monster is Kiha) && !(monster is Hel) && !(monster is Isabella)
+			&& flags[kFLAGS.PC_FETISH] == 1 && rand(10) == 0 && !player.hasItem(armors.SEDUCTA, 1) && !SceneLib.ceraphFollowerScene.ceraphIsFollower()) {
+			itype = armors.SEDUCTA;
+		}
+
+		if(rand(200) == 0 && player.level >= 7) itype = consumables.BROBREW;
+		if(rand(200) == 0 && player.level >= 7) itype = consumables.BIMBOLQ;
+		if(rand(1000) == 0 && player.level >= 7) itype = consumables.RAINDYE;
+		//Chance of eggs if Easter!
+		if(rand(6) == 0 && isEaster()) {
+			itype = randomChoice(
 				consumables.BROWNEG,
 				consumables.L_BRNEG,
 				consumables.PURPLEG,
@@ -3068,7 +2985,8 @@ public function dropItem(monster:Monster, nextFunc:Function = null):void {
 				consumables.WHITEEG,
 				consumables.BLACKEG,
 				consumables.L_BLKEG
-		);
+			);
+		}
 	}
 	//Bonus loot overrides others
 	if (flags[kFLAGS.BONUS_ITEM_AFTER_COMBAT_ID] != "") {
@@ -4439,7 +4357,7 @@ public function ScyllaTease():void {
 			damage += 5;
 			bimbo = true;
 		}
-		damage += scalingBonusLibido() * 0.1;
+		damage += player.scalingBonusLibido() * 0.1;
 		damage += player.teaseLevel;
 		damage += rand(7);
 		//partial skins bonuses
@@ -4606,7 +4524,7 @@ public function GooTease():void {
 			damage += 5;
 			bimbo = true;
 		}
-		damage += scalingBonusLibido() * 0.1;
+		damage += player.scalingBonusLibido() * 0.1;
 		damage += player.teaseLevel;
 		damage += rand(7);
 		//partial skins bonuses
@@ -4642,7 +4560,7 @@ public function GooTease():void {
 			}
 			outputText(" This feels very pleasurable to you but not as much as to your opponent who start to drool at your ministration.");
 			//NERF TEASE DAMAGE
-			damage += scalingBonusLibido();
+			damage += player.scalingBonusLibido();
 			damage *= 0.25;
 			damage = Math.round(damage);
 			if(player.hasPerk(PerkLib.HistoryWhore) || player.hasPerk(PerkLib.PastLifeWhore)) {
@@ -4743,7 +4661,7 @@ public function clawsRend():void {
 	fatigue(20, USEFATG_PHYSICAL);
 	outputText("You rend [monster a] [monster name] with your claws. ");
 	var damage:int = player.str;
-	damage += scalingBonusStrength() * 0.5;
+	damage += player.scalingBonusStrength() * 0.5;
 	damage = Math.round(damage);
 	doDamage(damage, true, true);
 	if(monster.HP < 1) {
@@ -4972,7 +4890,7 @@ public function takeFlight():void {
 }
 
 public function greatDive():void {
-	flags[kFLAGS.LAST_ATTACK_TYPE] = 2;
+	lastAttack = HPSPELL;
 	clearOutput();
 	if(player.fatigue + physicalCost(50) > player.maxFatigue()) {
 		clearOutput();
@@ -5006,96 +4924,5 @@ public function greatDive():void {
 	monster.removeStatusEffect(StatusEffects.MonsterAttacksDisabled);
 	enemyAI();
 }
-
-public function kiPowerMod():Number {
-	var modss:Number = 1;
-	if (player.hasPerk(PerkLib.WizardsAndDaoistsFocus)) modss += player.perkv2(PerkLib.WizardsAndDaoistsFocus);
-	if (player.hasPerk(PerkLib.SeersInsight)) modss += player.perkv1(PerkLib.SeersInsight);
-	if (player.hasPerk(PerkLib.AscensionSpiritualEnlightenment)) modss *= 1 + (player.perkv1(PerkLib.AscensionSpiritualEnlightenment) * 0.1);
-	if (player.shieldName == "spirit focus") modss += .2;
-	return modss;
-}
-public function kiPowerPhysicalMod():Number {
-	var modssp:Number = 1;
-	if (player.hasPerk(PerkLib.BodyCultivatorsFocus)) modssp += player.perkv1(PerkLib.BodyCultivatorsFocus);
-	if (player.hasPerk(PerkLib.AscensionSpiritualEnlightenment)) modssp *= 1 + (player.perkv1(PerkLib.AscensionSpiritualEnlightenment) * 0.1);
-	return modssp;
-}
-public function kiPowerMagicalMod():Number {
-	var modssm:Number = 1;
-	if (player.hasPerk(PerkLib.WizardsAndDaoistsFocus)) modssm += player.perkv2(PerkLib.WizardsAndDaoistsFocus);
-	if (player.hasPerk(PerkLib.SeersInsight)) modssm += player.perkv1(PerkLib.SeersInsight);
-	if (player.hasPerk(PerkLib.AscensionSpiritualEnlightenment)) modssm *= 1 + (player.perkv1(PerkLib.AscensionSpiritualEnlightenment) * 0.1);
-	if (player.shieldName == "spirit focus") modssm += .2;
-	return modssm;
-}
-
-public function kiPowerCostMulti():Number {
-	var multiss:Number = 1;
-	if (kiPowerMod() > 1) multiss += (kiPowerMod() - 1) * 0.1;
-	if (player.level >= 24 && player.wis >= 80) multiss += 1;
-	if (player.level >= 42 && player.wis >= 140) multiss += 1;
-	if (player.level >= 60 && player.wis >= 200) multiss += 1;
-	if (player.level >= 78 && player.wis >= 260) multiss += 1;
-	return multiss;
-}
-
-public function kiPowerCost():Number {
-	var modssc:Number = 1;
-	if (player.hasPerk(PerkLib.WizardsAndDaoistsEndurance)) modssc -= (0.01 * player.perkv2(PerkLib.WizardsAndDaoistsEndurance));
-	if (player.hasPerk(PerkLib.SeersInsight)) modssc -= player.perkv1(PerkLib.SeersInsight);
-	if (player.jewelryName == "fox hairpin") modssc -= .2;
-	if (modssc < 0.1) modssc = 0.1;
-	return modssc;
-}
-
-	private function touSpeStrScale(stat:int):Number{
-		var scale:Number = 0;
-		for(var i:int = 20; (i <= 80) && (i <= stat); i += 20){
-			scale += stat - i;
-		}
-		for(i = 100; (i <= 2000) && (i <= stat); i += 50){
-			scale += stat - i;
-		}
-		return scale;
-	}
-
-	private function inteWisLibScale(stat:int):Number{
-		var scale:Number = 6.75;
-		var changeBy:Number = 0.50;
-		if(stat <= 2000){
-			if(stat <= 100){
-				scale = (2/6) + ((int(stat/100)/20) * (1/6));
-				changeBy = 0.25;
-			} else {
-				scale = 1 + (int((stat - 100)/50) * 0.25);
-			}
-		}
-		return (stat * scale) + rand(stat * (scale + changeBy));
-	}
-
-	public function scalingBonusToughness():Number {
-		return touSpeStrScale(player.tou);
-	}
-
-	public function scalingBonusSpeed():Number {
-		return touSpeStrScale(player.spe);
-	}
-
-	public function scalingBonusStrength():Number {
-		return touSpeStrScale(player.str);
-	}
-
-	public function scalingBonusWisdom():Number {
-		return touSpeStrScale(player.wis);
-	}
-
-	public function scalingBonusIntelligence():Number {
-		return touSpeStrScale(player.inte);
-	}
-
-	public function scalingBonusLibido():Number {
-		return inteWisLibScale(player.lib);
-	}
 }
 }

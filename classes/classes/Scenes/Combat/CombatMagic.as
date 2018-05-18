@@ -1011,7 +1011,7 @@ public class CombatMagic extends BaseCombatContent {
 
 //(45) Ice Spike - ice version of whitefire
 	public function spellIceSpike():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 2;
+		SceneLib.combat.lastAttack = Combat.HPSPELL;
 		clearOutput();
 		doNext(combatMenu);
 		if (player.hasPerk(PerkLib.LastResort) && player.mana < spellCostBlack(40)) player.HP -= spellCostBlack(40);
@@ -1078,7 +1078,7 @@ public class CombatMagic extends BaseCombatContent {
 
 //(45) Darkness Shard
 	public function spellDarknessShard():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 2;
+		SceneLib.combat.lastAttack = Combat.HPSPELL;
 		clearOutput();
 		doNext(combatMenu);
 		if (player.hasPerk(PerkLib.LastResort) && player.mana < spellCostBlack(40)) player.HP -= spellCostBlack(40);
@@ -1145,8 +1145,11 @@ public class CombatMagic extends BaseCombatContent {
 
 //(100) Ice Rain - AoE Ice spell
 	public function spellIceRain():void {
-		if (rand(2) == 0) flags[kFLAGS.LAST_ATTACK_TYPE] = 2;
-		else flags[kFLAGS.LAST_ATTACK_TYPE] = 3;
+		if (trueOnceInN(2)) {
+			SceneLib.combat.lastAttack = Combat.HPSPELL;
+		} else {
+			SceneLib.combat.lastAttack = Combat.LUSTSPELL;
+		}
 		clearOutput();
 		doNext(combatMenu);
 		if (player.hasPerk(PerkLib.LastResort) && player.mana < spellCost(200)) player.HP -= spellCost(200);
@@ -1215,8 +1218,11 @@ public class CombatMagic extends BaseCombatContent {
 
 //(100) Fire Storm - AoE Fire spell
 	public function spellFireStorm():void {
-		if (rand(2) == 0) flags[kFLAGS.LAST_ATTACK_TYPE] = 2;
-		else flags[kFLAGS.LAST_ATTACK_TYPE] = 3;
+		if (trueOnceInN(2)) {
+			SceneLib.combat.lastAttack = Combat.HPSPELL;
+		} else {
+			SceneLib.combat.lastAttack = Combat.LUSTSPELL;
+		}
 		clearOutput();
 		doNext(combatMenu);
 		if (player.hasPerk(PerkLib.LastResort) && player.mana < spellCost(200)) player.HP -= spellCost(200);
@@ -1500,7 +1506,7 @@ public class CombatMagic extends BaseCombatContent {
 	}
 //(20) Blind – reduces your opponent's accuracy, giving an additional 50% miss chance to physical attacks.
 	public function spellBlind():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 2;
+		SceneLib.combat.lastAttack = Combat.HPSPELL;
 		clearOutput();
 		doNext(combatMenu);
 		if (player.hasPerk(PerkLib.LastResort) && player.mana < spellCostWhite(30)) player.HP -= spellCostWhite(30);
@@ -1600,7 +1606,7 @@ public class CombatMagic extends BaseCombatContent {
 	//(30) Whitefire – burns the enemy for 10 + int/3 + rand(int/2) * spellMod.
 	public function spellWhitefire():void {
 		var damage:Number;
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 2;
+		SceneLib.combat.lastAttack = Combat.HPSPELL;
 		clearOutput();
 		doNext(combatMenu);
 		if (player.hasPerk(PerkLib.LastResort) && player.mana < spellCostWhite(40)) player.HP -= spellCostWhite(40);
@@ -1703,7 +1709,7 @@ public class CombatMagic extends BaseCombatContent {
 
 //(45) Lightning Bolt - base lighting spell
 	public function spellLightningBolt():void {
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 2;
+		SceneLib.combat.lastAttack = Combat.HPSPELL;
 		clearOutput();
 		doNext(combatMenu);
 		if (player.hasPerk(PerkLib.LastResort) && player.mana < spellCostWhite(40)) player.HP -= spellCostWhite(40);
@@ -1797,7 +1803,7 @@ public class CombatMagic extends BaseCombatContent {
 
 	public function spellCleansingPalm():void
 	{
-		flags[kFLAGS.LAST_ATTACK_TYPE] = 2;
+		SceneLib.combat.lastAttack = Combat.HPSPELL;
 		clearOutput();
 		doNext(combatMenu);
 //This is now automatic - newRound arg defaults to true:	menuLoc = 0;

@@ -3673,5 +3673,109 @@ package classes
 				max     : argDefs.max[0]
 			};
 		}
+
+		public function kiPowerCostMod():Number {
+			var mod:int = 1;
+			if(hasPerk(PerkLib.WizardsAndDaoistsEndurance)){
+				mod -= (0.01 * perkv2(PerkLib.WizardsAndDaoistsEndurance))
+			}
+			if(hasPerk(PerkLib.SeersInsight)){
+				mod -= perkv1(PerkLib.SeersInsight);
+			}
+			if(jewelryName == game.jewelries.FOXHAIR.name){
+				mod -= 0.2;
+			}
+
+			var mult:Number = 1;
+			if(mod > 1) {
+				mult += (mod - 1) * 0.1;
+			}
+			for(var i:int = 24, j:int = 0; i < level; i+=18, j++){
+				if(wis >= 80 + (60 * j)){
+					mult++;
+				}
+			}
+			return Math.max(0.1,mod) * mult;
+		}
+
+		public function kiPowerMod(physical:Boolean=false):Number {
+			var mod:Number = 1;
+			if(physical){
+				if(hasPerk(PerkLib.BodyCultivatorsFocus)) {mod += perkv1(PerkLib.BodyCultivatorsFocus);}
+			} else {
+				if(hasPerk(PerkLib.WizardsAndDaoistsFocus)) {mod += perkv2(PerkLib.WizardsAndDaoistsFocus);}
+				if(hasPerk(PerkLib.SeersInsight)) {mod += perkv1(PerkLib.SeersInsight);}
+				if(shieldName == CoC.instance.shields.SPI_FOC.name){
+					mod += 0.2;
+				}
+			}
+			if(hasPerk(PerkLib.AscensionSpiritualEnlightenment)){
+				mod *= 1 + perkv1(PerkLib.AscensionSpiritualEnlightenment);
+			}
+			return mod;
+		}
+
+		private function touSpeStrScale(stat:int):Number{
+			var scale:Number = 0;
+			for(var i:int = 20; (i <= 80) && (i <= stat); i += 20){
+				scale += stat - i;
+			}
+			for(i = 100; (i <= 2000) && (i <= stat); i += 50){
+				scale += stat - i;
+			}
+			return scale;
+		}
+
+		private function inteWisLibScale(stat:int):Number{
+			var scale:Number = 6.75;
+			var changeBy:Number = 0.50;
+			if(stat <= 2000){
+				if(stat <= 100){
+					scale = (2/6) + ((int(stat/100)/20) * (1/6));
+					changeBy = 0.25;
+				} else {
+					scale = 1 + (int((stat - 100)/50) * 0.25);
+				}
+			}
+			return (stat * scale) + rand(stat * (scale + changeBy));
+		}
+
+		public function scalingBonusToughness():Number {
+			return touSpeStrScale(tou);
+		}
+
+		public function scalingBonusSpeed():Number {
+			return touSpeStrScale(spe);
+		}
+
+		public function scalingBonusStrength():Number {
+			return touSpeStrScale(str);
+		}
+
+		public function scalingBonusWisdom():Number {
+			return touSpeStrScale(wis);
+		}
+
+		public function scalingBonusIntelligence():Number {
+			return touSpeStrScale(inte);
+		}
+
+		public function scalingBonusLibido():Number {
+			return inteWisLibScale(lib);
+		}
+
+		public function isFistOrFistWeapon():Boolean
+		{
+			var w:WeaponLib = game.weapons;
+			var weaponArr:Array = [
+				"fists", w.S_GAUNT.name, w.H_GAUNT.name,
+				w.MASTGLO.name, w.KARMTOU.name, w.YAMARG.name,
+				w.CLAWS.name
+			];
+			for each(var weap:String in weaponArr) {
+				if(weaponName == weap){return true}
+			}
+			return false;
+		}
 	}
 }
