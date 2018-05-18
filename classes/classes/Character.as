@@ -1,11 +1,11 @@
-﻿package classes 
+package classes 
 {
-import classes.BodyParts.Face;
-import classes.BodyParts.Tail;
-import classes.GlobalFlags.kFLAGS;
-import classes.Items.JewelryLib;
 
-/**
+	import classes.GlobalFlags.kFLAGS;
+	import classes.Items.JewelryLib;
+	import classes.lists.Gender;
+
+	/**
 	 * Character class for player and NPCs. Has subclasses Player and NonPlayer.
 	 * @author Yoffy
 	 */
@@ -170,64 +170,34 @@ import classes.Items.JewelryLib;
 		public function fixFemininity():String
 		{
 			var output:String = "";
-			//Genderless/herms share the same bounds
-			if (gender == 0 || gender == 3)
-			{
-				if (femininity < 20)
-				{
-					output += "\n<b>Your incredibly masculine, chiseled features become a little bit softer from your body's changing hormones.";
-					/*if (hasBeard())
-					{
-						output += "  As if that wasn't bad enough, your " + beard() + " falls out too!";
-						beardLength = 0;
-						beardStyle = 0;
-					}*/
-					output += "</b>\n";
-					femininity = 20;
-				}
-				else if (femininity > 85)
-				{
-					output += "\n<b>You find your overly feminine face loses a little bit of its former female beauty due to your body's changing hormones.</b>\n";
-					femininity = 85;
-				}
+			var fem:String = "\n<b>You find your overly feminine face loses a little bit of its former female beauty due to your body's changing hormones.</b>\n";
+			var mas:String = "\n<b>Your incredibly masculine, chiseled features become a little bit softer from your body's changing hormones.</b>\n";
+			switch (gender) {
+				case Gender.GENDER_NONE: //Genderless/herms share the same bounds
+				case Gender.GENDER_HERM:
+					if (femininity < 20) {
+						output += mas;
+						femininity = 20;
+					} else if (femininity > 85) {
+						output += fem;
+						femininity = 85;
+					}
+					break;
+
+				case Gender.GENDER_FEMALE:
+					if (femininity < 30) {
+						output += mas;
+						femininity = 30;
+					}
+					break;
+
+				case Gender.GENDER_MALE:
+					if (femininity > 70) {
+						output += fem;
+						femininity = 70;
+					}
+					break;
 			}
-			//GURLS!
-			else if (gender == 2)
-			{
-				if (femininity < 30)
-				{
-					output += "\n<b>Your incredibly masculine, chiseled features become a little bit softer from your body's changing hormones.";
-					/*if (hasBeard())
-					{
-						output += "  As if that wasn't bad enough, your " + beard() + " falls out too!";
-						beardLength = 0;
-						beardStyle = 0;
-					}*/
-					output += "</b>\n";
-					femininity = 30;
-				}
-			}
-			//BOIZ!
-			else if (gender == 1)
-			{
-				if (femininity > 70)
-				{
-					output += "\n<b>You find your overly feminine face loses a little bit of its former female beauty due to your body's changing hormones.</b>\n";
-					femininity = 70;
-				}
-				/*if (femininity > 40 && hasBeard())
-				{
-					output += "\n<b>Your beard falls out, leaving you with " + faceDesc() + ".</b>\n";
-					beardLength = 0;
-					beardStyle = 0;
-				}*/
-			}
-			/*if (gender != 1 && hasBeard())
-			{
-				output += "\n<b>Your beard falls out, leaving you with " + faceDesc() + ".</b>\n";
-				beardLength = 0;
-				beardStyle = 0;
-			}*/
 			return output;
 		}
 
@@ -562,28 +532,7 @@ import classes.Items.JewelryLib;
 			}
 			return -1;
 		}
-		
-		//Grow
 
-		//BreastCup
-
-		/*OLD AND UNUSED
-		   public function breastCupS(rowNum:Number):String {
-		   if(breastRows[rowNum].breastRating < 1) return "tiny";
-		   else if(breastRows[rowNum].breastRating < 2) return "A";
-		   else if(breastRows[rowNum].breastRating < 3) return "B";
-		   else if(breastRows[rowNum].breastRating < 4) return "C";
-		   else if(breastRows[rowNum].breastRating < 5) return "D";
-		   else if(breastRows[rowNum].breastRating < 6) return "DD";
-		   else if(breastRows[rowNum].breastRating < 7) return "E";
-		   else if(breastRows[rowNum].breastRating < 8) return "F";
-		   else if(breastRows[rowNum].breastRating < 9) return "G";
-		   else if(breastRows[rowNum].breastRating < 10) return "GG";
-		   else if(breastRows[rowNum].breastRating < 11) return "H";
-		   else if(breastRows[rowNum].breastRating < 12) return "HH";
-		   else if(breastRows[rowNum].breastRating < 13) return "HHH";
-		   return "massive custom-made";
-		 }*/
 		public function viridianChange():Boolean
 		{
 			var count:int = cockTotal();
@@ -604,124 +553,6 @@ import classes.Items.JewelryLib;
 				return false;
 			return cocks[arg].hasKnot();
 		}
-		
-		public override function maxFatigue():Number
-		{
-			var max:Number = 150;
-			var ngMult:int = 1 + game.player.newGamePlusMod();
-			max += racialBonuses()[Race.BonusName_maxfatigue]*ngMult;
-			if (hasPerk(PerkLib.JobHunter)) max += 50;
-			if (hasPerk(PerkLib.JobRanger)) max += 5;
-			if (hasPerk(PerkLib.PrestigeJobArcaneArcher)) max += 600;
-			if (hasPerk(PerkLib.AscensionEndurance)) max += perkv1(PerkLib.AscensionEndurance) * 30;
-			if (jewelryEffectId == JewelryLib.MODIFIER_MP) max += jewelryEffectMagnitude;
-			max += level * 5;
-			if (hasPerk(PerkLib.AscensionUnlockedPotential)) max += level * 6;
-			if (max > 74999) max = 74999;
-			return max;
-		}
-		
-		public override function maxKi():Number
-		{
-			var max:Number = 50;
-			var ngMult:int = 1 + game.player.newGamePlusMod();
-			max += racialBonuses()[Race.BonusName_maxki]*ngMult;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 2) max += 25;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 3) max += 25;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 4) max += 30;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 5) max += 30;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 6) max += 30;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 7) max += 40;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 8) max += 40;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 9) max += 40;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 10) max += 50;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 11) max += 50;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 12) max += 50;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 13) max += 60;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 14) max += 60;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 15) max += 60;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 16) max += 70;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 17) max += 70;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 18) max += 70;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 19) max += 80;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 20) max += 80;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 21) max += 80;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 22) max += 90;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 23) max += 90;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 24) max += 90;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 25) max += 100;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 26) max += 100;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 27) max += 100;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 28) max += 110;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 29) max += 110;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 30) max += 110;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 31) max += 120;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 32) max += 120;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 33) max += 120;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 34) max += 130;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 35) max += 130;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 36) max += 130;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 37) max += 140;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 38) max += 140;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 39) max += 140;
-			if (hasPerk(PerkLib.AscensionSoulPurity)) max += perkv1(PerkLib.AscensionSoulPurity) * 50;
-			if (flags[kFLAGS.SOULFORCE_GAINED_FROM_CULTIVATING] > 0) max += flags[kFLAGS.SOULFORCE_GAINED_FROM_CULTIVATING];//+310
-			if (jewelryEffectId == JewelryLib.MODIFIER_SF) max += jewelryEffectMagnitude;//+20
-			if (hasPerk(PerkLib.AscensionUnlockedPotential2ndStage)) max += level * 6;
-			max = Math.round(max);
-			if (max > 139999) max = 139999;
-			return max;
-		}
-		
-		public override function maxWrath():Number
-		{
-			var max:Number = 250;
-			if (hasPerk(PerkLib.PrimalFury)) max += 10;
-			if (hasPerk(PerkLib.FeralArmor)) max += 20;
-			if (hasPerk(PerkLib.JobDervish)) max += 20;
-			if (hasPerk(PerkLib.JobWarrior)) max += 10;
-			if (hasPerk(PerkLib.Berzerker)) max += 100;
-			if (hasPerk(PerkLib.Lustzerker)) max += 100;
-			if (hasPerk(PerkLib.PrestigeJobBerserker)) max += 200;
-			if (hasPerk(PerkLib.Rage)) max += 300;
-			if (hasPerk(PerkLib.AscensionFury)) max += perkv1(PerkLib.AscensionFury) * 20;
-			if (hasPerk(PerkLib.AscensionUnlockedPotential2ndStage)) max += level * 2;
-			if (max > 20899) max = 20899;//obecnie max to 20890
-			return max;
-		}
-		
-		public override function maxMana():Number
-		{
-			var max:Number = 200;
-			if (hasPerk(PerkLib.Spellpower) && inte >= 50) max += 15;
-			if (hasPerk(PerkLib.JobSorcerer)) max += 15;
-			max = Math.round(max);
-			if (max > 184999) max = 184999;
-			return max;
-		}
-		
-		public function maxVenom():Number
-		{
-			var maxven:Number = 0;
-			if (game.player.faceType == Face.SNAKE_FANGS) maxven += 100;
-			if (game.player.faceType == Face.SPIDER_FANGS) maxven += 100;
-			if (game.player.tailType == Tail.BEE_ABDOMEN) maxven += 150;
-			if (game.player.tailType == Tail.SPIDER_ADBOMEN) maxven += 150;
-			if (game.player.tailType == Tail.SCORPION) maxven += 150;
-			if (game.player.tailType == Tail.MANTICORE_PUSSYTAIL) maxven += 200;
-			maxven = Math.round(maxven);
-			return maxven;
-		}
-		
-		public function maxHunger():Number
-		{
-			var max:Number = 100;
-			if (game.player.dragonScore() >= 20) max += 50;
-			if (game.player.dragonScore() >= 28) max += 50;
-			if (max > 1409) max = 1409;//obecnie max to 1360
-			return max;
-		}
-
 
 	}
 

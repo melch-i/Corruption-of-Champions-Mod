@@ -315,7 +315,7 @@ public class PerkMenu extends BaseContent {
 		displayHeader("All Perks ("+(1+page*count)+"-"+(page*count+perks.length)+
 					  "/"+allPerks.length+")");
 		for each (var ptype:PerkType in perks) {
-			var pclass:PerkClass = player.perk(player.findPerk(ptype));
+			var pclass:PerkClass = player.getPerk(ptype);
 
 			var color:String;
 			if (pclass) color=(darkTheme()?'#ffffff':'#000000'); // has perk

@@ -1,43 +1,35 @@
 package classes
 {
-import classes.BodyParts.Antennae;
-import classes.BodyParts.Arms;
-import classes.BodyParts.Butt;
-import classes.BodyParts.Ears;
-import classes.BodyParts.Eyes;
-import classes.BodyParts.Face;
-import classes.BodyParts.Hair;
-import classes.BodyParts.Horns;
-import classes.BodyParts.ISexyPart;
-import classes.BodyParts.LowerBody;
-import classes.BodyParts.RearBody;
-import classes.BodyParts.Skin;
-import classes.BodyParts.Tail;
-import classes.BodyParts.Wings;
-import classes.GlobalFlags.kACHIEVEMENTS;
-import classes.GlobalFlags.kFLAGS;
-import classes.Items.Armor;
-import classes.Items.ArmorLib;
-import classes.Items.Jewelry;
-import classes.Items.JewelryLib;
-import classes.Items.Mutations;
-import classes.Items.Shield;
-import classes.Items.ShieldLib;
-import classes.Items.Undergarment;
-import classes.Items.UndergarmentLib;
-import classes.Items.Weapon;
-import classes.Items.WeaponLib;
-import classes.Items.WeaponRange;
-import classes.Items.WeaponRangeLib;
-import classes.Scenes.Areas.Forest.KitsuneScene;
-import classes.Scenes.Places.TelAdre.UmasShop;
-import classes.Scenes.Pregnancy;
-import classes.Scenes.SceneLib;
-import classes.StatusEffects.VampireThirstEffect;
-import classes.internals.Utils;
-import classes.lists.BreastCup;
 
-use namespace CoC;
+	import classes.BodyParts.Arms;
+	import classes.BodyParts.Face;
+	import classes.BodyParts.ISexyPart;
+	import classes.BodyParts.LowerBody;
+	import classes.BodyParts.Skin;
+	import classes.BodyParts.Tail;
+	import classes.BodyParts.Wings;
+	import classes.GlobalFlags.kACHIEVEMENTS;
+	import classes.GlobalFlags.kFLAGS;
+	import classes.Items.Armor;
+	import classes.Items.ArmorLib;
+	import classes.Items.Jewelry;
+	import classes.Items.JewelryLib;
+	import classes.Items.Shield;
+	import classes.Items.ShieldLib;
+	import classes.Items.Undergarment;
+	import classes.Items.UndergarmentLib;
+	import classes.Items.Weapon;
+	import classes.Items.WeaponLib;
+	import classes.Items.WeaponRange;
+	import classes.Items.WeaponRangeLib;
+	import classes.Scenes.Places.TelAdre.UmasShop;
+	import classes.Scenes.Pregnancy;
+	import classes.Scenes.SceneLib;
+	import classes.StatusEffects.VampireThirstEffect;
+	import classes.internals.Utils;
+	import classes.lists.BreastCup;
+
+	use namespace CoC;
 
 	/**
 	 * ...
@@ -137,158 +129,6 @@ use namespace CoC;
 		private var _lowerGarment:Undergarment = UndergarmentLib.NOTHING;
 		private var _modArmorName:String = "";
 
-		//override public function set armors
-		override public function set armorValue(value:Number):void
-		{
-			CoC_Settings.error("ERROR: attempt to directly set player.armorValue.");
-		}
-
-		override public function set armorName(value:String):void
-		{
-			CoC_Settings.error("ERROR: attempt to directly set player.armorName.");
-		}
-
-		override public function set armorDef(value:Number):void
-		{
-			CoC_Settings.error("ERROR: attempt to directly set player.armorDef.");
-		}
-
-		override public function set armorPerk(value:String):void
-		{
-			CoC_Settings.error("ERROR: attempt to directly set player.armorPerk.");
-		}
-
-		//override public function set weapons
-		override public function set weaponName(value:String):void
-		{
-			CoC_Settings.error("ERROR: attempt to directly set player.weaponName.");
-		}
-
-		override public function set weaponVerb(value:String):void
-		{
-			CoC_Settings.error("ERROR: attempt to directly set player.weaponVerb.");
-		}
-
-		override public function set weaponAttack(value:Number):void
-		{
-			CoC_Settings.error("ERROR: attempt to directly set player.weaponAttack.");
-		}
-
-		override public function set weaponPerk(value:String):void
-		{
-			CoC_Settings.error("ERROR: attempt to directly set player.weaponPerk.");
-		}
-
-		override public function set weaponValue(value:Number):void
-		{
-			CoC_Settings.error("ERROR: attempt to directly set player.weaponValue.");
-		}
-
-		//override public function set weapons
-		override public function set weaponRangeName(value:String):void
-		{
-			CoC_Settings.error("ERROR: attempt to directly set player.weaponRangeName.");
-		}
-
-		override public function set weaponRangeVerb(value:String):void
-		{
-			CoC_Settings.error("ERROR: attempt to directly set player.weaponRangeVerb.");
-		}
-
-		override public function set weaponRangeAttack(value:Number):void
-		{
-			CoC_Settings.error("ERROR: attempt to directly set player.weaponRangeAttack.");
-		}
-
-		override public function set weaponRangePerk(value:String):void
-		{
-			CoC_Settings.error("ERROR: attempt to directly set player.weaponRangePerk.");
-		}
-
-		override public function set weaponRangeValue(value:Number):void
-		{
-			CoC_Settings.error("ERROR: attempt to directly set player.weaponRangeValue.");
-		}
-
-		//override public function set jewelries
-		override public function set jewelryName(value:String):void
-		{
-			CoC_Settings.error("ERROR: attempt to directly set player.jewelryName.");
-		}
-		
-		override public function set jewelryEffectId(value:Number):void
-		{
-			CoC_Settings.error("ERROR: attempt to directly set player.jewelryEffectId.");
-		}
-		
-		override public function set jewelryEffectMagnitude(value:Number):void
-		{
-			CoC_Settings.error("ERROR: attempt to directly set player.jewelryEffectMagnitude.");
-		}
-				
-		override public function set jewelryPerk(value:String):void
-		{
-			CoC_Settings.error("ERROR: attempt to directly set player.jewelryPerk.");
-		}
-		
-		override public function set jewelryValue(value:Number):void
-		{
-			CoC_Settings.error("ERROR: attempt to directly set player.jewelryValue.");
-		}
-
-		//override public function set shields
-		override public function set shieldName(value:String):void
-		{
-			CoC_Settings.error("ERROR: attempt to directly set player.shieldName.");
-		}
-		
-		override public function set shieldBlock(value:Number):void
-		{
-			CoC_Settings.error("ERROR: attempt to directly set player.shieldBlock.");
-		}
-		
-		override public function set shieldPerk(value:String):void
-		{
-			CoC_Settings.error("ERROR: attempt to directly set player.shieldPerk.");
-		}
-		
-		override public function set shieldValue(value:Number):void
-		{
-			CoC_Settings.error("ERROR: attempt to directly set player.shieldValue.");
-		}
-		
-		//override public function set undergarments
-		override public function set upperGarmentName(value:String):void
-		{
-			CoC_Settings.error("ERROR: attempt to directly set player.upperGarmentName.");
-		}
-		
-		override public function set upperGarmentPerk(value:String):void
-		{
-			CoC_Settings.error("ERROR: attempt to directly set player.upperGarmentPerk.");
-		}
-		
-		override public function set upperGarmentValue(value:Number):void
-		{
-			CoC_Settings.error("ERROR: attempt to directly set player.upperGarmentValue.");
-		}
-
-		override public function set lowerGarmentName(value:String):void
-		{
-			CoC_Settings.error("ERROR: attempt to directly set player.lowerGarmentName.");
-		}
-		
-		override public function set lowerGarmentPerk(value:String):void
-		{
-			CoC_Settings.error("ERROR: attempt to directly set player.lowerGarmentPerk.");
-		}
-		
-		override public function set lowerGarmentValue(value:Number):void
-		{
-			CoC_Settings.error("ERROR: attempt to directly set player.lowerGarmentValue.");
-		}
-		
-		
 		public function get modArmorName():String
 		{
 			if (_modArmorName == null) _modArmorName = "";
@@ -3949,6 +3789,136 @@ use namespace CoC;
 			//mainView.statsView.showUpDown();
 			EngineCore.showUpDown();
 			EngineCore.statScreenRefresh();
+		}
+
+		public override function maxFatigue():Number
+		{
+			var max:Number = 150;
+			var ngMult:int = 1 + newGamePlusMod();
+			max += racialBonuses()[Race.BonusName_maxfatigue]*ngMult;
+			if (hasPerk(PerkLib.JobHunter)) max += 50;
+			if (hasPerk(PerkLib.JobRanger)) max += 5;
+			if (hasPerk(PerkLib.PrestigeJobArcaneArcher)) max += 600;
+			if (hasPerk(PerkLib.AscensionEndurance)) max += perkv1(PerkLib.AscensionEndurance) * 30;
+			if (jewelryEffectId == JewelryLib.MODIFIER_MP) max += jewelryEffectMagnitude;
+			max += level * 5;
+			if (hasPerk(PerkLib.AscensionUnlockedPotential)) max += level * 6;
+			if (max > 74999) max = 74999;
+			return max;
+		}
+
+		public function maxHunger(): Number {
+			var max: Number = 100;
+			if (game.player.dragonScore() >= 20) {
+				max += 50;
+			}
+			if (game.player.dragonScore() >= 28) {
+				max += 50;
+			}
+			if (max > 1409) {
+				max = 1409;
+			}//obecnie max to 1360
+			return max;
+		}
+
+		public function maxVenom(): Number {
+			var maxven: Number = 0;
+			if (faceType == Face.SNAKE_FANGS) {
+				maxven += 100;
+			}
+			if (faceType == Face.SPIDER_FANGS) {
+				maxven += 100;
+			}
+			if (tailType == Tail.BEE_ABDOMEN) {
+				maxven += 150;
+			}
+			if (tailType == Tail.SPIDER_ADBOMEN) {
+				maxven += 150;
+			}
+			if (tailType == Tail.SCORPION) {
+				maxven += 150;
+			}
+			if (tailType == Tail.MANTICORE_PUSSYTAIL) {
+				maxven += 200;
+			}
+			maxven = Math.round(maxven);
+			return maxven;
+		}
+
+		public override function maxMana(): Number {
+			var max: Number = 200;
+			if (hasPerk(PerkLib.Spellpower) && inte >= 50) {
+				max += 15;
+			}
+			if (hasPerk(PerkLib.JobSorcerer)) {
+				max += 15;
+			}
+			max = Math.round(max);
+			if (max > 184999) {
+				max = 184999;
+			}
+			return max;
+		}
+
+		public override function maxWrath(): Number {
+			var max: Number = 250;
+			if (hasPerk(PerkLib.PrimalFury)) {
+				max += 10;
+			}
+			if (hasPerk(PerkLib.FeralArmor)) {
+				max += 20;
+			}
+			if (hasPerk(PerkLib.JobDervish)) {
+				max += 20;
+			}
+			if (hasPerk(PerkLib.JobWarrior)) {
+				max += 10;
+			}
+			if (hasPerk(PerkLib.Berzerker)) {
+				max += 100;
+			}
+			if (hasPerk(PerkLib.Lustzerker)) {
+				max += 100;
+			}
+			if (hasPerk(PerkLib.PrestigeJobBerserker)) {
+				max += 200;
+			}
+			if (hasPerk(PerkLib.Rage)) {
+				max += 300;
+			}
+			if (hasPerk(PerkLib.AscensionFury)) {
+				max += perkv1(PerkLib.AscensionFury) * 20;
+			}
+			if (hasPerk(PerkLib.AscensionUnlockedPotential2ndStage)) {
+				max += level * 2;
+			}
+			if (max > 20899) {
+				max = 20899;
+			}//obecnie max to 20890
+			return max;
+		}
+
+		public override function maxKi(): Number {
+			var max: Number = 50;
+			var ngMult: int = 1 + game.player.newGamePlusMod();
+			max += racialBonuses()[Race.BonusName_maxki] * ngMult;
+			if (hasPerk(PerkLib.AscensionSoulPurity)) {
+				max += perkv1(PerkLib.AscensionSoulPurity) * 50;
+			}
+			if (flags[kFLAGS.SOULFORCE_GAINED_FROM_CULTIVATING] > 0) {
+				max += flags[kFLAGS.SOULFORCE_GAINED_FROM_CULTIVATING];
+			}//+310
+			if (jewelryEffectId == JewelryLib.MODIFIER_SF) {
+				max += jewelryEffectMagnitude;
+			}//+20
+			if (hasPerk(PerkLib.AscensionUnlockedPotential2ndStage)) {
+				max += level * 6;
+			}
+			max = Math.round(max);
+			if (max > 139999) {
+				max = 139999;
+			}
+			return max;
 		}
 	}
 }

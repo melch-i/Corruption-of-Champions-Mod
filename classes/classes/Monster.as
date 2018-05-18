@@ -50,6 +50,104 @@ import flash.utils.getQualifiedClassName;
 		{
 			return game.player;
 		}
+
+		//Weapon melee
+		private var _weaponName:String = "";
+		private var _weaponVerb:String = "";
+		private var _weaponAttack:Number = 0;
+		private var _weaponPerk:String = "";
+		private var _weaponValue:Number = 0;
+		override public function get weaponName():String { return _weaponName; }
+		override public function get weaponVerb():String { return _weaponVerb; }
+		override public function get weaponAttack():Number { return _weaponAttack; }
+		override public function get weaponPerk():String { return _weaponPerk; }
+		override public function get weaponValue():Number { return _weaponValue; }
+		public function set weaponName(value:String):void { _weaponName = value; }
+		public function set weaponVerb(value:String):void { _weaponVerb = value; }
+		public function set weaponAttack(value:Number):void { _weaponAttack = value; }
+		public function set weaponPerk(value:String):void { _weaponPerk = value; }
+		public function set weaponValue(value:Number):void { _weaponValue = value; }
+		//Weapon range
+		private var _weaponRangeName:String = "";
+		private var _weaponRangeVerb:String = "";
+		private var _weaponRangeAttack:Number = 0;
+		private var _weaponRangePerk:String = "";
+		private var _weaponRangeValue:Number = 0;
+		override public function get weaponRangeName():String { return _weaponRangeName; }
+		override public function get weaponRangeVerb():String { return _weaponRangeVerb; }
+		override public function get weaponRangeAttack():Number { return _weaponRangeAttack; }
+		override public function get weaponRangePerk():String { return _weaponRangePerk; }
+		override public function get weaponRangeValue():Number { return _weaponRangeValue; }
+		public function set weaponRangeName(value:String):void { _weaponRangeName = value; }
+		public function set weaponRangeVerb(value:String):void { _weaponRangeVerb = value; }
+		public function set weaponRangeAttack(value:Number):void { _weaponRangeAttack = value; }
+		public function set weaponRangePerk(value:String):void { _weaponRangePerk = value; }
+		public function set weaponRangeValue(value:Number):void { _weaponRangeValue = value; }
+		//Clothing/Armor
+		private var _armorName:String = "";
+		private var _armorDef:Number = 0;
+		private var _armorPerk:String = "";
+		private var _armorValue:Number = 0;
+		override public function get armorName():String { return _armorName; }
+		override public function get armorDef():Number { return _armorDef; }
+		override public function get armorPerk():String { return _armorPerk; }
+		override public function get armorValue():Number { return _armorValue; }
+		public function set armorValue(value:Number):void { _armorValue = value; }
+		public function set armorName(value:String):void { _armorName = value; }
+		public function set armorDef(value:Number):void { _armorDef = value; }
+		public function set armorPerk(value:String):void { _armorPerk = value; }
+		//Jewelry!
+		private var _jewelryName:String = "";
+		private var _jewelryEffectId:Number = 0;
+		private var _jewelryEffectMagnitude:Number = 0;
+		private var _jewelryPerk:String = "";
+		private var _jewelryValue:Number = 0;
+		override public function get jewelryName():String { return _jewelryName; }
+		override public function get jewelryEffectId():Number { return _jewelryEffectId; }
+		override public function get jewelryEffectMagnitude():Number { return _jewelryEffectMagnitude; }
+		override public function get jewelryPerk():String { return _jewelryPerk; }
+		override public function get jewelryValue():Number { return _jewelryValue; }
+		public function set jewelryValue(value:Number):void { _jewelryValue = value; }
+		public function set jewelryName(value:String):void { _jewelryName = value; }
+		public function set jewelryEffectId(value:Number):void { _jewelryEffectId = value; }
+		public function set jewelryEffectMagnitude(value:Number):void { _jewelryEffectId = value; }
+		public function set jewelryPerk(value:String):void { _jewelryPerk = value; }
+		//Shield!
+		private var _shieldName:String = "";
+		private var _shieldBlock:Number = 0;
+		private var _shieldPerk:String = "";
+		private var _shieldValue:Number = 0;
+		override public function get shieldName():String { return _shieldName; }
+		override public function get shieldBlock():Number { return _shieldBlock; }
+		override public function get shieldPerk():String { return _shieldPerk; }
+		override public function get shieldValue():Number { return _shieldValue; }
+		public function set shieldValue(value:Number):void { _shieldValue = value; }
+		public function set shieldName(value:String):void { _shieldName = value; }
+		public function set shieldBlock(value:Number):void { _shieldBlock = value; }
+		public function set shieldPerk(value:String):void { _shieldPerk = value; }
+		//Undergarments!
+		private var _upperGarmentName:String = "";
+		private var _upperGarmentPerk:String = "";
+		private var _upperGarmentValue:Number = 0;
+		override public function get upperGarmentName():String { return _upperGarmentName; }
+		override public function get upperGarmentPerk():String { return _upperGarmentPerk; }
+		override public function get upperGarmentValue():Number { return _upperGarmentValue; }
+		public function set upperGarmentName(value:String):void { _upperGarmentName = value; }
+		public function set upperGarmentPerk(value:String):void { _upperGarmentPerk = value; }
+		public function set upperGarmentValue(value:Number):void { _upperGarmentValue = value; }
+
+		private var _lowerGarmentName:String = "";
+		private var _lowerGarmentPerk:String = "";
+		private var _lowerGarmentValue:Number = 0;
+		override public function get lowerGarmentName():String { return _lowerGarmentName; }
+		override public function get lowerGarmentPerk():String { return _lowerGarmentPerk; }
+		override public function get lowerGarmentValue():Number { return _lowerGarmentValue; }
+		public function set lowerGarmentName(value:String):void { _lowerGarmentName = value; }
+		public function set lowerGarmentPerk(value:String):void { _lowerGarmentPerk = value; }
+		public function set lowerGarmentValue(value:Number):void { _lowerGarmentValue = value; }
+
+
+
         public function newGamePlusMod():int {
             return player.newGamePlusMod();
         }
