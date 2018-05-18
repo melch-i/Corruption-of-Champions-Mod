@@ -21,7 +21,7 @@ public class PerkTree extends BaseContent {
 				PerkLib.JobEnchanter,
 				PerkLib.JobEromancer,
 				PerkLib.JobKnight,
-				PerkLib.JobMonk,
+				PerkLib.AdvancedJobMonk,
 				PerkLib.JobGuardian,
 				PerkLib.JobRanger,
 				PerkLib.JobSeducer,

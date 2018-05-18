@@ -1090,7 +1090,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 		damage += scalingBonusToughness() * 0.5;
 		//addictive bonuses
 		if (player.hasPerk(PerkLib.IronFists)) damage += 10;
-		if (player.hasPerk(PerkLib.JobMonk)) damage += (10 * (1 + player.newGamePlusMod()));
+		if (player.hasPerk(PerkLib.AdvancedJobMonk)) damage += (10 * (1 + player.newGamePlusMod()));
 		if (player.hasStatusEffect(StatusEffects.Berzerking)) damage += (30 + (15 * player.newGamePlusMod()));
 		if (player.hasStatusEffect(StatusEffects.Lustzerking)) damage += (30 + (15 * player.newGamePlusMod()));
 		//multiplicative bonuses
@@ -1145,7 +1145,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 		damage += scalingBonusToughness() * 0.25;
 		//addictive bonuses
 		if (player.hasPerk(PerkLib.IronFists)) damage += 10;
-		if (player.hasPerk(PerkLib.JobMonk)) damage += (10 * (1 + player.newGamePlusMod()));
+		if (player.hasPerk(PerkLib.AdvancedJobMonk)) damage += (10 * (1 + player.newGamePlusMod()));
 		if (player.hasStatusEffect(StatusEffects.Berzerking)) damage += (30 + (15 * player.newGamePlusMod()));
 		if (player.hasStatusEffect(StatusEffects.Lustzerking)) damage += (30 + (15 * player.newGamePlusMod()));
 		//multiplicative bonuses
@@ -1539,7 +1539,7 @@ public class PhysicalSpecials extends BaseCombatContent {
 					damage += scalingBonusSpeed() * 0.5;
 					//addictive bonuses
 					if (player.hasPerk(PerkLib.IronFists)) damage += 10;
-					if (player.hasPerk(PerkLib.JobMonk)) damage += (10 * (1 + player.newGamePlusMod()));
+					if (player.hasPerk(PerkLib.AdvancedJobMonk)) damage += (10 * (1 + player.newGamePlusMod()));
 					if (player.hasStatusEffect(StatusEffects.Berzerking)) damage += (30 + (15 * player.newGamePlusMod()));
 					if (player.hasStatusEffect(StatusEffects.Lustzerking)) damage += (30 + (15 * player.newGamePlusMod()));
 					//multiplicative bonuses

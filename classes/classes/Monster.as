@@ -1,4 +1,4 @@
-﻿package classes
+package classes
 {
 import classes.BodyParts.Antennae;
 import classes.BodyParts.Arms;
@@ -2034,7 +2034,7 @@ import flash.utils.getQualifiedClassName;
 				inte += (5 * (1 + newGamePlusMod()));
 			}
 			if (hasPerk(PerkLib.JobKnight)) tou += (10 * (1 + newGamePlusMod()));
-			if (hasPerk(PerkLib.JobMonk)) wis += (15 * (1 + newGamePlusMod()));
+			if (hasPerk(PerkLib.AdvancedJobMonk)) wis += (15 * (1 + newGamePlusMod()));
 			if (hasPerk(PerkLib.JobRanger)) spe += (5 * (1 + newGamePlusMod()));
 			if (hasPerk(PerkLib.JobSeducer)) lib += (5 * (1 + newGamePlusMod()));
 			if (hasPerk(PerkLib.JobSorcerer)) inte += (5 * (1 + newGamePlusMod()));

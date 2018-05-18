@@ -1,4 +1,4 @@
-﻿package classes
+package classes
 {
 import classes.BodyParts.Antennae;
 import classes.BodyParts.Arms;
@@ -3045,7 +3045,7 @@ use namespace CoC;
 				maxInt += (5 * newGamePlusMod);
 			}
 			if (hasPerk(PerkLib.JobKnight)) maxTou += (10 * newGamePlusMod);
-			if (hasPerk(PerkLib.JobMonk)) maxWis += (15 * newGamePlusMod);
+			if (hasPerk(PerkLib.AdvancedJobMonk)) maxWis += (15 * newGamePlusMod);
 			if (hasPerk(PerkLib.JobRanger)) maxSpe += (5 * newGamePlusMod);
 			if (hasPerk(PerkLib.JobSeducer)) maxLib += (5 * newGamePlusMod);
 			if (hasPerk(PerkLib.JobSorcerer)) maxInt += (5 * newGamePlusMod);

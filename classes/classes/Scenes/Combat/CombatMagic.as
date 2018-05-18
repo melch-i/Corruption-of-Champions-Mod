@@ -838,7 +838,7 @@ public class CombatMagic extends BaseCombatContent {
 			if (player.hasPerk(PerkLib.Battlemage) && player.inte >= 50) MightBoost += 15;
 			if (player.hasPerk(PerkLib.JobDervish)) MightBoost -= 10;
 			if (player.hasPerk(PerkLib.IronFists)) MightBoost -= 10;
-			if (player.hasPerk(PerkLib.JobMonk)) MightBoost -= 15;
+			if (player.hasPerk(PerkLib.AdvancedJobMonk)) MightBoost -= 15;
 			if (player.hasPerk(PerkLib.Berzerker)) MightBoost -= 15;
 			if (player.hasPerk(PerkLib.Lustzerker)) MightBoost -= 15;
 			if (player.hasPerk(PerkLib.WeaponMastery)) MightBoost -= 15;
@@ -940,7 +940,7 @@ public class CombatMagic extends BaseCombatContent {
 			if (player.hasPerk(PerkLib.Battleflash) && player.inte >= 50) BlinkBoost += 15;
 			if (player.hasPerk(PerkLib.JobDervish)) BlinkBoost -= 10;
 			if (player.hasPerk(PerkLib.IronFists)) BlinkBoost -= 10;
-			if (player.hasPerk(PerkLib.JobMonk)) BlinkBoost -= 15;
+			if (player.hasPerk(PerkLib.AdvancedJobMonk)) BlinkBoost -= 15;
 			if (player.hasPerk(PerkLib.Berzerker)) BlinkBoost -= 15;
 			if (player.hasPerk(PerkLib.Lustzerker)) BlinkBoost -= 15;
 			if (player.hasPerk(PerkLib.WeaponMastery)) BlinkBoost -= 15;
@@ -1358,7 +1358,7 @@ public class CombatMagic extends BaseCombatContent {
 		if (player.hasPerk(PerkLib.Spellsword) && player.inte >= 50) ChargeWeaponBoost += 15;
 		if (player.hasPerk(PerkLib.JobDervish)) ChargeWeaponBoost -= 10;
 		if (player.hasPerk(PerkLib.IronFists)) ChargeWeaponBoost -= 10;
-		if (player.hasPerk(PerkLib.JobMonk)) ChargeWeaponBoost -= 15;
+		if (player.hasPerk(PerkLib.AdvancedJobMonk)) ChargeWeaponBoost -= 15;
 		if (player.hasPerk(PerkLib.Berzerker)) ChargeWeaponBoost -= 15;
 		if (player.hasPerk(PerkLib.Lustzerker)) ChargeWeaponBoost -= 15;
 		if (player.hasPerk(PerkLib.WeaponMastery)) ChargeWeaponBoost -= 15;
@@ -1414,7 +1414,7 @@ public class CombatMagic extends BaseCombatContent {
 		if (player.hasPerk(PerkLib.Spellarmor) && player.inte >= 50) ChargeArmorBoost += 15;
 		if (player.hasPerk(PerkLib.JobDervish)) ChargeArmorBoost -= 10;
 		if (player.hasPerk(PerkLib.IronFists)) ChargeArmorBoost -= 10;
-		if (player.hasPerk(PerkLib.JobMonk)) ChargeArmorBoost -= 15;
+		if (player.hasPerk(PerkLib.AdvancedJobMonk)) ChargeArmorBoost -= 15;
 		if (player.hasPerk(PerkLib.Berzerker)) ChargeArmorBoost -= 15;
 		if (player.hasPerk(PerkLib.Lustzerker)) ChargeArmorBoost -= 15;
 		if (player.hasPerk(PerkLib.WeaponMastery)) ChargeArmorBoost -= 15;

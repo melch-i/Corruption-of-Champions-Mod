@@ -174,13 +174,6 @@ public class PerkLib
 						"<b>You aren't strong enough to benefit from this anymore.</b>" +
 						"]",
 				"You choose the 'Brutal Blows' perk, which reduces enemy armor with each hit.");
-		public static const CatchTheBlade:PerkType = mk("Catch the blade", "Catch the blade",
-				"[if(player.spe>=50)" +
-						"Increases deflect chance by up to 15% while using only fists/fist weapons. (Speed-based)." +
-						"|" +
-						"<b>You are not fast enough to gain benefit from this perk.</b>" +
-						"]",
-				"You choose the 'Catch the blade' perk, giving you a chance to deflect blow with your fists. (Speed-based).");
 		public static const CatlikeNimbleness:PerkType = mk("Cat-like Nimbleness", "Cat-like Nimbleness",
 				"Your transformed joins allows you to move more swiftly and with greater nimbleness.",
 				"You choose the 'Cat-like Nimbleness' perk. Your body joints due to repeadly usage of cat-like flexibility became more nimble.");
@@ -294,7 +287,7 @@ public class PerkLib
 				"You choose 'Elements of Mareth: Basics' perk, your time spent in Mareth allowed you to get basic understanding of native elements that aren't classified as one of four traditional.");
 		public static const ElementsOfTheOrtodoxPath:PerkType = mk("Elements of the Ortodox Path", "Elements of the Ortodox Path",
 				"You can now summon and command ether, wood and metal elementals. Also increase elementals command limit by 1.",
-				"You choose 'Elements of the Ortodox Path' perk, your time spent on studing elements allowed to be able clal those meantioned in more ortodox writings.");
+				"You choose the 'Elements of the Ortodox Path' perk, your time spent on studing elements allowed to be able clal those meantioned in more ortodox writings.");
 		public static const EnvenomedBolt:PerkType = mk("Envenomed Bolt", "Envenomed Bolt",
 				"By carefully collecting your venom you can apply poison to your arrows and bolts.",
 				"You choose the 'Envenomed Bolt' perk, allowing you to apply your own venom to arrows and bolts.");
@@ -341,9 +334,6 @@ public class PerkLib
 		public static const Impale:PerkType = mk("Impale", "Impale",
 				"Damage bonus of spears and lances critical hits is doubled as long speed is high enough.",
 				"You've chosen the 'Impale' perk. Your spear and lance critical hit attacks bonus damages are doubled.");
-		public static const IronFists:PerkType = mk("Iron Fists", "Iron Fists",
-				"Hardens your fists to increase attack rating by 10.",
-				"You choose the 'Iron Fists' perk, hardening your fists. This increases attack power by 10.");
 		public static const IronMan:PerkType = mk("Iron Man", "Iron Man",
 				"Reduces the fatigue cost of physical specials by 50%.",
 				"You choose the 'Iron Man' perk, reducing the fatigue cost of physical special attacks by 50%");
@@ -377,9 +367,6 @@ public class PerkLib
 		public static const JobKnight:PerkType = mk("Job: Knight", "Job: Knight",
 				"You've trained in combat using shields and heaviest armors.",
 				"You choose 'Job: Knight' perk, training yourself to became Knight.");
-		public static const JobMonk:PerkType = mk("Job: Monk", "Job: Monk",
-				"You've trained in unarmed combat.",
-				"You choose 'Job: Monk' perk, training yourself to became Monk.");
 		public static const JobRanger:PerkType = mk("Job: Ranger", "Job: Ranger",
 				"You've trained in ranged combat.",
 				"You choose 'Job: Ranger' perk, training yourself to became Ranger.");
@@ -617,7 +604,79 @@ public class PerkLib
 		public static const JobArcher:PerkType = mk("Job: Archer", "Job: Archer",
 				"You've trained in ranged combat.",
 				"You choose 'Job: Archer' perk, training yourself to became Archer.");//perk później do usuniecia
-		
+
+		//Ki Perks
+		public static const AdvancedJobMonk:PerkType = mk("Advanced Job: Monk", "Advanced Job: Monk",
+			"You've trained in unarmed, Ki based combat.",
+			"You choose 'Advanced Job: Monk' perk, training yourself to became a Monk.");
+		public static const AdvancedJobSage:PerkType = mk("Advanced Job: Sage", "Advanced Job: Sage",
+			"You've trained your Ki powers to the elements.",
+			"You choose the 'Advanced Job: Sage' perk, training your Ki powers to align with the elements");
+		public static const AlignedKi:PerkType = mk("Aligned Ki", "Aligned Ki",
+			"Ki powers deal 40% more damage to enemies of opposite alignment",
+			"You choose the 'Aligned Ki' perk, causing your Ki powers to do extra damage based on enemy alignemnt");
+		public static const Backlash:PerkType = mk("Backlash", "Backlash",
+			"Raises block chance by 5% while using your fists and no shield, and allows a single attack in response to blocking an attack with your fists.",
+			"You choose the 'Backlash' perk, raising your unarmed block chance, and allowing you to strike back after blocking.");
+		public static const BloomOfLife:PerkType = mk("Bloom of Life", "Bloom of Life",
+			"You recover a small amount of health when using wood aligned Ki powers",
+			"You choose the 'Bloom of Life' perk, granting regeneration when using wood Ki powers");
+		public static const CalmWithinTheStorm:PerkType = mk("Calm within the Storm", "Calm within the Storm",
+			"Recover a small amount of Ki every round of combat.",
+			"You choose the 'Calm within the Storm' perk, allowing you to regain Ki while in combat");
+		public static const CatchTheBlade:PerkType = mk("Catch the blade", "Catch the blade",
+			"[if(player.spe>=50)" +
+			"Increases deflect chance by up to 15% while using only fists/fist weapons. (Speed-based)." +
+			"|" +
+			"<b>You are not fast enough to gain benefit from this perk.</b>" +
+			"]",
+			"You choose the 'Catch the blade' perk, giving you a chance to deflect blow with your fists. (Speed-based).");
+		public static const ElementalBalance:PerkType = mk("Elemental Balance", "Elemental Balance",
+			"Your elemental attacks gain an extra 20% damage so long as you never use the same element twice",
+			"You choose the 'Elemental Balance' perk, increasing damage from elemental attacks when their elements are balanced");
+		public static const ElementalHarmony:PerkType = mk("Elemental Harmony", "Elemental Harmony",
+			"You are one with the world and its elements, taking 20% reduced damage from elemental attacks",
+			"You choose 'Elemental Harmony' perk, reducing the damage you take from elemental attacks by 20%.");
+		public static const HavenOfPeace:PerkType = mk("Haven of Peace", "Haven of Peace",
+			"You may relieve yourself or meditate even while in a dungeon or other dangerous location",
+			"You choose the 'Haven of Peace' perk, allowing you to meditate in dargerous locations");
+		public static const IceShards:PerkType = mk("Ice Shards", "Ice Shards",
+			"Ice based Ki powers guarantee your next attack will be a critical hit.",
+			"You choose the 'Wind of Haste' perk, giving your ice based Ki powers the ability to icrease critical chance.");
+		public static const IronFists:PerkType = mk("Iron Fists", "Iron Fists",
+			"Hardens your fists to increase attack rating by 10.",
+			"You choose the 'Iron Fists' perk, hardening your fists. This increases attack power by 10.");
+		public static const ImprovedKiRecovery:PerkType = mk("Improved Ki Recovery", "Improved Ki Recovery",
+			"Ki recovery via resting and meditation is doubled",
+			"You choose the 'Improved Ki Recovery' perk, doubling the effectiveness of resting and meditation on Ki recovery");
+		public static const JobPilgrim:PerkType = mk("Job: Pilgrim", "Job: Pilgrim",
+			"You've trained in Ki based combat",
+			"You choose 'Job: Pilgrim' perk, training yourself to become a Pigrim");
+		public static const KiLeech:PerkType = mk("Ki Leech", "Ki Leech",
+			"Steal a Ki point on every critical",
+			"You choose the 'Ki Leech' perk, giving your critical hits the ability to steal Ki points");
+		public static const RedirectAttacks:PerkType = mk("Redirect Attacks", "Redirect Attacks",
+			"Reduces the chance that enemies will score critical hits on by a percentage of your wisdom",
+			"You choose the 'Redirect Attacs' perk, lowering the chance of enemy criticals by a percent of your wisdom.");
+		public static const Smite:PerkType = mk("Smite", "Smite",
+			"Aligned damage is doubled",
+			"You choose the 'Smite' perk, doubling the damage you do through aligned effects");
+		public static const SpiritBurn:PerkType = mk("Spirit Burn", "Spirit Burn",
+			"Fire based Ki powers can sear your opponent, reducing their damage done by 30% (10 round cooldown)",
+			"You choose the 'Spirit Burn' perk, giving your fire Ki powers the ability to sear your opponents.");
+		public static const WaterCrush:PerkType = mk("Water Crush", "Water Crush",
+			"Water based Ki powers gain a chance to stun.",
+			"You choose the 'Water Crush' perk, giving your water Ki powers the chance to stun your opponents.");
+		public static const WayOfBalance:PerkType = mk("Way of Balance", "Way of Balance",
+			"Ki powers gain a bonus to critical chance based on wisdom for enemies of opposed alignment. Neutral characters only benefit from half of this bonus.",
+			"You choose the 'Way of Balance' perk, giving your Ki powers extra critical chance against enemies of opposing alignment.");
+		public static const WayOfTheWise:PerkType = mk("Way of the Wise","Way of the Wise",
+			"Gain an ammount of Ki based on your wisdom (1 Ki per 10 Wisdom)",
+			"You choose the 'Vital Shot' perk, gaining 1 additional Ki point per 10 wisdom");
+		public static const WindOfHaste:PerkType = mk("Wind of Haste", "Wind of Haste",
+			"Cooldowns on Ki powers are reduced by 2 rounds.",
+			"You choose the 'Wind of Haste' perk, reducing all Ki power cooldowns by 2 rounds.");
+
 
 		// Needlework perks
 		public static const ChiReflowAttack:PerkType = mk("Chi Reflow - Attack", "Chi Reflow - Attack",
@@ -920,8 +979,6 @@ public class PerkLib
             BrutalBlows.requireLevel(6)
                     .requireStr(75)
                     .requirePerk(JobWarrior);
-            IronFists.requireLevel(6)
-                    .requireStr(60);
             Parry.requireLevel(6)
                     .requireStr(50)
                     .requireSpe(50);
@@ -1138,11 +1195,6 @@ public class PerkLib
             ElementalContractRank4.requirePerk(ElementalContractRank3)
                     .requireWis(100)
                     .requireLevel(18);
-            CatchTheBlade.requirePerk(JobMonk)
-                    .requireWis(80)
-                    .requireSpe(100)
-                    .requireLevel(18);
-
             //Tier 4 Wisdom perks
             ElementalContractRank5.requirePerk(ElementalContractRank4)
                     .requirePerk(ElementalConjurerDedication)
@@ -1363,10 +1415,33 @@ public class PerkLib
                     .requireCustomFunction(function (player:Player):Boolean {
                         return player.internalChimeraScore() >= 6;
                     }, "Six racial perks");
-            //Tier 4
-            //Tier 5
-            //Tier 6
-            //Tier 7
+
+	        // Ki Perks
+	        WayOfTheWise.requirePerk(JobPilgrim);
+	        ElementalHarmony.requirePerk(JobPilgrim);
+	        AlignedKi.requirePerk(JobPilgrim);
+	        CalmWithinTheStorm.requirePerk(JobPilgrim);
+	        ImprovedKiRecovery.requirePerk(JobPilgrim);
+	        ElementalBalance.requirePerk(JobPilgrim);
+	        WayOfBalance.requirePerk(JobPilgrim);
+	        RedirectAttacks.requirePerk(JobPilgrim);
+	        HavenOfPeace.requirePerk(JobPilgrim);
+	        Smite.requirePerk(JobPilgrim);
+
+	        AdvancedJobMonk.requirePerk(JobPilgrim).requireLevel(6);
+	        CatchTheBlade.requirePerk(AdvancedJobMonk);
+	        Backlash.requirePerk(AdvancedJobMonk);
+	        IronFists.requirePerk(AdvancedJobMonk);
+	        KiLeech.requirePerk(AdvancedJobMonk);
+
+	        AdvancedJobSage.requirePerk(JobPilgrim).requireLevel(6);
+	        BloomOfLife.requirePerk(AdvancedJobSage);
+	        SpiritBurn.requirePerk(AdvancedJobSage);
+	        WaterCrush.requirePerk(AdvancedJobSage);
+	        WindOfHaste.requirePerk(AdvancedJobSage);
+	        IceShards.requirePerk(AdvancedJobSage);
+
+
         } catch (e:Error) {
             trace(e.getStackTrace());
         }

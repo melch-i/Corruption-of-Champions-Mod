@@ -9,7 +9,7 @@ import classes.CoC;
 
 import flash.utils.Dictionary;
 
-public class PerkType extends BaseContent
+public class PerkType
 	{
 		private static var PERK_LIBRARY:Dictionary = new Dictionary();
 
