@@ -1,4 +1,4 @@
-package classes 
+﻿package classes 
 {
 
 	import classes.GlobalFlags.kFLAGS;
@@ -294,86 +294,9 @@ package classes
 		//Create a keyItem
 		public function createKeyItem(keyName:String, value1:Number, value2:Number, value3:Number, value4:Number):void
 		{
-			var newKeyItem:KeyItemClass = new KeyItemClass();
-			//used to denote that the array has already had its new spot pushed on.
-			var arrayed:Boolean = false;
-			//used to store where the array goes
-			var keySlot:Number = 0;
-			var counter:Number = 0;
-			//Start the array if its the first bit
-			if (keyItems.length == 0)
-			{
-				//trace("New Key Item Started Array! " + keyName);
-				keyItems.push(newKeyItem);
-				arrayed = true;
-				keySlot = 0;
-			}
-			//If it belongs at the end, push it on
-			if (keyItems[keyItems.length - 1].keyName < keyName && !arrayed)
-			{
-				//trace("New Key Item Belongs at the end!! " + keyName);
-				keyItems.push(newKeyItem);
-				arrayed = true;
-				keySlot = keyItems.length - 1;
-			}
-			//If it belongs in the beginning, splice it in
-			if (keyItems[0].keyName > keyName && !arrayed)
-			{
-				//trace("New Key Item Belongs at the beginning! " + keyName);
-				keyItems.splice(0, 0, newKeyItem);
-				arrayed = true;
-				keySlot = 0;
-			}
-			//Find the spot it needs to go in and splice it in.
-			if (!arrayed)
-			{
-				//trace("New Key Item using alphabetizer! " + keyName);
-				counter = keyItems.length;
-				while (counter > 0 && !arrayed)
-				{
-					counter--;
-					//If the current slot is later than new key
-					if (keyItems[counter].keyName > keyName)
-					{
-						//If the earlier slot is earlier than new key && a real spot
-						if (counter - 1 >= 0)
-						{
-							//If the earlier slot is earlier slot in!
-							if (keyItems[counter - 1].keyName <= keyName)
-							{
-								arrayed = true;
-								keyItems.splice(counter, 0, newKeyItem);
-								keySlot = counter;
-							}
-						}
-						//If the item after 0 slot is later put here!
-						else
-						{
-							//If the next slot is later we are go
-							if (keyItems[counter].keyName <= keyName)
-							{
-								arrayed = true;
-								keyItems.splice(counter, 0, newKeyItem);
-								keySlot = counter;
-							}
-						}
-					}
-				}
-			}
-			//Fallback
-			if (!arrayed)
-			{
-				//trace("New Key Item Belongs at the end!! " + keyName);
-				keyItems.push(newKeyItem);
-				keySlot = keyItems.length - 1;
-			}
-			
-			keyItems[keySlot].keyName = keyName;
-			keyItems[keySlot].value1 = value1;
-			keyItems[keySlot].value2 = value2;
-			keyItems[keySlot].value3 = value3;
-			keyItems[keySlot].value4 = value4;
-			//trace("NEW KEYITEM FOR PLAYER in slot " + keySlot + ": " + keyItems[keySlot].keyName);
+			var newKeyItem:KeyItemClass = new KeyItemClass(keyName, value1, value2, value3, value4);
+			keyItems.push(newKeyItem);
+			keyItems.sortOn("keyName");
 		}
 		
 		//Remove a key item
@@ -400,112 +323,55 @@ package classes
 		
 		public function addKeyValue(statusName:String, statusValueNum:Number = 1, newNum:Number = 0):void
 		{
-			var counter:Number = keyItems.length;
-			//Various Errors preventing action
-			if (keyItems.length <= 0)
-			{
-				return;
-					//trace("ERROR: Looking for keyitem '" + statusName + "' to change value " + statusValueNum + ", and player has no key items.");
+			var kitem:KeyItemClass = getKeyItem(statusName);
+			if(!kitem){return;}
+			switch(statusValueNum){
+				case 1: kitem.value1 += newNum; break;
+				case 2: kitem.value2 += newNum; break;
+				case 3: kitem.value3 += newNum; break;
+				case 4: kitem.value4 += newNum; break;
+				default: return;
 			}
-			while (counter > 0)
-			{
-				counter--;
-				//Find it, change it, quit out
-				if (keyItems[counter].keyName == statusName)
-				{
-					if (statusValueNum < 1 || statusValueNum > 4)
-					{
-						//trace("ERROR: AddKeyValue called with invalid key value number.");
-						return;
-					}
-					if (statusValueNum == 1)
-						keyItems[counter].value1 += newNum;
-					if (statusValueNum == 2)
-						keyItems[counter].value2 += newNum;
-					if (statusValueNum == 3)
-						keyItems[counter].value3 += newNum;
-					if (statusValueNum == 4)
-						keyItems[counter].value4 += newNum;
-					return;
+		}
+		private function getKeyItem(keyName:String):KeyItemClass {
+			for (var i: int = keyItems.length - 1; i >= 0; i--) {
+				var keyItem: KeyItemClass = keyItems[i];
+				if(keyItem.keyName == keyName){
+					return keyItem;
 				}
 			}
-			//trace("ERROR: Looking for keyitem '" + statusName + "' to change value " + statusValueNum + ", and player does not have the key item.");
+			return null;
 		}
-		
+
+		public function keyItemVal(keyName:String, valIdx:int = 1):Number {
+			var kitem:KeyItemClass = getKeyItem(keyName);
+			if(!kitem){return 0;}
+			switch(valIdx){
+				case 1: return kitem.value1;
+				case 2: return kitem.value2;
+				case 3: return kitem.value3;
+				case 4: return kitem.value4;
+				default: return 0;
+			}
+		}
 		public function keyItemv1(statusName:String):Number
 		{
-			var counter:Number = keyItems.length;
-			//Various Errors preventing action
-			if (keyItems.length <= 0)
-			{
-				return 0;
-					//trace("ERROR: Looking for keyItem '" + statusName + "', and player has no key items.");
-			}
-			while (counter > 0)
-			{
-				counter--;
-				if (keyItems[counter].keyName == statusName)
-					return keyItems[counter].value1;
-			}
-			//trace("ERROR: Looking for key item '" + statusName + "', but player does not have it.");
-			return 0;
+			return keyItemVal(statusName, 1);
 		}
 		
 		public function keyItemv2(statusName:String):Number
 		{
-			var counter:Number = keyItems.length;
-			//Various Errors preventing action
-			if (keyItems.length <= 0)
-			{
-				return 0;
-					//trace("ERROR: Looking for keyItem '" + statusName + "', and player has no key items.");
-			}
-			while (counter > 0)
-			{
-				counter--;
-				if (keyItems[counter].keyName == statusName)
-					return keyItems[counter].value2;
-			}
-			//trace("ERROR: Looking for key item '" + statusName + "', but player does not have it.");
-			return 0;
+			return keyItemVal(statusName, 2);
 		}
 		
 		public function keyItemv3(statusName:String):Number
 		{
-			var counter:Number = keyItems.length;
-			//Various Errors preventing action
-			if (keyItems.length <= 0)
-			{
-				return 0;
-					//trace("ERROR: Looking for keyItem '" + statusName + "', and player has no key items.");
-			}
-			while (counter > 0)
-			{
-				counter--;
-				if (keyItems[counter].keyName == statusName)
-					return keyItems[counter].value3;
-			}
-			//trace("ERROR: Looking for key item '" + statusName + "', but player does not have it.");
-			return 0;
+			return keyItemVal(statusName, 3);
 		}
 		
 		public function keyItemv4(statusName:String):Number
 		{
-			var counter:Number = keyItems.length;
-			//Various Errors preventing action
-			if (keyItems.length <= 0)
-			{
-				return 0;
-					//trace("ERROR: Looking for keyItem '" + statusName + "', and player has no key items.");
-			}
-			while (counter > 0)
-			{
-				counter--;
-				if (keyItems[counter].keyName == statusName)
-					return keyItems[counter].value4;
-			}
-			//trace("ERROR: Looking for key item '" + statusName + "', but player does not have it.");
-			return 0;
+			return keyItemVal(statusName, 4);
 		}
 		
 		public function removeKeyItems():void
