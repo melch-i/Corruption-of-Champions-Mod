@@ -415,6 +415,10 @@ public function combatMenu(newRound:Boolean = true):void { //If returning from a
 	flags[kFLAGS.IN_COMBAT_USE_PLAYER_WAITED_FLAG] = 0;
 	if (newRound) {
 		flags[kFLAGS.IN_COMBAT_PLAYER_ELEMENTAL_ATTACKED] = 0;
+		//todo move this?
+		for each (var action:CombatAction in player.availableActions){
+			action.onCombatRound();
+		}
 	}
 	mainView.hideMenuButton(MainView.MENU_DATA);
 	mainView.hideMenuButton(MainView.MENU_APPEARANCE);
@@ -3087,13 +3091,10 @@ private function combatStatusesUpdate():void {
 		[StatusEffects.StoneSkin, 2, -1, "<b>Stone Skin effect wore off!</b>\n\n", ""],
 		[StatusEffects.BarkSkin, 2, -1, "<b>Bark Skin effect wore off!</b>\n\n", ""],
 		[StatusEffects.MetalSkin, 2, -1, "<b>Metal Skin effect wore off!</b>\n\n", ""],
-		[StatusEffects.CooldownHurricaneDance, 1, -1, "", ""],
 		[StatusEffects.HurricaneDance, 1, -1, "<b>Hurricane Dance effect wore off!</b>\n\n", ""],
-		[StatusEffects.CooldownEarthStance, 1, -1, "", ""],
 		[StatusEffects.CooldownEclipsingShadow, 1, -1, ""],
 		[StatusEffects.CooldownSonicScream, 1, -1, "", ""],
 		[StatusEffects.CooldownTornadoStrike, 1, -1, "", ""],
-		[StatusEffects.CooldownSoulBlast, 1, -1, "", ""],
 		[StatusEffects.SecondWindRegen, 2, -1, "", ""],
 		[StatusEffects.Flying, 1, -1, "<b>You land to tired to keep flying.</b>\n\n", "<b>You keep making circles in the air around your opponent.</b>\n\n"],
 		[StatusEffects.Blizzard, 1, -1, "<b>Blizzard spell exhausted all of it power and need to be casted again to provide protection from the fire attacks again!</b>\n\n", "<b>Surrounding your blizzard slowly loosing it protective power.</b>\n\n"],

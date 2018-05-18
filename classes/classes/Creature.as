@@ -1,4 +1,4 @@
-//CoC Creature.as
+﻿//CoC Creature.as
 package classes
 {
 
@@ -1035,6 +1035,20 @@ package classes
 			}
 			trace("/!\\ ERROR: addCombatBuff('"+stat+"', "+buff+")");
 			return 0;
+		}
+
+		public var availableActions:Array = [];
+		public function addAction(action:Object):void {
+			if(availableActions.indexOf(action) < 0){
+				availableActions.push(action);
+			}
+		}
+
+		public function removeAction(action:Object):void {
+			var i:int = availableActions.indexOf(action);
+			if(i >=0){
+				availableActions.removeAt(i);
+			}
 		}
 		/*
 		
