@@ -85,6 +85,13 @@ import classes.internals.ChainedDrop;
 			}
 		}
 
+		override public function endRoundChecks():Function {
+			var res:Function = super.endRoundChecks();
+			if (res != null){return res;}
+			if (player.spe <= 1) {return curry(doNext, SceneLib.combat.endHpLoss);}
+			return null;
+		}
+
 		public function Basilisk()
 		{
 			this.a = "the ";

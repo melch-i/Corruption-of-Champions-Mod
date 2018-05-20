@@ -10,10 +10,11 @@ import classes.BodyParts.Hips;
 import classes.BodyParts.Horns;
 import classes.BodyParts.Tail;
 import classes.GlobalFlags.kFLAGS;
-import classes.Scenes.SceneLib;
+	import classes.Scenes.Monsters.PackMonster;
+	import classes.Scenes.SceneLib;
 import classes.internals.WeightedDrop;
 
-public class DemonPackBlightRidge extends Monster
+public class DemonPackBlightRidge extends PackMonster
 	{
 		
 		override protected function performCombatAction():void
@@ -112,8 +113,8 @@ public class DemonPackBlightRidge extends Monster
 							consumables.INCUBID,
 							consumables.OVIELIX,
 							consumables.B__BOOK);
-			this.special1 = SceneLib.combat.packAttack;
-			this.special2 = SceneLib.combat.lustAttack;
+			this.special1 = packAttack;
+			this.special2 = lustAttack;
 			this.tailType = Tail.DEMONIC;
 			this.horns.type = Horns.DEMON;
 			this.horns.count = 2;

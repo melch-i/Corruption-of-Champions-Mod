@@ -16,7 +16,27 @@ package classes.Scenes.NPCs
 	public class Luna extends Monster
 	{
 		public var lunaScene:LunaFollower = SceneLib.lunaFollower;
-		
+
+		override public function handleWait():Object {
+			if (player.hasStatusEffect(StatusEffects.WolfHold)) {
+				outputText("Luna tears your body with her claws.");
+				player.takePhysDamage(5 + rand(5));
+				return true;
+			}
+			return super.handleWait();
+		}
+
+		override public function handleStruggle():Boolean {
+			if (rand(3) == 0 || rand(80) < player.str / 1.5) {
+				outputText("You try and shove Luna off and manage to stand back up; Luna growling at you.");
+				player.removeStatusEffect(StatusEffects.WolfHold);
+			}
+			else {
+				outputText("You try and shove Luna off but she maintains the pin.");
+			}
+			return true;
+		}
+
 		public function usingClawCombo():void {
 			outputText("Luna attempts to rend you with her claws.");
 			eAttack();

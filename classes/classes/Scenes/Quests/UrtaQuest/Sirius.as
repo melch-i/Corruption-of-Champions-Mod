@@ -95,6 +95,13 @@ public class Sirius extends Naga
 			SceneLib.urtaQuest.urtaLosesToSirriusSnakeRadio();
 		}
 
+		override protected function lustText():void {
+			var percent:int = lust100;
+			if (percent >= 80) {outputText("His cock is throbbing hard, you don't think it will take much longer for him to pop.   Yet his face still looks inexpressive... despite the beads of sweat forming on his brow.  ");}
+			else if (percent >= 60) {outputText("His cock is now completely exposed and half-erect, yet somehow he still stays focused on your eyes and his face is inexpressive.  ");}
+			else if (percent >= 40) {outputText("You can see the tip of his reptilian member poking out of its protective slit. ");}
+		}
+
 		public function Sirius()
 		{
 			super(true);

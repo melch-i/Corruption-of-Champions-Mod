@@ -12,7 +12,20 @@ import classes.Scenes.SceneLib;
 public class HarpyQueen extends Monster
 	{
 		public var spellCostWhitefire:int = 12;
-		
+
+		override public function handleWait():Object {
+			if(hasStatusEffect(StatusEffects.QueenBind)) {
+				ropeStruggles(true);
+				return true;
+			}
+			return super.handleWait();
+		}
+
+		override public function handleStruggle():Boolean {
+			ropeStruggles();
+			return true;
+		}
+
 		public function harpyQueenAI():void {
 			if (rand(4) == 0) eldritchRopes();
 			else if(rand(3) == 0 && fatigue <= (100 - spellCostWhitefire)) whitefire();

@@ -194,6 +194,13 @@ public class Minerva extends Monster
 			SceneLib.highMountains.minervaScene.loseToMinerva();
 		}
 
+		override protected function lustText():void {
+			var percent:int = lust100;
+			if (percent >= 80) {outputText("She's holding onto her weapon for support as her face is flushed and pain-stricken.  Her tiny, short shorts are painfully holding back her quaking bulge, making the back of the fabric act like a thong as they ride up her ass and struggle against her cock.  Her cock-tentacles are lashing out in every direction.  The dampness has grown and is leaking down her leg.");}
+			else if (percent >= 60) {outputText("Tentacles are squirming out from the crotch of her shorts as the throbbing bulge grows bigger and bigger, becoming harder and harder... for Minerva to ignore.  A damp spot has formed just below the bulge.  ");}
+			else if (percent >= 40) {outputText("Letting out a groan Minerva shakes her head, focusing on the fight at hand.  The bulge in her short is getting larger, but the siren ignores her growing hard-on and continues fighting.  ");}
+		}
+
 		public function Minerva()
 		{
 			this.a = "";

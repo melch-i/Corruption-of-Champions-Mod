@@ -25,7 +25,8 @@ import classes.Items.WeaponRangeLib;
 import classes.Scenes.Areas.Forest.Alraune;
 import classes.Scenes.Areas.Ocean.UnderwaterSharkGirl;
 import classes.Scenes.Areas.Ocean.UnderwaterTigersharkGirl;
-import classes.Scenes.Dungeons.DenOfDesire.HeroslayerOmnibus;
+	import classes.Scenes.Combat.Combat;
+	import classes.Scenes.Dungeons.DenOfDesire.HeroslayerOmnibus;
 import classes.Scenes.Dungeons.Factory.OmnibusOverseer;
 import classes.Scenes.Dungeons.Factory.SecretarialSuccubus;
 import classes.Scenes.NPCs.ChiChi;
@@ -235,6 +236,14 @@ import flash.utils.getQualifiedClassName;
 
 		//Is a creature a 'plural' encounter - mob, etc.
 		public var plural:Boolean = false;
+		public function isare():String{
+			if(plural){
+				return "are";
+			}
+			return "is";
+		}
+
+
 		public var imageName:String = "";
 
 		//Lust vulnerability
@@ -413,34 +422,7 @@ import flash.utils.getQualifiedClassName;
 		 */
 		public function eBaseDamage():Number {
 			var damage:Number = 0;
-			damage += str;
-			if (str >= 21) damage += ((str - 20) * 0.25);
-			if (str >= 41) damage += ((str - 40) * 0.25);
-			if (str >= 61) damage += ((str - 60) * 0.25);
-			if (str >= 81) damage += ((str - 80) * 0.25);
-			if (str >= 101) damage += ((str - 100) * 0.25);
-			if (str >= 151) damage += ((str - 150) * 0.25);
-			if (str >= 201) damage += ((str - 200) * 0.25);
-			if (str >= 251) damage += ((str - 250) * 0.25);
-			if (str >= 301) damage += ((str - 300) * 0.25);
-			if (str >= 351) damage += ((str - 350) * 0.25);
-			if (str >= 401) damage += ((str - 400) * 0.25);
-			if (str >= 451) damage += ((str - 450) * 0.25);
-			if (str >= 501) damage += ((str - 500) * 0.25);
-			if (str >= 551) damage += ((str - 550) * 0.25);
-			if (str >= 601) damage += ((str - 600) * 0.25);
-			if (str >= 651) damage += ((str - 650) * 0.25);
-			if (str >= 701) damage += ((str - 700) * 0.25);
-			if (str >= 751) damage += ((str - 750) * 0.25);
-			if (str >= 801) damage += ((str - 800) * 0.25);
-			if (str >= 851) damage += ((str - 850) * 0.25);
-			if (str >= 901) damage += ((str - 900) * 0.25);
-			if (str >= 951) damage += ((str - 950) * 0.25);
-			if (str >= 1001) damage += ((str - 1000) * 0.25);
-			if (str >= 1051) damage += ((str - 1050) * 0.25);
-			if (str >= 1101) damage += ((str - 1100) * 0.25);
-			if (str >= 1151) damage += ((str - 1150) * 0.25);
-			if (str >= 1201) damage += ((str - 1200) * 0.25);
+			damage += str + (scalingBonusStrength() * 0.25);
 			if (str < 10) damage = 10;
 			//weapon bonus
 			if (weaponAttack < 51) damage *= (1 + (weaponAttack * 0.03));
@@ -474,34 +456,7 @@ import flash.utils.getQualifiedClassName;
 
 		public function eBaseStrengthDamage():Number {
 			var damage:Number = 0;
-			damage += str;
-			if (str >= 21) damage += (str - 20);
-			if (str >= 41) damage += (str - 40);
-			if (str >= 61) damage += (str - 60);
-			if (str >= 81) damage += (str - 80);
-			if (str >= 101) damage += (str - 100);
-			if (str >= 151) damage += (str - 150);
-			if (str >= 201) damage += (str - 200);
-			if (str >= 251) damage += (str - 250);
-			if (str >= 301) damage += (str - 300);
-			if (str >= 351) damage += (str - 350);
-			if (str >= 401) damage += (str - 400);
-			if (str >= 451) damage += (str - 450);
-			if (str >= 501) damage += (str - 500);
-			if (str >= 551) damage += (str - 550);
-			if (str >= 601) damage += (str - 600);
-			if (str >= 651) damage += (str - 650);
-			if (str >= 701) damage += (str - 700);
-			if (str >= 751) damage += (str - 750);
-			if (str >= 801) damage += (str - 800);
-			if (str >= 851) damage += (str - 850);
-			if (str >= 901) damage += (str - 900);
-			if (str >= 951) damage += (str - 950);
-			if (str >= 1001) damage += (str - 1000);
-			if (str >= 1051) damage += (str - 1050);
-			if (str >= 1101) damage += (str - 1100);
-			if (str >= 1151) damage += (str - 1150);
-			if (str >= 1201) damage += (str - 1200);
+			damage += str + scalingBonusStrength();
 			if (hasStatusEffect(StatusEffects.PunishingKick)) damage *= 0.5;
 			//monster exclusive perks bonus
 			if (hasPerk(PerkLib.EnemyBossType)) damage *= 2;
@@ -512,34 +467,7 @@ import flash.utils.getQualifiedClassName;
 
 		public function eBaseToughnessDamage():Number {
 			var damage:Number = 0;
-			damage += tou;
-			if (tou >= 21) damage += (tou - 20);
-			if (tou >= 41) damage += (tou - 40);
-			if (tou >= 61) damage += (tou - 60);
-			if (tou >= 81) damage += (tou - 80);
-			if (tou >= 101) damage += (tou - 100);
-			if (tou >= 151) damage += (tou - 150);
-			if (tou >= 201) damage += (tou - 200);
-			if (tou >= 251) damage += (tou - 250);
-			if (tou >= 301) damage += (tou - 300);
-			if (tou >= 351) damage += (tou - 350);
-			if (tou >= 401) damage += (tou - 400);
-			if (tou >= 451) damage += (tou - 450);
-			if (tou >= 501) damage += (tou - 500);
-			if (tou >= 551) damage += (tou - 550);
-			if (tou >= 601) damage += (tou - 600);
-			if (tou >= 651) damage += (tou - 650);
-			if (tou >= 701) damage += (tou - 700);
-			if (tou >= 751) damage += (tou - 750);
-			if (tou >= 801) damage += (tou - 800);
-			if (tou >= 851) damage += (tou - 850);
-			if (tou >= 901) damage += (tou - 900);
-			if (tou >= 951) damage += (tou - 950);
-			if (tou >= 1001) damage += (tou - 1000);
-			if (tou >= 1051) damage += (tou - 1050);
-			if (tou >= 1101) damage += (tou - 1100);
-			if (tou >= 1151) damage += (tou - 1150);
-			if (tou >= 1201) damage += (tou - 1200);
+			damage += tou + scalingBonusToughness();
 			if (hasStatusEffect(StatusEffects.PunishingKick)) damage *= 0.5;
 			//monster exclusive perks bonus
 			if (hasPerk(PerkLib.EnemyBossType)) damage *= 2;
@@ -550,34 +478,7 @@ import flash.utils.getQualifiedClassName;
 
 		public function eBaseSpeedDamage():Number {
 			var damage:Number = 0;
-			damage += spe;
-			if (spe >= 21) damage += (spe - 20);
-			if (spe >= 41) damage += (spe - 40);
-			if (spe >= 61) damage += (spe - 60);
-			if (spe >= 81) damage += (spe - 80);
-			if (spe >= 101) damage += (spe - 100);
-			if (spe >= 151) damage += (spe - 150);
-			if (spe >= 201) damage += (spe - 200);
-			if (spe >= 251) damage += (spe - 250);
-			if (spe >= 301) damage += (spe - 300);
-			if (spe >= 351) damage += (spe - 350);
-			if (spe >= 401) damage += (spe - 400);
-			if (spe >= 451) damage += (spe - 450);
-			if (spe >= 501) damage += (spe - 500);
-			if (spe >= 551) damage += (spe - 550);
-			if (spe >= 601) damage += (spe - 600);
-			if (spe >= 651) damage += (spe - 650);
-			if (spe >= 701) damage += (spe - 700);
-			if (spe >= 751) damage += (spe - 750);
-			if (spe >= 801) damage += (spe - 800);
-			if (spe >= 851) damage += (spe - 850);
-			if (spe >= 901) damage += (spe - 900);
-			if (spe >= 951) damage += (spe - 950);
-			if (spe >= 1001) damage += (spe - 1000);
-			if (spe >= 1051) damage += (spe - 1050);
-			if (spe >= 1101) damage += (spe - 1100);
-			if (spe >= 1151) damage += (spe - 1150);
-			if (spe >= 1201) damage += (spe - 1200);
+			damage += spe + scalingBonusSpeed();
 			if (hasStatusEffect(StatusEffects.PunishingKick)) damage *= 0.5;
 			//monster exclusive perks bonus
 			if (hasPerk(PerkLib.EnemyBossType)) damage *= 2;
@@ -588,34 +489,7 @@ import flash.utils.getQualifiedClassName;
 
 		public function eBaseIntelligenceDamage():Number {
 			var damage:Number = 0;
-			damage += inte;
-			if (inte >= 21) damage += (inte - 20);
-			if (inte >= 41) damage += (inte - 40);
-			if (inte >= 61) damage += (inte - 60);
-			if (inte >= 81) damage += (inte - 80);
-			if (inte >= 101) damage += (inte - 100);
-			if (inte >= 151) damage += (inte - 150);
-			if (inte >= 201) damage += (inte - 200);
-			if (inte >= 251) damage += (inte - 250);
-			if (inte >= 301) damage += (inte - 300);
-			if (inte >= 351) damage += (inte - 350);
-			if (inte >= 401) damage += (inte - 400);
-			if (inte >= 451) damage += (inte - 450);
-			if (inte >= 501) damage += (inte - 500);
-			if (inte >= 551) damage += (inte - 550);
-			if (inte >= 601) damage += (inte - 600);
-			if (inte >= 651) damage += (inte - 650);
-			if (inte >= 701) damage += (inte - 700);
-			if (inte >= 751) damage += (inte - 750);
-			if (inte >= 801) damage += (inte - 800);
-			if (inte >= 851) damage += (inte - 850);
-			if (inte >= 901) damage += (inte - 900);
-			if (inte >= 951) damage += (inte - 950);
-			if (inte >= 1001) damage += (inte - 1000);
-			if (inte >= 1051) damage += (inte - 1050);
-			if (inte >= 1101) damage += (inte - 1100);
-			if (inte >= 1151) damage += (inte - 1150);
-			if (inte >= 1201) damage += (inte - 1200);
+			damage += inte + scalingBonusIntelligence();
 			//monster exclusive perks bonus
 			if (hasPerk(PerkLib.EnemyBossType)) damage *= 2;
 			if (hasPerk(PerkLib.EnemyGigantType)) damage *= 3;
@@ -625,105 +499,12 @@ import flash.utils.getQualifiedClassName;
 
 		public function eBaseWisdomDamage():Number {
 			var damage:Number = 0;
-			damage += wis;
-			if (wis >= 21) damage += (wis - 20);
-			if (wis >= 41) damage += (wis - 40);
-			if (wis >= 61) damage += (wis - 60);
-			if (wis >= 81) damage += (wis - 80);
-			if (wis >= 101) damage += (wis - 100);
-			if (wis >= 151) damage += (wis - 150);
-			if (wis >= 201) damage += (wis - 200);
-			if (wis >= 251) damage += (wis - 250);
-			if (wis >= 301) damage += (wis - 300);
-			if (wis >= 351) damage += (wis - 350);
-			if (wis >= 401) damage += (wis - 400);
-			if (wis >= 451) damage += (wis - 450);
-			if (wis >= 501) damage += (wis - 500);
-			if (wis >= 551) damage += (wis - 550);
-			if (wis >= 601) damage += (wis - 600);
-			if (wis >= 651) damage += (wis - 650);
-			if (wis >= 701) damage += (wis - 700);
-			if (wis >= 751) damage += (wis - 750);
-			if (wis >= 801) damage += (wis - 800);
-			if (wis >= 851) damage += (wis - 850);
-			if (wis >= 901) damage += (wis - 900);
-			if (wis >= 951) damage += (wis - 950);
-			if (wis >= 1001) damage += (wis - 1000);
-			if (wis >= 1051) damage += (wis - 1050);
-			if (wis >= 1101) damage += (wis - 1100);
-			if (wis >= 1151) damage += (wis - 1150);
-			if (wis >= 1201) damage += (wis - 1200);
+			damage += wis + scalingBonusWisdom();
 			//monster exclusive perks bonus
 			if (hasPerk(PerkLib.EnemyBossType)) damage *= 2;
 			if (hasPerk(PerkLib.EnemyGigantType)) damage *= 3;
 			damage = Math.round(damage);
 			return damage;
-		}
-
-		public function inteligencescalingbonus():Number {
-			var inteligencescalingvalue:Number = 0;
-			if (inte >= 21 && inte < 41) inteligencescalingvalue += (inte / 2 + rand((inte * 3) / 4));
-			if (inte >= 41 && inte < 61) inteligencescalingvalue += ((inte * 2) / 3 + rand(inte));
-			if (inte >= 61 && inte < 81) inteligencescalingvalue += ((inte * 5) / 6 + rand(inte * 1.25));
-			if (inte >= 81 && inte < 101) inteligencescalingvalue += (inte + rand(inte * 1.5));
-			if (inte >= 101 && inte < 151) inteligencescalingvalue += ((inte * 1.25) + rand(inte * 1.75));
-			if (inte >= 151 && inte < 201) inteligencescalingvalue += ((inte * 1.5) + rand(inte * 2));
-			if (inte >= 201 && inte < 251) inteligencescalingvalue += ((inte * 1.75) + rand(inte * 2.25));
-			if (inte >= 251 && inte < 301) inteligencescalingvalue += ((inte * 2) + rand(inte * 2.5));
-			if (inte >= 301 && inte < 351) inteligencescalingvalue += ((inte * 2.25) + rand(inte * 2.75));
-			if (inte >= 351 && inte < 401) inteligencescalingvalue += ((inte * 2.5) + rand(inte * 3));
-			if (inte >= 401 && inte < 451) inteligencescalingvalue += ((inte * 2.75) + rand(inte * 3.25));
-			if (inte >= 451 && inte < 501) inteligencescalingvalue += ((inte * 3) + rand(inte * 3.5));
-			if (inte >= 501 && inte < 551) inteligencescalingvalue += ((inte * 3.25) + rand(inte * 3.75));
-			if (inte >= 551 && inte < 601) inteligencescalingvalue += ((inte * 3.5) + rand(inte * 4));
-			if (inte >= 601 && inte < 651) inteligencescalingvalue += ((inte * 3.75) + rand(inte * 4.25));
-			if (inte >= 651 && inte < 701) inteligencescalingvalue += ((inte * 4) + rand(inte * 4.5));
-			if (inte >= 701 && inte < 751) inteligencescalingvalue += ((inte * 4.25) + rand(inte * 4.75));
-			if (inte >= 751 && inte < 801) inteligencescalingvalue += ((inte * 4.5) + rand(inte * 5));
-			if (inte >= 801 && inte < 851) inteligencescalingvalue += ((inte * 4.75) + rand(inte * 5.25));
-			if (inte >= 851 && inte < 901) inteligencescalingvalue += ((inte * 5) + rand(inte * 5.5));
-			if (inte >= 901 && inte < 951) inteligencescalingvalue += ((inte * 5.25) + rand(inte * 5.75));
-			if (inte >= 951 && inte < 1001) inteligencescalingvalue += ((inte * 5.5) + rand(inte * 6));
-			if (inte >= 1001 && inte < 1051) inteligencescalingvalue += ((inte * 5.75) + rand(inte * 6.25));
-			if (inte >= 1051 && inte < 1101) inteligencescalingvalue += ((inte * 6) + rand(inte * 6.5));
-			if (inte >= 1101 && inte < 1151) inteligencescalingvalue += ((inte * 6.25) + rand(inte * 6.75));
-			if (inte >= 1151 && inte < 1201) inteligencescalingvalue += ((inte * 6.5) + rand(inte * 7));
-			if (inte >= 1201) inteligencescalingvalue += ((inte * 6.75) + rand(inte * 7.25));
-			else inteligencescalingvalue += (inte/3 + rand(inte/2));
-			return inteligencescalingvalue;
-		}
-
-		public function wisdomscalingbonus():Number {
-			var wisdomscalingvalue:Number = 0;
-			if (wis >= 21 && wis < 41) wisdomscalingvalue += (wis / 2 + rand((wis * 3) / 4));
-			if (wis >= 41 && wis < 61) wisdomscalingvalue += ((wis * 2) / 3 + rand(wis));
-			if (wis >= 61 && wis < 81) wisdomscalingvalue += ((wis * 5) / 6 + rand(wis * 1.25));
-			if (wis >= 81 && wis < 101) wisdomscalingvalue += (wis + rand(wis * 1.5));
-			if (wis >= 101 && wis < 151) wisdomscalingvalue += ((wis * 1.25) + rand(wis * 1.75));
-			if (wis >= 151 && wis < 201) wisdomscalingvalue += ((wis * 1.5) + rand(wis * 2));
-			if (wis >= 201 && wis < 251) wisdomscalingvalue += ((wis * 1.75) + rand(wis * 2.25));
-			if (wis >= 251 && wis < 301) wisdomscalingvalue += ((wis * 2) + rand(wis * 2.5));
-			if (wis >= 301 && wis < 351) wisdomscalingvalue += ((wis * 2.25) + rand(wis * 2.75));
-			if (wis >= 351 && wis < 401) wisdomscalingvalue += ((wis * 2.5) + rand(wis * 3));
-			if (wis >= 401 && wis < 451) wisdomscalingvalue += ((wis * 2.75) + rand(wis * 3.25));
-			if (wis >= 451 && wis < 501) wisdomscalingvalue += ((wis * 3) + rand(wis * 3.5));
-			if (wis >= 501 && wis < 551) wisdomscalingvalue += ((wis * 3.25) + rand(wis * 3.75));
-			if (wis >= 551 && wis < 601) wisdomscalingvalue += ((wis * 3.5) + rand(wis * 4));
-			if (wis >= 601 && wis < 651) wisdomscalingvalue += ((wis * 3.75) + rand(wis * 4.25));
-			if (wis >= 651 && wis < 701) wisdomscalingvalue += ((wis * 4) + rand(wis * 4.5));
-			if (wis >= 701 && wis < 751) wisdomscalingvalue += ((wis * 4.25) + rand(wis * 4.75));
-			if (wis >= 751 && wis < 801) wisdomscalingvalue += ((wis * 4.5) + rand(wis * 5));
-			if (wis >= 801 && wis < 851) wisdomscalingvalue += ((wis * 4.75) + rand(wis * 5.25));
-			if (wis >= 851 && wis < 901) wisdomscalingvalue += ((wis * 5) + rand(wis * 5.5));
-			if (wis >= 901 && wis < 951) wisdomscalingvalue += ((wis * 5.25) + rand(wis * 5.75));
-			if (wis >= 951 && wis < 1001) wisdomscalingvalue += ((wis * 5.5) + rand(wis * 6));
-			if (wis >= 1001 && wis < 1051) wisdomscalingvalue += ((wis * 5.75) + rand(wis * 6.25));
-			if (wis >= 1051 && wis < 1101) wisdomscalingvalue += ((wis * 6) + rand(wis * 6.5));
-			if (wis >= 1101 && wis < 1151) wisdomscalingvalue += ((wis * 6.25) + rand(wis * 6.75));
-			if (wis >= 1151 && wis < 1201) wisdomscalingvalue += ((wis * 6.5) + rand(wis * 7));
-			if (wis >= 1201) wisdomscalingvalue += ((wis * 6.75) + rand(wis * 7.25));
-			else wisdomscalingvalue += (wis/3 + rand(wis/2));
-			return wisdomscalingvalue;
 		}
 
 		/**
@@ -1722,6 +1503,7 @@ import flash.utils.getQualifiedClassName;
 			return _drop.roll() as ItemType;
 		}
 
+		//fixme monster statuses need to be simplified
 		public function combatRoundUpdate():void
 		{
 			if(hasStatusEffect(StatusEffects.MilkyUrta)) {
@@ -2066,7 +1848,118 @@ import flash.utils.getQualifiedClassName;
 				addHP(temp2);
 			}
 		}
-		
+
+		/**
+		 * Handle the player waiting during combat
+		 * @return null if the monster does not handle waits, true to skip combat action, false to perform Ai after wait
+		 */
+		public function handleWait():Object {
+			return null;
+		}
+
+		/**
+		 * Handle the player struggling during combat
+		 * @return true if monster AI should be skipped
+		 */
+		public function handleStruggle():Boolean {
+			return false;
+		}
+
+		protected function showLust():void {
+			//Entrapped
+			if(hasStatusEffect(StatusEffects.Constricted)) {
+				outputText("[monster A][monster name] is currently wrapped up in your tail-coils!  ");
+			}
+			//Venom stuff!
+			if(hasStatusEffect(StatusEffects.NagaVenom)) {
+				if(statusEffectv1(StatusEffects.NagaVenom) <= 1) {
+					outputText("You notice [monster he] [monster is] beginning to show signs of weakening, but there still appears to be plenty of fight left in [monster him].  ");
+				}
+				else {
+					outputText("You notice [monster he] [monster is] obviously affected by your venom, [monster his] movements become unsure, and [monster his] balance begins to fade. Sweat begins to roll on [monster his] skin. You wager [monster he] [monster is] probably beginning to regret provoking you.  ");
+				}
+				spe -= statusEffectv1(StatusEffects.NagaVenom);
+				str -= statusEffectv1(StatusEffects.NagaVenom);
+				if (spe < 1) spe = 1;
+				if (str < 1) str = 1;
+				if (statusEffectv3(StatusEffects.NagaVenom) >= 1) lust += statusEffectv3(StatusEffects.NagaVenom);
+				if (SceneLib.combat.combatIsOver()) {
+					return;
+				}
+			}
+			lustText();
+		}
+
+		protected function lustText():void {
+			var percent:int = lust100;
+			var s:String = plural ? "" : "s";
+			if (percent > 50 && percent < 60) {outputText("[monster A][monster name]'" + s + " skin remains flushed with the beginnings of arousal.  ");}
+			if (percent >= 60 && percent < 70) {outputText("[monster A][monster name]'" + s + " eyes constantly dart over your most sexual parts, betraying [monster his] lust.  ");}
+			if (hasCock()) {
+				if (percent >= 85) {outputText("[monster A][monster name] [monster is] panting and softly whining, each movement seeming to make [monster his] bulges more pronounced.  You don't think [monster he] can hold out much longer.  ");}
+				else if (percent >= 70) {outputText("[monster A][monster name] [monster is] having trouble moving due to the rigid protrusion in [monster his] groin.  ");}
+			}
+			if (hasVagina()) {
+				if (percent >= 85) {outputText("[monster A][monster name]'" + s + " [monster vagina]" + s + " [monster is] practically soaked with their lustful secretions.  ");}
+				else if (percent >= 70) {outputText("[monster A][monster name] [monster is] obviously turned on, you can smell [monster his] arousal in the air.  ");}
+			}
+		}
+
+		protected function get HPText():String {
+			var math:Number = HPRatio();
+			if(math >= 1) {return "You see [monster he] [monster is] in perfect health.  ";}
+			else if(math > .75) {return "You see [monster he] [monster is]n't very hurt.  ";}
+			else if(math > .5) {return "You see [monster he] [monster is] slightly wounded.  ";}
+			else if(math > .25) {return "You see [monster he] [monster is] seriously hurt.  ";}
+			else {return "You see [monster he] [monster is] unsteady and close to death.  ";}
+		}
+
+		public function showCBtext():void{
+			outputText(long + "\n\n" + HPText);
+			showLust();
+		}
+
+		public function endRoundChecks():Function {
+			var combat:Combat = SceneLib.combat;
+			if(HP < 1) {return curry(doNext, combat.endHpVictory);}
+			if(lust >= maxLust()) {return curry(doNext, combat.endLustVictory);}
+			return null;
+		}
+
+		public function getGeneralTypes(sens:int):Array {
+			var generalTypes:Array = [];
+			if (sens >= 25) {
+				if (hasPerk(PerkLib.EnemyBeastOrAnimalMorphType)) {generalTypes.push("Beast or Animal-morph");}
+				if (hasPerk(PerkLib.EnemyConstructType)) {generalTypes.push("Construct");}
+				if (hasPerk(PerkLib.EnemyGigantType)) {generalTypes.push("Gigant");}
+				if (hasPerk(PerkLib.EnemyGroupType)) {generalTypes.push("Group");}
+				if (hasPerk(PerkLib.EnemyPlantType)) {generalTypes.push("Plant");}
+			}
+			if (sens >= 50) {
+				if (hasPerk(PerkLib.EnemyBossType)) {generalTypes.push("Boss");}
+				if (hasPerk(PerkLib.EnemyGodType)) {generalTypes.push("God");}
+			}
+			return generalTypes;
+		}
+
+		//Todo @oxdeception changes this to resist % after moving the perk effects to resists
+		public function getElementalTypes(sens:int):Array {
+			var elementalTypes:Array = [];
+			if (sens >= 50) {
+				if (hasPerk(PerkLib.DarknessNature)) {elementalTypes.push("Darkness Nature");}
+				if (hasPerk(PerkLib.FireNature)) {elementalTypes.push("Fire Nature");}
+				if (hasPerk(PerkLib.IceNature)) {elementalTypes.push("Ice Nature");}
+				if (hasPerk(PerkLib.LightningNature)) {elementalTypes.push("Lightning Nature");}
+			}
+			if (sens >= 75) {
+				if (hasPerk(PerkLib.DarknessVulnerability)) {elementalTypes.push("Darkness Vulnerability");}
+				if (hasPerk(PerkLib.FireVulnerability)) {elementalTypes.push("Fire Vulnerability");}
+				if (hasPerk(PerkLib.IceVulnerability)) {elementalTypes.push("Ice Vulnerability");}
+				if (hasPerk(PerkLib.LightningVulnerability)) {elementalTypes.push("Lightning Vulnerability");}
+			}
+			return elementalTypes;
+		}
+
 		public function handleAwardItemText(itype:ItemType):void
 		{ //New Function, override this function in child classes if you want a monster to output special item drop text
 			if (itype != null) outputText("\nThere is " + itype.longName + " on your defeated opponent.  ");
@@ -2117,53 +2010,49 @@ import flash.utils.getQualifiedClassName;
 			return 8; //This allows different monsters to delay the player by different amounts of time after a combat loss. Normal loss causes an eight hour blackout
 		}
 		public function prepareForCombat():void {
-			var bonusStatsAmp:Number = 0.2;
-			if (hasPerk(PerkLib.JobCourtesan)) lib += (15 * (1 + newGamePlusMod()));
-			if (hasPerk(PerkLib.JobDefender)) tou += (15 * (1 + newGamePlusMod()));
-			if (hasPerk(PerkLib.JobElementalConjurer)) wis += (5 * (1 + newGamePlusMod()));
-			if (hasPerk(PerkLib.JobEnchanter)) inte += (15 * (1 + newGamePlusMod()));
+			var mod:int = newGamePlusMod();
+			var mMod:int = (1 + mod);
+			if (hasPerk(PerkLib.JobCourtesan)) lib += (15 * mMod);
+			if (hasPerk(PerkLib.JobDefender)) tou += (15 * mMod);
+			if (hasPerk(PerkLib.JobElementalConjurer)) wis += (5 * mMod);
+			if (hasPerk(PerkLib.JobEnchanter)) inte += (15 * mMod);
 			if (hasPerk(PerkLib.JobEromancer)) {
-				inte += (5 * (1 + newGamePlusMod()));
-				lib += (5 * (1 + newGamePlusMod()));
+				inte += (5 * mMod);
+				lib += (5 * mMod);
 			}
-			if (hasPerk(PerkLib.JobGuardian)) tou += (5 * (1 + newGamePlusMod()));
+			if (hasPerk(PerkLib.JobGuardian)) tou += (5 * mMod);
 			if (hasPerk(PerkLib.JobHunter)) {
-				spe += (10 * (1 + newGamePlusMod()));
-				inte += (5 * (1 + newGamePlusMod()));
+				spe += (10 * mMod);
+				inte += (5 * mMod);
 			}
-			if (hasPerk(PerkLib.JobKnight)) tou += (10 * (1 + newGamePlusMod()));
-			if (hasPerk(PerkLib.AdvancedJobMonk)) wis += (15 * (1 + newGamePlusMod()));
-			if (hasPerk(PerkLib.JobRanger)) spe += (5 * (1 + newGamePlusMod()));
-			if (hasPerk(PerkLib.JobSeducer)) lib += (5 * (1 + newGamePlusMod()));
-			if (hasPerk(PerkLib.JobSorcerer)) inte += (5 * (1 + newGamePlusMod()));
-			if (hasPerk(PerkLib.JobWarrior)) str += (5 * (1 + newGamePlusMod()));
+			if (hasPerk(PerkLib.JobKnight)) tou += (10 * mMod);
+			if (hasPerk(PerkLib.AdvancedJobMonk)) wis += (15 * mMod);
+			if (hasPerk(PerkLib.JobRanger)) spe += (5 * mMod);
+			if (hasPerk(PerkLib.JobSeducer)) lib += (5 * mMod);
+			if (hasPerk(PerkLib.JobSorcerer)) inte += (5 * mMod);
+			if (hasPerk(PerkLib.JobWarrior)) str += (5 * mMod);
 			if (hasPerk(PerkLib.PrestigeJobArcaneArcher)) {
-				spe += (40 * (1 + newGamePlusMod()));
-				inte += (40 * (1 + newGamePlusMod()));
+				spe += (40 * mMod);
+				inte += (40 * mMod);
 			}
 			if (hasPerk(PerkLib.PrestigeJobBerserker)) {
-				str += (60 * (1 + newGamePlusMod()));
-				tou += (20 * (1 + newGamePlusMod()));
+				str += (60 * mMod);
+				tou += (20 * mMod);
 			}
 			if (hasPerk(PerkLib.PrestigeJobKiArtMaster)) {
-				str += (40 * (1 + newGamePlusMod()));
-				wis += (40 * (1 + newGamePlusMod()));
+				str += (40 * mMod);
+				wis += (40 * mMod);
 			}
+			var bonusStatsAmp:Number = 0.2;
 			if (level > 25) bonusStatsAmp += 0.1*((int)(level-1)/25);
-			bonusAscStr += bonusStatsAmp * str * newGamePlusMod();
-			bonusAscTou += bonusStatsAmp * tou * newGamePlusMod();
-			bonusAscSpe += bonusStatsAmp * spe * newGamePlusMod();
-			bonusAscInt += bonusStatsAmp * inte * newGamePlusMod();
-			bonusAscWis += bonusStatsAmp * wis * newGamePlusMod();
-			bonusAscLib += bonusStatsAmp * lib * newGamePlusMod();
-			bonusAscSen += bonusStatsAmp * sens * newGamePlusMod();
-			bonusAscStr = Math.round(bonusAscStr);
-			bonusAscTou = Math.round(bonusAscTou);
-			bonusAscSpe = Math.round(bonusAscSpe);
-			bonusAscInt = Math.round(bonusAscInt);
-			bonusAscWis = Math.round(bonusAscWis);
-			bonusAscLib = Math.round(bonusAscLib);
-			bonusAscSen = Math.round(bonusAscSen);
+			bonusStatsAmp *= mod;
+			var bonusAscStr:int = Math.round(bonusStatsAmp * str);
+			var bonusAscTou:int = Math.round(bonusStatsAmp * tou);
+			var bonusAscSpe:int = Math.round(bonusStatsAmp * spe);
+			var bonusAscInt:int = Math.round(bonusStatsAmp * inte);
+			var bonusAscWis:int = Math.round(bonusStatsAmp * wis);
+			var bonusAscLib:int = Math.round(bonusStatsAmp * lib);
+			var bonusAscSen:int = Math.round(bonusStatsAmp * sens);
 			this.str += bonusAscStr;
 			this.tou += bonusAscTou;
 			this.spe += bonusAscSpe;
@@ -2172,10 +2061,21 @@ import flash.utils.getQualifiedClassName;
 			this.lib += bonusAscLib;
 			this.sens += bonusAscSen;
 			bonusAscMaxHP += bonusAscStr + bonusAscTou + bonusAscSpe + bonusAscInt + bonusAscWis + bonusAscLib + bonusAscSen;
-			if (level > 10) bonusAscMaxHP *= (int)(level / 10 + 1);
-			weaponAttack += (1 + (int)(weaponAttack / 5)) * newGamePlusMod();
-			if (weaponRangeAttack > 0) weaponRangeAttack += (1 + (int)(weaponRangeAttack/5)) * newGamePlusMod();
-			armorDef += ((int)(1 + armorDef/10)) * newGamePlusMod();
+			if (level > 10) {
+				bonusAscMaxHP *= (int)(level / 10 + 1);
+			}
+			weaponAttack += (1 + (int)(weaponAttack / 5)) * mod;
+			if (weaponRangeAttack > 0) {
+				weaponRangeAttack += (1 + (int)(weaponRangeAttack / 5)) * mod;
+			}
+			armorDef += ((int)(1 + armorDef / 10)) * mod;
+
+			lustVuln *= 1 - (Math.min(mod, 4)/10);
+
+			HP = maxHP();
+			mana = maxMana();
+			ki = maxKi();
+			XP = totalXP();
 		}
 	}
 }

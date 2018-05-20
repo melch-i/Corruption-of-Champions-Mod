@@ -10,6 +10,14 @@ import classes.Scenes.SceneLib;
 public class Isabella extends Monster
 	{
 
+		override public function handleWait():Object {
+			if (player.hasStatusEffect(StatusEffects.IsabellaStunned)) {
+				outputText("You wobble about for some time but manage to recover. Isabella capitalizes on your wasted time to act again.\n\n");
+				player.removeStatusEffect(StatusEffects.IsabellaStunned);
+				return false;
+			}
+			return super.handleWait();
+		}
 		//IZZY AI:
 
 		//Isabella Combat texttttttsss

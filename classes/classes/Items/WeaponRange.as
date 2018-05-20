@@ -14,6 +14,7 @@ package classes.Items
 		private var _attack:Number;
 		private var _perk:String;
 		private var _name:String;
+		private var _ammoWord:String;
 		
 		public function WeaponRange(id:String, shortName:String, name:String,longName:String, verb:String, attack:Number, value:Number = 0, description:String = null, perk:String = "") {
 			super(id, shortName, longName, value, description);
@@ -21,6 +22,14 @@ package classes.Items
 			this._verb = verb;
 			this._attack = attack;
 			this._perk = perk;
+			switch(_perk){
+				case "Bow": _ammoWord = "arrow"; break;
+				case "Crossbow": _ammoWord = "bolt"; break;
+				case "Throwing": _ammoWord = "projectile"; break;
+				case "Pistol":
+				case "Rifle":
+					_ammoWord = "bullet"
+			}
 		}
 		
 		public function get verb():String { return _verb; }
@@ -40,9 +49,6 @@ package classes.Items
 			else if (perk == "Pistol") desc += "(Pistol)";
 			else if (perk == "Rifle") desc += "(Rifle)";
 			else if (perk == "Throwing") desc += "(Throwing)";
-		//	else if (verb == "smash") desc += "(Blunt)";
-		//	else if (verb == "slash" || verb == "keen cut") desc += "(Sword)";
-		//	else if (name.indexOf("staff") >= 0) desc += "(Staff)";
 			//Attack
 			desc += "\nRange Attack: " + String(attack);
 			//Value
@@ -52,27 +58,36 @@ package classes.Items
 		
 		override public function useText():void {
 			outputText("You equip " + longName + ".  ");
-		//	if (perk == "Large" && game.player.shield != ShieldLib.NOTHING) {
-		//		outputText("Because the weapon requires the use of two hands, you have unequipped your shield. ");
-		//	}
 		}
 		
 		override public function canUse():Boolean {
 			return true;
 		}
-		
-		public function playerEquip():WeaponRange { //This item is being equipped by the player. Add any perks, etc. - This function should only handle mechanics, not text output
-		//	if (perk == "Large" && game.player.shield != ShieldLib.NOTHING) {
-		//		game.inventory.unequipShield();
-		//	}
+
+		/**
+		 * This item is being equipped by the player. Add any perks, etc. - This function should only handle mechanics, not text output
+		 * @return
+		 */
+		public function playerEquip():WeaponRange {
 			return this;
 		}
-		
-		public function playerRemove():WeaponRange { //This item is being removed by the player. Remove any perks, etc. - This function should only handle mechanics, not text output
+
+		/**
+		 * This item is being removed by the player. Remove any perks, etc. - This function should only handle mechanics, not text output
+		 * @return
+		 */
+		public function playerRemove():WeaponRange {
 			return this;
 		}
-		
-		public function removeText():void {} //Produces any text seen when removing the armor normally
+
+		/**
+		 * Produces any text seen when removing the armor normally
+		 */
+		public function removeText():void {}
+
+		public function get ammoWord():String{
+			return _ammoWord;
+		}
 		
 	}
 }

@@ -186,12 +186,10 @@ public class Ember extends Monster
 			this.imageName = "ember";
 			this.long = "You are currently 'battling' Ember, the dragon, in a playfight.  At least, that was the intention.  The way " + emberMF("he", "she") + " lashes " + emberMF("his", "her") + " tail along the ground, with claws spread and teeth bared ferociously, makes you wonder.";
 			// this.plural = false;
+			pronoun1 = emberMF("he","she");
+			pronoun2 = emberMF("him","her");
+			pronoun3 = emberMF("his","her");
 			var gender:int = game.flags[kFLAGS.EMBER_GENDER];
-			if (gender==0){
-				this.pronoun1 = "she";
-				this.pronoun2 = "her";
-				this.pronoun3 = "her";
-			}
 			if(gender == 1 || gender == 3) {
 				this.createCock(16,2,CockTypesEnum.DRAGON);
 				this.balls = 2;

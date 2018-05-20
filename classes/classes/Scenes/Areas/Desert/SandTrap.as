@@ -9,6 +9,11 @@ import classes.internals.*;
 
 public class SandTrap extends Monster
 	{
+
+		public override function handleWait():Object{
+			sandTrapWait();
+			return false;
+		}
 		//Wait:
 		public function sandTrapWait():void {
 			clearOutput();
@@ -105,6 +110,27 @@ public class SandTrap extends Monster
 			} else {
 				SceneLib.desert.sandTrapScene.sandtrapmentLoss(true);
 			}
+		}
+
+		override public function get long():String {
+			var text:String = super.long + "\n\n";
+			var level:int = statusEffectv1(StatusEffects.Level);
+			switch(level) {
+				case 4: text += "You are right at the edge of its pit.  If you can just manage to keep your footing here, you'll be safe."; break;
+				case 3: text += "The sand sinking beneath your feet has carried you almost halfway into the creature's pit."; break;
+				default: text += "The dunes tower above you and the hissing of sand fills your ears. [b: The leering sandtrap is almost on top of you!]";
+			}
+			text += " You could try attacking it with your [weapon], but that will carry you straight to the bottom.  Alternately, you could try to tease it or hit it at range, or wait and maintain your footing until you can clamber up higher.";
+			return text;
+		}
+
+		override public function endRoundChecks():Function {
+			var res:Function = super.endRoundChecks();
+			if (res != null) {return res;}
+			if (trapLevel() <= 1) {
+				return SceneLib.desert.sandTrapScene.sandtrapmentLoss;
+			}
+			return null;
 		}
 
 		public function SandTrap()

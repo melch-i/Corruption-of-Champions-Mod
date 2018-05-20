@@ -12,6 +12,31 @@ import classes.internals.*;
 
 public class Scylla extends Monster
 	{
+
+		override public function handleWait():Object {
+			if (player.hasStatusEffect(StatusEffects.ScyllaBind)) {
+				outputText("You're being squeezed tightly by the scylla’s powerful tentacles. That's without mentioning the fact she's rubbing in your sensitive place quite a bit, giving you a knowing grin.");
+				player.takeLustDamage(player.sens / 4 + 20);
+				player.takePhysDamage(100 + rand(40));
+				return true;
+			}
+			return super.handleWait();
+		}
+
+		override public function handleStruggle():Boolean {
+			outputText("You struggle to get free from the [monster name] mighty tentacles. ");
+			if (rand(3) == 0 || rand(120) < player.str / 1.5) {
+				outputText("As force alone seems ineffective, you bite one of her tentacles and she screams in surprise, releasing you.");
+				player.removeStatusEffect(StatusEffects.ScyllaBind);
+			}
+			else {
+				outputText("Despite all of your struggle she manage to maintain her hold on you.");
+				player.takeLustDamage(player.sens / 5 + 5);
+				player.takePhysDamage(100 + rand(80));
+			}
+			return true;
+		}
+
 		public function scyllaConstrict():void {
 			outputText("The " + this.short + "’s tentacles grab you all at once and start to squeeze you!");
 			player.createStatusEffect(StatusEffects.ScyllaBind,0,0,0,0); 

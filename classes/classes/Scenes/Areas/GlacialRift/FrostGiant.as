@@ -9,7 +9,23 @@ import classes.internals.WeightedDrop;
 
 public class FrostGiant extends Monster
 	{
-		
+		override public function handleWait():Object {
+			if (player.hasStatusEffect(StatusEffects.GiantGrabbed)) {
+				giantGrabFail(false);
+				return true;
+			}
+			if (player.hasStatusEffect(StatusEffects.GiantBoulder)) {
+				giantBoulderMiss();
+				return true;
+			}
+			return super.handleWait();
+		}
+
+		override public function handleStruggle():Boolean {
+			giantGrabStruggle();
+			return true;
+		}
+
 		public function giantAttackPunch():void {
 			var damage:int = 0;
 			outputText("The giant strides toward you, closing the distance faster than you can run. He rears back and strikes at you!  ");

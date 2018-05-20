@@ -131,6 +131,14 @@ public class Clara extends Monster
 			SceneLib.marblePurification.loseToClara();
 		}
 
+		override protected function lustText():void {
+			var percent:int = lust100;
+			if (percent > 85) {outputText("It looks like Clara is on the verge of having her anger overwhelmed by her lusts.");}
+			else if (percent > 75) {outputText("Clara is breathing heavily now, the signs of her arousal becoming quite visible now.");}
+			else if (percent > 65) {outputText("Clara seems to be becoming more aroused than angry now.");}
+			else if (percent > 40) {outputText("The anger in her motions is weakening.");}
+		}
+
 		public function Clara()
 		{
 			trace("Clara Constructor!");

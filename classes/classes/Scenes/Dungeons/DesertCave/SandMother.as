@@ -7,6 +7,14 @@ import classes.Scenes.SceneLib;
 
 public class SandMother extends Monster
 	{
+		override public function handleWait():Object {
+			if (player.hasStatusEffect(StatusEffects.Whispered)) {
+				outputText("You shake off the mental compulsions and ready yourself to fight!\n\n");
+				player.removeStatusEffect(StatusEffects.Whispered);
+				return false;
+			}
+			return super.handleWait();
+		}
 		//Notes:
 		//Starts combat with sandstorm.  GigaFire's every fifth round.
 		//Whispers every fourth.

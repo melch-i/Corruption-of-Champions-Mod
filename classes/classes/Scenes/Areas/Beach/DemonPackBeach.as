@@ -9,10 +9,11 @@ import classes.BodyParts.Butt;
 import classes.BodyParts.Hips;
 import classes.BodyParts.Horns;
 import classes.BodyParts.Tail;
-import classes.Scenes.SceneLib;
+	import classes.Scenes.Monsters.PackMonster;
+	import classes.Scenes.SceneLib;
 import classes.internals.WeightedDrop;
 
-public class DemonPackBeach extends Monster
+public class DemonPackBeach extends PackMonster
 	{
 		override protected function performCombatAction():void
 		{
@@ -75,8 +76,8 @@ public class DemonPackBeach extends Monster
 							consumables.INCUBID,
 							consumables.OVIELIX,
 							consumables.B__BOOK);
-			this.special1 = SceneLib.combat.packAttack;
-			this.special2 = SceneLib.combat.lustAttack;
+			this.special1 = packAttack;
+			this.special2 = lustAttack;
 			this.tailType = Tail.DEMONIC;
 			this.horns.type = Horns.DEMON;
 			this.horns.count = 2;

@@ -12,6 +12,27 @@ import classes.internals.WeightedDrop;
 
 public class WinterWolf extends Monster
 	{
+		override public function handleWait():Object {
+			if (player.hasStatusEffect(StatusEffects.WolfHold)) {
+				outputText("The wolf tear your body with its maw wounding you greatly as it starts to eat you alive!");
+				player.takePhysDamage(5 + rand(5));
+				return true;
+			}
+			return super.handleWait();
+		}
+
+		override public function handleStruggle():Boolean {
+			if (rand(3) == 0 || rand(80) < player.str / 1.5) {
+				outputText("You slam your head in the wolf sensible muzzle forcing it to recoil away as it whine in pain allowing you to stand up.");
+				player.removeStatusEffect(StatusEffects.WolfHold);
+			}
+			else {
+				outputText("The wolf tear your body with its maw wounding you greatly as it starts to eat you alive!");
+				player.takePhysDamage(7 + rand(5));
+			}
+			return true;
+		}
+
 		override public function defeated(hpVictory:Boolean):void
 		{
 			SceneLib.glacialRift.winterwolfScene.winAgainstWinterWolf();

@@ -11,6 +11,31 @@ import classes.Scenes.SceneLib;
 
 public class GooArmor extends GooGirl
 	{
+		override public function handleWait():Object {
+			if (player.hasStatusEffect(StatusEffects.GooArmorBind)) {
+				outputText("Suddenly, the goo-girl leaks half-way out of her heavy armor and lunges at you. You attempt to dodge her attack, but she doesn't try and hit you - instead, she wraps around you, pinning your arms to your chest. More and more goo latches onto you - you'll have to fight to get out of this.");
+				player.addStatusValue(StatusEffects.GooArmorBind, 1, 1);
+				return true;
+			}
+			return super.handleWait();
+		}
+
+		override public function handleStruggle():Boolean {
+			struggleAtGooBind();
+			return true;
+		}
+
+		override public function endRoundChecks():Function {
+			if (player.statusEffectv1(StatusEffects.GooArmorBind) >= 5) {
+				if (hasStatusEffect(StatusEffects.Spar)) {
+					return SceneLib.valeria.pcWinsValeriaSparDefeat;
+				} else {
+					return SceneLib.dungeons.heltower.gooArmorBeatsUpPC;
+				}
+			}
+			return super.endRoundChecks();
+		}
+
 		public function gooArmorAI():void {
 			if(rand(2) == 0 && !player.hasStatusEffect(StatusEffects.GooArmorSilence)) gooSilenceAttack();
 			else if(rand(3) > 0) gooArmorAttackPhysical();

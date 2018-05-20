@@ -130,6 +130,16 @@ public class Kelt extends Monster
 			}
 		}
 
+		override protected function lustText():void {
+			var percent:int = lust100;
+			if (percent >= 90) {outputText("There can be no doubt that you're having quite the effect on Kelt.  He keeps fidgeting, dripping pre-cum everywhere as he tries to keep up the facade of fighting you.  His maleness is continually twitching and bobbing, dripping messily.  He's so close to giving in...");}
+			else if (percent >= 80) {outputText("Kelt seems to be having trouble focusing.  He keeps pausing and flexing his muscles, slapping his cock against his belly and moaning when it smears his pre-cum over his equine underside.  ");}
+			else if (percent >= 70) {outputText("Kelt is unabashedly aroused at this point.  His skin is flushed, his manhood is erect, and a thin bead of pre has begun to bead underneath.  ");}
+			else if (percent >= 60) {outputText("Kelt's member has grown to its full size and even flared a little at the tip.  It bobs and sways with every movement he makes, reminding him how aroused you get him.  ");}
+			else if (percent >= 50) {outputText("Kelt's gotten a little stiff down below, but he still seems focused on taking you down.  ");}
+			else {outputText("Kelt actually seems to be turned off for once in his miserable life.  His maleness is fairly flaccid and droopy.  ");}
+		}
+
 		public function Kelt()
 		{
 			var breakLevel2:Boolean = game.flags[kFLAGS.KELT_BREAK_LEVEL] == 2;

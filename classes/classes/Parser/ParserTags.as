@@ -238,6 +238,7 @@ public class ParserTags {
         "his"                   : function ():* { return CoC.instance.monster.pronoun3; },
         "hisher"                : function ():* { return CoC.instance.monster.pronoun3; },
         "horns"                 : function ():* { return CoC.instance.monster.hornDescript(); },
+        "is"                    : function ():* { return CoC.instance.monster.isare(); },
         "leg"                   : function ():* { return CoC.instance.monster.leg(); },
         "legs"                  : function ():* { return CoC.instance.monster.legs(); },
         "lowergarment"          : function ():* { return CoC.instance.monster.lowerGarmentName; },

@@ -21,6 +21,18 @@ public class Holli extends Monster
 		 -basically requires luck plus any of firebreath level grindan, stun abuse, or blood mage whitefire/arouse abuse
 		 */
 
+		override public function handleWait():Object {
+			if (player.hasStatusEffect(StatusEffects.HolliConstrict)) {
+				waitForHolliConstrict(true);
+				return true;
+			}
+			return super.handleWait();
+		}
+
+		override public function handleStruggle():Boolean {
+			struggleOutOfHolli();
+			return true;
+		}
 //Attack:
 //[monster] whips out at you with branches and roots!
 

@@ -40,7 +40,7 @@ package classes.Scenes.Combat {
 		}
 		if (player.weapon == weapons.WDBLADE) {
 			buttons.add("Blade Dance", BladeDance, "Attack twice (four times if double attack is active, six times if triple attack is active and etc.).")
-				.requireKi(50 * kiPowerCost() * (1 + flags[kFLAGS.DOUBLE_ATTACK_STYLE]));
+				.requireKi(50 * base);
 		}
 		if (player.weapon == weapons.WDSTAFF) {
 			buttons.add("AvatarOfTheSong", AvatarOfTheSong, "Doublecast Charged Weapon and Might. Casts blind if charged weapon is already active. Casts Heal if Might is already active.")
@@ -217,14 +217,14 @@ package classes.Scenes.Combat {
 		player.str += BeatOfWarBoost;
 		statScreenRefresh();
 		outputText("You momentarily attune yourself to the song of the mother tree, and prepare to add a note of your own to it’s rhythm. You feel the beat shift the song’s tempo slightly, taking a twist towards the ominous. This attunement augments your strength.\n\n");
-		combat.basemeleeattacks();
+		combat.attack();
 	}
 
 	public function BladeDance():void {
 		clearOutput();
 		outputText("You momentarily attune yourself to the song of the mother tree, and dance forward, darting your blade around your enemy.\n\n");
 		player.createStatusEffect(StatusEffects.BladeDance,0,0,0,0);
-		combat.basemeleeattacks();
+		combat.attack();
 	}
 	public function ResonanceVolley():void {
 		clearOutput();
