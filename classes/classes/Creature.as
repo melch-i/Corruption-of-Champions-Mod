@@ -51,6 +51,18 @@ package classes
 			return game.flags;
 		}
 
+		public static function damage_PHYS(creature:Creature, damage:Number):Number {
+			return creature.takePhysDamage(damage);
+		}
+
+		public static function damage_LUST(creature:Creature, damage:Number):Number {
+			return creature.takeLustDamage(damage)
+		}
+
+		public static function damage_MAGIC(creature:Creature, damage:Number):Number {
+			return creature.takeMagicDamage(damage);
+		}
+
 		//Variables
 		
 		//Short refers to player name and monster name. BEST VARIABLE NAME EVA!
@@ -1050,6 +1062,32 @@ package classes
 				availableActions.removeAt(i);
 			}
 		}
+
+		private function damageLimit(value:Number):Number {
+			return Utils.boundFloat(-2.00, value, 3.00);
+		}
+		private var damageResist:DefaultDict = new DefaultDict(0);
+		public function setDamageResist(dtype:String, value:Number = 0):void {
+			damageResist[dtype] = damageLimit(value)
+		}
+		public function addDamageResist(dtype:String, value:Number):void {
+			damageResist[dtype] = damageLimit(damageResist[dtype] + value);
+		}
+		public function getDamageResist(dtype:String):int {
+			return damageResist[dtype];
+		}
+
+		private var damageMod:DefaultDict = new DefaultDict(1.00);
+		public function setDamageMod(dtype:String, value:int = 1.00):void {
+			damageMod[dtype] = damageLimit(value);
+		}
+		public function addDamageMod(dtype:String, value:int):void {
+			damageMod[dtype] = damageLimit(damageMod[dtype] + value);
+		}
+		public function getDamageMod(dtype:String):int {
+			return damageMod[dtype];
+		}
+
 		/*
 		
 		[    ? ? ?    ]

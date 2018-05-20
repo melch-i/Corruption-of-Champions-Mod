@@ -966,7 +966,7 @@ public class PerkLib
 		}
 
 	// Perk requirements
-	private static function initDependencies():void {
+	internal static function initDependencies():void {
         try {
 			//------------
             // STRENGTH
@@ -1446,6 +1446,5 @@ public class PerkLib
             trace(e.getStackTrace());
         }
 	}
-	initDependencies();
 }
 }

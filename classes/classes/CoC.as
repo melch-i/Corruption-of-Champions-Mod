@@ -207,6 +207,7 @@ public class CoC extends MovieClip
         this.stage.addChild( this.mainView );
     }
     private function _postInit(e:Event):void {
+        PerkLib.initDependencies();
         // Hooking things to MainView.
         this.mainView.onNewGameClick = charCreation.newGameGo;
         this.mainView.onAppearanceClick = playerAppearance.appearance;

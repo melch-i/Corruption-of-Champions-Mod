@@ -5,11 +5,13 @@ package classes.Scenes.Combat {
 	import classes.Monster;
 	import classes.PerkLib;
 	import classes.PerkType;
+	import classes.Player;
 	import classes.Scenes.SceneLib;
 	import classes.StatusEffectClass;
 	import classes.StatusEffectType;
 	import classes.StatusEffects;
 	import classes.internals.Utils;
+	import classes.lists.DamageType;
 
 	import coc.view.ButtonData;
 
@@ -41,10 +43,10 @@ package classes.Scenes.Combat {
 		private var _cooldown:int = 0;
 		private var _cooldowns:Dictionary = new Dictionary();
 
-		private var _startText:String;
-		private var _hitText:String;
+		private var _startText:String = "";
+		private var _hitText:String = "";
 		private var _rageEnabled:Boolean;
-		private var _customActions:Array = []
+		private var _customActions:Array = [];
 		private var _stunTurns:int = 0;
 
 
@@ -138,19 +140,23 @@ package classes.Scenes.Combat {
 
 			_cooldowns[host] = _cooldown + 1;
 
-			var damage:Number = 0;
+			var damage:Array = [];
 			if (_action != null) {
-				damage = _action(host, target);
+				//FIXME @Oxdeception create returnable object for this?
+				damage.push({value:_action(host, target), type:DamageType.PHYSICAL});
 			}
 
 			if (_dodgeEnable) {
 				if (dodgeRoll(host, target)) {
-					return endAction(target, 0);
+					return endAction(host, target, [{type:null,value:0}]);
 				}
 			}
 
 			for each (var dam:CombatDamage in _damage) {
-				//todo apply damage, resists
+				damage.push({
+					type: dam.dtype,
+					value: dam.roll() * host.getDamageMod(dam.dtype.name) * host.getDamageMod(_actionType)
+				})
 			}
 
 			var crit:Boolean = critRoll(host, target);
@@ -165,9 +171,12 @@ package classes.Scenes.Combat {
 					}
 				}
 			}
-
+			if(damage.length == 0){
+				damage.push({value:0, type:DamageType.PHYSICAL})
+			}
+			//fixme @Oxdeception allow custom actions to operate on all damage
 			for each (var customAction:Function in _customActions) {
-				damage = customAction(host, target, damage, crit);
+				damage[0].value = customAction(host, target, damage[0].value, crit);
 			}
 
 			damage = applyDamage(host, target, damage, crit);
@@ -177,7 +186,7 @@ package classes.Scenes.Combat {
 			}
 
 			EngineCore.outputText(_hitText + damageText(damage, crit));
-			endAction(target, damage);
+			endAction(host, target, damage);
 		}
 
 		/**
@@ -346,15 +355,17 @@ package classes.Scenes.Combat {
 		 * @param target creature receiving the action, used to check if combat should end
 		 * @param damage damage dealt, used to check achievements
 		 */
-		private function endAction(target:Creature, damage:Number):void {
-			//fixme @oxdeception these methods need updated to specify target
-			SceneLib.combat.checkAchievementDamage(damage);
-			EngineCore.outputText("\n\n");
-			SceneLib.combat.heroBaneProc(damage);
-			//fixme @oxdeception move below into combat
-			if (target.HP < 1) {
-				EngineCore.doNext(SceneLib.combat.endHpVictory);
+		private function endAction(host:Creature, target:Creature, damage:Array):void {
+			//fixme @oxdeception move below into combat?
+			if (!(host is Player)) {
+				SceneLib.combat.combatRoundOver()
 			} else {
+				var dam:Number = 0;
+				for each(var d:* in damage) {
+					dam += d.value;
+				}
+				SceneLib.combat.checkAchievementDamage(dam);
+				SceneLib.combat.heroBaneProc(dam);
 				SceneLib.combat.enemyAIImpl();
 			}
 		}
@@ -396,22 +407,26 @@ package classes.Scenes.Combat {
 		 * @param target creature receiving the action
 		 * @param damage damage that has been dealt
 		 * @param crit if a critical hit was scored
-		 * @return the final damage value
+		 * @return array of final damage values
 		 */
-		private function applyDamage(host:Creature, target:Creature, damage:Number, crit:Boolean = false):Number {
-			if (host.hasPerk(PerkLib.Heroism) && (target.hasPerk(PerkLib.EnemyBossType) || target.hasPerk(PerkLib.EnemyGigantType))) {
-				damage *= 2;
-			}
-			if (crit) {
-				var critmod:Number = _critMult;
+		private function applyDamage(host:Creature, target:Creature, damage:Array, crit:Boolean = false):Array {
+			var critmod:Number = 1;
+			if(crit){
+				critmod = _critMult;
 				for each (var mod:Function in _critMultMods) {
 					critmod += mod(host, target);
 				}
-				damage *= critmod;
 			}
-			damage *= (target.damagePercent() / 100);
-			//fixme @Oxdeception move doing damage, or update to specify target
-			return SceneLib.combat.doDamage(damage);
+
+			for each (var dam:* in damage){
+				if (host.hasPerk(PerkLib.Heroism) && (target.hasPerk(PerkLib.EnemyBossType) || target.hasPerk(PerkLib.EnemyGigantType))) {
+					dam.value *= 2;
+				}
+				dam.value *= critmod;
+				dam.value -= dam.value * target.getDamageResist(dam.type);
+				dam.value = dam.type.damage(target, Math.round(dam.value));
+			}
+			return damage;
 		}
 
 		/**
@@ -446,17 +461,23 @@ package classes.Scenes.Combat {
 		 * @param crit
 		 * @return
 		 */
-		private static function damageText(damage:int, crit:Boolean):String {
-			var text:String = "[b: " + damage + "]";
-			if (damage > 0) {
-				text = "[red: " + text + "]";
+		private static function damageText(damage:Array, crit:Boolean):String {
+			var text:String;
+			var arr:Array = [];
+			for each (var dam:* in damage){
+				text = dam.value;
+				if (dam.value > 0) {
+					text = dam.type.colourText(text);
+				}
+				else if (dam.value < 0) {
+					text = "[green: " + text + "]";
+				}
+				arr.push(text);
 			}
-			else if (damage < 0) {
-				text = "[green: " + text + "]";
-			}
-			text = "(" + text + ")";
+			text = arr.join("+");
+			text = " ([b: " + text + "]) ";
 			if (crit) {
-				text += " [b: *Critical Hit!*]";
+				text += "[b:  *Critical Hit!*] ";
 			}
 			return text;
 		}
@@ -515,7 +536,7 @@ package classes.Scenes.Combat {
 				target.createStatusEffect(StatusEffects.Stunned, duration, 0, 0, 0);
 			} else {
 				var isare:String = (target as Monster).plural ? " are " : " is ";
-				EngineCore.outputText("[b: " + target.capitalA + target.short + isare + "too resolute to be stunned by your attack.]");
+				EngineCore.outputText("\n\n[b: " + target.capitalA + target.short + isare + "too resolute to be stunned by your attack.]");
 			}
 		}
 
