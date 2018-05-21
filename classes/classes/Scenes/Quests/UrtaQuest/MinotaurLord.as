@@ -18,6 +18,28 @@ use namespace CoC;
 	public class MinotaurLord extends Monster
 	{
 
+		override public function handleWait():Object {
+			if(hasStatusEffect(StatusEffects.MinotaurEntangled)){
+				outputText("You sigh and relax in the chains, eying the well-endowed minotaur as you await whatever rough treatment he desires to give.  His musky, utterly male scent wafts your way on the wind, and you feel droplets of your lust dripping down your thighs.  You lick your lips as you watch the pre-cum drip from his balls, eager to get down there and worship them.  Why did you ever try to struggle against this fate?\n\n");
+				player.takeLustDamage(30 + rand(5));
+				return false;
+			}
+			return super.handleWait();
+		}
+
+		override public function handleStruggle():Boolean {
+			if (player.str / 9 + rand(20) + 1 >= 15) {
+				outputText("Utilizing every ounce of your strength and cunning, you squirm wildly, shrugging through weak spots in the chain's grip to free yourself!  Success!\n\n");
+				removeStatusEffect(StatusEffects.MinotaurEntangled);
+				if (flags[kFLAGS.URTA_QUEST_STATUS] == 0.75) {
+					outputText("\"<i>No!  You fool!  You let her get away!  Hurry up and finish her up!  I need my serving!</i>\"  The succubus spits out angrily.\n\n");
+				}
+				return true;
+			}
+			outputText("You wiggle and struggle with all your might, but the chains remain stubbornly tight, binding you in place.  Damnit!  You can't lose like this!\n\n");
+			return false;
+		}
+
 		override protected function performCombatAction():void
 		{
 			if (HP < 300 && statusEffectv1(StatusEffects.MinoMilk) < 4 && flags[kFLAGS.URTA_QUEST_STATUS] == 0.75) minotaurDrankMalk();

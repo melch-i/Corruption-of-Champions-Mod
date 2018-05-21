@@ -1608,7 +1608,7 @@ use namespace CoC;
 			clearOutput();
 			outputText("You proceed according to the ritual as described in the book, however a question poses itself. What kind of blood will you use?");
 			menu();
-			addButton(0, "OwnBlood", becomingGargoyleYesOwnBlood).hint("Your body would need regular intake of raw soulforce.");
+			addButton(0, "OwnBlood", becomingGargoyleYesOwnBlood).hint("Your body would need regular intake of raw ki.");
 			if (player.hasItem(consumables.MINOBLO, 1)) addButton(1, "Minotaur", becomingGargoyleYesMinotaurBlood).hint("Your body would need regular intake of sexual fluids.");
 			else addButtonDisabled(1, "Minotaur", "Need Minotaur Blood vial for this option");
 			addButton(2, "Back", templeBasement)
@@ -1712,8 +1712,8 @@ use namespace CoC;
 			if (flags[kFLAGS.GARGOYLE_BODY_MATERIAL] == 2) outputText("alabaster");
 			outputText(" stone body, strong enough to shatter rocks and solid enough that the sharpest sword will leave you damageless as you’re suddenly rocked over by a terrifying hunger.\n\n");
 			if (player.hasPerk(PerkLib.GargoylePure)) {
-				outputText("Energy! You need energy to stay alive now. As you are masterless, while food used to be your main source of power, you are now a magical construct and Soulforce is what powers you now!\n\n");
-				outputText("<b>Gain perk: Gargoyle - Need to gain sustenance from soulforce to stay alive.</b>\n\n");
+				outputText("Energy! You need energy to stay alive now. As you are masterless, while food used to be your main source of power, you are now a magical construct and Ki is what powers you now!\n\n");
+				outputText("<b>Gain perk: Gargoyle - Need to gain sustenance from ki to stay alive.</b>\n\n");
 			}
 			else {
 				outputText("Something went really wrong in the ritual. You're starting to crave fluids… any fluids and particularly cum and milk! Without an input of these, you feel you're gonna lose strength and eventually run out of energy, turning into an immobile ordinary statue! Worse yet, lust seems to creep up your mind like an uncontrollable wave. You need sex and you need it now!\n\n");

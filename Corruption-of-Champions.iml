@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="Flex" version="4">
-  <component name="FlexBuildConfigurationManager" active="CoC-debug">
+  <component name="FlexBuildConfigurationManager" active="CoC-Mobile">
     <configurations>
       <configuration name="CoC-debug" main-class="classes.CoC" output-file="CoC-debug.swf" output-folder="$MODULE_DIR$">
         <dependencies target-player="11.1" framework-linkage="Merged">
@@ -44,18 +44,29 @@
         <packaging-android />
         <packaging-ios />
       </configuration>
-      <configuration name="CoC-Mobile" target-platform="Mobile" main-class="classes.CoC" output-file="CoC-Mobile.swf" output-folder="$MODULE_DIR$" skip-build="true">
+      <configuration name="CoC-Mobile" target-platform="Mobile" main-class="classes.CoC" output-file="CoC-AIR.swf" output-folder="$MODULE_DIR$">
         <dependencies>
-          <sdk name="4.6.0" />
+          <entries>
+            <entry library-name="lib" library-level="project">
+              <dependency linkage="Merged" />
+            </entry>
+          </entries>
+          <sdk name="Flash" />
         </dependencies>
         <compiler-options>
           <map>
+            <entry key="compiler.debug.swf" value="false" />
             <entry key="compiler.define" value="CONFIG::AIR&#9;true&#10;CONFIG::STANDALONE&#9;false&#10;CONFIG::debug&#9;false&#10;CONFIG::release&#9;true" />
           </map>
+          <option name="resourceFilesMode" value="None" />
           <option name="additionalOptions" value="-use-network=false" />
         </compiler-options>
         <packaging-air-desktop />
-        <packaging-android enabled="true" package-file-name="CoC-Mobile" />
+        <packaging-android enabled="true" package-file-name="CoC-Mobile">
+          <files-to-package>
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/devTools/icons" path-in-package="icons" />
+          </files-to-package>
+        </packaging-android>
         <packaging-ios package-file-name="CoC-Mobile" />
       </configuration>
     </configurations>
@@ -73,7 +84,7 @@
       <excludeFolder url="file://$MODULE_DIR$/generated" />
       <excludeFolder url="file://$MODULE_DIR$/obj" />
     </content>
-    <orderEntry type="jdk" jdkName="4.6.0" jdkType="Flex SDK Type (new)" />
+    <orderEntry type="jdk" jdkName="4.6.0&#9;Flash" jdkType="__CompositeFlexSdk__" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="lib" level="project" />
   </component>

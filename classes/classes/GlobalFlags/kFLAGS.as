@@ -334,7 +334,7 @@ public static const UNKNOWN_FLAG_NUMBER_00325:int                               
 public static const UNKNOWN_FLAG_NUMBER_00326:int                                   =  326; // Number of grown up minotaur offspring - TRIBE SIZE
 public static const UNKNOWN_FLAG_NUMBER_00327:int                                   =  327; // Number of minotaur sons pending growing up
 public static const UNKNOWN_FLAG_NUMBER_00328:int                                   =  328; // Grow up countdown
-public static const UNKNOWN_FLAG_NUMBER_00329:int                                   =  329; // Minos wasting a turn? (1 = yes)
+public static const UNKNOWN_FLAG_NUMBER_00329:int                                   =  329; // No longer used. Previously: Minos wasting a turn? (1 = yes)
 public static const UNKNOWN_FLAG_NUMBER_00330:int                                   =  330; // Cooldown on minotaur cum repeat messages
 public static const UNKNOWN_FLAG_NUMBER_00331:int                                   =  331; // Times Jojo Milked
 public static const JOJO_COCK_MILKING_COOLDOWN:int                                  =  332; // Jojo milk cooldown 4 hours
@@ -2354,7 +2354,7 @@ public static const EVANGELINE_02345:int                                   = 234
 public static const MULTIPLE_ATTACK_STYLE:int            	                        = 2346;
 public static const SOULFORCE_USED_FOR_BREAKTHROUGH:int                             = 2347;
 public static const FLOWER_LEVEL:int                    			                = 2348;
-public static const SPIRIT_STONES:int                       			            = 2349;
+public static const SPIRIT_STONES:int                       			            = 2349; // No longer used. Previously a Currency in Xianxia Mod
 public static const SOULFORCE_GAINED_FROM_CULTIVATING:int                           = 2350;
 public static const UNLOCKED_MERIDIANS:int                      	                = 2351;
 public static const GARGOYLE_BODY_MATERIAL:int                                      = 2352;
@@ -2980,7 +2980,7 @@ public static const UNKNOWN_FLAG_NUMBER_02971:int                               
 public static const UNKNOWN_FLAG_NUMBER_02972:int                                   = 2972;
 public static const UNKNOWN_FLAG_NUMBER_02973:int                                   = 2973;
 public static const SPARRABLE_NPCS_TRAINING:int                                     = 2974;
-public static const STAT_GAIN_MODE:int                                              = 2975;
+public static const STAT_GAIN_MODE:int                                              = 2975; // No longer used. Peviously 0 for classic, 1 for daily stat gains
 public static const TEXT_BACKGROUND_STYLE:int                                       = 2976; // Text BG Style. Revamp has this flag as 2983
 public static const CHARVIEW_STYLE:int                                              = 2977; // 0 for in text, 1 for sidebar
 public static const CHARVIEWER_ENABLED:int                                          = 2978;

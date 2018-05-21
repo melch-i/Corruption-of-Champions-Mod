@@ -57,10 +57,10 @@ public class PlayerInfo extends BaseContent {
 		combatStats += "<b>Accuracy (1st range attack):</b> " + (combat.arrowsAccuracy() / 2) + "%\n";
 		if (player.hasPerk(PerkLib.Manyshot)) combatStats += "<b>Accuracy (4th range attack):</b> " + ((combat.arrowsAccuracy() / 2) - 45) + "%\n";
 
-		combatStats += "<b>Soulskill Effect Multiplier:</b> " + Math.round(100 * combat.soulskillMod()) + "%\n";
-		combatStats += "<b>Physical Soulskill Effect Multiplier:</b> " + Math.round(100 * combat.soulskillPhysicalMod()) + "%\n";
-		combatStats += "<b>Magical Soulskill Effect Multiplier:</b> " + Math.round(100 * combat.soulskillMagicalMod()) + "%\n";
-		combatStats += "<b>Soulskill Cost:</b> " + Math.round(100 * combat.soulskillCost()) + "%\n";
+		combatStats += "<b>Ki Power Effect Multiplier:</b> " + Math.round(100 * player.kiPowerMod()) + "%\n";
+		combatStats += "<b>Physical Ki Power Effect Multiplier:</b> " + Math.round(100 * player.kiPowerMod(true)) + "%\n";
+		combatStats += "<b>Magical Ki Power Effect Multiplier:</b> " + Math.round(100 * player.kiPowerMod()) + "%\n";
+		combatStats += "<b>Ki Power Cost:</b> " + Math.round(100 * player.kiPowerCostMod()) + "%\n";
 
 		combatStats += "<b>Unarmed:</b> +" + combat.unarmedAttack() + "\n";
 
@@ -685,18 +685,14 @@ if (SceneLib.valeria.valeriaFluidsEnabled()) {
         if (player.XP >= player.requiredXP() && player.level < CoC.instance.levelCap) {
             player.XP -= player.requiredXP();
 			player.level++;
-			player.perkPoints++;
-			//if (player.level % 2 == 0) player.ascensionPerkPoints++;
-			//przerobić aby z asc perk co ?6/3/1? lvl dostawać another perk point?
-			//może też dodać ascension perk aby móc dostawać 6 lub nawet wiecej stat points na lvl up?
-			clearOutput();
-			outputText("<b>You are now level " + num2Text(player.level) + "!</b>");
-			if (flags[kFLAGS.STAT_GAIN_MODE] ==CoC.STAT_GAIN_CLASSIC) {
-				player.statPoints += 5;
-				outputText("\n\nYou have gained five attribute points and one perk point!");
-			} else {
-				outputText("\n\nYou have gained one perk point!");
-			}
+	        outputText("<b>You are now level " + num2Text(player.level) + "!</b>");
+	        if(player.level % 2 == 0){
+		        outputText("\n\nYou have gained five attribute points!");
+		        player.statPoints += 5;
+	        } else {
+		        outputText("\n\nYou have gained one perk point!");
+		        player.perkPoints++;
+	        }
 
 			if (player.statPoints>0) {
 				doNext(attributeMenu);
@@ -715,8 +711,7 @@ if (SceneLib.valeria.valeriaFluidsEnabled()) {
 			perkBuyMenu();
 		}
 		else {
-			outputText("<b>ERROR.  LEVEL UP PUSHED WHEN PC CANNOT LEVEL OR GAIN PERKS.  PLEASE REPORT THE STEPS TO REPRODUCE THIS BUG TO ORMAEL@GMAIL.COM OR THE FENOXO.COM XIANXIA MOD THREAD.</b>");
-			doNext(playerMenu);
+	        playerMenu();
 		}
 	}
 
@@ -1001,7 +996,7 @@ if (SceneLib.valeria.valeriaFluidsEnabled()) {
 			player.itemSlot4.unlocked = true;
 			player.itemSlot5.unlocked = true;
 		}
-		if (perk.ptype == PerkLib.TankI) {
+		if (perk.ptype == PerkLib.Tank) {
 			HPChange(player.tou, false);
 			statScreenRefresh();
 		}

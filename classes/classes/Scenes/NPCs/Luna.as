@@ -16,7 +16,27 @@ package classes.Scenes.NPCs
 	public class Luna extends Monster
 	{
 		public var lunaScene:LunaFollower = SceneLib.lunaFollower;
-		
+
+		override public function handleWait():Object {
+			if (player.hasStatusEffect(StatusEffects.WolfHold)) {
+				outputText("Luna tears your body with her claws.");
+				player.takePhysDamage(5 + rand(5));
+				return true;
+			}
+			return super.handleWait();
+		}
+
+		override public function handleStruggle():Boolean {
+			if (rand(3) == 0 || rand(80) < player.str / 1.5) {
+				outputText("You try and shove Luna off and manage to stand back up; Luna growling at you.");
+				player.removeStatusEffect(StatusEffects.WolfHold);
+			}
+			else {
+				outputText("You try and shove Luna off but she maintains the pin.");
+			}
+			return true;
+		}
+
 		public function usingClawCombo():void {
 			outputText("Luna attempts to rend you with her claws.");
 			eAttack();
@@ -123,7 +143,7 @@ package classes.Scenes.NPCs
 			this.drop = NO_DROP;
 			this.createPerk(PerkLib.MonsterRegeneration, 5, 0, 0, 0);
 			this.createPerk(PerkLib.EnemyBeastOrAnimalMorphType, 0, 0, 0, 0);
-			if (flags[kFLAGS.LUNA_LVL_UP] >= 2) this.createPerk(PerkLib.TankI, 0, 0, 0, 0);
+			if (flags[kFLAGS.LUNA_LVL_UP] >= 2) this.createPerk(PerkLib.Tank, 0, 0, 0, 0);
 			if (flags[kFLAGS.LUNA_LVL_UP] >= 3) this.createPerk(PerkLib.EnemyBossType, 0, 0, 0, 0);
 			checkMonster();
 		}

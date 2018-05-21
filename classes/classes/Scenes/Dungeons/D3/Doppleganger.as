@@ -17,7 +17,13 @@ import classes.VaginaClass;
 	public class Doppleganger extends Monster
 	{
 		private var _roundCount:int = 0;
-		
+
+		override public function handleWait():Object {
+			outputText("You decide not to take any action this round.\n\n");
+			handlePlayerWait();
+			return false;
+		}
+
 		public function mirrorAttack(damage:Number):void
 		{
 			this.createStatusEffect(StatusEffects.MirroredAttack, 0, 0, 0, 0);

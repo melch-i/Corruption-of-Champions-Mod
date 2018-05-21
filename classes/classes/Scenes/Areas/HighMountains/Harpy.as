@@ -92,6 +92,23 @@ public class Harpy extends Monster
 			}
 		}
 
+		protected override function lustText():void {
+			var percent:int = lust100;
+			if (percent >= 90) {outputText("You can see her thighs coated with clear fluids, the feathers matted and sticky as she struggles to contain her lust.");}
+			else if (percent >= 70) {outputText("She stops flapping quite so frantically and instead gently sways from side to side, showing her soft, feathery body to you, even twirling and raising her tail feathers, giving you a glimpse of her plush pussy, glistening with fluids.");}
+			else if (percent >= 45) {outputText("The harpy's actions are becoming more and more erratic as she runs her mad-looking eyes over your body, her chest jiggling, clearly aroused.  ");}
+		}
+
+		override public function dropLoot():ItemType {
+			if (rand(10) == 0) {
+				return armors.W_ROBES;
+			} else if (rand(3) == 0 && player.hasPerk(PerkLib.LuststickAdapted)) {
+				return consumables.LUSTSTK;
+			} else {
+				return consumables.GLDSEED;
+			}
+		}
+
 		public function Harpy(noInit:Boolean=false)
 		{
 			if (noInit) return;

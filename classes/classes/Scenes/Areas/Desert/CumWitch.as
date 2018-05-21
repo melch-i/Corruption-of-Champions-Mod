@@ -8,6 +8,15 @@ import classes.internals.WeightedDrop;
 
 public class CumWitch extends Monster
 	{
+		override public function handleWait():Object {
+			if (player.hasStatusEffect(StatusEffects.Confusion)) {
+				outputText("You shake your head and file your memories in the past, where they belong.  It's time to fight!\n\n");
+				player.removeStatusEffect(StatusEffects.Confusion);
+				return false;
+			}
+			return super.handleWait();
+		}
+
 		public function cumWitchAI():void {
 			//Hurt!
 			if(HPRatio() < .6 && fatigue <= 90) {
@@ -160,6 +169,19 @@ public class CumWitch extends Monster
 		override public function won(hpVictory:Boolean,pcCameWorms:Boolean):void
 		{
 			SceneLib.dungeons.desertcave.defeatedByCumWitch();
+		}
+
+		override protected function lustText():void {
+			var percent:int = lust100;
+			if (percent >= 75) {
+				outputText("Wobbling dangerously, you can see her semi-hard shaft rustling the fabric as she moves, evidence of her growing needs.  ");
+				outputText("Swelling obscenely, the Cum Witch's thick cock stands out hard and proud, its bulbous tip rustling through the folds of her fabric as she moves and leaving dark smears in its wake.  ");
+				if (percent >= 85) {outputText("Every time she takes a step, those dark patches seem to double in size.  ");}
+				if (percent >= 93) {outputText("There's no doubt about it, the Cum Witch is dripping with pre-cum and so close to caving in.  Hell, the lower half of her robes are slowly becoming a seed-stained mess.  ");}
+			}
+			else if (percent >= 50) {outputText("Her nipples are hard, and poke two visible tents into the robe draped across her mountainous melons.  ");}
+
+			if (percent >= 70) {outputText("She keeps licking her lips whenever she has a moment, and she seems to be breathing awfully hard.  ");}
 		}
 		
 		public function CumWitch()

@@ -54,7 +54,15 @@ public class GreenSlime extends Monster
 			lust -= 13;
 			doNext(EventParser.playerMenu);
 		}
-		
+
+		override protected function lustText():void {
+			var percent:int = lust100;
+			if (percent >= 93) {outputText("A long, thick pillar like a small arm protrudes from the base of the slime's torso.  Its entire body pulses, and it is clearly beginning to lose its cohesion.  ");}
+			else if (percent >= 85) {outputText("A long, thick pillar like a small arm protrudes from the base of the slime's torso.  ");}
+			else if (percent >= 65) {outputText("A distinct lump pulses at the base of the slime's torso, as if something inside the creature were trying to escape.  ");}
+			else if (percent >= 45) {outputText("A lump begins to form at the base of the figure's torso, where its crotch would be.  ");}
+		}
+
 		public function GreenSlime()
 		{
 			trace("GreenSlime Constructor!");

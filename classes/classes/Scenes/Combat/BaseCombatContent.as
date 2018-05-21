@@ -99,32 +99,29 @@ public class BaseCombatContent extends BaseContent {
 	protected function bowCost(mod:Number):Number {
 		return combat.bowCost(mod);
 	}
-	protected function soulskillCost():Number {
-		return combat.soulskillCost();
+	protected function kiPowerCost():Number {
+		return player.kiPowerCostMod();
 	}
-	protected function soulskillcostmulti():Number {
-		return combat.soulskillcostmulti();
-	}
-	protected function soulskillMod():Number {
-		return combat.soulskillMod();
+	protected function kiPowerMod():Number {
+		return player.kiPowerMod();
 	}
 	protected function scalingBonusStrength():Number {
-		return combat.scalingBonusStrength();
+		return player.scalingBonusStrength();
 	}
 	protected function scalingBonusToughness():Number {
-		return combat.scalingBonusToughness();
+		return player.scalingBonusToughness();
 	}
 	protected function scalingBonusSpeed():Number {
-		return combat.scalingBonusSpeed();
+		return player.scalingBonusSpeed();
 	}
 	protected function scalingBonusIntelligence():Number {
-		return combat.scalingBonusIntelligence();
+		return player.scalingBonusIntelligence();
 	}
 	protected function scalingBonusWisdom():Number {
-		return combat.scalingBonusWisdom();
+		return player.scalingBonusWisdom();
 	}
 	protected function scalingBonusLibido():Number {
-		return combat.scalingBonusLibido();
+		return player.scalingBonusLibido();
 	}
 	protected function spellCost(mod:Number):Number {
 		return combat.magic.spellCostImpl(mod);

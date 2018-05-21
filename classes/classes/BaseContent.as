@@ -917,29 +917,6 @@ import coc.xxc.StoryContext;
 		protected function get context():StoryContext {
 			return CoC.instance.context;
 		}
-		protected function submenu(buttons:ButtonDataList,back:Function=null,page:int=0,sort:Boolean = true):void {
-			var list:/*ButtonData*/Array = buttons.list.filter(function(e:ButtonData, i:int, a:Array):Boolean{
-				return e.visible;
-			});
-			if(sort){
-				list.sortOn('text');
-			}
-			menu();
-			var total:int = list.length;
-			var perPage:int = 12;
-			if(total <= 14){
-				perPage = 14;
-			}
-			var n:int = Math.min(total,(page+1)*perPage);
-			for (var bi:int = 0,li:int=page*perPage; li<n; li++,bi++) {
-				list[li].applyTo(button(bi%perPage));
-			}
-			if (page!=0 || total>perPage) {
-				button(12).show("Prev Page", curry(submenu, buttons, back, page - 1)).disableIf(page == 0);
-				button(13).show("Next Page", curry(submenu, buttons, back, page + 1)).disableIf(n >= total);
-			}
-			if (back != null) button(14).show("Back",back);
-		}
 	}
 
 }

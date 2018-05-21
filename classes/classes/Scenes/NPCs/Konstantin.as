@@ -300,10 +300,10 @@ package classes.Scenes.NPCs
 				if (player.hasItem(useables.WT_BRAN)) {
 					outputText("You show Konstantin the branch from Yggdrasil and ask for his opinion. He gives you a slightly amused look. The bear takes the branch from you and examines it carefully, muttering thing about it’s texture and material, once he’s satisfied, he returns it to you.\n\n");
 					outputText("\"<i>Odd stuff. I think that with the right treatment, I could make a regal looking show piece, but in case of that you want me to make a weapon from this thing, I’ll need something more...something like a branch from those mageboon trents.</i>\"\n\n");
-					outputText("You assure him that the wood is suitable. When you see his doubt, you give him a quick explanation on where the wood comes from. That Yggdrasil’s wood is every bit as suitable as mageboon wood. When mention that the branch has soulforce, you get his full attention at once.\n\n");
-					outputText("\"<i>" + player.mf("Man","Girl") + ", you should’ve say that from the start! There are few materials that possess natural soulforce, since it usually dissipates once the user has expired, and needs to be artificially infused. And natural soulforce in wood? Why that is simply unheard of. I have a few ideas for how to use this. I’ll require a lot of work, tho.</i>\"\n\n");
+					outputText("You assure him that the wood is suitable. When you see his doubt, you give him a quick explanation on where the wood comes from. That Yggdrasil’s wood is every bit as suitable as mageboon wood. When mention that the branch has ki, you get his full attention at once.\n\n");
+					outputText("\"<i>" + player.mf("Man","Girl") + ", you should’ve say that from the start! There are few materials that possess natural ki, since it usually dissipates once the user has expired, and needs to be artificially infused. And natural ki in wood? Why that is simply unheard of. I have a few ideas for how to use this. I’ll require a lot of work, tho.</i>\"\n\n");
 					outputText("You grimace at his words as the giant bear runs his hands over the wood.\n\n");
-					outputText("\"<i>Hey, [name], don’t give me that look! I mean real, weaponizing treatments. With those we can turn this into a conduit for your own soulforce. I could even mold this into a sword, if you want me to.</i>\"\n\n");
+					outputText("\"<i>Hey, [name], don’t give me that look! I mean real, weaponizing treatments. With those we can turn this into a conduit for your own ki. I could even mold this into a sword, if you want me to.</i>\"\n\n");
 					outputText("Well, damn. Looks like you have plenty of options to choose from. Decisions, decisions...\n\n");
 				}
 				if (player.hasItem(useables.DBAPLAT)) {
@@ -736,7 +736,7 @@ package classes.Scenes.NPCs
 			flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00275] = yggdrasilType;
 			statScreenRefresh();
 			outputText(images.showImage("konstantin-craft-worldtreeweapon"));
-			outputText("\"<i>Of course, of course, leave it to me. I’ll have your new weapon ready soon, just wait a bit, okay?</i>\"\n\nThe ursine smith rushes back to his workbench and begins to work at a feverish pace, quite a sight given his usually calm demeanor. Who would have thought something as simple as soulforce imbued wood would excite him so much?\n\n");
+			outputText("\"<i>Of course, of course, leave it to me. I’ll have your new weapon ready soon, just wait a bit, okay?</i>\"\n\nThe ursine smith rushes back to his workbench and begins to work at a feverish pace, quite a sight given his usually calm demeanor. Who would have thought something as simple as ki imbued wood would excite him so much?\n\n");
 			outputText("<b>BOOM</b>\n\n");
 			outputText("Yup, Kon just caused something to explode. You hope he doesn't damage your weapon to be too much...\n\n");
 			var itype:ItemType;

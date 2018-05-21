@@ -47,7 +47,7 @@ import classes.StatusEffects;
 			this.armorDef = 100;
 			this.additionalXP = 1000;
 			createPerk(PerkLib.Resolute, 0, 0, 0, 0);
-			this.createPerk(PerkLib.TankI, 0, 0, 0, 0);
+			this.createPerk(PerkLib.Tank, 0, 0, 0, 0);
 			this.createPerk(PerkLib.EnemyConstructType, 0, 0, 0, 0);
 			checkMonster();
 		}

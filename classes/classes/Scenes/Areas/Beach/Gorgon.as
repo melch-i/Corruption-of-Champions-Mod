@@ -16,7 +16,29 @@ import classes.internals.*;
 public class Gorgon extends Monster
 	{
 		public var nagaScene:NagaScene = new NagaScene(true);
-		
+
+		override public function handleWait():Object {
+			if (player.hasStatusEffect(StatusEffects.NagaBind)) {
+				outputText("The [monster name]'s grip on you tightens as you relax into the stimulating pressure.");
+				player.takeLustDamage(player.sens / 5 + 5);
+				player.takePhysDamage(5 + rand(5));
+				return true;
+			}
+			return super.handleWait();
+		}
+
+		override public function handleStruggle():Boolean {
+			if (rand(3) == 0 || rand(80) < player.str / 1.5) {
+				outputText("You wriggle and squirm violently, tearing yourself out from within [monster a] [monster name]'s coils.");
+				player.removeStatusEffect(StatusEffects.NagaBind);
+			} else {
+				outputText("The [monster name]'s grip on you tightens as you struggle to break free from the stimulating pressure.");
+				player.takeLustDamage(player.sens / 10 + 2);
+				player.takePhysDamage(17 + rand(15));
+			}
+			return true;
+		}
+
 		override public function defeated(hpVictory:Boolean):void
 		{
 			nagaScene.nagaRapeChoice();

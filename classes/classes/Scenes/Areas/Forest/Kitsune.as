@@ -13,6 +13,18 @@ public class Kitsune extends Monster
 	{
 
 
+		override public function handleWait():Object {
+			if(hasStatusEffect(StatusEffects.PCTailTangle)){
+				kitsuneWait();
+				return true;
+			}
+			return super.handleWait();
+		}
+
+		override public function handleStruggle():Boolean {
+			kitsuneStruggle();
+			return true;
+		}
 		// Combat Abilities:
 		// the kitsune are an almost purely magical mob, relying mainly on tease attacks and spells that raise lust.
 		//Entwine:
@@ -191,7 +203,20 @@ public class Kitsune extends Monster
 			}
 		}
 
-		public function Kitsune(hairColor:String)
+	override protected function lustText():void {
+		var percent:int = lust100;
+		if (percent >= 75) {
+			if (hairColor == "red") {
+				outputText("The kitsune is openly aroused, unable to hide the obvious bulge in her robes as she seems to be struggling not to stroke it right here and now.");
+			} else {
+				outputText("The kitsune is openly aroused, licking her lips frequently and desperately trying to hide the trail of fluids dripping down her leg.");
+			}
+		}
+		else if (percent >= 50) {outputText("The kitsune's cheeks are bright pink, and you can see her rubbing her thighs together and squirming with lust.");}
+		else if (percent >= 30) {outputText("The kitsune's face is slightly flushed.  She fans herself with her hand, watching you closely.");}
+	}
+
+	public function Kitsune(hairColor:String)
 		{
 
 			if (rand(3) != 2) game.flags[kFLAGS.redheadIsFuta] = 1;

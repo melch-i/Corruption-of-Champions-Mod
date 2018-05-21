@@ -6,10 +6,11 @@ import classes.BodyParts.Hips;
 import classes.BodyParts.Horns;
 import classes.BodyParts.Tail;
 import classes.GlobalFlags.kFLAGS;
-import classes.Scenes.SceneLib;
+	import classes.Scenes.Monsters.PackMonster;
+	import classes.Scenes.SceneLib;
 import classes.internals.WeightedDrop;
 
-public class DemonPackDesert extends Monster
+public class DemonPackDesert extends PackMonster
 	{
 
 
@@ -90,6 +91,13 @@ public class DemonPackDesert extends Monster
 			applyTease(lustDelta);
 		}
 
+		override protected function lustText():void {
+			var percent:int = lust100;
+			if (percent >= 80) {outputText(" The demons are less and less willing to hit you and more and more willing to just stroke their hands sensuously over you. The smell of demonic lust is thick on the air and part of the group just stands there stroking themselves openly.");}
+			else if (percent >= 60) {outputText("The demons are obviously steering clear from damaging anything you might use to fuck and they're starting to leave their hands on you just a little longer after each blow. Some are starting to cop quick feels with their other hands and you can smell the demonic lust of a dozen bodies on the air.");}
+			else if (percent >= 30) {outputText("The demons lessen somewhat in the intensity of their attack, and some even eye up your assets as they strike at you.");}
+		}
+
 		public function DemonPackDesert()
 		{
 			trace("DemonPack Constructor!");
@@ -135,8 +143,8 @@ public class DemonPackDesert extends Monster
 							consumables.INCUBID,
 							consumables.OVIELIX,
 							consumables.B__BOOK);
-			this.special1 = SceneLib.combat.packAttack;
-			this.special2 = SceneLib.combat.lustAttack;
+			this.special1 = packAttack;
+			this.special2 = lustAttack;
 			this.tailType = Tail.DEMONIC;
 			this.horns.type = Horns.DEMON;
 			this.horns.count = 2;

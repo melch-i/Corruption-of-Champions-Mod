@@ -11,6 +11,41 @@ import classes.internals.*;
 
 public class TentacleBeast extends Monster
 	{
+		override public function handleWait():Object {
+			if (player.hasStatusEffect(StatusEffects.TentacleBind)) {
+				if (player.cocks.length > 0)
+					outputText("The creature continues spiraling around your cock, sending shivers up and down your body. You must escape or this creature will overwhelm you!");
+				else if (player.hasVagina())
+					outputText("The creature continues sucking your clit and now has latched two more suckers on your nipples, amplifying your growing lust. You must escape or you will become a mere toy to this thing!");
+				else outputText("The creature continues probing at your asshole and has now latched " + num2Text(player.totalNipples()) + " more suckers onto your nipples, amplifying your growing lust.  You must escape or you will become a mere toy to this thing!");
+				player.takeLustDamage(8 + player.sens / 10);
+				return true;
+			}
+			return super.handleWait();
+		}
+
+		override public function handleStruggle():Boolean {
+			outputText("You struggle with all of your might to free yourself from the tentacles before the creature can fulfill whatever unholy desire it has for you.\n");
+			//33% chance to break free + up to 50% chance for strength
+			if (!(rand(3) == 0 || rand(80) < player.str / 2)) {
+				outputText("Despite trying to escape, the creature only tightens its grip, making it difficult to breathe.\n\n");
+				player.takePhysDamage(5);
+				if (player.cocks.length > 0) {
+					outputText("The creature continues spiraling around your cock, sending shivers up and down your body. You must escape or this creature will overwhelm you!");
+				} else if (player.hasVagina()) {
+					outputText("The creature continues sucking your clit and now has latched two more suckers on your nipples, amplifying your growing lust. You must escape or you will become a mere toy to this thing!");
+				} else {
+					outputText("The creature continues probing at your asshole and has now latched " + num2Text(player.totalNipples()) + " more suckers onto your nipples, amplifying your growing lust.  You must escape or you will become a mere toy to this thing!");
+				}
+				player.takeLustDamage(3 + player.sens / 10 + player.lib / 20);
+				return true;
+			}
+			outputText("As the creature attempts to adjust your position in its grip, you free one of your [legs] and hit the beast in its beak, causing it to let out an inhuman cry and drop you to the ground smartly.\n\n");
+			player.removeStatusEffect(StatusEffects.TentacleBind);
+			createStatusEffect(StatusEffects.TentacleCoolDown, 3, 0, 0, 0);
+			return false;
+		}
+
 		private function tentaclePhysicalAttack():void {
 			outputText("The shambling horror throws its tentacles at you with a murderous force.\n");
 			var temp:int = int((str + weaponAttack) - Math.random()*(player.tou) - player.armorDef);
@@ -56,10 +91,7 @@ public class TentacleBeast extends Monster
 			} else {
 				outputText("The tentacle beast's mass begins quivering and sighing, the tentacles wrapping around each other and feverishly caressing each other.  It seems the beast has given up on fighting.");
 			}
-			if (player.hasStatusEffect(StatusEffects.SoulArenaGaunlet)) {
-				SceneLib.telAdre.arena.gaunletchallange1fight3();
-			}
-			else if (hasStatusEffect(StatusEffects.PhyllaFight)) {
+			if (hasStatusEffect(StatusEffects.PhyllaFight)) {
 				removeStatusEffect(StatusEffects.PhyllaFight);
 				SceneLib.desert.antsScene.phyllaTentacleDefeat();
 			}

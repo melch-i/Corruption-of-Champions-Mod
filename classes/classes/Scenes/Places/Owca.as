@@ -235,23 +235,28 @@ private function fightZeDemons(sacrifice:Boolean = true):void {
 	//Fight leads to the Horde Fight
 	//When acting as sacrifice, Item button is disabled; Fight, Run, and Phys Special buttons are disabled unless PC has str >= 80; Run is furthermore prevented entirely if PC is non-winged; outputs text: \"<i>You'd like to run, but you can't scale the walls of the pit with so many demonic hands pulling you down!</i>\"
 	//PC's weapon is temporarily set to fists and armor to comfortable clothes during a Horde Fight if he triggered it in response to a sacrifice request, but not if triggered through volunteering to guard the pit later once the village is unlocked
-	startCombat(new LustyDemons());
+	var mon:Monster = new LustyDemons();
 	if (sacrifice) {
 		//Remove weapon
 		player.createStatusEffect(StatusEffects.Disarmed, 50, 0, 0, 0);
 		flags[kFLAGS.PLAYER_DISARMED_WEAPON_ID] = player.weapon.id;
 		player.setWeapon(WeaponLib.FISTS);
-		monster.createStatusEffect(StatusEffects.BowDisabled, 0, 0, 0, 0);
+		mon.createStatusEffect(StatusEffects.BowDisabled, 0, 0, 0, 0);
 		if (player.str < 80 && player.spe < 80) {
-			monster.createStatusEffect(StatusEffects.AttackDisabled, 0, 0, 0, 0);
-			monster.createStatusEffect(StatusEffects.RunDisabled, 0, 0, 0, 0);
-			monster.createStatusEffect(StatusEffects.PhysicalDisabled, 0, 0, 0, 0);
+			mon.createStatusEffect(StatusEffects.AttackDisabled, 0, 0, 0, 0);
+			mon.onPcRunAttempt = runDisabled;
+			mon.createStatusEffect(StatusEffects.PhysicalDisabled, 0, 0, 0, 0);
 		}
 		else {
-			if (!player.canFly()) monster.createStatusEffect(StatusEffects.RunDisabled, 0, 0, 0, 0);
+			if (!player.canFly()) mon.onPcRunAttempt = runDisabled;
 		}
 	}
+	startCombat(mon);
 	playerMenu(); //Avoid showing the next button. Must call it here, after setting up all the statuses, so the first round combat menu is correct
+
+	function runDisabled():void{
+		combat.runFail("You'd like to run, but you can't scale the walls of the pit with so many demonic hands pulling you down!");
+	}
 }
 
 
@@ -842,7 +847,7 @@ private function fightZeVillagers():void {
 	clearOutput();
 	//You are fighting the villagers (level 14):
 	startCombat(new Farmers());
-	monster.createStatusEffect(StatusEffects.GenericRunDisabled,0,0,0,0);
+	monster.onPcRunAttempt = monster.genericPcRunDisabled;
 	playerMenu();
 	//~500 HP, 6 different attacks at 20 hp, can't run, 100% lust resistance (can't arouse), ~200 xp
 }

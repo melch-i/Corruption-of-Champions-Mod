@@ -563,7 +563,7 @@ public class PatchouliScene extends NPCAwareContent {
 		itemButton(consumables.PINKEGG, flags[kFLAGS.PATCHOULI_COCK] <= 0);
 		itemButton(consumables.REDUCTO, (flags[kFLAGS.PATCHOULI_CUP_SIZE] <= 5 || flags[kFLAGS.PATCHOULI_COCK] <= 6));
 		buttons.add("Hair Dye", giveHairDye);
-		submenu(buttons, patchouleMainCampMenu);
+		buttons.submenu(patchouleMainCampMenu);
 
 		function giveItem(item:ItemType):void {
 			clearOutput();
@@ -658,7 +658,7 @@ public class PatchouliScene extends NPCAwareContent {
 				var colour:String = name.toLowerCase();
 				buttons.add(name, curry(applyDye, dye, colour)).disableIf(colour == current || !player.hasItem(dye));
 			}
-			submenu(buttons, patchouleGiveItem);
+			buttons.submenu(patchouleGiveItem);
 
 			function applyDye(dye:HairDye, colour:String):void {
 				clearOutput();

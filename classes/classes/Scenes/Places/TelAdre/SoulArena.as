@@ -1,11 +1,17 @@
 package classes.Scenes.Places.TelAdre
 {
+
 	import classes.GlobalFlags.kFLAGS;
+	import classes.Monster;
+	import classes.Scenes.Areas.Desert.Naga;
 	import classes.Scenes.Areas.Forest.TentacleBeast;
+	import classes.Scenes.Areas.GlacialRift.Valkyrie;
 	import classes.Scenes.Areas.Mountain.HellHound;
 	import classes.Scenes.Areas.Swamp.CorruptedDrider;
+	import classes.Scenes.Areas.Swamp.MaleSpiderMorph;
 	import classes.Scenes.Monsters.DarkElfScout;
 	import classes.Scenes.Monsters.GoblinAssassin;
+	import classes.Scenes.Monsters.Imp;
 	import classes.Scenes.SceneLib;
 	import classes.StatusEffects;
 
@@ -19,18 +25,18 @@ package classes.Scenes.Places.TelAdre
 		}
 
 		public function soularena():void {
-			clearOutput();//arena do walk z przeciwnikami na exp tylko - zadnych sex scenes tylko walk do wygranej niewazne czy przez hp czy lust - przeciwnicy: dummy golem, grupa dummy golems, true golem, ?group of true golems, weak deviant golem?, niskopoziomowi przeciwnicy uzywajacy soul skills (moze po prostu wesje zwyklych przeciwnikow ale z dodanymi soul attakami?)
+			clearOutput();//arena do walk z przeciwnikami na exp tylko - zadnych sex scenes tylko walk do wygranej niewazne czy przez hp czy lust - przeciwnicy: dummy golem, grupa dummy golems, true golem, ?group of true golems, weak deviant golem?, niskopoziomowi przeciwnicy uzywajacy ki powers (moze po prostu wesje zwyklych przeciwnikow ale z dodanymi soul attakami?)
 			if (flags[kFLAGS.CHI_CHI_AFFECTION] >= 10 && flags[kFLAGS.CHI_CHI_AFFECTION] < 15) SceneLib.chichiScene.EnterOfTheChiChi();
 			else {
 				outputText("Coming closer to the arena you see two muscular tigersharks standing on each side of the entrance, which only briefly glance at you the moment you pass by them. Inside after few a moment a tall slightly muscular male cat-morph approaches you. Most of its body is covered by armor yet two long tails waves behind him from time to time.");//osoba zarządzająca areną bedzie male nekomanta npc
-				outputText("\n\n\"<i>Greeting to the Soul Arena. Don't pick up fights outside of the proper place or you will be thrown out. If you break any rule here you will be kicked out. Knowing this go pick the area where you want to train or maybe go to the challenges area,</i>\" without wasting time the nekomata overseer of this place explains you all that is needed and walk away.");
+				outputText("\n\n\"<i>Greeting to the Arena. Don't pick up fights outside of the proper place or you will be thrown out. If you break any rule here you will be kicked out. Knowing this go pick the area where you want to train or maybe go to the challenges area,</i>\" without wasting time the nekomata overseer of this place explains you all that is needed and walk away.");
 				outputText("\n\nSo which one of the three possible sub areas you gonna visit this time?");
 				if (flags[kFLAGS.IGNIS_ARENA_SEER] >= 1) outputText("\n\nYou notice Ignis sitting in the stands, a notebook in his paws. The kitsune seems to be watching the fights and taking notes as he does so.");
 				if (flags[kFLAGS.CHI_CHI_AFFECTION] < 1) flags[kFLAGS.CHI_CHI_AFFECTION] = 0;
-				menu();//statuseffect(soulArena) dodać na początku walk co pozwoli dać inne dropy itp. w stosuku do spotkania podobnego wroga w innym miejscu a nawet łatwo pozwoli zrobić wersje soulforce niektórych ras bez tworzenia nowych opisów monsterów - zrobić to dla trybu challenge, w który walka z wrogie da określony drop a nawet można na niej grać aby uzyskać nagro...np. nowego camp member ^^
-				addButton(0, "Solo", soularenaSolo).hint("Go to the section of soul arena for 1 on 1 fights.");
-				addButton(1, "Group", soularenaGroup).hint("Go to the section of soul arena for group fights.");
-				addButton(2, "Challenge", soularenaChallenge).hint("Go to the section of soul arena for challenges. (Who knows what reward you may get after winning any of the challenges there...)");
+				menu();
+				addButton(0, "Solo", soularenaSolo).hint("Go to the section of the arena for 1 on 1 fights.");
+				// addButton(1, "Group", soularenaGroup).hint("Go to the section of the arena for group fights.");
+				addButton(2, "Challenge", soularenaChallenge).hint("Go to the section of the arena for challenges. (Who knows what reward you may get after winning any of the challenges there...)");
 				if (flags[kFLAGS.IGNIS_ARENA_SEER] >= 1) addButton(10, "Ignis", ignisarenaseer.mainIgnisMenu);
 				addButton(14, "Back", telAdre.telAdreMenu);
 				statScreenRefresh();
@@ -42,6 +48,11 @@ package classes.Scenes.Places.TelAdre
 			clearOutput();
 			outputText("Picking the one on the left prepared for solo fight you enter there and looking around checking who is currently avialable for sparring session.");
 			menu();
+			addButton(0,"Imp", arenaSelection, new Imp());
+			addButton(1,"Tentacle Beast", arenaSelection, new TentacleBeast());
+			addButton(2, "Spider Morph", arenaSelection, new MaleSpiderMorph());
+			addButton(3, "Naga", arenaSelection, new Naga());
+			addButton(4, "Valkyrie", arenaSelection, new Valkyrie());
 			addButton(14, "Back", soularena);
 		}
 		public function soularenaGroup():void {
@@ -59,17 +70,59 @@ package classes.Scenes.Places.TelAdre
 			addButton(14, "Back", soularena);
 		}
 
-		private function arenaSelection(mon:Class):void{
-			player.createStatusEffect(StatusEffects.SoulArena, 0, 0, 0, 0);
+		private function arenaSelection(monster:Monster, onVictoryNext:Function = null):void{
 			if (flags[kFLAGS.CHI_CHI_AFFECTION] < 10) flags[kFLAGS.CHI_CHI_AFFECTION]++;
-			startCombat(new mon());
+
+			monster.onWon = onMonsterWon;
+			monster.onDefeated = onMonsterDefeated;
+			monster.onPcRunAttempt = onPCRunAttempt;
+
+			if(onVictoryNext == null){
+				clearOutput();
+				outputText("The roar of the crowd gets your blood boiling, it fills you unwavering determination, as you enter the middle of the arena, you call out for your challenge. In comes "+monster.a+" " +monster.short+" and you both get into a battle stance.");
+			}
+
+			startCombat(monster);
+
 			monster.createStatusEffect(StatusEffects.NoLoot, 0, 0, 0, 0);
 			monster.XP = Math.round(monster.XP / 2);
-		}
-		public function gaunletsinbetween():void {
-			cleanupAfterCombat();
-			player.createStatusEffect(StatusEffects.SoulArena, 0, 0, 0, 0);
-			player.createStatusEffect(StatusEffects.SoulArenaGaunlet, 0, 0, 0, 0);
+
+			function onMonsterWon(hpVictory:Boolean, pcCameWorms:Boolean):void {
+				clearOutput();
+				if(hpVictory) {
+					outputText("As your enemies hit knocks the wind out of you, the cheers of the crowd and the victory roar of your enemy is the last thing you hear before you fall unconscious...");
+				} else {
+					outputText("The roar of the crowd is drowned out by the blood rushing down to your loins, you drop to your knees unable to continue fighting as your enemy rallies the crowd.");
+				}
+				SceneLib.combat.inCombat = false;
+				player.clearStatuses(false);
+				player.HP = player.maxHP();
+				player.lust = player.minLust();
+				outputText("\n\nYou wake later in the infirmary before returning to camp.");
+				doNext(camp.returnToCampUseOneHour);
+			}
+			function onMonsterDefeated(hpVictory:Boolean):void {
+				if(onVictoryNext != null){
+					player.XP += monster.XP;
+					onVictoryNext();
+					return;
+				}
+				clearOutput();
+				if (hpVictory) {
+					outputText("With a final blow, your enemy lowers [monster hisher] [monster weapon], kneeling in defeat before you and the crowd.\nYou won.");
+				} else {
+					outputText("The smirk on your face is evident to the entire crowd, jeering on as your enemy falls to their more primal instincts, collapsing and masturbating feverishly.");
+				}
+				player.clearStatuses(false);
+				combat.awardPlayer(soularena)
+			}
+			function onPCRunAttempt():void {
+				clearOutput();
+				outputText("You’re unable to continue fighting, your spirit is broken for now and the sound of the crowd’s boos flood your ears as you lower your weapon and turn back towards the gate.");
+				SceneLib.combat.inCombat = false;
+				player.clearStatuses(false);
+				doNext(soularena);
+			}
 		}
 
 		public function gaunletchallange1fight1():void {
@@ -81,39 +134,37 @@ package classes.Scenes.Places.TelAdre
 					"\"<i>Ah but a contestant is nothing without the trial. You all love him, and he hates you all in return. This pit dog only lives to beat the crap out of our new would-be gladiator. His name…. BRUTUS!</i>\"\n\n" +
 					"A massive dog morph with the face of a pitbull enters the arena. He holds in his hand a chain linked to a spiked ball he pulls around like an anchor, leaving a deep trail in the arena sand. Your opponent examines you and starts to growl, lifting the steel ball like a kids toy."
 			);
-			player.createStatusEffect(StatusEffects.SoulArena, 0, 0, 0, 0);
-			player.createStatusEffect(StatusEffects.SoulArenaGaunlet, 0, 0, 0, 0);
-			if (flags[kFLAGS.CHI_CHI_AFFECTION] < 10) flags[kFLAGS.CHI_CHI_AFFECTION]++;
-			startCombat(new ArenaBrutus());
+			arenaSelection(new ArenaBrutus(), gaunletchallange1fight2);
 		}
 		public function gaunletchallange1fight2():void {
 			clearOutput();
-			gaunletsinbetween();
 			outputText("The dog morphs defeated, falls over and is escorted out of the arena by a pair of healers. That said the fights are only beginning as the announcer’s voice rings out again.\n\n");
 			outputText("\"<i>This one is straight from the woods. Freshly caught and horny to boot. Can our champion’s strength overcome the beast’s lust? LET'S FIND OUT!!</i>\"\n\n");
 			outputText("A shadow moves out behind the gate, revealing the shape of a fluid starved tentacle beast.\n\n");
-			startCombat(new TentacleBeast());
+			arenaSelection(new TentacleBeast(), gaunletchallange1fight3);
 		}
 		public function gaunletchallange1fight3():void {
 			clearOutput();
-			gaunletsinbetween();
 			outputText("As the tentacle beast whimpers and crawls away, the crowd cheers for you. Here comes the final round.\n\n");
 			outputText("\"<i>This contestant is smaller than the last two... Smarter too, and most of all extremely deadly. She’s paid a handsome sack of gems daily to kick the ass of anyone who reach this stage, yet is by far the deadliest combatant of her division. She’s your favorite and an expert huntress. Here she comes... Merisiel the dark elf!!!</i>\"\n\n");
 			outputText("A woman with dark skin walks by the entrance of the arena with only a bow for a weapon. She sure does look like an elf, however. She’s nothing like the gentle creature from your childhood stories as she observes you with a cruel, calculative gaze. The dark elf readies her bow, smirking.\n\n");
-			startCombat(new DarkElfScout());
+			arenaSelection(new DarkElfScout(), gaunletchallange1postfight);
 		}
 		public function gaunletchallange1postfight():void {
 			clearOutput();
 			outputText("You exit the arena, victorious, basking in the cheering of the crowd and go to the prize counter for your reward. A woman greets you.\n\n");
 			if (flags[kFLAGS.SOUL_ARENA_FINISHED_GAUNLETS] >= 1) {
-				outputText("\"<i>Good show, champion. As a reward for your performance, please accept these 15 spirit stones. Please do come back again and maybe next time you could even try the harder challenge.</i>\"\n\n");
-				flags[kFLAGS.SPIRIT_STONES] += 15;
+				outputText("\"<i>Good show, champion. As a reward for your performance, please accept these 75 gems. Please do come back again and maybe next time you could even try the harder challenge.</i>\"\n\n");
+				player.gems += 75;
 				cleanupAfterCombat();
 			}
 			else {
 				outputText("\"<i>Good show, champion. As a reward for your performance, please accept this magical bow. Please do come back again and maybe next time you could even try the harder challenge.</i>\"\n\n");
 				flags[kFLAGS.SOUL_ARENA_FINISHED_GAUNLETS] = 1;
 				inventory.takeItem(weaponsrange.BOWGUID, cleanupAfterCombat);
+				if(flags[kFLAGS.CHI_CHI_AFFECTION] < 10){
+					flags[kFLAGS.CHI_CHI_AFFECTION] = 10;
+				}
 			}
 		}
 		public function gaunletchallange2fight1():void {
@@ -122,33 +173,27 @@ package classes.Scenes.Places.TelAdre
 			outputText("The voice of the announcer ring into the stadium.\n\n");
 			outputText("\"<i>Ladies and gentlemans today someone challenged the second ranking gladiatorial test. Can this would be hero defeat all three opponent and earn not only a large sum of gems as well as the right to brag for a full month?! LET'S FIND OUT!</i>\"\n\n");
 			outputText("The gates open and the goblin charge at you weapon at the ready.\n\n");
-			player.createStatusEffect(StatusEffects.SoulArena, 0, 0, 0, 0);
-			player.createStatusEffect(StatusEffects.SoulArenaGaunlet, 0, 0, 0, 0);
-			if (flags[kFLAGS.CHI_CHI_AFFECTION] < 10) flags[kFLAGS.CHI_CHI_AFFECTION]++;
-			startCombat(new GoblinAssassin());
+			arenaSelection(new GoblinAssassin(false,GoblinAssassin.ADENTURER),gaunletchallange2fight2);
 		}
 		public function gaunletchallange2fight2():void {
 			clearOutput();
-			gaunletsinbetween();
 			outputText("As the goblin falls unconscious to the ground the crowd cheer for you.\n\n");
 			outputText("\"<i>It would seems the hero squashed that midget good but were only beginning. If I may the next contestant has been sex starved for two consecutive month and is desperate to sow his seed hence now we release... THE HOUND!!!</i>\"\n\n");
 			outputText("A massive hellhound of proportion larger than normal rush out of an opening gate. Its eye burns with lust.\n\n");
-			startCombat(new HellHound());
+			arenaSelection(new HellHound(),gaunletchallange2fight3);
 		}
 		public function gaunletchallange2fight3():void {
 			clearOutput();
-			gaunletsinbetween();
 			outputText("The mutt fall defeated to the floor as the crowd scream your name. The announcer announce the next contestant.\n\n");
 			outputText("\"<i>The next opponent is a fighter known and loved by the public. You have heard her name told in shallow whispers for the next opponent is an expert of the terrible art known as BDSM. Yes you have all been waiting for her so cheer up for Malady the drider!!!</i>\"\n\n");
 			outputText("A drider in bondage suit comes out of the gate and eyes you amused.\n\n");
 			outputText("\"<i>You are my opponent uh? Doesn’t look like much. Little pet, by the time I’m done binding you, you will seldom call me mistress!</i>\"\n\n");
-			startCombat(new CorruptedDrider());
+			arenaSelection(new CorruptedDrider(),gaunletchallange2fight4);
 		}
 
 		public function gaunletchallange2fight4():void {
 			var raphMet:Boolean = flags[kFLAGS.RAPHAEL_MET] == 1;
 			clearOutput();
-			gaunletsinbetween();
 			outputText(
 					"Your opponent is defeated, the arena cheers for you as the announcer resumes his speech.\n\n"+
 					"\"<i>Magnificent!!! The Champion of Ignam managed to obtain victory again! However, one final opponent remains! A man shrouded in mystery that is on everyone lips whenever this tournament is initiated. His true name, no one knows, for he is… The Red Avenger!!</i>\"\n\n" +
@@ -164,7 +209,7 @@ package classes.Scenes.Places.TelAdre
 				outputText("You never expected you would have to fight with your teacher someday, but so be it. ");
 			}
 			outputText("The fox makes a duel bow, and gets into a fighting stance.");
-			startCombat(new ArenaRaphael());
+			arenaSelection(new ArenaRaphael(),gaunletchallange2postfight);
 		}
 		public function gaunletchallange2postfight():void {
 			var raphMet:Boolean = flags[kFLAGS.RAPHAEL_MET] == 1;

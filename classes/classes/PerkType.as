@@ -9,7 +9,7 @@ import classes.CoC;
 
 import flash.utils.Dictionary;
 
-public class PerkType extends BaseContent
+public class PerkType
 	{
 		private static var PERK_LIBRARY:Dictionary = new Dictionary();
 
@@ -282,13 +282,13 @@ public class PerkType extends BaseContent
 			});
 			return this;
 		}
-		public function requireMaxSoulforce(value:int):PerkType {
+		public function requireMaxKi(value:int):PerkType {
 			requirements.push({
 				fn  : function(player:Player):Boolean {
-					return player.maxSoulforce() >= value;
+					return player.maxKi() >= value;
 				},
-				text: "Max. Soulforce "+value,
-				type: "soulforce",
+				text: "Max. Ki "+value,
+				type: "ki",
 				value: value
 			});
 			return this;

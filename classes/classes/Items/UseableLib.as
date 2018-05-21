@@ -38,7 +38,7 @@ use namespace CoC;
 			"Grey metallic flowers such as these are known to bloom in the deepest caves that run below the mountains of Mareth. Prized by mountain dwellers, these blooms fetch a high price due to their rarity and alchemical value.", 
 			"You look over the grey metallic flowers such as these are known to bloom in the deepest caves that run below the mountains of Mareth. Prized by mountain dwellers, these blooms fetch a high price due to their rarity and alchemical value.");
 		public const WT_BRAN:SimpleUseable = new SimpleUseable("WT.Bran", "W.T.Branch", "a World Tree Branch", 100,
-			"A branch from World Tree.  It's infused with small amount of soulforce.",
+			"A branch from World Tree.  It's infused with small amount of ki.",
 			"You look over the branch of World Tree.  Maybe someone else will know how to use it.");
 		public const TBAPLAT:SimpleUseable = new SimpleUseable("TBaPlat", "T.BarkPlates", "a Tentacled Bark Plates", 1000, 
 			"A Tentacled Bark Plates.",

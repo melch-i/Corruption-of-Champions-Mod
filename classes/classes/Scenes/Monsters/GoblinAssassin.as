@@ -1,61 +1,66 @@
 ﻿package classes.Scenes.Monsters
 {
-import classes.*;
-import classes.BodyParts.Butt;
-import classes.BodyParts.Hips;
-import classes.GlobalFlags.*;
-import classes.Scenes.SceneLib;
-import classes.internals.*;
 
-public class GoblinAssassin extends Monster
+	import classes.*;
+	import classes.BodyParts.Butt;
+	import classes.BodyParts.Hips;
+	import classes.GlobalFlags.*;
+	import classes.Scenes.SceneLib;
+	import classes.internals.*;
+
+	public class GoblinAssassin extends Monster
 	{
+		public static const ASSASSIN:Object = {
+			short:"goblin assassin",
+			level:10,
+			bonusHP:100
+		};
+		public static const ADENTURER:Object = {
+			short:"goblin adventurer",
+			level:9,
+			bonusHP:70
+		};
+
 		protected function goblinDrugAttack():void {
-			var temp2:Number = rand(5);
-			var color:String = "";
-			if(temp2 == 0) color = "red";
-			if(temp2 == 1) color = "green";
-			if(temp2 == 2) color = "blue";
-			if(temp2 == 3) color = "white";
-			if(temp2 == 4) color = "black";
-			//Throw offensive potions at the player
-			if (color != "blue") {
-				outputText(capitalA + short + " uncorks a glass bottle full of " + color + " fluid and swings her arm, flinging a wave of fluid at you.");
-			}
-			//Drink blue pots
-			else {
+			var color:String = randomChoice("red","green","blue","white","black");
+
+			//Drink blue  pots
+			if(color == "blue") {
 				outputText(capitalA + short + " pulls out a blue vial and uncaps it, swiftly downing its contents.");
 				if(HPRatio() < 1) {
 					outputText("  She looks to have recovered from some of her wounds!\n");
 					addHP(maxHP() / 4);
 				}
 				else outputText("  There doesn't seem to be any effect.\n");
+				return;
 			}
+
+			//Throw offensive potions at the player
+			outputText(capitalA + short + " uncorks a glass bottle full of " + color + " fluid and swings her arm, flinging a wave of fluid at you.");
+
 			//Dodge chance!
 			if((player.hasPerk(PerkLib.Evade) && rand(10) <= 3) || (rand(100) < player.spe/5)) {
 				outputText("\nYou narrowly avoid the gush of alchemic fluids!\n");
+				return;
 			}
 			//Get hit!
-			//Temporary heat
-			if(color == "red") {
-				outputText("\nThe red fluids hit you and instantly soak into your skin, disappearing.  Your skin flushes and you feel warm.  Oh no...\n");
-				if(!player.hasStatusEffect(StatusEffects.TemporaryHeat)) player.createStatusEffect(StatusEffects.TemporaryHeat,0,0,0,0);
+			switch(color){
+				case "red": //Temporary heat
+					outputText("\nThe red fluids hit you and instantly soak into your skin, disappearing.  Your skin flushes and you feel warm.  Oh no...\n");
+					if(!player.hasStatusEffect(StatusEffects.TemporaryHeat)) player.createStatusEffect(StatusEffects.TemporaryHeat,0,0,0,0);
+					break;
+				case "green": //Green poison
+					outputText("\nThe greenish fluids splash over you, making you feel slimy and gross.  Nausea plagues you immediately - you have been poisoned!\n");
+					if(!player.hasStatusEffect(StatusEffects.Poison)) player.createStatusEffect(StatusEffects.Poison,0,0,0,0);
+					break;
+				case "white": //sticky flee prevention
+					outputText("\nYou try to avoid it, but it splatters the ground around you with very sticky white fluid, making it difficult to run.  You'll have a hard time escaping now!\n");
+					if(!player.hasStatusEffect(StatusEffects.NoFlee)) player.createStatusEffect(StatusEffects.NoFlee,0,0,0,0);
+					break;
+				case "black": //Increase fatigue
+					outputText("\nThe black fluid splashes all over you and wicks into your skin near-instantly.  It makes you feel tired and drowsy.\n");
+					EngineCore.fatigue(10 + rand(25));
 			}
-			//Green poison
-			if(color == "green") {
-				outputText("\nThe greenish fluids splash over you, making you feel slimy and gross.  Nausea plagues you immediately - you have been poisoned!\n");
-				if(!player.hasStatusEffect(StatusEffects.Poison)) player.createStatusEffect(StatusEffects.Poison,0,0,0,0);
-			}
-			//sticky flee prevention
-			if(color == "white") {
-				outputText("\nYou try to avoid it, but it splatters the ground around you with very sticky white fluid, making it difficult to run.  You'll have a hard time escaping now!\n");
-				if(!player.hasStatusEffect(StatusEffects.NoFlee)) player.createStatusEffect(StatusEffects.NoFlee,0,0,0,0);
-			}
-			//Increase fatigue
-			if(color == "black") {
-				outputText("\nThe black fluid splashes all over you and wicks into your skin near-instantly.  It makes you feel tired and drowsy.\n");
-				EngineCore.fatigue(10 + rand(25));
-			}
-			return;
 		}
 		//Lust Needle
 		protected function lustNeedle():void {
@@ -103,8 +108,7 @@ public class GoblinAssassin extends Monster
 		}
 		override public function defeated(hpVictory:Boolean):void
 		{
-			if (player.hasStatusEffect(StatusEffects.SoulArenaGaunlet)) SceneLib.telAdre.arena.gaunletchallange2fight2();
-			else SceneLib.goblinAssassinScene.gobboAssassinRapeIntro();
+			SceneLib.goblinAssassinScene.gobboAssassinRapeIntro();
 		}
 		override public function won(hpVictory:Boolean, pcCameWorms:Boolean):void
 		{
@@ -116,20 +120,14 @@ public class GoblinAssassin extends Monster
 				SceneLib.goblinAssassinScene.gobboAssassinBeatYaUp();
 			}
 		}
-		public function GoblinAssassin(noInit:Boolean=false)
+		public function GoblinAssassin(noInit:Boolean=false, monType:Object = null)
 		{
 			if (noInit) return;
 			this.a = "the ";
-			if (player.hasStatusEffect(StatusEffects.SoulArenaGaunlet)) {
-				this.short = "goblin adventurer";
-				this.level = 9;
-				this.bonusHP = 70;
-			}
-			else {
-				this.short = "goblin assassin";
-				this.level = 10;
-				this.bonusHP = 100;
-			}
+			if(monType == null){monType = ASSASSIN}
+			this.short = monType.short;
+			this.level = monType.level;
+			this.bonusHP = monType.bonusHP;
 			this.imageName = "goblinassassin";
 			this.long = "Her appearance is that of a regular goblin, curvy and pale green, perhaps slightly taller than the norm. Her wavy, untamed hair is a deep shade of blue, covering her pierced ears and reaching just above her shoulders. Her soft curves are accentuated by her choice of wear, a single belt lined with assorted needles strapped across her full chest and a pair of fishnet stockings reaching up to her thick thighs. She bounces on the spot, preparing to dodge anything you might have in store, though your eyes seem to wander towards her bare slit and jiggling ass. Despite her obvious knowledge in combat, she’s a goblin all the same – a hard cock can go a long way.";
 			// this.plural = false;

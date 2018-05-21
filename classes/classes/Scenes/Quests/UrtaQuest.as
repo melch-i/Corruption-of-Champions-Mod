@@ -261,7 +261,7 @@ public function startUrtaQuest():void {
 	player.cor = 30;
 	player.lust = 55;
 	player.hunger = 100;
-	player.soulforce = 50;
+	player.ki = 50;
 	player.wrath = 0;
 	player.gems = 183;
 	player.level = 26;
@@ -291,8 +291,8 @@ public function startUrtaQuest():void {
 	player.createPerk(PerkLib.HiddenMomentum,0,0,0,0);
 	player.createPerk(PerkLib.HoldWithBothHands,0,0,0,0);
 	player.createPerk(PerkLib.ColdFury,0,0,0,0);
-	player.createPerk(PerkLib.ResistanceI,0,0,0,0);
-	player.createPerk(PerkLib.TankI,0,0,0,0);
+	player.createPerk(PerkLib.Resistance,0,0,0,0);
+	player.createPerk(PerkLib.Tank,0,0,0,0);
 
 	//GEAR!
 	player.setWeapon(weapons.URTAHLB);

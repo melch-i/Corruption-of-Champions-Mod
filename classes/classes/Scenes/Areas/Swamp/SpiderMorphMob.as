@@ -4,10 +4,17 @@ import classes.*;
 import classes.BodyParts.Butt;
 import classes.BodyParts.Hips;
 import classes.BodyParts.Tail;
-import classes.Scenes.SceneLib;
+	import classes.Scenes.Monsters.PackMonster;
+	import classes.Scenes.SceneLib;
 
-public class SpiderMorphMob extends Monster
+public class SpiderMorphMob extends PackMonster
 	{
+		public override function handleStruggle():Boolean {
+			outputText("You claw your way out of the webbing while Kiha does her best to handle the spiders single-handedly!\n\n");
+			player.removeStatusEffect(StatusEffects.UBERWEB);
+			return false;
+		}
+
 		//==============================
 		// SPOIDAH HORDE COMBAT SHIZZLE HERE!
 		//==============================
@@ -132,8 +139,8 @@ public class SpiderMorphMob extends Monster
 			this.temperment = TEMPERMENT_LOVE_GRAPPLES;
 			this.level = 23;
 			this.gems = rand(50)+100;
-			this.special1 = SceneLib.combat.packAttack;
-			this.special2 = SceneLib.combat.lustAttack;
+			this.special1 = packAttack;
+			this.special2 = lustAttack;
 			this.tailType = Tail.SPIDER_ADBOMEN;
 			this.drop = NO_DROP;
 			this.createPerk(PerkLib.EnemyGroupType, 0, 0, 0, 0);

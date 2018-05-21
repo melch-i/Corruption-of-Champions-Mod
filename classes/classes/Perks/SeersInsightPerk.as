@@ -12,7 +12,7 @@ package classes.Perks
 		
 		override public function desc(params:PerkClass = null):String
 		{
-			return "Increase spell/magical soulskills power and lower specials fatigue/soulforce cost by " + (params.value1 * 100) + "%.";
+			return "Increase spell/magical soulskills power and lower specials fatigue/ki cost by " + (params.value1 * 100) + "%.";
 		}
 
 		public function SeersInsightPerk() 

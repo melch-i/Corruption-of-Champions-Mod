@@ -218,7 +218,7 @@ public class GoblinElder extends Goblin
 			this.special1 = goblinDrugAttack;
 			this.special2 = goblinTeaseAttack;
 			//this.special3 = castSpell;
-			this.createPerk(PerkLib.TankI, 0, 0, 0, 0);
+			this.createPerk(PerkLib.Tank, 0, 0, 0, 0);
 			this.createPerk(PerkLib.ShieldWielder, 0, 0, 0, 0);
 			checkMonster();
 		}

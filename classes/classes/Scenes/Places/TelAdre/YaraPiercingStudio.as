@@ -142,7 +142,7 @@ public class YaraPiercingStudio extends TelAdreAbstractContent {
         clearOutput();
         outputText("Yara asks, \"<i>Ok then, what would you like pierced " + player.mf("sir", "cutie") + "?  Just keep in mind my piercings are special - they're permanent and CAN'T be removed.</i>\"");
         if (spaceAvailable) {
-            submenu(locChoices, piercingStudio);
+            locChoices.submenu(piercingStudio);
         }
         else {
             outputText("\n\nYou give yourself a quick once-over and realize there's nowhere left for her to pierce you.  Oh well.");
@@ -196,7 +196,7 @@ public class YaraPiercingStudio extends TelAdreAbstractContent {
         typeChoices.add("Ladder", curry(chooseMaterials, loc, Piercing.LADDER)).visible = (loc == LOC_DICK);
         typeChoices.add("Hoop", curry(chooseMaterials, loc, Piercing.HOOP)).visible     = (loc == LOC_EARS);
         typeChoices.add("Chain", curry(chooseMaterials, loc, Piercing.CHAIN)).visible   = (loc == LOC_NIPPLES);
-        submenu(typeChoices, pierceMenu);
+        typeChoices.submenu(pierceMenu);
     }
 
     private function chooseMaterials(loc:int, type:int):void {
@@ -562,7 +562,7 @@ public class YaraPiercingStudio extends TelAdreAbstractContent {
             doNext(piercingStudio);
             return;
         }
-        submenu(locChoices, piercingStudio);
+        locChoices.submenu(piercingStudio);
 
         function doRemove(loc:int):void {
             clearOutput();

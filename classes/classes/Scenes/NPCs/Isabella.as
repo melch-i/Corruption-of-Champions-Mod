@@ -10,6 +10,14 @@ import classes.Scenes.SceneLib;
 public class Isabella extends Monster
 	{
 
+		override public function handleWait():Object {
+			if (player.hasStatusEffect(StatusEffects.IsabellaStunned)) {
+				outputText("You wobble about for some time but manage to recover. Isabella capitalizes on your wasted time to act again.\n\n");
+				player.removeStatusEffect(StatusEffects.IsabellaStunned);
+				return false;
+			}
+			return super.handleWait();
+		}
 		//IZZY AI:
 
 		//Isabella Combat texttttttsss
@@ -282,7 +290,7 @@ public class Isabella extends Monster
 			this.createPerk(PerkLib.EnemyBeastOrAnimalMorphType, 0, 0, 0, 0);
 			if (flags[kFLAGS.ISABELLA_LVL_UP] >= 1) this.createPerk(PerkLib.EnemyBossType, 0, 0, 0, 0);
 			if (flags[kFLAGS.ISABELLA_LVL_UP] >= 4) {
-				this.createPerk(PerkLib.TankI, 0, 0, 0, 0);
+				this.createPerk(PerkLib.Tank, 0, 0, 0, 0);
 			}
 			if (flags[kFLAGS.ISABELLA_LVL_UP] >= 5) this.createPerk(PerkLib.Regeneration, 0, 0, 0, 0);
 			checkMonster();

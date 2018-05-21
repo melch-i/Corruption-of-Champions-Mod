@@ -9,7 +9,23 @@ import classes.internals.WeightedDrop;
 
 public class FrostGiant extends Monster
 	{
-		
+		override public function handleWait():Object {
+			if (player.hasStatusEffect(StatusEffects.GiantGrabbed)) {
+				giantGrabFail(false);
+				return true;
+			}
+			if (player.hasStatusEffect(StatusEffects.GiantBoulder)) {
+				giantBoulderMiss();
+				return true;
+			}
+			return super.handleWait();
+		}
+
+		override public function handleStruggle():Boolean {
+			giantGrabStruggle();
+			return true;
+		}
+
 		public function giantAttackPunch():void {
 			var damage:int = 0;
 			outputText("The giant strides toward you, closing the distance faster than you can run. He rears back and strikes at you!  ");
@@ -233,7 +249,7 @@ public class FrostGiant extends Monster
 			this.drop = new WeightedDrop()
 					.add(consumables.ICICLE_, 1)
 					.add(null, 3);
-			this.createPerk(PerkLib.TankI, 0, 0, 0, 0);
+			this.createPerk(PerkLib.Tank, 0, 0, 0, 0);
 			this.createPerk(PerkLib.EnemyGigantType, 0, 0, 0, 0);
 			this.createPerk(PerkLib.IceNature, 0, 0, 0, 0);
 			checkMonster();

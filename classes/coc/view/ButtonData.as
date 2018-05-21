@@ -54,13 +54,13 @@ public class ButtonData {
 		}
 	}
 	/**
-	 * Adds a Soulforce requirement hint, and disables if player has not enough.
+	 * Adds a Ki requirement hint, and disables if player has not enough.
 	 * DOES NOT apply any scale modifiers
-	 * DOES NOT decrease soulforce if clicked
+	 * DOES NOT decrease ki if clicked
 	 */
-	public function requireSoulforce(cost:Number):ButtonData {
-		toolTipText += "\nSoulforce cost: "+cost;
-		if (CoC.instance.player.soulforce < cost) {
+	public function requireKi(cost:Number):ButtonData {
+		toolTipText += "\nKi cost: "+cost;
+		if (CoC.instance.player.ki < cost) {
 			disable();
 			toolTipText += " <b>You are too tired to use this ability.</b>";
 		}

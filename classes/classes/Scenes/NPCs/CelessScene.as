@@ -171,7 +171,7 @@ public class CelessScene extends XXCNPC implements TimeAwareInterface {
 				menu.add("Suck her off", curry(incestScene, "suckHerOff"));
 				menu.add("Fuck Her", curry(incestScene, "fuckHer")).disableIf(!player.isMaleOrHerm());
 				menu.add("Get Fucked", curry(incestScene, "getFucked")).disableIf(!player.isFemaleOrHerm());
-				submenu(menu, campInteraction);
+				menu.submenu(campInteraction);
 			}
 			else {
 				incestScene("pureIncest")
@@ -265,7 +265,7 @@ public class CelessScene extends XXCNPC implements TimeAwareInterface {
 				selectMenu.add(item.id, curry(improveItem, item, from)).disableIf(!player.hasItem(from));
 			}
 		}
-		submenu(selectMenu, campInteraction);
+		selectMenu.submenu(campInteraction);
 
 		function improveItem(item:ItemType, from:ItemType):void {
 			scene("strings/itemImprove/improveThatItem", myLocals);

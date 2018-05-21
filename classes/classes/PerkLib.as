@@ -77,7 +77,7 @@ public class PerkLib
 		public static const AscensionUnlockedPotential:PerkType = mk("Ascension: Unlocked Potential", "Ascension: Unlocked Potential",
 				"Due to reincarnation experience your body becoming strong faster than in previous life (increased passive hp, fatigue, mana gains at lvl-up).");
 		public static const AscensionUnlockedPotential2ndStage:PerkType = mk("Ascension: Unlocked Potential (2nd Stage)", "Ascension: Unlocked Potential (2nd Stage)",
-				"Due to reincarnation experience your body becoming strong faster than in previous life (increased passive lust, wrath, soulforce gains at lvl-up).");
+				"Due to reincarnation experience your body becoming strong faster than in previous life (increased passive lust, wrath, Ki gains at lvl-up).");
 		
 		// History perks
 		public static const HistoryAlchemist:PerkType = mk("History: Alchemist", "History: Alchemist",
@@ -85,9 +85,9 @@ public class PerkLib
 		public static const PastLifeAlchemist:PerkType = mk("Past Life: Alchemist", "Past Life: Alchemist",
 				"Alchemical experience makes items more reactive to your body.", null, true);
 		public static const HistoryCultivator:PerkType = mk("History: Cultivator", "History: Cultivator",
-				"Soulforce is easier to kept giving you 10% increase to it maximum amount.");
+				"Ki is easier to kept giving you 10% increase to it maximum amount.");
 		public static const PastLifeCultivator:PerkType = mk("Past Life: Cultivator", "Past Life: Cultivator",
-				"Soulforce is easier to kept giving you 10% increase to it maximum amount.", null, true);
+				"Ki is easier to kept giving you 10% increase to it maximum amount.", null, true);
 		public static const HistoryFighter:PerkType = mk("History: Fighter", "History: Fighter",
 				"A Past full of conflict increases physical melee damage dealt by 10%.");
 		public static const PastLifeFighter:PerkType = mk("Past Life: Fighter", "Past Life: Fighter",
@@ -174,13 +174,6 @@ public class PerkLib
 						"<b>You aren't strong enough to benefit from this anymore.</b>" +
 						"]",
 				"You choose the 'Brutal Blows' perk, which reduces enemy armor with each hit.");
-		public static const CatchTheBlade:PerkType = mk("Catch the blade", "Catch the blade",
-				"[if(player.spe>=50)" +
-						"Increases deflect chance by up to 15% while using only fists/fist weapons. (Speed-based)." +
-						"|" +
-						"<b>You are not fast enough to gain benefit from this perk.</b>" +
-						"]",
-				"You choose the 'Catch the blade' perk, giving you a chance to deflect blow with your fists. (Speed-based).");
 		public static const CatlikeNimbleness:PerkType = mk("Cat-like Nimbleness", "Cat-like Nimbleness",
 				"Your transformed joins allows you to move more swiftly and with greater nimbleness.",
 				"You choose the 'Cat-like Nimbleness' perk. Your body joints due to repeadly usage of cat-like flexibility became more nimble.");
@@ -294,7 +287,7 @@ public class PerkLib
 				"You choose 'Elements of Mareth: Basics' perk, your time spent in Mareth allowed you to get basic understanding of native elements that aren't classified as one of four traditional.");
 		public static const ElementsOfTheOrtodoxPath:PerkType = mk("Elements of the Ortodox Path", "Elements of the Ortodox Path",
 				"You can now summon and command ether, wood and metal elementals. Also increase elementals command limit by 1.",
-				"You choose 'Elements of the Ortodox Path' perk, your time spent on studing elements allowed to be able clal those meantioned in more ortodox writings.");
+				"You choose the 'Elements of the Ortodox Path' perk, your time spent on studing elements allowed to be able clal those meantioned in more ortodox writings.");
 		public static const EnvenomedBolt:PerkType = mk("Envenomed Bolt", "Envenomed Bolt",
 				"By carefully collecting your venom you can apply poison to your arrows and bolts.",
 				"You choose the 'Envenomed Bolt' perk, allowing you to apply your own venom to arrows and bolts.");
@@ -341,9 +334,6 @@ public class PerkLib
 		public static const Impale:PerkType = mk("Impale", "Impale",
 				"Damage bonus of spears and lances critical hits is doubled as long speed is high enough.",
 				"You've chosen the 'Impale' perk. Your spear and lance critical hit attacks bonus damages are doubled.");
-		public static const IronFistsI:PerkType = mk("Iron Fists I", "Iron Fists I",
-				"Hardens your fists to increase attack rating by 10.",
-				"You choose the 'Iron Fists I' perk, hardening your fists. This increases attack power by 10.");
 		public static const IronMan:PerkType = mk("Iron Man", "Iron Man",
 				"Reduces the fatigue cost of physical specials by 50%.",
 				"You choose the 'Iron Man' perk, reducing the fatigue cost of physical special attacks by 50%");
@@ -377,9 +367,6 @@ public class PerkLib
 		public static const JobKnight:PerkType = mk("Job: Knight", "Job: Knight",
 				"You've trained in combat using shields and heaviest armors.",
 				"You choose 'Job: Knight' perk, training yourself to became Knight.");
-		public static const JobMonk:PerkType = mk("Job: Monk", "Job: Monk",
-				"You've trained in unarmed combat.",
-				"You choose 'Job: Monk' perk, training yourself to became Monk.");
 		public static const JobRanger:PerkType = mk("Job: Ranger", "Job: Ranger",
 				"You've trained in ranged combat.",
 				"You choose 'Job: Ranger' perk, training yourself to became Ranger.");
@@ -467,17 +454,17 @@ public class PerkLib
 		public static const PrestigeJobSentinel:PerkType = mk("Prestige Job: Sentinel", "Prestige Job: Sentinel",
 				"You've trained in prestige art that brings 'tanking' to a whole new level.",
 				"You choose 'Prestige Job: Sentinel' perk, training yourself to became Sentinel.");
-		public static const PrestigeJobSoulArtMaster:PerkType = mk("Prestige Job: Soul Art Master", "Prestige Job: Soul Art Master",
-				"You've trained in prestige art of combine soulforce with physical attacks to various deadly effect.",
-				"You choose 'Prestige Job: Soul Art Master' perk, training yourself to became Soul Art Master.");
-		public static const PrimalFuryI:PerkType = mk("Primal Fury I", "Primal Fury I",
+		public static const PrestigeJobKiArtMaster:PerkType = mk("Prestige Job: Ki Art Master", "Prestige Job: Ki Art Master",
+				"You've trained in prestige art of combine Ki with physical attacks to various deadly effect.",
+				"You choose 'Prestige Job: Ki Art Master' perk, training yourself to became Ki Art Master.");
+		public static const PrimalFury:PerkType = mk("Primal Fury", "Primal Fury",
 				"Raises max Wrath by 10, generates 1 point of Wrath out of combat and double this amount during fight.",
-				"You choose the 'Primal Fury I' perk, increasing passive wrath generation and max Wrath.");
+				"You choose the 'Primal Fury' perk, increasing passive wrath generation and max Wrath.");
 		public static const Rage:PerkType = mk("Rage", "Rage",
 				"Increasing crit chance by up to 50% in berserk state that would reset after succesful crit attack.",
 				"You choose the 'Rage' perk, increasing crit chance by up to 50% in berserk state until next crit attack.");
 		public static const Regeneration :RegenerationPerk = new RegenerationPerk();
-		public static const ResistanceI:PerkType = mk("Resistance I", "Resistance I",
+		public static const Resistance:PerkType = mk("Resistance", "Resistance",
 				"Reduces lust gain by 5%.",
 				"You choose the 'Resistance I' perk, reducing the rate at which your lust increases by 5%.");
 		public static const Resolute:PerkType = mk("Resolute", "Resolute",
@@ -562,9 +549,9 @@ public class PerkLib
 						"<b>You are too dumb to gain benefit from this perk.</b>" +
 						"]",
 				"You choose the 'Tactician' perk, increasing critical hit chance by up to 10% (Intelligence-based).");
-		public static const TankI:PerkType = mk("Tank I", "Tank I",
+		public static const Tank:PerkType = mk("Tank", "Tank",
 				"+3 extra HP per point of toughness.",
-				"You choose the 'Tank I' perk, granting +3 extra maximum HP for each point of toughness.");
+				"You choose the 'Tank' perk, granting +3 extra maximum HP for each point of toughness.");
 		public static const ThirstForBlood:PerkType = mk("Thirst for blood", "Thirst for blood",
 				"Weapon and effect that causes bleed damage have this damage increased by 50%.",
 				"You choose the 'Thirst for blood' perk, increasing damage done by bleed effects.");
@@ -586,12 +573,12 @@ public class PerkLib
 		public static const TrachealSystemEvolved:PerkType = mk("Tracheal System (Evolved)", "Tracheal System (Evolved)",
 				"Your body posses half developed respiratory system of the insects.",
 				"You choose the 'Tracheal System (Evolved)' perk, continuous exposition to insectoidal changes caused your tracheal system evolution into more complete form.");
-		public static const TraditionalMageI:PerkType = mk("Traditional Mage I", "Traditional Mage I",
+		public static const TraditionalMage:PerkType = mk("Traditional Mage", "Traditional Mage",
 				"You gain 100% spell effect multiplier while using a staff and either a tome or no ranged weapon.",
 				"You choose the 'Traditional Mage I' perk, boosting your base spell effects while using a staff and either a tome or no ranged weapon.");
 		public static const Trance:PerkType = mk("Trance", "Trance",
-				"Unlocked ability to enter a state in which PC assumes a crystalline form, enhancing physical and mental abilities at constant cost of soulforce.",
-				"You choose the 'Trance' perk, which unlock 'Trance' special. It enhancing physical and mental abilities at constant cost of soulforce.");
+				"Unlocked ability to enter a state in which PC assumes a crystalline form, enhancing physical and mental abilities at constant cost of Ki.",
+				"You choose the 'Trance' perk, which unlock 'Trance' special. It enhancing physical and mental abilities at constant cost of Ki.");
 		public static const Transference:PerkType = mk("Transference", "Transference",
 				"Your mastery of lust and desire allows you to transfer 15% of your current arousal to your opponent.",
 				"You choose the 'Transference' perk, granting ability to transfer your own arousal to your opponent.");
@@ -617,7 +604,79 @@ public class PerkLib
 		public static const JobArcher:PerkType = mk("Job: Archer", "Job: Archer",
 				"You've trained in ranged combat.",
 				"You choose 'Job: Archer' perk, training yourself to became Archer.");//perk później do usuniecia
-		
+
+		//Ki Perks
+		public static const AdvancedJobMonk:PerkType = mk("Advanced Job: Monk", "Advanced Job: Monk",
+			"You've trained in unarmed, Ki based combat.",
+			"You choose 'Advanced Job: Monk' perk, training yourself to became a Monk.");
+		public static const AdvancedJobSage:PerkType = mk("Advanced Job: Sage", "Advanced Job: Sage",
+			"You've trained your Ki powers to the elements.",
+			"You choose the 'Advanced Job: Sage' perk, training your Ki powers to align with the elements");
+		public static const AlignedKi:PerkType = mk("Aligned Ki", "Aligned Ki",
+			"Ki powers deal 40% more damage to enemies of opposite alignment",
+			"You choose the 'Aligned Ki' perk, causing your Ki powers to do extra damage based on enemy alignemnt");
+		public static const Backlash:PerkType = mk("Backlash", "Backlash",
+			"Raises block chance by 5% while using your fists and no shield, and allows a single attack in response to blocking an attack with your fists.",
+			"You choose the 'Backlash' perk, raising your unarmed block chance, and allowing you to strike back after blocking.");
+		public static const BloomOfLife:PerkType = mk("Bloom of Life", "Bloom of Life",
+			"You recover a small amount of health when using wood aligned Ki powers",
+			"You choose the 'Bloom of Life' perk, granting regeneration when using wood Ki powers");
+		public static const CalmWithinTheStorm:PerkType = mk("Calm within the Storm", "Calm within the Storm",
+			"Recover a small amount of Ki every round of combat.",
+			"You choose the 'Calm within the Storm' perk, allowing you to regain Ki while in combat");
+		public static const CatchTheBlade:PerkType = mk("Catch the blade", "Catch the blade",
+			"[if(player.spe>=50)" +
+			"Increases deflect chance by up to 15% while using only fists/fist weapons. (Speed-based)." +
+			"|" +
+			"<b>You are not fast enough to gain benefit from this perk.</b>" +
+			"]",
+			"You choose the 'Catch the blade' perk, giving you a chance to deflect blow with your fists. (Speed-based).");
+		public static const ElementalBalance:PerkType = mk("Elemental Balance", "Elemental Balance",
+			"Your elemental attacks gain an extra 20% damage so long as you never use the same element twice",
+			"You choose the 'Elemental Balance' perk, increasing damage from elemental attacks when their elements are balanced");
+		public static const ElementalHarmony:PerkType = mk("Elemental Harmony", "Elemental Harmony",
+			"You are one with the world and its elements, taking 20% reduced damage from elemental attacks",
+			"You choose 'Elemental Harmony' perk, reducing the damage you take from elemental attacks by 20%.");
+		public static const HavenOfPeace:PerkType = mk("Haven of Peace", "Haven of Peace",
+			"You may relieve yourself or meditate even while in a dungeon or other dangerous location",
+			"You choose the 'Haven of Peace' perk, allowing you to meditate in dargerous locations");
+		public static const IceShards:PerkType = mk("Ice Shards", "Ice Shards",
+			"Ice based Ki powers guarantee your next attack will be a critical hit.",
+			"You choose the 'Wind of Haste' perk, giving your ice based Ki powers the ability to icrease critical chance.");
+		public static const IronFists:PerkType = mk("Iron Fists", "Iron Fists",
+			"Hardens your fists to increase attack rating by 10.",
+			"You choose the 'Iron Fists' perk, hardening your fists. This increases attack power by 10.");
+		public static const ImprovedKiRecovery:PerkType = mk("Improved Ki Recovery", "Improved Ki Recovery",
+			"Ki recovery via resting and meditation is doubled",
+			"You choose the 'Improved Ki Recovery' perk, doubling the effectiveness of resting and meditation on Ki recovery");
+		public static const JobPilgrim:PerkType = mk("Job: Pilgrim", "Job: Pilgrim",
+			"You've trained in Ki based combat",
+			"You choose 'Job: Pilgrim' perk, training yourself to become a Pigrim");
+		public static const KiLeech:PerkType = mk("Ki Leech", "Ki Leech",
+			"Steal a Ki point on every critical",
+			"You choose the 'Ki Leech' perk, giving your critical hits the ability to steal Ki points");
+		public static const RedirectAttacks:PerkType = mk("Redirect Attacks", "Redirect Attacks",
+			"Reduces the chance that enemies will score critical hits on by a percentage of your wisdom",
+			"You choose the 'Redirect Attacs' perk, lowering the chance of enemy criticals by a percent of your wisdom.");
+		public static const Smite:PerkType = mk("Smite", "Smite",
+			"Aligned damage is doubled",
+			"You choose the 'Smite' perk, doubling the damage you do through aligned effects");
+		public static const SpiritBurn:PerkType = mk("Spirit Burn", "Spirit Burn",
+			"Fire based Ki powers can sear your opponent, reducing their damage done by 30% (10 round cooldown)",
+			"You choose the 'Spirit Burn' perk, giving your fire Ki powers the ability to sear your opponents.");
+		public static const WaterCrush:PerkType = mk("Water Crush", "Water Crush",
+			"Water based Ki powers gain a chance to stun.",
+			"You choose the 'Water Crush' perk, giving your water Ki powers the chance to stun your opponents.");
+		public static const WayOfBalance:PerkType = mk("Way of Balance", "Way of Balance",
+			"Ki powers gain a bonus to critical chance based on wisdom for enemies of opposed alignment. Neutral characters only benefit from half of this bonus.",
+			"You choose the 'Way of Balance' perk, giving your Ki powers extra critical chance against enemies of opposing alignment.");
+		public static const WayOfTheWise:PerkType = mk("Way of the Wise","Way of the Wise",
+			"Gain an ammount of Ki based on your wisdom (1 Ki per 10 Wisdom)",
+			"You choose the 'Vital Shot' perk, gaining 1 additional Ki point per 10 wisdom");
+		public static const WindOfHaste:PerkType = mk("Wind of Haste", "Wind of Haste",
+			"Cooldowns on Ki powers are reduced by 2 rounds.",
+			"You choose the 'Wind of Haste' perk, reducing all Ki power cooldowns by 2 rounds.");
+
 
 		// Needlework perks
 		public static const ChiReflowAttack:PerkType = mk("Chi Reflow - Attack", "Chi Reflow - Attack",
@@ -673,16 +732,16 @@ public class PerkLib
 		public static const Accuracy1:Accuracy1Perk = new Accuracy1Perk();
 		public static const Accuracy2:Accuracy2Perk = new Accuracy2Perk();
 		public static const BladeWarden:PerkType = mk("Blade-Warden", "Blade-Warden",
-				"Enables Resonance Volley soul skill while equipped: Perform a ranged attack where each arrow after the first gets an additional 10% accuracy for every arrow before it.",null,true);
+				"Enables Resonance Volley ki power while equipped: Perform a ranged attack where each arrow after the first gets an additional 10% accuracy for every arrow before it.",null,true);
 		public static const BodyCultivatorsFocus:BodyCultivatorsFocusPerk = new BodyCultivatorsFocusPerk();
 		public static const DaoistsFocus:DaoistsFocusPerk = new DaoistsFocusPerk();
 		public static const MageWarden:PerkType = mk("Mage-Warden", "Mage-Warden",
-				"Enables Resonance Volley soul skill while equipped: Perform a ranged attack where each arrow after the first gets an additional 10% accuracy for every arrow before it.",null,true);
+				"Enables Resonance Volley ki power while equipped: Perform a ranged attack where each arrow after the first gets an additional 10% accuracy for every arrow before it.",null,true);
 		public static const SagesKnowledge:SagesKnowledgePerk = new SagesKnowledgePerk();
 		public static const StrifeWarden:PerkType = mk("Strife-Warden", "Strife-Warden",
-				"Enables Beat of War soul skill while equipped: Attack with low-moderate additional soul damage, gain strength equal to 15% your base strength until end of battle. This effect stacks.",null,true);
+				"Enables Beat of War ki power while equipped: Attack with low-moderate additional soul damage, gain strength equal to 15% your base strength until end of battle. This effect stacks.",null,true);
 		public static const WildWarden:PerkType = mk("Wild-Warden", "Wild-Warden",
-				"Enables Resonance Volley soul skill while equipped: Perform a ranged attack where each arrow after the first gets an additional 10% accuracy for every arrow before it.",null,true);
+				"Enables Resonance Volley ki power while equipped: Perform a ranged attack where each arrow after the first gets an additional 10% accuracy for every arrow before it.",null,true);
 		public static const WizardsAndDaoistsFocus:WizardsAndDaoistsFocusPerk = new WizardsAndDaoistsFocusPerk();
 		public static const WizardsFocus:WizardsFocusPerk = new WizardsFocusPerk();
 
@@ -832,7 +891,7 @@ public class PerkLib
 		public static const GargoyleCorrupted:PerkType = mk("Corrupted Gargoyle", "Corrupted Gargoyle",
 				"You need constant intakes of sexual fluids to stay alive.");
 		public static const GargoylePure:PerkType = mk("Gargoyle", "Gargoyle",
-				"Need to gain sustenance from soulforce to stay alive.");
+				"Need to gain sustenance from Ki to stay alive.");
 		public static const Hellfire:PerkType = mk("Hellfire", "Hellfire",
 				"Grants a corrupted fire breath attack, like the hellhounds in the mountains.");
 		public static const LuststickAdapted:PerkType = mk("Luststick Adapted", "Luststick Adapted",
@@ -907,12 +966,11 @@ public class PerkLib
 		}
 
 	// Perk requirements
-	private static function initDependencies():void {
+	internal static function initDependencies():void {
         try {
 			//------------
             // STRENGTH
             //------------
-            JobWarrior.requireStr(10);
             StrongBack.requireStr(25);
             //Tier 1 Strength Perks
             ThunderousStrikes.requireLevel(6)
@@ -921,8 +979,6 @@ public class PerkLib
             BrutalBlows.requireLevel(6)
                     .requireStr(75)
                     .requirePerk(JobWarrior);
-            IronFistsI.requireLevel(6)
-                    .requireStr(60);
             Parry.requireLevel(6)
                     .requireStr(50)
                     .requireSpe(50);
@@ -954,32 +1010,20 @@ public class PerkLib
             //Tier 5 Strength Perks
             //Tier 6 Strength Perks
             //Tier 7 Strength Perks
-            PrestigeJobBerserker.requirePrestigeJobSlot()
-                    .requirePerk(JobGuardian)
-                    .requireAnyPerk(Berzerker, Lustzerker)
-                    .requireStr(200)
-                    .requireLevel(42);
             //Tier 8 Strength Perks
             Rage.requirePerk(PrestigeJobBerserker)
                     .requireLevel(48);
             //------------
             // TOUGHNESS
             //------------
-            JobGuardian.requireTou(10);
             Regeneration.requireTou(50);
             //Tier 1 Toughness Perks
-            TankI.requireTou(60)
-                    .requireLevel(6);
-            JobKnight.requirePerk(JobGuardian)
-                    .requireTou(50)
+            Tank.requireTou(60)
                     .requireLevel(6);
             ShieldMastery.requirePerk(JobKnight)
                     .requireTou(50)
                     .requireLevel(6);
             //Tier 2 Toughness Perks
-            JobDefender.requirePerk(JobGuardian)
-                    .requireTou(75)
-                    .requireLevel(12);
             ImmovableObject.requirePerk(JobDefender)
                     .requireTou(75)
                     .requireLevel(12);
@@ -999,11 +1043,6 @@ public class PerkLib
             //Tier 5 Toughness Perks
             //Tier 6 Toughness Perks
             //Tier 7 Toughness Perks
-            PrestigeJobSentinel.requirePrestigeJobSlot()
-                    .requirePerk(JobKnight)
-                    .requirePerk(JobWarrior)
-                    .requireTou(200)
-                    .requireLevel(42);
             //Tier 8 Toughness Perks
             SteelImpact.requirePerk(PrestigeJobSentinel)
                     .requireLevel(48);
@@ -1013,7 +1052,6 @@ public class PerkLib
             //------------
             // SPEED
             //------------
-            JobRanger.requireSpe(10);
             Runner.requireSpe(25);
             //slot 3 - speed perk
             Evade.requirePerk(JobRanger)
@@ -1040,11 +1078,6 @@ public class PerkLib
                     .requirePerk(JobRanger)
                     .requirePerk(Precision)
                     .requireLevel(6);
-            JobDervish.requirePerk(JobRanger)
-                    .requireSpe(40)
-                    .requireLevel(6);
-            /*Brawler.requireMinSpe(60)
-					.requireMinStr(60);*/ //Would it be fitting to have Urta teach you?
             //Tier 2 Speed Perks
             LungingAttacks.requirePerk(JobRanger)
                     .requireSpe(75)
@@ -1062,11 +1095,6 @@ public class PerkLib
                     .requirePerk(Unhindered)
                     .requirePerk(JobEromancer)
                     .requireLevel(12);
-            JobHunter.requirePerk(JobRanger)
-                    .requireSpe(80)
-                    .requireLevel(12);
-            //requirePerk(JobMonk).requireMinSpe(50) //perk dajacy 2 ataki kiedy uzywa sie tylko fists -
-            // - cos jak double attack ale bez limitu sily ^^ (ale dodac nowy status aby byl niezalezny od double strike)
             //Tier 3 Speed Perks
             Manyshot.requirePerk(JobHunter)
                     .requireSpe(100)
@@ -1087,18 +1115,6 @@ public class PerkLib
                     .requireSpe(180)
                     .requireLevel(36);
             //Tier 7 Speed Perks
-            /*		PrestigeJobSoulArcher.requirePrestigeJobSlot()
-					 .requirePerk(SoulOverlord)
-					 .requirePerk(JobHunter)
-					 .requireSpe(200)
-					 .requireLevel(42);
-                    */
-            PrestigeJobArcaneArcher.requirePrestigeJobSlot()
-                    .requirePerk(JobSorcerer)
-                    .requirePerk(JobHunter)
-                    .requireSpe(200)
-                    .requireInt(150)
-                    .requireLevel(42);
             //Tier 8 Speed Perks
             ElementalArrows.requireLevel(48)
                     .requirePerk(PrestigeJobArcaneArcher)
@@ -1112,7 +1128,6 @@ public class PerkLib
             //------------
             // INTELLIGENCE
             //------------
-            JobSorcerer.requireInt(10);
             //Slot 4 - precision - -10 enemy toughness for damage calc
             Precision.requireInt(25);
             //Spellpower - boosts spell power
@@ -1124,8 +1139,6 @@ public class PerkLib
             StaffChanneling.requireInt(60)
                     .requireLevel(6);
             //Tier 2 Intelligence perks
-            JobEnchanter.requireInt(75)
-                    .requireLevel(12);
             // Spell-boosting perks
             // Battlemage: auto-use Might
             Battlemage.requireLevel(12)
@@ -1148,12 +1161,11 @@ public class PerkLib
                     .requirePerk(Spellsword)
                     .requireInt(90)
                     .requireStatusEffect(StatusEffects.KnowsChargeA, "Charge Armor spell");
-            TraditionalMageI.requireLevel(18)
+            TraditionalMage.requireLevel(18)
                     .requireInt(80);
             //------------
             // WISDOM
             //------------
-            JobElementalConjurer.requireWis(10);
             ElementalConjurerResolve.requirePerk(JobElementalConjurer)
                     .requireWis(20);
             ElementalContractRank1.requirePerk(ElementalConjurerResolve)
@@ -1169,12 +1181,7 @@ public class PerkLib
             ElementalBondFlesh.requirePerk(ElementalContractRank1)
                     .requireWis(50)
                     .requireLevel(6);
-            /*.requirePerk(ElementsOfMarethBasics)
-					.requireWis(35)
-					.requireLevel(6);*/
             //Tier 2 Wisdom perks
-            JobMonk.requireWis(60)
-                    .requireLevel(12);
             ElementalContractRank3.requirePerk(ElementalContractRank2)
                     .requireWis(75)
                     .requireLevel(12);
@@ -1188,11 +1195,6 @@ public class PerkLib
             ElementalContractRank4.requirePerk(ElementalContractRank3)
                     .requireWis(100)
                     .requireLevel(18);
-            CatchTheBlade.requirePerk(JobMonk)
-                    .requireWis(80)
-                    .requireSpe(100)
-                    .requireLevel(18);
-
             //Tier 4 Wisdom perks
             ElementalContractRank5.requirePerk(ElementalContractRank4)
                     .requirePerk(ElementalConjurerDedication)
@@ -1222,10 +1224,6 @@ public class PerkLib
                     .requireWis(175)
                     .requireLevel(36);
             //Tier 7 Wisdom perks
-            PrestigeJobSoulArtMaster.requirePrestigeJobSlot()
-                    .requirePerk(JobMonk)
-                    .requireWis(200)
-                    .requireLevel(42);
             ElementalContractRank8.requirePerk(ElementalContractRank7)
                     .requireWis(200)
                     .requireLevel(42);
@@ -1251,7 +1249,6 @@ public class PerkLib
             //slot 5 - libido perks
 
             //Slot 5 - Fertile+ increases cum production and fertility (+15%)
-            JobSeducer.requireLib(10);
             FertilityPlus.requireLib(25);
             FertilityPlus.defaultValue1 = 15;
             FertilityPlus.defaultValue2 = 1.75;
@@ -1274,10 +1271,6 @@ public class PerkLib
             Masochist.requireLib(60)
                     .requireCor(50)
                     .requireLevel(6);
-            JobEromancer.requirePerk(JobSeducer)
-                    .requireLib(30)
-                    .requireInt(60)
-                    .requireLevel(6);
             ArcaneLash.requirePerk(JobEromancer).requireLevel(6);
 
             //Tier 2 Libido Perks
@@ -1285,9 +1278,6 @@ public class PerkLib
                     .requireLevel(12)
                     .requireLib(50)
                     .requireStatusEffect(StatusEffects.KnowsArouse, "Arouse spell");
-            JobCourtesan.requirePerk(JobSeducer)
-                    .requireLib(50)
-                    .requireLevel(12);
             DazzlingDisplay.requirePerk(JobCourtesan)
                     .requireLib(50)
                     .requireLevel(12);
@@ -1370,14 +1360,14 @@ public class PerkLib
                 return player.beeScore() >= 4 || player.mantisScore() >= 4 || player.scorpionScore() >= 4 || player.spiderScore() >= 4;
             }, "Any insect race");
 
-	        PrimalFuryI.requireStr(20)
+	        PrimalFury.requireStr(20)
 					.requireTou(20)
 					.requireSpe(20);
 			ToughHide.requireTou(30);
             //Tier 1
             //Speedy Recovery - Regain Fatigue 50% faster.
             SpeedyRecovery.requireLevel(6);
-            ResistanceI.requireLevel(6);
+            Resistance.requireLevel(6);
             Heroism.requireLevel(6);
             ChimericalBodyInitialStage.requireLevel(6)
                     .requireCustomFunction(function (player:Player):Boolean {
@@ -1425,14 +1415,36 @@ public class PerkLib
                     .requireCustomFunction(function (player:Player):Boolean {
                         return player.internalChimeraScore() >= 6;
                     }, "Six racial perks");
-            //Tier 4
-            //Tier 5
-            //Tier 6
-            //Tier 7
+
+	        // Ki Perks
+	        WayOfTheWise.requirePerk(JobPilgrim);
+	        ElementalHarmony.requirePerk(JobPilgrim);
+	        AlignedKi.requirePerk(JobPilgrim);
+	        CalmWithinTheStorm.requirePerk(JobPilgrim);
+	        ImprovedKiRecovery.requirePerk(JobPilgrim);
+	        ElementalBalance.requirePerk(JobPilgrim);
+	        WayOfBalance.requirePerk(JobPilgrim);
+	        RedirectAttacks.requirePerk(JobPilgrim);
+	        HavenOfPeace.requirePerk(JobPilgrim);
+	        Smite.requirePerk(JobPilgrim);
+
+	        AdvancedJobMonk.requirePerk(JobPilgrim).requireLevel(6);
+	        CatchTheBlade.requirePerk(AdvancedJobMonk);
+	        Backlash.requirePerk(AdvancedJobMonk);
+	        IronFists.requirePerk(AdvancedJobMonk);
+	        KiLeech.requirePerk(AdvancedJobMonk);
+
+	        AdvancedJobSage.requirePerk(JobPilgrim).requireLevel(6);
+	        BloomOfLife.requirePerk(AdvancedJobSage);
+	        SpiritBurn.requirePerk(AdvancedJobSage);
+	        WaterCrush.requirePerk(AdvancedJobSage);
+	        WindOfHaste.requirePerk(AdvancedJobSage);
+	        IceShards.requirePerk(AdvancedJobSage);
+
+
         } catch (e:Error) {
             trace(e.getStackTrace());
         }
 	}
-	initDependencies();
 }
 }

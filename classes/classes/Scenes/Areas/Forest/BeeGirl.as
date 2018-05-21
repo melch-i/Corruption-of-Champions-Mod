@@ -106,6 +106,18 @@ public class BeeGirl extends Monster {
 			else doNext(EventParser.playerMenu);
 		}
 
+		override public function dropLoot():ItemType {
+			if (flags[kFLAGS.FORCE_BEE_TO_PRODUCE_HONEY] == 1) {
+				flags[kFLAGS.FORCE_BEE_TO_PRODUCE_HONEY] = 0;
+				if (rand(2) == 0) {
+					return consumables.BEEHONY;
+				} else {
+					return consumables.PURHONY;
+				}
+			}
+			return super.dropLoot();
+		}
+
 		public function BeeGirl()
 		{
 			super();

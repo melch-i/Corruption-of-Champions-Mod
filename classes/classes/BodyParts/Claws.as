@@ -3,21 +3,24 @@
  */
 package classes.BodyParts {
 import classes.Creature;
+import classes.internals.EnumValue;
 
 public class Claws extends SaveableBodyPart {
 	public var tone:String                  = "";
 	
-	public static const NORMAL:int     =  0;
-	public static const LIZARD:int     =  1;
-	public static const DRAGON:int     =  2;
-	public static const SALAMANDER:int =  3;
-	public static const CAT:int        =  4; // NYI! Placeholder for now!!
-	public static const DOG:int        =  5; // NYI! Placeholder for now!!
-	public static const RAPTOR:int     =  6; // NYI! Placeholder for now!!
-	public static const MANTIS:int     =  7; // NYI! Placeholder for Xianxia mod
-	public static const IMP:int        =  8; // NYI! Placeholder from Revamp
-	public static const COCKATRICE:int =  9; // NYI! Placeholder from Revamp
-	public static const RED_PANDA:int  = 10; // NYI! Placeholder from Revamp
+	public static const Types:/*EnumValue*/Array = [];
+	
+	public static const NORMAL:int     =  EnumValue.add(Types, 0, "NORMAL", {name:"fingernails"});
+	public static const LIZARD:int     =  EnumValue.add(Types, 1, "LIZARD", {name:"claws"});
+	public static const DRAGON:int     =  EnumValue.add(Types, 2, "DRAGON", {name:"claws"});
+	public static const SALAMANDER:int =  EnumValue.add(Types, 3, "SALAMANDER", {name:"claws"});
+	public static const CAT:int        =  EnumValue.add(Types, 4, "CAT", {name:"claws"}); // NYI! Placeholder for now!!
+	public static const DOG:int        =  EnumValue.add(Types, 5, "DOG", {name:"claws"}); // NYI! Placeholder for now!!
+	public static const RAPTOR:int     =  EnumValue.add(Types, 6, "RAPTOR", {name:"claws"}); // NYI! Placeholder for now!!
+	public static const MANTIS:int     =  EnumValue.add(Types, 7, "MANTIS", {name:"claws"}); // NYI! Placeholder for Xianxia mod
+	public static const IMP:int        =  EnumValue.add(Types, 8, "IMP", {name:"claws"}); // NYI! Placeholder from Revamp
+	public static const COCKATRICE:int =  EnumValue.add(Types, 9, "COCKATRICE", {name:"claws"}); // NYI! Placeholder from Revamp
+	public static const RED_PANDA:int  = EnumValue.add(Types, 10, "RED_PANDA", {name:"claws"}); // NYI! Placeholder from Revamp
 	
 	public function Claws(creature:Creature) {
 		super(creature,"clawsPart",["tone"]);

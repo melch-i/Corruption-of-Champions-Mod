@@ -220,7 +220,7 @@ public function telAdreMenuShow():void { //Just displays the normal Tel'Adre men
 	addButton(7, "Restaurant",restaurantShiraOfTheEast);
 	addButton(8, "Tower", library.visitZeMagesTower);
 	addButton(9, "Arena", arena.soularena);
-	if (flags[kFLAGS.CHI_CHI_AFFECTION] >= 20 && flags[kFLAGS.CHI_CHI_FOLLOWER] < 2) addButton(13, "Chi Chi", SceneLib.chichiScene.MeetingChiChiInHeXinDao);
+	if (flags[kFLAGS.CHI_CHI_AFFECTION] >= 20 && flags[kFLAGS.CHI_CHI_FOLLOWER] < 2) addButton(13, "Chi Chi", SceneLib.chichiScene.MeetingChiChiInTelAdre,true);
 	addButton(14, "Leave", camp.returnToCampUseOneHour);
 }
 
@@ -1362,8 +1362,8 @@ private function goJogging():void {
 			outputText("\n\nYou aren’t hungry at the time maybe you will eat later.");
 			doNext(telAdreMenu);
 			return;
-		} else if (player.gems < 1){
-			outputText("\n\nYou would like to eat but you don’t have enough spirit stones to afford the food.");
+		} else if (player.gems < 5){
+			outputText("\n\nYou would like to eat but you don’t have enough gems to afford anything.");
 			doNext(telAdreMenu);
 			return;
 		}
@@ -1439,7 +1439,7 @@ private function goJogging():void {
 		}
 		var tempToughness:int = player.statusEffectv4(StatusEffects.ShiraOfTheEastFoodBuff2);
 		dynStats("tou", tempToughness);
-		flags[kFLAGS.SPIRIT_STONES]--;
+		player.gems -= 5;
 		statScreenRefresh();
 		doNext(camp.returnToCampUseOneHour);
 	}

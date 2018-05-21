@@ -21,6 +21,18 @@ public class Holli extends Monster
 		 -basically requires luck plus any of firebreath level grindan, stun abuse, or blood mage whitefire/arouse abuse
 		 */
 
+		override public function handleWait():Object {
+			if (player.hasStatusEffect(StatusEffects.HolliConstrict)) {
+				waitForHolliConstrict(true);
+				return true;
+			}
+			return super.handleWait();
+		}
+
+		override public function handleStruggle():Boolean {
+			struggleOutOfHolli();
+			return true;
+		}
 //Attack:
 //[monster] whips out at you with branches and roots!
 
@@ -215,6 +227,16 @@ public class Holli extends Monster
 			SceneLib.holliScene.enjoyYourBadEndBIYAAAATCH();
 		}
 
+		private function onPCRun():void {
+			if (SceneLib.combat.runCheckEscaped()) {
+				SceneLib.combat.runSucceedDefault()
+			} else if(SceneLib.combat.runCheckRunner()) {
+				SceneLib.combat.runSucceedDefault(true)
+			} else {
+				escapeFailWithHolli();
+			}
+		}
+
 
 		override public function teased(lustDelta:Number):void
 		{
@@ -265,6 +287,7 @@ public class Holli extends Monster
 			this.drop = NO_DROP;
 			this.createPerk(PerkLib.FireVulnerability, 0, 0, 0, 0);
 			this.createPerk(PerkLib.EnemyPlantType, 0, 0, 0, 0);
+			this.onPcRunAttempt = onPCRun;
 			checkMonster();
 		}
 		

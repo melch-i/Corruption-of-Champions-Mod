@@ -10,6 +10,14 @@ import classes.internals.WeightedDrop;
 public class Akbal extends Monster
 	{
 
+		override public function handleWait():Object {
+			if (player.hasStatusEffect(StatusEffects.Whispered)) {
+				outputText("You shake off the mental compulsions and ready yourself to fight!\n\n");
+				player.removeStatusEffect(StatusEffects.Whispered);
+				return false;
+			}
+			return super.handleWait();
+		}
 		override public function eAttack():void
 		{
 			//Chances to miss:

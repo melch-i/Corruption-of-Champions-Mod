@@ -51,6 +51,26 @@ import classes.internals.*;
 					(hasAxe?"<b>This minotaur seems to have found a deadly looking axe somewhere!</b>":"");
 		}
 
+		override public function dropLoot():ItemType {
+			if (!hasAxe) {
+				return super.dropLoot();
+			}
+			if (rand(2) != 0) {
+				return consumables.MINOBLO;
+			}
+			//50% breakage!
+			if (rand(2) != 0) {
+				outputText("\nThe minotaur's axe appears to have been broken during the fight, rendering it useless.  ");
+				return null;
+			}
+			if (!(player.tallness < 78 && player.str < 90)) {
+				CoC.instance.plotFight = true;
+				return weapons.L__AXE;
+			}
+			outputText("\nYou find a large axe on the minotaur, but it is too big for a person of your stature to comfortably carry.  ");
+			return rand(2) != 0 ? consumables.SDELITE : null;
+		}
+
 		public function Minotaur(axe:Boolean=false)
 		{
 			//Most times they dont have an axe

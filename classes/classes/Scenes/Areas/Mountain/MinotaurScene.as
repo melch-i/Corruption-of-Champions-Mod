@@ -6,8 +6,9 @@ import classes.GlobalFlags.kFLAGS;
 import classes.Items.Armors.LustyMaidensArmor;
 import classes.Scenes.SceneLib;
 import classes.Scenes.UniqueSexScenes;
+	import classes.internals.ChainedDrop;
 
-public class MinotaurScene extends BaseContent {
+	public class MinotaurScene extends BaseContent {
 
 		public var uniquuuesexscene:UniqueSexScenes = new UniqueSexScenes();
 		
@@ -302,6 +303,7 @@ private function AddictNagaOnMinotaur():void {
 	//(satisfy or progress mino addiction)
 	minoCumAddiction(10);
 	monster.short = "tit-fucked Minotaur";
+	monster.drop = new ChainedDrop(consumables.MINOCUM)
 	cleanupAfterCombat();
 }
 
@@ -738,6 +740,7 @@ private function minoGetsTitFucked():void {
 	outputText("You wake up an hour later, unsure how you made it back to your camp, light-headed and euphoric with the lingering after-affects.  You also find a bottle on the ground next to you, filled to the brim with the fluid.  You don't remember filling it up, but you're already itching to pop it open and guzzle it down.  You manage to resist the urge.  Besides, you're still feeling GREAT from your last 'sample'.");
 	minoCumAddiction(10);
 	monster.short = "tit-fucked Minotaur";
+	monster.drop = new ChainedDrop(consumables.MINOCUM);
 	player.orgasm();
 	dynStats("sen", .5, "cor", .7);
 	cleanupAfterCombat();

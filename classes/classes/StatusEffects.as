@@ -1,10 +1,16 @@
 package classes
 {
-import classes.StatusEffects.Combat.*;
-import classes.StatusEffects.CombatStatusEffect;
-import classes.StatusEffects.VampireThirstEffect;
 
-/**
+	import classes.Scenes.Combat.Combat;
+	import classes.Scenes.Combat.CombatAction;
+	import classes.Scenes.Combat.CombatKiPowers;
+	import classes.StatusEffects.Combat.*;
+	import classes.StatusEffects.CombatStatusEffect;
+	import classes.StatusEffects.KnowledgeStatusEffect;
+	import classes.StatusEffects.VampireThirstEffect;
+	import classes.internals.Utils;
+
+	/**
 	 * IMPORTANT NOTE:
 	 * You can rename the constants BUT NOT the string ids (they are stored in saves).
 	 */
@@ -112,28 +118,121 @@ import classes.StatusEffects.VampireThirstEffect;
 		public static const KnowsBlizzard:StatusEffectType                  = mk("Knows Blizzard");
 		public static const KnowsCharge:StatusEffectType                    = mk("Knows Charge");//Charge Weapon
 		public static const KnowsChargeA:StatusEffectType                   = mk("Knows Charge Armor");
-		public static const KnowsComet:StatusEffectType                     = mk("Knows Comet");
+		public static const KnowsComet:StatusEffectType                     = mkKnowledge("Knows Comet",
+			new CombatAction("Comet", 60, CombatAction.KiAction, Combat.HPSPELL, "Project a shard of ki, which will come crashing down upon your opponent as a crystalline comet.")
+					.customDamage(Utils.curry(CombatKiPowers.kiDamage,CombatKiPowers.MAGICAL))
+					.disablingStatus(OniRampage, "You are too angry to think straight. Smash your puny opponents first and think later.")
+					.startText("You focus for a moment, projecting a fragment of your ki above you.  A moment later, a prismatic comet crashes down on your opponents [monster a][monster name], shattering into thousands of fragments that shower anything and everything around you.")
+					.enableDodge("the comet fragments")
+					.hitText("The comet fragments hit [monster a][monster name]!")
+					.addCustomAction(function(host:Creature, target:Creature, damage:Number, crit:Boolean):Number{
+						if((target as Monster).plural){damage *= 5;}
+						return damage;
+					})
+		);
 		public static const KnowsDarknessShard:StatusEffectType             = mk("Knows Darkness Shard");
-		public static const KnowsDracoSweep:StatusEffectType                = mk("Knows Draco Sweep");
-		public static const KnowsEarthStance:StatusEffectType               = mk("Knows Earth Stance");
-		public static const KnowsFirePunch:StatusEffectType                 = mk("Knows Fire Punch");
+		public static const KnowsDracoSweep:StatusEffectType                = mkKnowledge("Knows Draco Sweep",
+			new CombatAction("Draco Sweep", 50, CombatAction.KiAction, Combat.PHYSICAL, "Use a little bit of ki to infuse your weapon and then sweep ahead hitting as many enemies as possible.")
+					.customDamage(Utils.curry(CombatKiPowers.kiDamage,CombatKiPowers.PHYSICAL))
+					.startText("You ready your [weapon] and prepare to sweep it towards [monster a][monster name].")
+					.enableDodge("your attack")
+					.rageEnabled()
+					.hitText("Your [weapon] sweeps against [monster a][monster name]!")
+					.addCustomAction(function(host:Creature, target:Creature, damage:Number, crit:Boolean):Number{
+						if((target as Monster).plural){damage *= 5;}
+						return damage;
+					})
+		);
+		public static const KnowsEarthStance:StatusEffectType               = mkKnowledge("Knows Earth Stance",
+			new CombatAction("Earth Stance", 30, CombatAction.KiAction, 0, "Take on the stability and strength of the earth gaining 30% damage reduction for the next 3 rounds.")
+					.addStatus(EarthStance, 3, true)
+					.startText("Your body suddenly hardens like rock. You will be way harder to damage for a while.")
+					.setCooldown(10)
+		);
+		public static const KnowsFirePunch:StatusEffectType                 = mkKnowledge("Knows Fire Punch",
+			new CombatAction("Fire Punch", 30, CombatAction.KiAction,  Combat.HPSPELL, "Ignite your opponents dealing fire damage and setting them ablaze.")
+					.customDamage(Utils.curry(CombatKiPowers.kiDamage,CombatKiPowers.UNARMED))
+					.addStatus(FirePunchBurnDoT, 16)
+					.hitText("Setting your fist ablaze, you rush at [monster a] [monster name] and scorch [monster him] with your searing flames.")
+					.disableWhen(function(host:Creature):Boolean{return !host.isFistOrFistWeapon()}, "<b>Your current used weapon not allow to use this technique.</b>")
+					.disablingPerk(PerkLib.ColdAffinity, "Try as you want, you can’t call on the power of this technique due to your close affinity to cold.")
+		);
 		public static const KnowsFireStorm:StatusEffectType                 = mk("Knows Fire Storm");
 		public static const KnowsHeal:StatusEffectType                      = mk("Knows Heal");
-		public static const KnowsHurricaneDance:StatusEffectType            = mk("Knows Hurricane Dance");
-		public static const KnowsIceFist:StatusEffectType                   = mk("Knows Ice Fist");
+		public static const KnowsHurricaneDance:StatusEffectType            = mkKnowledge("Knows Hurricane Dance",
+			new CombatAction("Hurricane Dance", 30, CombatAction.KiAction, 0, "Take on the aspect of the wind dodging attacks with aerial graces for a time.")
+					.startText("Your movement becomes more fluid and precise, increasing your speed and evasion.")
+					.addStatus(HurricaneDance, 5, true)
+					.setCooldown(10)
+		);
+		public static const KnowsIceFist:StatusEffectType                   = mkKnowledge("Knows Ice Fist",
+			new CombatAction("Ice Fist", 30, CombatAction.KiAction, Combat.HPSPELL, "A chilling strike that can freeze an opponent solid, leaving it vulnerable to shattering soul art and hindering its movement.")
+					.disablingPerk(PerkLib.FireAffinity,"Try as you want, you can’t call on the power of this technique due to your close affinity to fire.")
+					.customDamage(Utils.curry(CombatKiPowers.kiDamage,CombatKiPowers.UNARMED))
+					.hitText("Air seems to lose all temperature around your fist as you dash at [monster a][monster name] and shove your palm on [monster him], [monster his] body suddenly is frozen solid, encased in a thick block of ice!")
+					.addCustomAction(function(host:Creature, target:Creature, damage:Number, crit:Boolean):Number{
+						target.createOrFindStatusEffect(StatusEffects.Frozen);
+						var spdmod:int = Utils.boundInt(0, target.spe, 20);
+						target.addStatusValue(StatusEffects.Frozen, 1, spdmod);
+						target.spe -= spdmod;
+						return damage;
+					})
+					.stunAttempt(2)
+		);
 		public static const KnowsIceRain:StatusEffectType                   = mk("Knows Ice Rain");
 		public static const KnowsIceSpike:StatusEffectType                  = mk("Knows Ice Spike");
 		public static const KnowsLightningBolt:StatusEffectType             = mk("Knows Lightning Bolt");
-		public static const KnowsManyBirds:StatusEffectType                 = mk("Knows Many Birds");
+		public static const KnowsManyBirds:StatusEffectType                 = mkKnowledge("Knows Many Birds",
+			new CombatAction("Many Birds", 10, CombatAction.KiAction, Combat.HPSPELL, "Project a figment of your ki as a crystal traveling at extreme speeds.")
+					.customDamage(Utils.curry(CombatKiPowers.kiDamage,CombatKiPowers.MAGICAL))
+					.disablingStatus(OniRampage, "You are too angry to think straight. Smash your puny opponents first and think later.")
+					.startText("[if(silly) You focus your ki, projecting it as an aura around you.  As you concentrate, dozens, hundreds, thousands of tiny, ethereal birds shimmer into existence.  As you raise your hand up, more and more appear, until the area around you and [monster a][monster name] is drowned in spectral flappy shapes." +
+							"| You thrust your hand outwards with deadly intent, and in the blink of an eye a crystal shoots towards [monster a][monster name].]")
+					.enableDodge("[if(silly) the birds|the crystal")
+					.hitText("[if(silly) You snap your fingers, and at once every bird lends their high pitched voice to a unified, glass shattering cry:\n\n\"<i>AAAAAAAAAAAAAAAAAAAAAAAAAAAAA</i>\"" +
+							"|Crystal hits [monster a][monster name]!]")
+
+		);
 		public static const KnowsManaShield:StatusEffectType                = mk("Knows Mana Shield");
 		public static const KnowsMight:StatusEffectType                     = mk("Knows Might");
 		public static const KnowsNosferatu:StatusEffectType                 = mk("Knows Nosferatu");
 		public static const KnowsOverlimit:StatusEffectType                 = mk("Knows Overlimit");
-		public static const KnowsPunishingKick:StatusEffectType	            = mk("Knows Punishing Kick");
+		public static const KnowsPunishingKick:StatusEffectType	            = mkKnowledge("Knows Punishing Kick",
+			new CombatAction("Punishing Kick", 30, CombatAction.KiAction, Combat.PHYSICAL, "A vicious kick that can daze an opponent, reducing its damage for a while.")
+					.customDamage(Utils.curry(CombatKiPowers.kiDamage,CombatKiPowers.UNARMED))
+					.disableWhen(function(host:Creature):Boolean{return !host.isBiped() || !host.isTaur()}, "<b>Your legs are not suited for this technique.</b>")
+					.setCooldown(10)
+					.hitText("You lash out with a devastating kick, knocking your opponent back and disorienting it. [monster a][monster name] will have a hard time recovering its balance for a while.")
+					.addStatus(PunishingKick, 5)
+		);
 		public static const KnowsRegenerate:StatusEffectType                = mk("Knows Regenerate");
 		public static const KnowsSidewinder:StatusEffectType                = mk("Knows Sidewinder");
-		public static const KnowsSoulBlast:StatusEffectType                 = mk("Knows Soul Blast");
-		public static const KnowsTripleThrust:StatusEffectType              = mk("Knows Triple Thrust");
+		public static const KnowsSoulBlast:StatusEffectType                 = mkKnowledge("Knows Soul Blast",
+			new CombatAction("Soul Blast", 100, CombatAction.KiAction, Combat.HPSPELL, "Take in your reserve of soul force to unleash a torrent of devastating energy and obliterate your opponent.")
+					.customDamage(CombatKiPowers.SoulBlast)
+					.setCooldown(15)
+					.hitText("You wave the sign of the gate, tiger and serpent as you unlock all of your ki for an attack. [monster A][monster name] can’t figure out what you are doing until a small sphere of energy explodes at the end of your fist in a massive beam of condensed ki.")
+					.stunAttempt(3)
+		);
+		public static const KnowsTripleThrust:StatusEffectType              = mkKnowledge("Knows Triple Thrust",
+			new CombatAction("Triple Thrust", 30, CombatAction.KiAction, Combat.PHYSICAL, "Use a little bit of ki to infuse your weapon and thrust three times toward your enemy.")
+					.customDamage(Utils.curry(CombatKiPowers.kiDamage,CombatKiPowers.PHYSICAL))
+					.startText("You ready your [weapon] and prepare to thrust it towards [monster a][monster name].")
+					.enableDodge("your attack")
+					.rageEnabled()
+					.addCustomAction(function(host:Creature, target:Creature, damage:Number, crit:Boolean):Number{
+						if (target.hasStatusEffect(Frozen)) {
+							damage *= 2;
+							target.spe += target.statusEffectv1(Frozen);
+							target.removeStatusEffect(Frozen);
+							EngineCore.outputText("Your [weapon] hits the ice in three specific points, making it explode along with your frozen adversary!");
+						} else {
+							EngineCore.outputText("Your [weapon] hits thrice against [monster a][monster name]!");
+						}
+						damage *= 3;
+						return damage;
+					})
+		);
 		public static const KnowsVioletPupilTransformation:StatusEffectType = mk("Knows Violet Pupil Transformation");
 		public static const KnowsWereBeast:StatusEffectType                 = mk("Knows Were-Beast");
 		public static const KnowsWhitefire:StatusEffectType                 = mk("Knows Whitefire");
@@ -334,12 +433,10 @@ import classes.StatusEffects.VampireThirstEffect;
 		public static const WhipReady:StatusEffectType          = mk("Whip Ready");
 		
 		//metamorph
-		public static const UnlockedFur:StatusEffectType				 = mk("Unlocked Fur");//użyć fox fur lub inne skin tf scene text
+		public static const UnlockedFur:StatusEffectType				 = mk("Unlocked Fur");
 		public static const UnlockedScales:StatusEffectType				 = mk("Unlocked Scales");
 		public static const UnlockedChitin:StatusEffectType				 = mk("Unlocked Chitin");
 		public static const UnlockedDragonScales:StatusEffectType		 = mk("Unlocked Dragon Scales");
-	//	public static const Unlocked:StatusEffectType = mk("Unlocked ");//pozostałe typy skóry tutaj a także partial skin types
-	//	public static const Unlocked:StatusEffectType = mk("Unlocked ");//pozostałe typy skóry tutaj a także partial skin types
 		public static const UnlockedTattoed:StatusEffectType			 = mk("Unlocked Tattoed");
 		public static const UnlockedBattleTattoed:StatusEffectType		 = mk("Unlocked Battle Tattoed");
 		public static const UnlockedLightningTattoed:StatusEffectType	 = mk("Unlocked Lightning Tattoed");
@@ -394,10 +491,6 @@ import classes.StatusEffects.VampireThirstEffect;
 		public static const UnlockedSharkLegs:StatusEffectType           = mk("Unlocked Shark Legs");
 		public static const UnlockedSharkArms:StatusEffectType           = mk("Unlocked Shark Arms");
 		public static const UnlockedSharkFin:StatusEffectType            = mk("Unlocked Shark Fin");
-	//	public static const UnlockedGoo:StatusEffectType = mk("Unlocked Goo ");
-	//	public static const UnlockedGoo:StatusEffectType = mk("Unlocked Goo ");
-	//	public static const UnlockedGoo:StatusEffectType = mk("Unlocked Goo/Siren ");
-	//	public static const UnlockedGoo:StatusEffectType = mk("Unlocked Goo/Siren ");
 		public static const UnlockedDraconicX2:StatusEffectType 		 = mk("Unlocked Draconic Horns");
 		public static const UnlockedDraconicX4:StatusEffectType 		 = mk("Unlocked Draconic Horns (2nd pair)");
 		public static const UnlockedFoxTail7th:StatusEffectType 		 = mk("Unlocked Fox Tail 7th");
@@ -472,9 +565,6 @@ import classes.StatusEffects.VampireThirstEffect;
 		public static const UnlockedRaijuEars:StatusEffectType			 = mk("Unlocked Raiju Ears");
 		public static const UnlockedRaijuEyes:StatusEffectType			 = mk("Unlocked Raiju Eyes");
 		public static const UnlockedRaijuHair:StatusEffectType			 = mk("Unlocked Raiju Hair");
-	//	public static const Unlocked:StatusEffectType = mk("Unlocked ");
-	//	public static const Unlocked:StatusEffectType = mk("Unlocked ");
-	//	public static const Unlocked:StatusEffectType = mk("Unlocked ");
 
 		// universal combat debuffs
 
@@ -602,7 +692,6 @@ import classes.StatusEffects.VampireThirstEffect;
 		public static const CooldownCompellingAria:StatusEffectType     = mkCombat("Cooldown Compelling Aria");
 		public static const CooldownCumCannon:StatusEffectType          = mkCombat("Cooldown Cum Cannon");
 		public static const CooldownCursedRiddle:StatusEffectType       = mkCombat("Cooldown Cursed Riddle");
-		public static const CooldownEarthStance:StatusEffectType        = mkCombat("Cooldown Earth Stance");
 		public static const CooldownEAspectAir:StatusEffectType         = mkCombat("Cooldown Elemental Aspect Air");
 		public static const CooldownEAspectEarth:StatusEffectType       = mkCombat("Cooldown Elemental Aspect Earth");
 		public static const CooldownEAspectFire:StatusEffectType        = mkCombat("Cooldown Elemental Aspect Fire");
@@ -618,18 +707,15 @@ import classes.StatusEffects.VampireThirstEffect;
 		public static const CooldownFascinate:StatusEffectType          = mkCombat("Cooldown Fascinate");
 		public static const CooldownFreezingBreath:StatusEffectType     = mkCombat("Cooldown Freezing Breath (F)");
 		public static const CooldownFreezingBreathYeti:StatusEffectType = mkCombat("Cooldown Freezing Breath (Y)");
-		public static const CooldownHurricaneDance:StatusEffectType     = mkCombat("Cooldown Hurricane Dance");
 		public static const CooldownIllusion:StatusEffectType           = mkCombat("Cooldown Illusion");
 		public static const CooldownInkSpray:StatusEffectType           = mkCombat("Cooldown Ink Spray");
 		public static const CooldownKick:StatusEffectType               = mkCombat("Cooldown Kick");
 		public static const CooldownMilkBlast:StatusEffectType          = mkCombat("Cooldown Milk Blast");
 		public static const CooldownOniRampage:StatusEffectType         = mkCombat("Cooldown Oni Rampage");
 		public static const CooldownPhoenixFireBreath:StatusEffectType  = mkCombat("Cooldown Phoenix Fire Breath");
-		public static const CooldownPunishingKick:StatusEffectType      = mkCombat("Cooldown Punishing Kick");
 		public static const CooldownSecondWind:StatusEffectType         = mkCombat("Cooldown Second Wind");
 		public static const CooldownSideWinder:StatusEffectType         = mkCombat("Cooldown Sidewinder");
 		public static const CooldownSonicScream:StatusEffectType        = mkCombat("Cooldown Sonic scream");
-		public static const CooldownSoulBlast:StatusEffectType          = mkCombat("Cooldown Soul Blast");
 		public static const CooldownStoneClaw:StatusEffectType          = mkCombat("Cooldown Stone Claw");
 		public static const CooldownTailSlam:StatusEffectType           = mkCombat("Cooldown Tail Slam");
 		public static const CooldownTailSmack:StatusEffectType          = mkCombat("Cooldown Tail Smack");
@@ -656,8 +742,6 @@ import classes.StatusEffects.VampireThirstEffect;
 		public static const LethicesShell:StatusEffectType         = mkCombat("Lethices Magic Shell");
 		public static const WhipSilence:StatusEffectType           = mkCombat("Whip Silence");
 		public static const PigbysHands:StatusEffectType           = mkCombat("Pigbys Hands");
-		public static const SoulArena:StatusEffectType             = mkCombat("Soul Arena");
-		public static const SoulArenaGaunlet:StatusEffectType      = mkCombat("Soul Arena Gaunlet");
 
 		/**
 		 * Creates status affect
@@ -672,6 +756,18 @@ import classes.StatusEffects.VampireThirstEffect;
 		private static function mkCombat(id:String):StatusEffectType
 		{
 			return new StatusEffectType(id,CombatStatusEffect,1);
+		}
+
+		/**
+		 * Creates an knowledge status effect type, which unlocks a combat action when given to a creature
+		 * @param id perk ID
+		 * @param action CombatAction to unlock when this status is gained
+		 * @return
+		 */
+		private static function mkKnowledge(id:String, action:CombatAction):StatusEffectType{
+			var stype:StatusEffectType =  new StatusEffectType(id,KnowledgeStatusEffect,1);
+			KnowledgeStatusEffect.registerAction(stype, action);
+			return stype;
 		}
 	}
 }

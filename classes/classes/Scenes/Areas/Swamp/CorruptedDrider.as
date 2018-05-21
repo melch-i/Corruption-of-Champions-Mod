@@ -130,8 +130,7 @@ import classes.internals.*;
 
 		override public function defeated(hpVictory:Boolean):void
 		{
-			if (player.hasStatusEffect(StatusEffects.SoulArenaGaunlet)) SceneLib.telAdre.arena.gaunletchallange2fight4();
-			else SceneLib.swamp.corruptedDriderScene.defeatDriderIntro();
+			SceneLib.swamp.corruptedDriderScene.defeatDriderIntro();
 		}
 
 		override public function won(hpVictory:Boolean, pcCameWorms:Boolean):void

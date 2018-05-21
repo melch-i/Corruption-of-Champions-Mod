@@ -843,7 +843,7 @@ public function saveGameObject(slot:String, isFile:Boolean):void
 		saveFile.data.cor = player.cor;
 		saveFile.data.fatigue = player.fatigue;
 		saveFile.data.mana = player.mana;
-		saveFile.data.soulforce = player.soulforce;
+		saveFile.data.ki = player.ki;
 		saveFile.data.wrath = player.wrath;
 		//Combat STATS
 		saveFile.data.HP = player.HP;
@@ -1521,7 +1521,7 @@ public function loadGameObject(saveData:Object, slot:String = "VOID"):void
 		player.cor = saveFile.data.cor;
 		player.fatigue = saveFile.data.fatigue;
 		player.mana = saveFile.data.mana;
-		player.soulforce = saveFile.data.soulforce;
+		player.ki = saveFile.data.ki;
 		player.wrath = saveFile.data.wrath;
 
 		//CLOTHING/ARMOR
@@ -2188,8 +2188,8 @@ public function loadGameObject(saveData:Object, slot:String = "VOID"):void
 			}
 		}
 
-		//Set soulforce
-		if (saveFile.data.soulforce == undefined) player.soulforce = 25;
+		//Set ki
+		if (saveFile.data.ki == undefined) player.ki = 25;
 		//Set wisdom
 		if (saveFile.data.wis == undefined) player.wis = 15;
 		//Set wrath

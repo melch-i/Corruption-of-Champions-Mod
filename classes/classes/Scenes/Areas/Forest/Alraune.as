@@ -13,8 +13,16 @@ import classes.Scenes.SceneLib;
 import classes.internals.ChainedDrop;
 import classes.display.SpriteDb;
 
-public class Alraune extends Monster
+	import flash.display.Scene;
+
+	public class Alraune extends Monster
 	{
+
+		override public function handleWait():Object {
+			alrauneWait();
+			return false;
+		}
+
 		public function trapLevel(adjustment:Number = 0):Number {
 			if(!hasStatusEffect(StatusEffects.Level)) createStatusEffect(StatusEffects.Level,6,0,0,0);
 			if(adjustment != 0) {
@@ -141,7 +149,36 @@ public class Alraune extends Monster
 		{
 			SceneLib.forest.alrauneScene.alrauneDeepwoodsLost();
 		}
-		
+
+		override public function get long():String {
+			var text:String = super.long + "\n\n";
+			var level:int = statusEffectv1(StatusEffects.Level);
+			switch(level){
+				case 6:
+				case 5:
+					text += "The [monster name] keeps pulling you ever closer. You are a fair distance from her for now but she keeps drawing you in.";
+					break;
+				case 4:
+					text += "The [monster name] keeps pulling you ever closer. You are getting dangerously close to her.";
+					break;
+				default:
+					text += "The [monster name] keeps pulling you ever closer. You are almost in the pitcher, the "
+					text += Holidays.isHalloween()? "pumpkin" : "plant";
+					text += " woman smiling and waiting with open arms to help you in. [b: You need to get some distance or you will be grabbed and drawn inside her flower!]"
+			}
+			text += " You could try attacking it with your [weapon], but that will carry you straight to the pitcher.  Alternately, you could try to tease it or hit it at range.";
+			return text;
+		}
+
+		override public function endRoundChecks():Function {
+			var res:Function = super.endRoundChecks();
+			if (res != null) {return res;}
+			if (trapLevel() <= 1) {
+				return SceneLib.forest.alrauneScene.alrauneDeepwoodsLost
+			}
+			return null;
+		}
+
 		public function Alraune() 
 		{
 			super();
@@ -190,7 +227,7 @@ public class Alraune extends Monster
 			this.createPerk(PerkLib.Regeneration, 0, 0, 0, 0);
 			this.createPerk(PerkLib.FireVulnerability, 0, 0, 0, 0);
 			this.createPerk(PerkLib.EnemyPlantType, 0, 0, 0, 0);
-			this.createStatusEffect(StatusEffects.GenericRunDisabled, 0, 0, 0, 0);
+			this.onPcRunAttempt = genericPcRunDisabled;
 			createStatusEffect(StatusEffects.Level,4,0,0,0);
 			checkMonster();
 		}

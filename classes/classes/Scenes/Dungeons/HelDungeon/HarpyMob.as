@@ -9,6 +9,22 @@ import classes.Scenes.SceneLib;
 
 public class HarpyMob extends Monster
 	{
+
+		override public function handleWait():Object {
+			if (player.hasStatusEffect(StatusEffects.HarpyBind)) {
+				outputText("The brood continues to hammer away at your defenseless self. ");
+				var damage:int = 80 + rand(40);
+				player.takePhysDamage(damage, true);
+				return true;
+			}
+			return super.handleWait();
+		}
+
+		public override function handleStruggle():Boolean {
+			harpyHordeGangBangStruggle();
+			return true;
+		}
+
 		public function harpyHordeAI():void {
 			if(rand(3) == 0) harpyHordeLustAttack();
 			else if(rand(3) > 0) harpyHordeClawFlurry();

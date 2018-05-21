@@ -3,8 +3,16 @@
  */
 package classes {
 import classes.BodyParts.*;
+import classes.BodyParts.Ears;
+import classes.BodyParts.Eyes;
+import classes.BodyParts.Hair;
+import classes.BodyParts.LowerBody;
+import classes.BodyParts.RearBody;
+import classes.BodyParts.Skin;
+import classes.BodyParts.Tongue;
 import classes.internals.Utils;
 import classes.lists.BreastCup;
+import classes.lists.Gender;
 import classes.lists.Gender;
 
 /**
@@ -109,39 +117,39 @@ public class Race {
 	public static function ExplainMetricValue(metric:String, value:*):String {
 		switch (metric) {
 			case 'skin'           :
-				return Appearance.DEFAULT_SKIN_NAMES[value].toLowerCase();
+				return Skin.Types[value].name;
 			case 'skin.coverage'  :
-				return ["none", "low", "medium", "high", "complete"][value];
+				return ["no", "partial", "medium", "high", "complete"]+" coat";
 			case 'skin.coat'      :
-				return Appearance.DEFAULT_SKIN_DESCS[value];
+				return Skin.Types[value].name+" coat";
 			case 'hair'           :
-				return Appearance.DEFAULT_HAIR_NAMES[value];
+				return Hair.Types[value].name+" hair";
 			case 'face'           :
-				return Appearance.DEFAULT_FACE_NAMES[value];
+				return Face.Types[value].name;
 			case 'eyes'           :
-				return Appearance.DEFAULT_EYES_NAMES[value];
+				return Eyes.Types[value].name+" eyes";
 			case 'ears'           :
-				return Appearance.DEFAULT_EARS_NAMES[value];
+				return Ears.Types[value].name+" ears";
 			case 'tongue'         :
-				return Appearance.DEFAULT_TONGUE_NAMES[value];
+				return Tongue.Types[value].name+" tongue";
 			case 'gills'          :
-				return Appearance.DEFAULT_GILL_NAMES[value];
+				return Gills.Types[value].name;
 			case 'antennae'       :
-				return Appearance.DEFAULT_ANTENNAE_NAMES[value];
+				return Antennae.Types[value].name+" antennae";
 			case 'horns'          :
-				return Appearance.DEFAULT_HORNS_NAMES[value];
+				return Horns.Types[value].name+" horns";
 			case 'arms'           :
-				return Appearance.DEFAULT_ARM_NAMES[value];
+				return Arms.Types[value].name + " arms";
 			case 'legs'           :
-				return Appearance.DEFAULT_LOWER_BODY_NAMES[value];
+				return LowerBody.Types[value].name + " legs";
 			case 'wings'          :
-				return Appearance.DEFAULT_WING_NAMES[value];
+				return Wings.Types[value].name + " desc";
 			case 'tail'           :
-				return Appearance.DEFAULT_TAIL_NAMES[value];
+				return Tail.Types[value].name+" tail";
 			case 'rear'           :
-				return Appearance.DEFAULT_REAR_BODY_NAMES[value];
+				return RearBody.Types[value].name;
 			case 'gender'         :
-				return Appearance.DEFAULT_GENDER_NAMES[value];
+				return Gender.Values[value].name;
 			case 'skin.tone'      :
 			case 'skin.adj'       :
 			case 'skin.coat.color':
@@ -166,7 +174,7 @@ public class Race {
 	public static const BonusName_maxlust:String      = 'maxlust';
 	public static const BonusName_maxhp:String        = 'maxhp';
 	public static const BonusName_maxfatigue:String   = 'maxfatigue';
-	public static const BonusName_maxsoulforce:String = 'maxsoulforce';
+	public static const BonusName_maxki:String        = 'maxki';
 	public static const BonusName_defense:String      = 'defense';
 	public static const BonusNames:/*String*/Array    = [
 		BonusName_maxstr,
@@ -180,7 +188,7 @@ public class Race {
 		BonusName_maxlust,
 		BonusName_maxhp,
 		BonusName_maxfatigue,
-		BonusName_maxsoulforce,
+		BonusName_maxki,
 		BonusName_defense
 	];
 
@@ -411,10 +419,10 @@ public class Race {
 					}
 			).withBonusTier(6, {
 				'maxfatigue'  : +50,
-				'maxsoulforce': +150
+				'maxki': +150
 			}).withBonusTier(11, {
 				'maxfatigue'  : 50,
-				'maxsoulforce': +150,
+				'maxki': +150,
 				'maxhp'       : +150,
 				'maxtou'      : +25,
 				'maxspe'      : +50,
@@ -2529,13 +2537,13 @@ public class Race {
 					}
 			).withBonusTier(5, {
 				'maxfatigue'  : +20,
-				'maxsoulforce': +50
+				'maxki': +50
 			}).withBonusTier(9, {
 				'maxtou'      : +20,
 				'maxspe'      : +40,
 				'maxint'      : +75,
 				'maxfatigue'  : +20,
-				'maxsoulforce': +50,
+				'maxki': +50,
 				'maxhp'       : +120
 			});
 

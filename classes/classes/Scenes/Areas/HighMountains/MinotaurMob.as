@@ -113,22 +113,30 @@ import classes.Scenes.SceneLib;
 		}
 		//Waste  a turn
 		private function minotaurGangWaste():void {
-			flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00329] = 1;
+			turnWasting = true;
 			game.spriteSelect(94);
 			outputText("\"<i>Oh man I can't wait to go hilt-deep in that pussy... I'm going to wreck " + player.mf("him", "her") + ",</i>\" promises one bull to his brother.  The other laughs and snorts, telling him how he'll have to do the deed during sloppy seconds.  It quickly escalates, and soon, every single one of the beast-men is taunting the others, bickering over how and when they'll get to have you.  While they're wasting their time, it's your chance to act!");
 		}
-
+		private var turnWasting:Boolean = false;
 		override public function doAI():void
 		{
 			game.spriteSelect(94);
-			flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00329] = 0;
+			turnWasting = false;
 			var select:Number = rand(7);
 			if(select <= 2) precumTease();
 			else if(select <= 4) minotaurGangGropeAttack();
 			else if(select == 5) minotaurGangGangGropeAttack();
 			else minotaurGangWaste();
 		}
-
+		private function onPCRun():void{
+			if(turnWasting){
+				SceneLib.combat.runSucceed("You slink away while the pack of brutes is arguing.  Once they finish that argument, they'll be sorely disappointed!");
+			} else if (short == "minotaur tribe" && HPRatio() >= 0.75) {
+				SceneLib.combat.runFail("There's too many of them surrounding you to run!");
+			} else {
+				SceneLib.combat.runAway(false);
+			}
+		}
 
 		override public function defeated(hpVictory:Boolean):void
 		{
@@ -201,6 +209,7 @@ import classes.Scenes.SceneLib;
 			this.drop = NO_DROP;
 			this.createPerk(PerkLib.EnemyGroupType, 0, 0, 0, 0);
 			this.createPerk(PerkLib.EnemyBeastOrAnimalMorphType, 0, 0, 0, 0);
+			this.onPcRunAttempt = onPCRun;
 			checkMonster();
 		}
 	}

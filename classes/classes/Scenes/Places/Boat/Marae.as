@@ -1,10 +1,11 @@
 package classes.Scenes.Places.Boat 
 {
-import classes.*;
-import classes.GlobalFlags.*;
-import classes.Scenes.SceneLib;
 
-public class Marae extends Monster
+	import classes.*;
+	import classes.GlobalFlags.*;
+	import classes.Scenes.SceneLib;
+
+	public class Marae extends Monster
 	{
 		
 		//Corrupted Marae's specials
@@ -111,6 +112,17 @@ public class Marae extends Monster
 				if (chooser >= 7 && chooser < 10) tentacleRape();
 			}
 		}
+
+		private function onPCRun(): void {
+			var text:String = "Your boat is blocked by tentacles! ";
+			if (player.canFly()) {
+				text += "You grit your teeth with effort as you try to fly away but the tentacles suddenly grab your [legs] and pull you down. ";
+			} else {
+				text += "You may not be able to swim fast enough. ";
+			}
+			text += "It looks like you cannot escape. ";
+			SceneLib.combat.runFail(text,true);
+		}
 		
 		public function Marae() 
 		{
@@ -176,10 +188,11 @@ public class Marae extends Monster
 			this.level = 99;
 			this.drop = NO_DROP;
 			this.gems = 1000;
-			this.createPerk(PerkLib.TankI, 0, 0, 0, 0);
+			this.createPerk(PerkLib.Tank, 0, 0, 0, 0);
 			this.createPerk(PerkLib.Regeneration, 0, 0, 0, 0);
 			this.createPerk(PerkLib.EnemyBossType, 0, 0, 0, 0);
 			this.createPerk(PerkLib.EnemyGodType, 0, 0, 0, 0);
+			this.onPcRunAttempt = onPCRun;
 			checkMonster();
 		}
 		

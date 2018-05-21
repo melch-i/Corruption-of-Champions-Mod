@@ -1,11 +1,11 @@
 ﻿package classes 
 {
-import classes.BodyParts.Face;
-import classes.BodyParts.Tail;
-import classes.GlobalFlags.kFLAGS;
-import classes.Items.JewelryLib;
 
-/**
+	import classes.GlobalFlags.kFLAGS;
+	import classes.Items.JewelryLib;
+	import classes.lists.Gender;
+
+	/**
 	 * Character class for player and NPCs. Has subclasses Player and NonPlayer.
 	 * @author Yoffy
 	 */
@@ -170,64 +170,34 @@ import classes.Items.JewelryLib;
 		public function fixFemininity():String
 		{
 			var output:String = "";
-			//Genderless/herms share the same bounds
-			if (gender == 0 || gender == 3)
-			{
-				if (femininity < 20)
-				{
-					output += "\n<b>Your incredibly masculine, chiseled features become a little bit softer from your body's changing hormones.";
-					/*if (hasBeard())
-					{
-						output += "  As if that wasn't bad enough, your " + beard() + " falls out too!";
-						beardLength = 0;
-						beardStyle = 0;
-					}*/
-					output += "</b>\n";
-					femininity = 20;
-				}
-				else if (femininity > 85)
-				{
-					output += "\n<b>You find your overly feminine face loses a little bit of its former female beauty due to your body's changing hormones.</b>\n";
-					femininity = 85;
-				}
+			var fem:String = "\n<b>You find your overly feminine face loses a little bit of its former female beauty due to your body's changing hormones.</b>\n";
+			var mas:String = "\n<b>Your incredibly masculine, chiseled features become a little bit softer from your body's changing hormones.</b>\n";
+			switch (gender) {
+				case Gender.GENDER_NONE: //Genderless/herms share the same bounds
+				case Gender.GENDER_HERM:
+					if (femininity < 20) {
+						output += mas;
+						femininity = 20;
+					} else if (femininity > 85) {
+						output += fem;
+						femininity = 85;
+					}
+					break;
+
+				case Gender.GENDER_FEMALE:
+					if (femininity < 30) {
+						output += mas;
+						femininity = 30;
+					}
+					break;
+
+				case Gender.GENDER_MALE:
+					if (femininity > 70) {
+						output += fem;
+						femininity = 70;
+					}
+					break;
 			}
-			//GURLS!
-			else if (gender == 2)
-			{
-				if (femininity < 30)
-				{
-					output += "\n<b>Your incredibly masculine, chiseled features become a little bit softer from your body's changing hormones.";
-					/*if (hasBeard())
-					{
-						output += "  As if that wasn't bad enough, your " + beard() + " falls out too!";
-						beardLength = 0;
-						beardStyle = 0;
-					}*/
-					output += "</b>\n";
-					femininity = 30;
-				}
-			}
-			//BOIZ!
-			else if (gender == 1)
-			{
-				if (femininity > 70)
-				{
-					output += "\n<b>You find your overly feminine face loses a little bit of its former female beauty due to your body's changing hormones.</b>\n";
-					femininity = 70;
-				}
-				/*if (femininity > 40 && hasBeard())
-				{
-					output += "\n<b>Your beard falls out, leaving you with " + faceDesc() + ".</b>\n";
-					beardLength = 0;
-					beardStyle = 0;
-				}*/
-			}
-			/*if (gender != 1 && hasBeard())
-			{
-				output += "\n<b>Your beard falls out, leaving you with " + faceDesc() + ".</b>\n";
-				beardLength = 0;
-				beardStyle = 0;
-			}*/
 			return output;
 		}
 
@@ -324,86 +294,9 @@ import classes.Items.JewelryLib;
 		//Create a keyItem
 		public function createKeyItem(keyName:String, value1:Number, value2:Number, value3:Number, value4:Number):void
 		{
-			var newKeyItem:KeyItemClass = new KeyItemClass();
-			//used to denote that the array has already had its new spot pushed on.
-			var arrayed:Boolean = false;
-			//used to store where the array goes
-			var keySlot:Number = 0;
-			var counter:Number = 0;
-			//Start the array if its the first bit
-			if (keyItems.length == 0)
-			{
-				//trace("New Key Item Started Array! " + keyName);
-				keyItems.push(newKeyItem);
-				arrayed = true;
-				keySlot = 0;
-			}
-			//If it belongs at the end, push it on
-			if (keyItems[keyItems.length - 1].keyName < keyName && !arrayed)
-			{
-				//trace("New Key Item Belongs at the end!! " + keyName);
-				keyItems.push(newKeyItem);
-				arrayed = true;
-				keySlot = keyItems.length - 1;
-			}
-			//If it belongs in the beginning, splice it in
-			if (keyItems[0].keyName > keyName && !arrayed)
-			{
-				//trace("New Key Item Belongs at the beginning! " + keyName);
-				keyItems.splice(0, 0, newKeyItem);
-				arrayed = true;
-				keySlot = 0;
-			}
-			//Find the spot it needs to go in and splice it in.
-			if (!arrayed)
-			{
-				//trace("New Key Item using alphabetizer! " + keyName);
-				counter = keyItems.length;
-				while (counter > 0 && !arrayed)
-				{
-					counter--;
-					//If the current slot is later than new key
-					if (keyItems[counter].keyName > keyName)
-					{
-						//If the earlier slot is earlier than new key && a real spot
-						if (counter - 1 >= 0)
-						{
-							//If the earlier slot is earlier slot in!
-							if (keyItems[counter - 1].keyName <= keyName)
-							{
-								arrayed = true;
-								keyItems.splice(counter, 0, newKeyItem);
-								keySlot = counter;
-							}
-						}
-						//If the item after 0 slot is later put here!
-						else
-						{
-							//If the next slot is later we are go
-							if (keyItems[counter].keyName <= keyName)
-							{
-								arrayed = true;
-								keyItems.splice(counter, 0, newKeyItem);
-								keySlot = counter;
-							}
-						}
-					}
-				}
-			}
-			//Fallback
-			if (!arrayed)
-			{
-				//trace("New Key Item Belongs at the end!! " + keyName);
-				keyItems.push(newKeyItem);
-				keySlot = keyItems.length - 1;
-			}
-			
-			keyItems[keySlot].keyName = keyName;
-			keyItems[keySlot].value1 = value1;
-			keyItems[keySlot].value2 = value2;
-			keyItems[keySlot].value3 = value3;
-			keyItems[keySlot].value4 = value4;
-			//trace("NEW KEYITEM FOR PLAYER in slot " + keySlot + ": " + keyItems[keySlot].keyName);
+			var newKeyItem:KeyItemClass = new KeyItemClass(keyName, value1, value2, value3, value4);
+			keyItems.push(newKeyItem);
+			keyItems.sortOn("keyName");
 		}
 		
 		//Remove a key item
@@ -430,112 +323,55 @@ import classes.Items.JewelryLib;
 		
 		public function addKeyValue(statusName:String, statusValueNum:Number = 1, newNum:Number = 0):void
 		{
-			var counter:Number = keyItems.length;
-			//Various Errors preventing action
-			if (keyItems.length <= 0)
-			{
-				return;
-					//trace("ERROR: Looking for keyitem '" + statusName + "' to change value " + statusValueNum + ", and player has no key items.");
+			var kitem:KeyItemClass = getKeyItem(statusName);
+			if(!kitem){return;}
+			switch(statusValueNum){
+				case 1: kitem.value1 += newNum; break;
+				case 2: kitem.value2 += newNum; break;
+				case 3: kitem.value3 += newNum; break;
+				case 4: kitem.value4 += newNum; break;
+				default: return;
 			}
-			while (counter > 0)
-			{
-				counter--;
-				//Find it, change it, quit out
-				if (keyItems[counter].keyName == statusName)
-				{
-					if (statusValueNum < 1 || statusValueNum > 4)
-					{
-						//trace("ERROR: AddKeyValue called with invalid key value number.");
-						return;
-					}
-					if (statusValueNum == 1)
-						keyItems[counter].value1 += newNum;
-					if (statusValueNum == 2)
-						keyItems[counter].value2 += newNum;
-					if (statusValueNum == 3)
-						keyItems[counter].value3 += newNum;
-					if (statusValueNum == 4)
-						keyItems[counter].value4 += newNum;
-					return;
+		}
+		private function getKeyItem(keyName:String):KeyItemClass {
+			for (var i: int = keyItems.length - 1; i >= 0; i--) {
+				var keyItem: KeyItemClass = keyItems[i];
+				if(keyItem.keyName == keyName){
+					return keyItem;
 				}
 			}
-			//trace("ERROR: Looking for keyitem '" + statusName + "' to change value " + statusValueNum + ", and player does not have the key item.");
+			return null;
 		}
-		
+
+		public function keyItemVal(keyName:String, valIdx:int = 1):Number {
+			var kitem:KeyItemClass = getKeyItem(keyName);
+			if(!kitem){return 0;}
+			switch(valIdx){
+				case 1: return kitem.value1;
+				case 2: return kitem.value2;
+				case 3: return kitem.value3;
+				case 4: return kitem.value4;
+				default: return 0;
+			}
+		}
 		public function keyItemv1(statusName:String):Number
 		{
-			var counter:Number = keyItems.length;
-			//Various Errors preventing action
-			if (keyItems.length <= 0)
-			{
-				return 0;
-					//trace("ERROR: Looking for keyItem '" + statusName + "', and player has no key items.");
-			}
-			while (counter > 0)
-			{
-				counter--;
-				if (keyItems[counter].keyName == statusName)
-					return keyItems[counter].value1;
-			}
-			//trace("ERROR: Looking for key item '" + statusName + "', but player does not have it.");
-			return 0;
+			return keyItemVal(statusName, 1);
 		}
 		
 		public function keyItemv2(statusName:String):Number
 		{
-			var counter:Number = keyItems.length;
-			//Various Errors preventing action
-			if (keyItems.length <= 0)
-			{
-				return 0;
-					//trace("ERROR: Looking for keyItem '" + statusName + "', and player has no key items.");
-			}
-			while (counter > 0)
-			{
-				counter--;
-				if (keyItems[counter].keyName == statusName)
-					return keyItems[counter].value2;
-			}
-			//trace("ERROR: Looking for key item '" + statusName + "', but player does not have it.");
-			return 0;
+			return keyItemVal(statusName, 2);
 		}
 		
 		public function keyItemv3(statusName:String):Number
 		{
-			var counter:Number = keyItems.length;
-			//Various Errors preventing action
-			if (keyItems.length <= 0)
-			{
-				return 0;
-					//trace("ERROR: Looking for keyItem '" + statusName + "', and player has no key items.");
-			}
-			while (counter > 0)
-			{
-				counter--;
-				if (keyItems[counter].keyName == statusName)
-					return keyItems[counter].value3;
-			}
-			//trace("ERROR: Looking for key item '" + statusName + "', but player does not have it.");
-			return 0;
+			return keyItemVal(statusName, 3);
 		}
 		
 		public function keyItemv4(statusName:String):Number
 		{
-			var counter:Number = keyItems.length;
-			//Various Errors preventing action
-			if (keyItems.length <= 0)
-			{
-				return 0;
-					//trace("ERROR: Looking for keyItem '" + statusName + "', and player has no key items.");
-			}
-			while (counter > 0)
-			{
-				counter--;
-				if (keyItems[counter].keyName == statusName)
-					return keyItems[counter].value4;
-			}
-			//trace("ERROR: Looking for key item '" + statusName + "', but player does not have it.");
-			return 0;
+			return keyItemVal(statusName, 4);
 		}
 		
 		public function removeKeyItems():void
@@ -562,28 +398,7 @@ import classes.Items.JewelryLib;
 			}
 			return -1;
 		}
-		
-		//Grow
 
-		//BreastCup
-
-		/*OLD AND UNUSED
-		   public function breastCupS(rowNum:Number):String {
-		   if(breastRows[rowNum].breastRating < 1) return "tiny";
-		   else if(breastRows[rowNum].breastRating < 2) return "A";
-		   else if(breastRows[rowNum].breastRating < 3) return "B";
-		   else if(breastRows[rowNum].breastRating < 4) return "C";
-		   else if(breastRows[rowNum].breastRating < 5) return "D";
-		   else if(breastRows[rowNum].breastRating < 6) return "DD";
-		   else if(breastRows[rowNum].breastRating < 7) return "E";
-		   else if(breastRows[rowNum].breastRating < 8) return "F";
-		   else if(breastRows[rowNum].breastRating < 9) return "G";
-		   else if(breastRows[rowNum].breastRating < 10) return "GG";
-		   else if(breastRows[rowNum].breastRating < 11) return "H";
-		   else if(breastRows[rowNum].breastRating < 12) return "HH";
-		   else if(breastRows[rowNum].breastRating < 13) return "HHH";
-		   return "massive custom-made";
-		 }*/
 		public function viridianChange():Boolean
 		{
 			var count:int = cockTotal();
@@ -604,124 +419,6 @@ import classes.Items.JewelryLib;
 				return false;
 			return cocks[arg].hasKnot();
 		}
-		
-		public override function maxFatigue():Number
-		{
-			var max:Number = 150;
-			var ngMult:int = 1 + game.player.newGamePlusMod();
-			max += racialBonuses()[Race.BonusName_maxfatigue]*ngMult;
-			if (hasPerk(PerkLib.JobHunter)) max += 50;
-			if (hasPerk(PerkLib.JobRanger)) max += 5;
-			if (hasPerk(PerkLib.PrestigeJobArcaneArcher)) max += 600;
-			if (hasPerk(PerkLib.AscensionEndurance)) max += perkv1(PerkLib.AscensionEndurance) * 30;
-			if (jewelryEffectId == JewelryLib.MODIFIER_MP) max += jewelryEffectMagnitude;
-			max += level * 5;
-			if (hasPerk(PerkLib.AscensionUnlockedPotential)) max += level * 6;
-			if (max > 74999) max = 74999;
-			return max;
-		}
-		
-		public override function maxSoulforce():Number
-		{
-			var max:Number = 50;
-			var ngMult:int = 1 + game.player.newGamePlusMod();
-			max += racialBonuses()[Race.BonusName_maxsoulforce]*ngMult;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 2) max += 25;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 3) max += 25;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 4) max += 30;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 5) max += 30;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 6) max += 30;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 7) max += 40;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 8) max += 40;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 9) max += 40;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 10) max += 50;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 11) max += 50;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 12) max += 50;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 13) max += 60;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 14) max += 60;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 15) max += 60;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 16) max += 70;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 17) max += 70;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 18) max += 70;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 19) max += 80;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 20) max += 80;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 21) max += 80;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 22) max += 90;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 23) max += 90;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 24) max += 90;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 25) max += 100;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 26) max += 100;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 27) max += 100;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 28) max += 110;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 29) max += 110;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 30) max += 110;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 31) max += 120;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 32) max += 120;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 33) max += 120;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 34) max += 130;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 35) max += 130;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 36) max += 130;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 37) max += 140;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 38) max += 140;
-			if (flags[kFLAGS.SOUL_CULTIVATION] >= 39) max += 140;
-			if (hasPerk(PerkLib.AscensionSoulPurity)) max += perkv1(PerkLib.AscensionSoulPurity) * 50;
-			if (flags[kFLAGS.SOULFORCE_GAINED_FROM_CULTIVATING] > 0) max += flags[kFLAGS.SOULFORCE_GAINED_FROM_CULTIVATING];//+310
-			if (jewelryEffectId == JewelryLib.MODIFIER_SF) max += jewelryEffectMagnitude;//+20
-			if (hasPerk(PerkLib.AscensionUnlockedPotential2ndStage)) max += level * 6;
-			max = Math.round(max);
-			if (max > 139999) max = 139999;
-			return max;
-		}
-		
-		public override function maxWrath():Number
-		{
-			var max:Number = 250;
-			if (hasPerk(PerkLib.PrimalFuryI)) max += 10;
-			if (hasPerk(PerkLib.FeralArmor)) max += 20;
-			if (hasPerk(PerkLib.JobDervish)) max += 20;
-			if (hasPerk(PerkLib.JobWarrior)) max += 10;
-			if (hasPerk(PerkLib.Berzerker)) max += 100;
-			if (hasPerk(PerkLib.Lustzerker)) max += 100;
-			if (hasPerk(PerkLib.PrestigeJobBerserker)) max += 200;
-			if (hasPerk(PerkLib.Rage)) max += 300;
-			if (hasPerk(PerkLib.AscensionFury)) max += perkv1(PerkLib.AscensionFury) * 20;
-			if (hasPerk(PerkLib.AscensionUnlockedPotential2ndStage)) max += level * 2;
-			if (max > 20899) max = 20899;//obecnie max to 20890
-			return max;
-		}
-		
-		public override function maxMana():Number
-		{
-			var max:Number = 200;
-			if (hasPerk(PerkLib.Spellpower) && inte >= 50) max += 15;
-			if (hasPerk(PerkLib.JobSorcerer)) max += 15;
-			max = Math.round(max);
-			if (max > 184999) max = 184999;
-			return max;
-		}
-		
-		public function maxVenom():Number
-		{
-			var maxven:Number = 0;
-			if (game.player.faceType == Face.SNAKE_FANGS) maxven += 100;
-			if (game.player.faceType == Face.SPIDER_FANGS) maxven += 100;
-			if (game.player.tailType == Tail.BEE_ABDOMEN) maxven += 150;
-			if (game.player.tailType == Tail.SPIDER_ADBOMEN) maxven += 150;
-			if (game.player.tailType == Tail.SCORPION) maxven += 150;
-			if (game.player.tailType == Tail.MANTICORE_PUSSYTAIL) maxven += 200;
-			maxven = Math.round(maxven);
-			return maxven;
-		}
-		
-		public function maxHunger():Number
-		{
-			var max:Number = 100;
-			if (game.player.dragonScore() >= 20) max += 50;
-			if (game.player.dragonScore() >= 28) max += 50;
-			if (max > 1409) max = 1409;//obecnie max to 1360
-			return max;
-		}
-
 
 	}
 

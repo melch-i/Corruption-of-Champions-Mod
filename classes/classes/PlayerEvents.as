@@ -462,16 +462,6 @@ public class PlayerEvents extends BaseContent implements TimeAwareInterface {
 			if (flags[kFLAGS.GATS_ANGEL_TIME_TO_FIND_KEY] > 0 && flags[kFLAGS.GATS_ANGEL_TIME_TO_FIND_KEY] < 500) flags[kFLAGS.GATS_ANGEL_TIME_TO_FIND_KEY]++;
 
 if (CoC.instance.model.time.hours > 23) { //Once per day
-                if (flags[kFLAGS.STAT_GAIN_MODE] == CoC.STAT_GAIN_DAILY) {
-					if (player.level > player.statPoints) {
-						if (player.level < 6) player.statPoints = 15;
-						else if (player.level >= 6 && player.level < 12) player.statPoints = 18;
-						else if (player.level >= 12 && player.level < 18) player.statPoints = 21;
-						else if (player.level >= 18 && player.level < 24) player.statPoints = 24;
-						else player.statPoints = player.level;
-						camp.setLevelButton(false);
-					}
-				}
 				flags[kFLAGS.BROOKE_MET_TODAY] = 0;
                 if (CoC.instance.model.time.days % 2 == 0 && flags[kFLAGS.KAIJU_BAD_END_COUNTER] > 0) {
                     flags[kFLAGS.KAIJU_BAD_END_COUNTER]--;
@@ -582,10 +572,10 @@ if (CoC.instance.model.time.hours > 23) { //Once per day
 					if (flags[kFLAGS.IZMA_FOLLOWER_STATUS] == 1) flags[kFLAGS.FISHES_STORED_AT_FISHERY] += 5;
 					if (flags[kFLAGS.CEANI_FOLLOWER] > 0) flags[kFLAGS.FISHES_STORED_AT_FISHERY] -= 5;
 				}
-				//Daily regeneration of soulforce for non soul cultivators
-				if ((player.soulforce < player.maxSoulforce())) {
-					player.soulforce += 50;
-					if (player.soulforce > player.maxSoulforce()) player.soulforce = player.maxSoulforce();
+				//Daily regeneration of ki for non soul cultivators
+				if ((player.ki < player.maxKi())) {
+					player.ki += 50;
+					if (player.ki > player.maxKi()) player.ki = player.maxKi();
 				}
 				//Daily regeneration of mana for non mages
 				if (!player.hasPerk(PerkLib.JobSorcerer) && (player.mana < player.maxMana())) {

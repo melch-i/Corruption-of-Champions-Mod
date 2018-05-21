@@ -1077,7 +1077,7 @@ public function campLoversMenu(descOnly:Boolean = false):void {
 	if (flags[kFLAGS.CHI_CHI_FOLLOWER] > 2) {
 		outputText("You can see Chi Chi not so far from Jojo. She’s busy practicing her many combos on a dummy. Said dummy will more than likely have to be replaced within twenty four hours.\n\n");
 		/*if (player.statusEffectv4(StatusEffects.CampLunaMishaps2) > 0) buttons.disable("Wet.");
-		else */buttons.add( "Chi Chi", SceneLib.chichiScene.ChiChiCampMainMenu2);
+		else */buttons.add( "Chi Chi", curry(SceneLib.chichiScene.ChiChiCampMainMenu,true));
 	}
 	//Etna
 	if (flags[kFLAGS.ETNA_FOLLOWER] > 0) {
@@ -1331,7 +1331,7 @@ public function campLoversMenu(descOnly:Boolean = false):void {
     for each(var npc:XXCNPC in _campFollowers){
 		npc.campDescription(buttons,XXCNPC.LOVER);
     }
-	if(!descOnly){submenu(buttons,playerMenu)}
+	if(!descOnly){buttons.submenu(playerMenu);}
 }
 
 public function campSlavesMenu(descOnly:Boolean = false):void {
@@ -1390,7 +1390,7 @@ public function campSlavesMenu(descOnly:Boolean = false):void {
     for each(var npc:XXCNPC in _campFollowers){
         npc.campDescription(buttons,XXCNPC.SLAVE);
     }
-    if(!descOnly){submenu(buttons,playerMenu);}
+    if(!descOnly){buttons.submenu(playerMenu);}
 }
 
 public function campFollowers(descOnly:Boolean = false):void {
@@ -1578,7 +1578,7 @@ public function campFollowers(descOnly:Boolean = false):void {
     for each(var npc:XXCNPC in _campFollowers){
         npc.campDescription(buttons,XXCNPC.FOLLOWER);
     }
-    if(!descOnly){submenu(buttons,playerMenu);}
+    if(!descOnly){buttons.submenu(playerMenu);}
 }
 
 //-----------------
@@ -2963,7 +2963,7 @@ public function setLevelButton(allowAutoLevelTransition:Boolean):Boolean {
 			var hp:int = 15;
 			var fatigue:int = 5;
 			var mana:int = 10;
-			var soulforce:int = 0;
+			var ki:int = 0;
 			var wrath:int = 0;
 			var lust:int = 0;
 			if (player.hasPerk(PerkLib.AscensionUnlockedPotential)) {
@@ -2974,9 +2974,9 @@ public function setLevelButton(allowAutoLevelTransition:Boolean):Boolean {
 			if (player.hasPerk(PerkLib.AscensionUnlockedPotential2ndStage)) {
 				lust += 2;
 				wrath += 2;
-				soulforce += 6;
+				ki += 6;
 			}
-			mainView.levelButton.toolTipText = "Level up to increase your maximum HP by " + hp + ", maximum Fatigue by " + fatigue + ", maximum Mana by " + mana + ", maximum Soulforce by " + soulforce + ", maximum Wrath by " + wrath + " and maximum Lust by " + lust + "; gain 5 attribute points and 1 perk points.";
+			mainView.levelButton.toolTipText = "Level up to increase your maximum HP by " + hp + ", maximum Fatigue by " + fatigue + ", maximum Mana by " + mana + ", maximum Ki by " + ki + ", maximum Wrath by " + wrath + " and maximum Lust by " + lust + "; gain 5 attribute points and 1 perk points.";
 			if (flags[kFLAGS.AUTO_LEVEL] > 0 && allowAutoLevelTransition) {
                 CoC.instance.playerInfo.levelUpGo();
                 return true; //True indicates that you should be routed to level-up.

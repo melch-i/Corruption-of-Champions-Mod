@@ -207,6 +207,7 @@ public class CoC extends MovieClip
         this.stage.addChild( this.mainView );
     }
     private function _postInit(e:Event):void {
+        PerkLib.initDependencies();
         // Hooking things to MainView.
         this.mainView.onNewGameClick = charCreation.newGameGo;
         this.mainView.onAppearanceClick = playerAppearance.appearance;
@@ -330,7 +331,7 @@ public class CoC extends MovieClip
         oldStats.oldHP   = 0;
         oldStats.oldLust = 0;
         oldStats.oldFatigue = 0;
-        oldStats.oldSoulforce = 0;
+        oldStats.oldKi = 0;
         oldStats.oldHunger = 0;
 
         // ******************************************************************************************
@@ -441,8 +442,6 @@ public class CoC extends MovieClip
          new CoC(e?e.stage:null);*!/
     }
     */
-    public static const STAT_GAIN_CLASSIC:int = 0;
-    public static const STAT_GAIN_DAILY:int = 1;
     public function flushOutputTextToGUI():void
     {
         var fmt:TextFormat = mainView.mainText.defaultTextFormat;

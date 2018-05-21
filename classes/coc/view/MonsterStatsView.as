@@ -20,7 +20,7 @@ public class MonsterStatsView extends Block {
 	private var lustBar:StatBar;
 	private var fatigueBar:StatBar;
 	private var manaBar:StatBar;
-	private var soulforceBar:StatBar;
+	private var kiBar:StatBar;
 	private var wrathBar:StatBar;
 	private var corBar:StatBar;
 	private var generalTypeLabel:TextField;
@@ -75,8 +75,8 @@ public class MonsterStatsView extends Block {
 			statName: "Fatigue:",
 			showMax : true
 		}));
-		addElement(soulforceBar = new StatBar({
-			statName: "SF:",
+		addElement(kiBar = new StatBar({
+			statName: "Ki:",
 			//	barColor: '#ffd700',
 			showMax : true
 		}));
@@ -130,8 +130,8 @@ public class MonsterStatsView extends Block {
 		lustBar.value         = monster.lust;
 		fatigueBar.value      = monster.fatigue;
 		fatigueBar.maxValue   = monster.maxFatigue();
-		soulforceBar.value    = monster.soulforce;
-		soulforceBar.maxValue = monster.maxSoulforce();
+		kiBar.value    = monster.ki;
+		kiBar.maxValue = monster.maxKi();
 		manaBar.value         = monster.mana;
 		manaBar.maxValue      = monster.maxMana();
 		manaBar.visible       = player.hasPerk(PerkLib.JobSorcerer);
