@@ -9,7 +9,6 @@ package classes.Scenes.Areas
 	import classes.*;
 	import classes.GlobalFlags.kFLAGS;
 	import classes.CoC;
-	import classes.Scenes.Areas.DeepSea.*;
 	
 	use namespace CoC;
 	
